@@ -1,6 +1,8 @@
 High Level Notes
 
+
 TOP
+
 Sorting
 >Stepper Motor, disc rotation
 >Chain/Pulley with electromagnet
@@ -8,11 +10,14 @@ Sorting
 >RGB Sensor upward facing
 >token storage release mechanism
 
+
 BOTTOM
+
 Movement
 >DC Motors
 >Encoders
 >Gyroscope
+
 Sensors
 >RGB Sensor down facing
 >Line Sensor array
