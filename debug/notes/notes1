@@ -1,0 +1,34 @@
+*********************************************************
+* Brainstorm of Overall Design for Robot Debugger	*
+* October 1, 2017					*
+*********************************************************
+
+"What tools would someone need in order to debugg a robot?"
+"What should we get done first?"
+
+Debugging Software:
+	Implements Event-Based Timeline:
+		- The user sees what the robot did while it was in action 
+			- Movement- encountering intersections, boxes, and tokens
+			- Token Counting- triggered by pick-up subrouting and sorting subroutine
+			- Decision Making- what choices did the robot have, and which one did it perform
+
+	Has this Core Functionality:
+		-GUI:
+			- Map over which information is overlayed
+			- Token Count - track tokens of each color as they are encountered and sorted
+			- A list of the events that occurred
+			- Play, Fast Forward, Rewind, Timeline
+
+		-Low Level:
+			- Can communicate with robot over UART 
+			- Data-recording subroutines in the robot's software 
+			- Different viewing modes (think customizable windows on an ide)
+			- Expectation files 
+				- what user expected robot to do
+				- can be compared against what robot actually does
+
+	Other things we could implement:
+		- Orientation, Speed, and Acceleration tracking
+		- Physical Debugging Mode- set breakpoints at which robot would start and stop operation
+		- History of intersection pop-up (what happened at that intersection on the field)
