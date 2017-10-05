@@ -1,0 +1,32 @@
+High Level Notes
+
+
+TOP
+
+Sorting
+>Stepper Motor, disc rotation
+>Chain/Pulley with electromagnet
+>Token storage, how to detach electromagnet
+>RGB Sensor upward facing
+>token storage release mechanism
+
+
+BOTTOM
+
+Movement
+>DC Motors
+>Encoders
+>Gyroscope
+
+Sensors
+>RGB Sensor down facing
+>Line Sensor array
+>ultrasound for edges
+
+SORTING STEPS
+1) Align over hole
+2) RGB - detect token*
+3) Realign/Pick up token*
+4) Rotate disk, RGB color
+5) Storage/Stepper Rotation
+*can start moving after either
