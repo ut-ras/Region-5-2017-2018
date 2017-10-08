@@ -1,6 +1,13 @@
+#include <stdint.h>
 class stepper {
+    //Direction for rotation
+    typedef enum {CLOCKWISE, COUNTERCLOCKWISE} Direction;
     
-    void rotateStepperAngle(double angleInRadians);
+    //Rotate stepper motor based on a radian degree input
+    void rotateStepperAngle(double angleInRadians, Direction rotationDirection);
 
-    void rotateStepperSteps(int stepValue);
+    //Rotate stepper motor based on a step value
+    void rotateStepperSteps(int stepValue, Direction rotationDirection);
+
+
 }
