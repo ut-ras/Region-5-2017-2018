@@ -1,0 +1,45 @@
+ctober 4 - Wednesday  *
+*  Header File Plan       *
+***************************
+
+Line Sensors
+  6 points
+     boolean
+     
+Stepper
+  ? angle
+  
+2 Line
+  boolean[8]
+  
+Ultrasound
+  dist cm
+  
+RGB Sensor
+  get a color cloest to...
+    green
+    red
+    yellow
+    cyan
+    dark blue
+    magenta
+    
+    black
+    white
+    gray
+  
+DC Motors
+  adafruit motor controller
+  speed
+  direction
+  time
+  
+Encoder
+  # of ticks relative
+  
+IMU
+  gyro
+  acc
+  compass
+
+
