@@ -1,5 +1,6 @@
-class MotorController
-{
+class MotorController {
+public:
+
     //Moves forward a certain distance
     void moveForward(double distance);
 

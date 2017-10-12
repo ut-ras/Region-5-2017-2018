@@ -1,8 +1,9 @@
-class IMU
-{
+class IMU {
+public:
+
     //Gets 3 compass values
     double[3] getCompass();
-    
+
     //Gets 3 Accelerometer values
     double[3] getAccel();
 
