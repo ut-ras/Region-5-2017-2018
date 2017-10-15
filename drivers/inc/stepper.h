@@ -2,6 +2,8 @@
 class stepper {
 public:
 
+    stepper(int pin);
+
     //Direction for rotation
     typedef enum {CLOCKWISE, COUNTERCLOCKWISE} Direction;
 
