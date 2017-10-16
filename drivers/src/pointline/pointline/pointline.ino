@@ -2,6 +2,7 @@
 Code to use a single point line sensor
  
  */
+
 #define BLACK 2700
 #define WHITE 1000
 class pointline{
@@ -17,5 +18,6 @@ boolean getValue()
   
   return sensorPin!=0 && analogRead(sensorPin)>BLACK;
   
+
 }
 };
