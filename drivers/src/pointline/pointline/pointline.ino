@@ -21,3 +21,13 @@ boolean getValue()
 
 }
 };
+
+
+/* 
+notes from cole 10\18\17
+this looks good, almost done! just need to tie this back into our code structure
+todo:
+>move this code from "src/pointline/pointline/pointline.ino" to "src/pointline.cpp" (there is an empty file there)
+>move the variable sensorPin to a private variable in inc/pointline.h
+>in inc/pointline.h change the function from isLine to getValue, to match what is here
+*/
