@@ -8,4 +8,4 @@ public:
     //Check if any of the 8 sensors are true
     bool isLine();
 
-}
+};

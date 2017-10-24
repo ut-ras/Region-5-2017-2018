@@ -9,4 +9,4 @@ public:
 
     //Gets 3 Compass values
     double[3] getCompass();
-}
+};

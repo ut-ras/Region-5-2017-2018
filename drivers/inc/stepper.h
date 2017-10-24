@@ -10,5 +10,4 @@ public:
     //Rotate stepper motor based on a radian degree input
     void rotateDisk(uint8_t holeOffset, Direction rotationDirection);
 
-
-}
+};

@@ -1,4 +1,4 @@
-#include "../../drivers/inc/intersectionSensors.h"
+#include "../../drivers/inc/pointline.h"
 
 /*
  * Class that abstracts
@@ -10,7 +10,7 @@
  * usage: in high level code, determine the desired pointlineData for the next intersection, then move and getData until data matches
  */
 
- 
+
 class intersectionSensors {
 public:
 
@@ -33,4 +33,4 @@ private:
   pointline r0;
   pointline r1;
   pointline r2;
-}
+};

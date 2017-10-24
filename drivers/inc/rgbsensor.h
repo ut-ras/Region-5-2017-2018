@@ -7,4 +7,4 @@ public:
     //Method to get the filtered color from hardware team
     uint8_t getColor();
 
-}
+};

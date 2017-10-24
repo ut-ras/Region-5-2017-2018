@@ -1,6 +1,10 @@
 class pointline {
 public:
-  pointline(int pin);
+  pointline(int _sensorPin);
 
-  bool isLine();
-}
+  bool getValue();
+
+private:
+  int sensorPin;    // select the input pin for the Line sensor
+
+};
