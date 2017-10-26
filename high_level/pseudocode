@@ -91,3 +91,38 @@ Repeat same algorithm as round 1 and 2 (don't return to starting location)
 We can adjust deposity_if_enough to drop if we have 2 out of the 3 tokens to speed up the process
 
 After depositing all the other tokens or if we 40 sec deposit the grey tokens and return to the starting square
+
+--------------------------------------------------------------------------------------------------------------------
+Possible Error Solutions
+
+1) Lost in Whitespace
+	2 Cases -
+		1) Inside the Box of Lines
+
+			Move forward until you find a line
+			Follow the line until you reach an intersection
+			while(!color found){
+				if it's a + intersection
+					Continue line following until the next intersection
+				else //it's at the fork intersection
+					Move towards the base of the fork and continue line following
+			}
+			reorient robot based on color we are at
+
+		2) Outside the Box
+
+			while(!outside_field && !line_found){ //keep checking ultrasonic sensors
+				move forward until you reach a line
+			}
+			if(outside_field)
+				reverse until you reach a line
+			Use same algorithm as inside the box of lines
+
+2) Missing Tokens after Pickup Route
+
+3) Resuming after Point of Error
+
+
+Following the Edge of the Field Using Ultrasonic Sensors
+	//have ultrasonics on the sides and front of the robot
+	
