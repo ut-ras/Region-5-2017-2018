@@ -1,77 +1,85 @@
-Round_state; (1, 2, or 3)
+Round_state; //(1, 2, or 3)
 first_color;
 
 deposit_if_enough(color c)
-	Checks if we have all the tokens of that color
-	If we do, do the correct deposit maneuver based on our position and drop the tokens
+	if(have_all_tokens(c))
+		do the correct deposit maneuver based on our position and drop the tokens
 	Return to the initial position
 
-We can use fastest path stuff etc
+have_all_tokens(color c)
+	Checks if we have all the tokens of the given color
+
+already_deposited(color c)
+	Checks if we already deposited at the given color
+
+fastest_path_to_color(color c)
+	uses our stored graph data to find the fastest path from our current
+	position to the given color. if given white choose the closest white square
 
 Round 1:
+
 Inventory set to 12, 2 of each color, except grey
-if (first_color == yellow)
-//First collect all the tokens on the field
+
+if (first_color == YELLOW)
+
+	//First collect all the tokens on the field
 	Turn left 45 degrees
 	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(red)
+	deposit_if_enough(RED)
 	Turn left 135 degrees
 	Forward until + intersection
-	deposit_if_enough(green)
+	deposit_if_enough(GREEN)
 	Turn left 90 degrees
 	Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
-	deposit_if_enough(magenta)
+	deposit_if_enough(MAGENTA)
 	 Turn left 90 degrees
 	Forward till intersection
-	deposit_if_enough(cyan)
+	deposit_if_enough(CYAN)
 	Turn left 135 degrees
 	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(blue) //we should have collected all the tokens on the field by here
-
-//We will end at the dark blue square
+	deposit_if_enough(BLUE) //we should have collected all the tokens on the field by here
+	//We will end at the dark blue square
 	
-//Deposit the tokens
-	Follow the outline of the outer square, whenever we get near a color(hit an intersection) run deposit_if_enough(color) if time > 30 sec
-	Once you deposit at the last color (Yellow) follow the edge of the outer square from yellow to dark blue halfway and turn left and pull into the start area
+	//Deposit the tokens
 
-OR
+	while(time > 30 sec && !doneDepositingAll) {
+		if(!already_deposited(GREEN)){
+			fastest_path_to_color(GREEN)
+			deposit_if_enough(GREEN)
+		}
+		repeat for remaining colors in order RED, CYAN, MAGENTA, YELLOW
+	}
+	fastest_path_to_color(WHITE)
 
-	Return to the center by backing up
-if(time > 30 sec)
-		Follow a line to each of the squares we need to deposit at returning to the center each time
-Else
-		Return to home square
+else //first_color is red
 
-Else //first_color is red
-//First collect all the tokens on the field
+	//First collect all the tokens on the field
 	Turn left 45 degrees
 	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(yellow)
+	deposit_if_enough(YELLOW)
 	Turn left 135 degrees
 	Forward until + intersection
-	deposit_if_enough(magenta)
+	deposit_if_enough(MAGENTA)
 	Turn left 90 degrees
 	Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
-	deposit_if_enough(green)
+	deposit_if_enough(GREEN)
 	 Turn left 90 degrees
 	Forward till intersection
-	deposit_if_enough(dark blue)
+	deposit_if_enough(BLUE)
 	Turn left 135 degrees
 	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(cyan) //we should have collected all the tokens on the field by here
-//We will end at the cyan square
+	deposit_if_enough(CYAN) //we should have collected all the tokens on the field by here
+	//We will end at the cyan square
 	
-//Deposit the tokens
-	Follow the outline of the outer square, whenever we get near a color(hit an intersection) run deposit_if_enough(color) if time > 30 sec
-	Once you deposit at the last color (Yellow) follow the edge of the outer square from yellow to dark blue halfway and turn left and pull into the start area
-
-OR
-
-	Return to the center by backing up
-if(time > 30 sec)
-		Follow a line to each of the squares we need to deposit at returning to the center each time
-Else
-		Return to home square
+	//Deposit the tokens
+	while(time > 30 sec && !doneDepositingAll) {
+		if(!already_deposited(MAGENTA)){
+			fastest_path_to_color(MAGENTA)
+			deposit_if_enough(MAGENTA)
+		}
+		repeat for remaining colors in order YELLOW, BLUE, GREEN, RED
+	}
+	fastest_path_to_color(WHITE)
 
 Round 2:
 Inventory set to 18 tokens, with 3 of each color
