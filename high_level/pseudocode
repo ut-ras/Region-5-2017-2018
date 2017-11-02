@@ -111,7 +111,7 @@ Possible Error Solutions
 
 		2) Outside the Box
 
-			while(!outside_field && !line_found){ //keep checking ultrasonic sensors
+			while(!outside_field && !line_found){ //keep checking ultrasonic sensors to update outside_field
 				move forward until you reach a line
 			}
 			if(outside_field)
@@ -119,6 +119,50 @@ Possible Error Solutions
 			Use same algorithm as inside the box of lines
 
 2) Missing Tokens after Pickup Route
+	If we are missing more than some percentage of all tokens (ex. 30-40%) use a different path
+	to try recollecting some tokens
+
+	*constantly check the time
+		if the time is < 40 sec
+		fastest_path_to_color(closest_square)
+		deposit_all(closest_square)
+		fastest_path_to_color(WHITE)
+
+	//if we ended the collection phase facing the BLUE square (Started w/ YELLOW square on right)
+	Turn left 180 degrees
+	Follow line diagonally, checking the spots for any remaining tokens, until you reach the CYAN square
+	deposit(CYAN)
+	Turn left 135 degrees
+	Follow line straight to the RED square
+	deposit(RED)
+	Turn left 90 degrees
+	Forward till + intersection
+	deposit(GREEN)
+	Turn left 90 degrees
+	Follow line straight across to MAGENTA
+	deposit(MAGENTA)
+	Turn right 90 degrees
+	Forward to fork intersection
+	deposit_all(YELLOW)
+	fastest_path_to_color(WHITE)
+
+	//if we ended the collection phase facing the CYAN square (Started w/ RED square on right)
+	Turn left 180 degrees
+	Follow line diagonally, checking the spots for any remaining tokens, until you reach the BLUE square
+	deposit(BLUE)
+	Turn left 135 degrees
+	Follow line straight to the YELLOW square
+	deposit(YELLOW)
+	Turn left 90 degrees
+	Forward till + intersection
+	deposit(MAGENTA)
+	Turn left 90 degrees
+	Follow line straight across to MAGENTA
+	deposit(GREEN)
+	Turn right 90 degrees
+	Forward to fork intersection
+	deposit(RED)
+	fastest_path_to_color(WHITE)
 
 3) Resuming after Point of Error
 
