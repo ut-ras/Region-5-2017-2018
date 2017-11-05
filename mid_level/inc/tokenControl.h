@@ -7,6 +7,7 @@ class tokenControl {
 
 public:
     tokenControl();
+    bool pickUpToken();
 
 private:
 
