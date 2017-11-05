@@ -1,7 +1,7 @@
 #include "../../drivers/inc/pointline.h"
 
 /*
- * Class that abstracts
+ * Class that abstracts the pointline class, array of line sensors for detecting intersections of lines
  * TODO: add enum or something to describe [intersection type]
  * TODO: add something to describe [direction of movement]
  * TODO: add static function that converts current [direction of movement] and [intersection type]
