@@ -30,7 +30,7 @@ void Graph::createNodes()
 		noob.Name = i;
 		noob.visited = false;
 		Node adj [8] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-		this.graph
+		
 	}	
 }
 
