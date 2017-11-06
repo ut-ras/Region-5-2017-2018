@@ -17,5 +17,7 @@ private:
 	void raiseMagnet();
 	Node::Color findColor();
 	void rotateDisk(Node::Color c);
-	
+	void depositInFunnel();
+	void reset();	//goes back over hole
+
 }

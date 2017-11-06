@@ -174,15 +174,6 @@ Possible Error Solutions
 	
 
 Following the Edge of the Field Using Ultrasonic Sensors
-	Going around the field clockwise
-		Use the ultransonic on the right side of the robot
-			const field_dist;
-			if(sensor_dist > field_dist)
-				turn left
-			else
-				turn right
-
-
 	//have ultrasonics on the sides and front of the robot
 
 Funtions We Need
