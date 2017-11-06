@@ -165,8 +165,36 @@ Possible Error Solutions
 	fastest_path_to_color(WHITE)
 
 3) Resuming after Point of Error
-
+	1) Before/During Collection
+		Use Lost in Whitespace algorithm to reorient
+		Restart collection based on current location
+	2) During depositing
+		Use Lost in Whitespace algorithm to reorient
+		Continue depositing with closest squares, then returning to any squares that need to be deposited at still
+	
 
 Following the Edge of the Field Using Ultrasonic Sensors
+	Going around the field clockwise
+		Use the ultransonic on the right side of the robot
+			const field_dist;
+			if(sensor_dist > field_dist)
+				turn left
+			else
+				turn right
+
+
 	//have ultrasonics on the sides and front of the robot
-	
+
+Funtions We Need
+
+Movement - 
+	Forwards/Backwards
+	Turning
+	Fastest Path to Color
+	Check Ultrasonic(for lost in whitespace)
+	Forward until Intersection (plus / fork)
+	Line Following Stuff
+
+Token Control -
+	Pick-up Token/Store Token
+	Deposit Token
