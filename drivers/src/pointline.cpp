@@ -12,6 +12,8 @@ Code to use a single point line sensor
 pointline::pointline(int _sensorPin) {
   //Set Line Sensor Pin Value
   sensorPin = _sensorPin;
+  
+  pinMode(sensorPin, INPUT);
 }
 
 boolean pointline::getValue() {
