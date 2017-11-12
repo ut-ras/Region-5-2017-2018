@@ -1,0 +1,4 @@
+Worked on sensor and motor header files
+    -arrayline.h
+    -rgbsensor.h
+    -stepper.h
