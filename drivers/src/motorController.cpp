@@ -44,6 +44,7 @@ void motorController::turn(double angleDegrees){
 }
 
 //Not part of the motorController class
+//What happens when the Mega asks for it to move?
 void receiveEvent(int numBytes){
 	
 }
