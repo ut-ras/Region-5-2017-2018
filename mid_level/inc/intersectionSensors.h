@@ -25,6 +25,7 @@ public:
 
   intersectionSensors(int _l0pin, int _l1pin, int _l2pin, int _r0pin, int _r1pin, int _r2pin);
   pointlineData getData();
+  pointlineData getNextIntersection();  //based on current location and direction in map
 
 private:
   pointline l0;
