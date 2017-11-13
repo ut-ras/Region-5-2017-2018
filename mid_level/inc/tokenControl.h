@@ -11,10 +11,11 @@ public:
     tokenControl();
     bool pickUpToken();
     Node::Color storeToken();
+    void depositTokens(Node::Color c);
 
 private:
-	void lowerMagnet();
-	void raiseMagnet();
+	void lowerMagnet(double distance);
+	void raiseMagnet(double distance);
 	Node::Color findColor();
 	void rotateDisk(Node::Color c);
 	void depositInFunnel();

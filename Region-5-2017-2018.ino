@@ -1,3 +1,7 @@
+#include "motorController.h"
+#include "rgbsensor.h"
+#include "tokenControl.h"
+
 void setup() {
   // put your setup code here, to run once:
 
@@ -6,16 +10,40 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
+
 }
 
 void round1(){
-	
+	int[] inventory = new int[6];
+	if(whichSide() == "Yellow"){
+		turn(PI / 4);
+		for(int i = 0; i < 4; i++){
+			forwardToIntersection();
+			if(pickUpToken())
+				updateInventory(storeToken())
+		}
+		moveForward(distance across grey square);
+		for(int i = 0; i < 4; i++){
+			forwardToIntersection();
+			if(pickUpToken())
+				updateInventory(storeToken())
+		}
+
+
+	} else{
+
+	}
 }
 
 void round2(){
-	
+	int[] inventory = new int[6];
 }
 
 void round3(){
-	
+	int[] inventory = new int[7];
+}
+
+Node::Color whichSide(){
+	moveForward(distance to colored square);
+	return getColor();
 }
