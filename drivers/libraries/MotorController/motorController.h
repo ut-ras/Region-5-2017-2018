@@ -1,5 +1,5 @@
-#ifndef
-#def motorController.h
+#ifndef motorController_h
+#def motorController_h
 
 #include "Arduino.h"
 #include <Wire.h>

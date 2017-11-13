@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 class pointline {
 public:
   pointline(int _sensorPin);
