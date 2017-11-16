@@ -19,6 +19,7 @@ public:
 	int addToken(Node::Color c);
 	Node getCurrentNode();
 	int getCurrentDirection();
+	Node getNeighbor(Node n, int direction);
 
 private:
 	void bruteForceInit();

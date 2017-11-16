@@ -1,4 +1,5 @@
 #include "../../drivers/inc/pointline.h"
+#include "../../debug/inc/Graph.h"
 
 /*
  * Class that abstracts the pointline class, array of line sensors for detecting intersections of lines
@@ -23,11 +24,12 @@ public:
     bool r2;
   } pointlineData;
 
-  intersectionSensors(int _l0pin, int _l1pin, int _l2pin, int _r0pin, int _r1pin, int _r2pin);
+  intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
   pointlineData getData();
   pointlineData getNextIntersection();  //based on current location and direction in map
 
 private:
+  Graph map;
   pointline l0;
   pointline l1;
   pointline l2;

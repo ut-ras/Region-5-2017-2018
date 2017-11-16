@@ -16,6 +16,11 @@ int Graph::getCurrentDirection() {
 	return currentDirection;
 }
 
+Node getNeighbor(Node n, int direction) {
+	Node[8] adj = graph.getValueOf(n);
+	return adj[direction];
+}
+
 void Graph::bruteForceInit()
 {
 	//Red
