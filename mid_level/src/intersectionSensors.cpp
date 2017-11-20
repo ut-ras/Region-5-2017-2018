@@ -54,10 +54,15 @@ pointlineData intersectionSensors::getPointlineFor(Node::Color c, int dir) {
     return data[index];
   }
   else if ((intersectionType == Node::Color.magenta) || (intersectionType == Node::Color.green)) {
-
+    if (dir % 2 == 0) {
+      return createPointlineData(0, 1, 0, 0, 1, 0);
+    }
+    else {
+      return createPointlineData(0, 0, 1, 0, 0, 1);
+    }
   }
   else if (intersectionType == Node::Color.grey) {
-
+    return createPointlineData(0, 1, 0, 0, 1, 0);
   }
   //also need something for drop off zones
 }

@@ -27,6 +27,7 @@ public:
   intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
   pointlineData getData();
   pointlineData getNextIntersection();  //based on current location and direction in map
+  pointlineData createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2);
 
 private:
   Graph map;
@@ -36,4 +37,6 @@ private:
   pointline r0;
   pointline r1;
   pointline r2;
+
+  pointlineData getPointlineFor(Node::Color c, int dir);
 };
