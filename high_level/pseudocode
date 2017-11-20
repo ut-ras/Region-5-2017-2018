@@ -1,5 +1,5 @@
 Round_state; //(1, 2, or 3)
-first_color;
+first_color; //getColor()
 
 deposit_if_enough(color c)
 	if(have_all_tokens(c))
@@ -16,81 +16,83 @@ fastest_path_to_color(color c)
 	uses our stored graph data to find the fastest path from our current
 	position to the given color. if given white choose the closest white square
 
-Round 1:
+if(Round_state == 1)
 
-Inventory set to 12, 2 of each color, except grey
+	Inventory set to 12, 2 of each color, except grey
 
-if (first_color == YELLOW)
+	if (first_color == YELLOW)
 
-	//First collect all the tokens on the field
-	Turn left 45 degrees
-	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(RED)
-	Turn left 135 degrees
-	Forward until + intersection
-	deposit_if_enough(GREEN)
-	Turn left 90 degrees
-	Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
-	deposit_if_enough(MAGENTA)
-	 Turn left 90 degrees
-	Forward till intersection
-	deposit_if_enough(CYAN)
-	Turn left 135 degrees
-	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(BLUE) //we should have collected all the tokens on the field by here
-	//We will end at the dark blue square
-	
-	//Deposit the tokens
+		//First collect all the tokens on the field
+		turn(0.785398) //Turn left 45 degrees
+		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
+		deposit_if_enough(RED)
+		turn(2.35619) //Turn left 135 degrees
+		Forward until + intersection
+		deposit_if_enough(GREEN)
+		turn(1.5708) //Turn left 90 degrees
+		Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
+		deposit_if_enough(MAGENTA)
+		turn(1.5708) //Turn left 90 degrees
+		Forward till intersection
+		deposit_if_enough(CYAN)
+		turn(2.35619) //Turn left 135 degrees
+		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
+		deposit_if_enough(BLUE) //we should have collected all the tokens on the field by here
+		//We will end at the dark blue square
+		
+		//Deposit the tokens
 
-	while(time > 30 sec && !doneDepositingAll) {
-		if(!already_deposited(GREEN)){
-			fastest_path_to_color(GREEN)
-			deposit_if_enough(GREEN)
+		while(time > 30 sec && !doneDepositingAll) {
+			if(!already_deposited(GREEN)){
+				fastest_path_to_color(GREEN)
+				deposit_if_enough(GREEN)
+			}
+			repeat for remaining colors in order RED, CYAN, MAGENTA, YELLOW
 		}
-		repeat for remaining colors in order RED, CYAN, MAGENTA, YELLOW
-	}
-	fastest_path_to_color(WHITE)
+		fastest_path_to_color(WHITE)
 
-else //first_color is red
+	else //first_color is red
 
-	//First collect all the tokens on the field
-	Turn left 45 degrees
-	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(YELLOW)
-	Turn left 135 degrees
-	Forward until + intersection
-	deposit_if_enough(MAGENTA)
-	Turn left 90 degrees
-	Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
-	deposit_if_enough(GREEN)
-	 Turn left 90 degrees
-	Forward till intersection
-	deposit_if_enough(BLUE)
-	Turn left 135 degrees
-	Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
-	deposit_if_enough(CYAN) //we should have collected all the tokens on the field by here
-	//We will end at the cyan square
-	
-	//Deposit the tokens
-	while(time > 30 sec && !doneDepositingAll) {
-		if(!already_deposited(MAGENTA)){
-			fastest_path_to_color(MAGENTA)
-			deposit_if_enough(MAGENTA)
+		//First collect all the tokens on the field
+		turn(0.785398) //Turn left 45 degrees
+		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
+		deposit_if_enough(YELLOW)
+		turn(2.35619) //Turn left 135 degrees
+		Forward until + intersection
+		deposit_if_enough(MAGENTA)
+		turn(1.5708) //Turn left 90 degrees
+		Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
+		deposit_if_enough(GREEN)
+		turn(1.5708) //Turn left 90 degrees
+		Forward till intersection
+		deposit_if_enough(BLUE)
+		turn(2.35619) //Turn left 135 degrees
+		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
+		deposit_if_enough(CYAN) //we should have collected all the tokens on the field by here
+		//We will end at the cyan square
+		
+		//Deposit the tokens
+		while(time > 30 sec && !doneDepositingAll) {
+			if(!already_deposited(MAGENTA)){
+				fastest_path_to_color(MAGENTA)
+				deposit_if_enough(MAGENTA)
+			}
+			repeat for remaining colors in order YELLOW, BLUE, GREEN, RED
 		}
-		repeat for remaining colors in order YELLOW, BLUE, GREEN, RED
-	}
-	fastest_path_to_color(WHITE)
+		fastest_path_to_color(WHITE)
 
-Round 2:
-Inventory set to 18 tokens, with 3 of each color
-Repeat same algorithm as round 1
 
-Round 3:
-Set inventory to 24 tokens, with 3 of each color and 6 grey
-Repeat same algorithm as round 1 and 2 (don't return to starting location)
-We can adjust deposity_if_enough to drop if we have 2 out of the 3 tokens to speed up the process
+else if(Round_state == 2)
+	Inventory set to 18 tokens, with 3 of each color
+	Repeat same algorithm as round 1
 
-After depositing all the other tokens or if we 40 sec deposit the grey tokens and return to the starting square
+
+else// Round 3:
+	Set inventory to 24 tokens, with 3 of each color and 6 grey
+	Repeat same algorithm as round 1 and 2 (don't return to starting location)
+	We can adjust deposity_if_enough to drop if we have 2 out of the 3 tokens to speed up the process
+
+	After depositing all the other tokens or if we 40 sec deposit the grey tokens and return to the starting square
 
 --------------------------------------------------------------------------------------------------------------------
 Possible Error Solutions
@@ -129,37 +131,37 @@ Possible Error Solutions
 		fastest_path_to_color(WHITE)
 
 	//if we ended the collection phase facing the BLUE square (Started w/ YELLOW square on right)
-	Turn left 180 degrees
+	turn(3.14159) //Turn left 180 degrees
 	Follow line diagonally, checking the spots for any remaining tokens, until you reach the CYAN square
 	deposit(CYAN)
-	Turn left 135 degrees
+	turn(2.35619) //Turn left 135 degrees
 	Follow line straight to the RED square
 	deposit(RED)
-	Turn left 90 degrees
+	turn(1.5708) //Turn left 90 degrees
 	Forward till + intersection
 	deposit(GREEN)
-	Turn left 90 degrees
+	turn(1.5708) //Turn left 90 degrees
 	Follow line straight across to MAGENTA
 	deposit(MAGENTA)
-	Turn right 90 degrees
+	turn(4.71239) //Turn right 90 degrees, left 270 degrees
 	Forward to fork intersection
 	deposit_all(YELLOW)
 	fastest_path_to_color(WHITE)
 
 	//if we ended the collection phase facing the CYAN square (Started w/ RED square on right)
-	Turn left 180 degrees
+	turn(3.14159) //Turn left 180 degrees
 	Follow line diagonally, checking the spots for any remaining tokens, until you reach the BLUE square
 	deposit(BLUE)
-	Turn left 135 degrees
+	turn(2.35619) //Turn left 135 degrees
 	Follow line straight to the YELLOW square
 	deposit(YELLOW)
-	Turn left 90 degrees
+	turn(1.5708) //Turn left 90 degrees
 	Forward till + intersection
 	deposit(MAGENTA)
-	Turn left 90 degrees
+	turn(1.5708) //Turn left 90 degrees
 	Follow line straight across to MAGENTA
 	deposit(GREEN)
-	Turn right 90 degrees
+	turn(4.71239) //Turn right 90 degrees, left 270 degrees
 	Forward to fork intersection
 	deposit(RED)
 	fastest_path_to_color(WHITE)
@@ -180,7 +182,7 @@ Funtions We Need
 
 Movement - 
 	Forwards/Backwards
-	Turning
+	Turning //included
 	Fastest Path to Color
 	Check Ultrasonic(for lost in whitespace)
 	Forward until Intersection (plus / fork)
