@@ -1,28 +1,36 @@
 
 #include "../inc/Graph.h"
 #include <Hashmap.h>
-#define NUMBER_OF_NODES 31
 
 void Graph::Graph()
 {
 	bruteForceInit();
 }
 
+/* returns the node the bot is currently located at */
 Node Graph::getCurrentNode() {
 		return currentNode;
 }
 
+/* returns the current cardinal direction the bot is facing */
 int Graph::getCurrentDirection() {
 	return currentDirection;
 }
 
+/* returns the neighbor (Node) in the cardinal direction DIRECTION of N */
 Node getNeighbor(Node n, int direction) {
 	Node[8] adj = graph.getValueOf(n);
 	return adj[direction];
 }
 
+/* BEAST of a function to create the entire map:
+   	- Map stored as hashmap between node and adjacency list (array)
+    - Nodes also stored in array by name enum (index) for quick iteration
+*/
 void Graph::bruteForceInit()
 {
+	int nodeCounter;
+
 	//Red
 	Node redBox = new Node();		//create the nodes
 	Node red1 = new Node();
@@ -130,7 +138,7 @@ void Graph::bruteForceInit()
 	greyBox.Name = Node::Name::X;
 	greyBox.visited = false;
 
-/////////////////////   Now set up each individual adjacency lists andd add them to the hash map   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+/////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	//Red
 	Node adjR  [8] = {NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL};		//each element represents a direction:
 	Node adjR1 [8] = {NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL};	//{up, up-right, right, down-right, down, down-left, left, up-left}
@@ -142,6 +150,11 @@ void Graph::bruteForceInit()
 	graph[2](red2, adjR2);
 	graph[3](red3, adjR3);
 	graph[4](red4, adjR4);
+	iterator[0] = redBox;
+	iterator[1] = red1;
+	iterator[2] = red2;
+	iterator[3] = red3;
+	iterator[4] = red4;
 
 	//Green
 	Node adjG  [8] = {NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL};
@@ -154,6 +167,11 @@ void Graph::bruteForceInit()
 	graph[7](green2, adjG2);
 	graph[8](green3, adjG3);
 	graph[9](green4, adjG4);
+	iterator[5] = greenBox;
+	iterator[6] = green1;
+	iterator[7] = green2;
+	iterator[8] = green3;
+	iterator[9] = green4;
 
 	//Blue
 	Node adjB  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
@@ -166,6 +184,11 @@ void Graph::bruteForceInit()
 	graph[12](blue2, adjB2);
 	graph[13](blue3, adjB3);
 	graph[14](blue1, adjB1);
+	iterator[10] = blueBox;
+	iterator[11] = blue1;
+	iterator[12] = blue2;
+	iterator[13] = blue3;
+	iterator[14] = blue4;
 
 	//Yellows:
 	Node adjY  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1};
@@ -178,6 +201,11 @@ void Graph::bruteForceInit()
 	graph[17](yellow2, adjY2);
 	graph[18](yellow3, adjY3);
 	graph[19](yellow4, adjY4);
+	iterator[15] = yellowBox;
+	iterator[16] = yellow1;
+	iterator[17] = yellow2;
+	iterator[18] = yellow3;
+	iterator[19] = yellow4;
 
 	//Magentas:
 	Node adjM  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL};
@@ -190,6 +218,11 @@ void Graph::bruteForceInit()
 	graph[22](magenta2, adjM2);
 	graph[23](magenta3, adjM3);
 	graph[24](magenta4, adjM4);
+	iterator[20] = magentaBox;
+	iterator[21] = magenta1;
+	iterator[22] = magenta2;
+	iterator[23] = magenta3;
+	iterator[24] = magenta4;
 
 	//Cyans:
 	Node adjC  [8] = {NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL};
@@ -202,8 +235,27 @@ void Graph::bruteForceInit()
 	graph[27](cyan2, adjC2);
 	graph[28](cyan3, adjC3);
 	graph[29](cyan4, adjC4);
+	iterator[25] = cyanBox;
+	iterator[26] = cyan1;
+	iterator[27] = cyan2;
+	iterator[28] = cyan3;
+	iterator[29] = cyan4;
 
 	//Greys:
 	Node adjX  [8] = {NULL, cyan4, magenta4, yellow4, NULL, blue4, green4, red4};
 	graph[30](greyBox, adjX)
+	iterator[30] = greyBox;
+}
+
+/* Iterates through every node and creates a string describing the map's current state such that
+    - Nodes are '/' delimited
+    - per-node information is formatted as described in Node::toString()
+ */
+string Graph::toString() {
+	string result;
+	for(int i=0; i < NUMBER_OF_NODES; i++) {
+		result += iterator[i].toString();		// legal syntax in C++ ?
+		if(i != NUMBER_OF_NODES) 
+			result += "/"; 		// nodes will be '/' delimited
+	}
 }
