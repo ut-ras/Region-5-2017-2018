@@ -37,16 +37,16 @@ void Graph::bruteForceInit()
 	Node red2 = new Node();
 	Node red3 = new Node();
 	Node red4 = new Node();
-	redBox.Name = Node::Name::R;	//assign the enums (names)
-	red1.Name = Node::Name::R1;
-	red2.Name = Node::Name::R2;
-	red3.Name = Node::Name::R3;
-	red4.Name = Node::Name::R4;
-	redBox.visited = false;			//initialize visited boolean
-	red1.visited = false;
-	red2.visited = false;
-	red3.visited = false;
-	red4.visited = false;
+	redBox.setName(Node::Name::R);	//assign the enums (names)
+	red1.setName(Node::Name::R1);
+	red2.setName(Node::Name::R2);
+	red3.setName(Node::Name::R3);
+	red4.setName(Node::Name::R4);
+	redBox.setVisited(false);			//initialize visited boolean
+	red1.setVisited(false);
+	red2.setVisited(false);
+	red3.setVisited(false);
+	red4.setVisited(false);
 
 	//Green
 	Node greenBox = new Node();
@@ -54,16 +54,16 @@ void Graph::bruteForceInit()
 	Node green2 = new Node();
 	Node green3 = new Node();
 	Node green4 = new Node();
-	greenBox.Name = Node::Name::G;
-	green1.Name = Node::Name::G1;
-	green2.Name = Node::Name::G2;
-	green3.Name = Node::Name::G3;
-	green4.Name = Node::Name::G4;
-	greenBox.visited = false;
-	green1.visited = false;
-	green2.visited = false;
-	green3.visited = false;
-	green4.visited = false;
+	greenBox.setName(Node::Name::G);
+	green1.setName(Node::Name::G1);
+	green2.setName(Node::Name::G2);
+	green3.setName(Node::Name::G3);
+	green4.setName(Node::Name::G4);
+	greenBox.setVisited(false);
+	green1.setVisited(false);
+	green2.setVisited(false);
+	green3.setVisited(false);
+	green4.setVisited(false);
 
 	//Blue
 	Node blueBox = new Node();
@@ -71,16 +71,16 @@ void Graph::bruteForceInit()
 	Node blue2 = new Node();
 	Node blue3 = new Node();
 	Node blue4 = new Node();
-	blueBox.Name = Node::Name::B;
-	blue1.Name = Node::Name::B1;
-	blue2.Name = Node::Name::B2;
-	blue3.Name = Node::Name::B3;
-	blue4.Name = Node::Name::B4;
-	blueBox.visited = false;
-	blue1.visited = false;
-	blue2.visited = false;
-	blue3.visited = false;
-	blue4.visited = false;
+	blueBox.setName(Node::Name::B);
+	blue1.setName(Node::Name::B1);
+	blue2.setName(Node::Name::B2);
+	blue3.setName(Node::Name::B3);
+	blue4.setName(Node::Name::B4);
+	blueBox.setVisited(false);
+	blue1.setVisited(false);
+	blue2.setVisited(false);
+	blue3.setVisited(false);
+	blue4.setVisited(false);
 
 	//Yellow
 	Node yellowBox = new Node();
@@ -88,16 +88,16 @@ void Graph::bruteForceInit()
 	Node yellow2 = new Node();
 	Node yellow3 = new Node();
 	Node yellow4 = new Node();
-	yellowBox.Name = Node::Name::Y;
-	yellow1.Name = Node::Name::Y1;
-	yellow2.Name = Node::Name::Y2;
-	yellow3.Name = Node::Name::Y3;
-	yellow4.Name = Node::Name::Y4;
-	yellowBox.visited = false;
-	yellow1.visited = false;
-	yellow2.visited = false;
-	yellow3.visited = false;
-	yellow4.visited = false;
+	yellowBox.setName(Node::Name::Y);
+	yellow1.setName(Node::Name::Y1);
+	yellow2.setName(Node::Name::Y2);
+	yellow3.setName(Node::Name::Y3);
+	yellow4.setName(Node::Name::Y4);
+	yellowBox.setVisited(false);
+	yellow1.setVisited(false);
+	yellow2.setVisited(false);
+	yellow3.setVisited(false);
+	yellow4.setVisited(false);
 
 	//Magenta
 	Node magentaBox = new Node();
@@ -105,16 +105,16 @@ void Graph::bruteForceInit()
 	Node magenta2 = new Node();
 	Node magenta3 = new Node();
 	Node magenta4 = new Node();
-	magentaBox.Name = Node::Name::M;
-	magenta1.Name = Node::Name::M1;
-	magenta2.Name = Node::Name::M2;
-	magenta3.Name = Node::Name::M3;
-	magenta4.Name = Node::Name::M4;
-	magentaBox.visited = false;
-	magenta1.visited = false;
-	magenta2.visited = false;
-	magenta3.visited = false;
-	magenta4.visited = false;
+	magentaBox.setName(Node::Name::M);
+	magenta1.setName(Node::Name::M1);
+	magenta2.setName(Node::Name::M2);
+	magenta3.setName(Node::Name::M3);
+	magenta4.setName(Node::Name::M4);
+	magentaBox.setVisited(false);
+	magenta1.setVisited(false);
+	magenta2.setVisited(false);
+	magenta3.setVisited(false);
+	magenta4.setVisited(false);
 
 	//Cyan
 	Node cyanBox = new Node();
@@ -122,21 +122,21 @@ void Graph::bruteForceInit()
 	Node cyan2 = new Node();
 	Node cyan3 = new Node();
 	Node cyan4 = new Node();
-	cyanBox.Name = Node::Name::C;
-	cyan1.Name = Node::Name::C1;
-	cyan2.Name = Node::Name::C2;
-	cyan3.Name = Node::Name::C3;
-	cyan4.Name = Node::Name::C4;
-	cyanBox.visited = false;
-	cyan1.visited = false;
-	cyan2.visited = false;
-	cyan3.visited = false;
-	cyan4.visited = false;
+	cyanBox.setName(Node::Name::C);
+	cyan1.setName(Node::Name::C1);
+	cyan2.setName(Node::Name::C2);
+	cyan3.setName(Node::Name::C3);
+	cyan4.setName(Node::Name::C4);
+	cyanBox.setVisited(false);
+	cyan1.setVisited(false);
+	cyan2.setVisited(false);
+	cyan3.setVisited(false);
+	cyan4.setVisited(false);
 
 	//Grey
 	Node greyBox = new Node();
-	greyBox.Name = Node::Name::X;
-	greyBox.visited = false;
+	greyBox.setName(Node::Name::X);
+	greyBox.setVisited(false);
 
 /////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	//Red
@@ -255,7 +255,7 @@ string Graph::toString() {
 	string result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
 		result += iterator[i].toString();		// legal syntax in C++ ?
-		if(i != NUMBER_OF_NODES) 
+		if(i != NUMBER_OF_NODES)
 			result += "/"; 		// nodes will be '/' delimited
 	}
 }
