@@ -2,11 +2,13 @@
 
 class pointline {
 public:
+	// Sets pin value
   pointline(int _sensorPin);
 
+  // True is black, False is white		
   bool getValue();
 
 private:
-  int sensorPin;    // select the input pin for the Line sensor
+  int QRE1113_Pin;    // select the input pin for the Line sensor
 
 };
