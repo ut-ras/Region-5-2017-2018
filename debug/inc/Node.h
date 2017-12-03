@@ -23,7 +23,7 @@ public:
 	Node();
 	Node(Name n, Color mc, int d);
 	Name getName();
-	void setName(String n);
+	void setName(Name n);
 	bool getVisited();
 	void setVisited(bool visit);
 	Color getMapColor();

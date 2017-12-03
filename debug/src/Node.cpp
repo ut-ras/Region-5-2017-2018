@@ -14,7 +14,7 @@ Name Node::getName() {
 	return name;
 }
 
-void Node:setName(String n) {
+void Node:setName(Name n) {
 	name = n;
 }
 
