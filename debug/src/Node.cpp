@@ -1,5 +1,9 @@
 #include "../inc/Node.h"
 
+Node::Node() {
+	visited = false;
+}
+
 Node::Node(Name n, Color mc) {
 	name = n;
 	visited = false;
@@ -8,6 +12,10 @@ Node::Node(Name n, Color mc) {
 
 Name Node::getName() {
 	return name;
+}
+
+void Node:setName(Name n) {
+	name = n;
 }
 
 bool Node::getVisited() {
