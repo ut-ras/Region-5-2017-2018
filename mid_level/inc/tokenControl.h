@@ -3,7 +3,7 @@
  * picking up tokens, storing tokens, releasing tokens
  */
 
-#include "Node.h";
+#include "../../debug/inc/Node.h";
 
 class tokenControl {
 
@@ -21,4 +21,4 @@ private:
 	void depositInFunnel();
 	void reset();	//goes back over hole
 
-}
+};
