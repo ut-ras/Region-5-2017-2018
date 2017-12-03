@@ -21,6 +21,9 @@ public:
     //Turn at an angle
     void turn(float angleDegrees);
 	
+	//I2C receive event
+	void receiveEvent(int numbytes);
+	
 private:
 	Adafruit_MotorShield AFMS;
 

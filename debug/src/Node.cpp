@@ -1,6 +1,5 @@
 #include "../inc/Node.h"
 
-
 Node::Node(Name n, Color mc) {
 	name = n;
 	visited = false;

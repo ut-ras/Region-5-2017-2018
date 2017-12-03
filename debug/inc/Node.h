@@ -12,6 +12,9 @@ protected:
 	Color tokenColor;
 	bool visited;
 	Node* adjList;
+	string[] nameTable = {"Red Box", "Red 1", "Red 2", "Red 3", "Red 4", "Green Box", "Green 1", "Green 2", "Green 3", "Green 4", "Blue Box", "Blue 1", "Blue 2", "Blue 3", "Blue 4",
+						  "Yellow Box", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Magenta Box", "Magenta 1", "Magenta 2", "Magenta 3", "Magenta 4",
+						  "Cyan Box", "Cyan 1", "Cyan 2", "Cyan 3", "Cyan 4", "Grey Box"};
 
 public:
 	enum Color {red, green, blue, yellow, magenta, cyan, grey};
