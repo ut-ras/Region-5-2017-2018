@@ -1,5 +1,8 @@
+MotorController mc = new MotorController();
+rgbsensor rgb = new rgbsensor();
+
 Round_state; //(1, 2, or 3)
-first_color; //getColor()
+first_color;
 
 deposit_if_enough(color c)
 	if(have_all_tokens(c))
@@ -16,7 +19,10 @@ fastest_path_to_color(color c)
 	uses our stored graph data to find the fastest path from our current
 	position to the given color. if given white choose the closest white square
 
+
 if(Round_state == 1)
+
+	first_color = rgb.getColor()
 
 	Inventory set to 12, 2 of each color, except grey
 
@@ -26,16 +32,16 @@ if(Round_state == 1)
 		turn(0.785398) //Turn left 45 degrees
 		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
 		deposit_if_enough(RED)
-		turn(2.35619) //Turn left 135 degrees
-		Forward until + intersection
+		mc.turn(2.35619) //Turn left 135 degrees
+		mc.moveForward(unitl intersection)
 		deposit_if_enough(GREEN)
 		turn(1.5708) //Turn left 90 degrees
 		Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
 		deposit_if_enough(MAGENTA)
-		turn(1.5708) //Turn left 90 degrees
-		Forward till intersection
+		mc.turn(1.5708) //Turn left 90 degrees
+		mc.moveForward(unitl intersection)
 		deposit_if_enough(CYAN)
-		turn(2.35619) //Turn left 135 degrees
+		mc.turn(2.35619) //Turn left 135 degrees
 		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
 		deposit_if_enough(BLUE) //we should have collected all the tokens on the field by here
 		//We will end at the dark blue square
@@ -54,19 +60,19 @@ if(Round_state == 1)
 	else //first_color is red
 
 		//First collect all the tokens on the field
-		turn(0.785398) //Turn left 45 degrees
+		mc.turn(0.785398) //Turn left 45 degrees
 		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
 		deposit_if_enough(YELLOW)
-		turn(2.35619) //Turn left 135 degrees
-		Forward until + intersection
+		mc.turn(2.35619) //Turn left 135 degrees
+		mc.moveForward(unitl intersection)
 		deposit_if_enough(MAGENTA)
-		turn(1.5708) //Turn left 90 degrees
+		mc.turn(1.5708) //Turn left 90 degrees
 		Follow line straight across, checking for tokens, until you reach the last space (8 more spots)
 		deposit_if_enough(GREEN)
-		turn(1.5708) //Turn left 90 degrees
+		mc.turn(1.5708) //Turn left 90 degrees
 		Forward till intersection
 		deposit_if_enough(BLUE)
-		turn(2.35619) //Turn left 135 degrees
+		mc.turn(2.35619) //Turn left 135 degrees
 		Follow line diagonally, checking for tokens, until you reach the last space on the diagonal (8 spots per diagonal)
 		deposit_if_enough(CYAN) //we should have collected all the tokens on the field by here
 		//We will end at the cyan square
