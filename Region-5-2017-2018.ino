@@ -16,7 +16,7 @@ void loop() {
 
 void round1(){
 	int[] inventory = new int[6];
-	if(whichSide() == "yellow"){
+	if(whichSide() == Node::Color::yellow){
 		turn(PI / 4);
 		for(int i = 0; i < 4; i++){
 			forwardToIntersection();
