@@ -40,8 +40,12 @@ Node* Graph::moveInDirection(int dir) {
 
 Node* Graph::getNode(Node::Name n) {
 	//TODO iterate through hashmap and find node with name
-
-
+	for (int i = 0; i < NUMBER_OF_NODES; i++) {
+		if (iterator[i]->getName() == n) {
+			return iterator[i];
+		}
+	}
+	return null;
 }
 
 /* BEAST of a function to create the entire map:
@@ -53,11 +57,11 @@ void Graph::bruteForceInit()
 	int nodeCounter;
 
 	//Red
-	Node redBox = new Node();		//create the nodes
-	Node red1 = new Node();
-	Node red2 = new Node();
-	Node red3 = new Node();
-	Node red4 = new Node();
+	Node* redBox = new Node();		//create the nodes
+	Node* red1 = new Node();
+	Node* red2 = new Node();
+	Node* red3 = new Node();
+	Node* red4 = new Node();
 	redBox.setName(Node::Name::R);	//assign the enums (names)
 	red1.setName(Node::Name::R1);
 	red2.setName(Node::Name::R2);
@@ -70,11 +74,11 @@ void Graph::bruteForceInit()
 	red4.setVisited(false);
 
 	//Green
-	Node greenBox = new Node();
-	Node green1 = new Node();
-	Node green2 = new Node();
-	Node green3 = new Node();
-	Node green4 = new Node();
+	Node* greenBox = new Node();
+	Node* green1 = new Node();
+	Node* green2 = new Node();
+	Node* green3 = new Node();
+	Node* green4 = new Node();
 	greenBox.setName(Node::Name::G);
 	green1.setName(Node::Name::G1);
 	green2.setName(Node::Name::G2);
@@ -87,11 +91,11 @@ void Graph::bruteForceInit()
 	green4.setVisited(false);
 
 	//Blue
-	Node blueBox = new Node();
-	Node blue1 = new Node();
-	Node blue2 = new Node();
-	Node blue3 = new Node();
-	Node blue4 = new Node();
+	Node* blueBox = new Node();
+	Node* blue1 = new Node();
+	Node* blue2 = new Node();
+	Node* blue3 = new Node();
+	Node* blue4 = new Node();
 	blueBox.setName(Node::Name::B);
 	blue1.setName(Node::Name::B1);
 	blue2.setName(Node::Name::B2);
@@ -104,11 +108,11 @@ void Graph::bruteForceInit()
 	blue4.setVisited(false);
 
 	//Yellow
-	Node yellowBox = new Node();
-	Node yellow1 = new Node();
-	Node yellow2 = new Node();
-	Node yellow3 = new Node();
-	Node yellow4 = new Node();
+	Node* yellowBox = new Node();
+	Node* yellow1 = new Node();
+	Node* yellow2 = new Node();
+	Node* yellow3 = new Node();
+	Node* yellow4 = new Node();
 	yellowBox.setName(Node::Name::Y);
 	yellow1.setName(Node::Name::Y1);
 	yellow2.setName(Node::Name::Y2);
@@ -121,11 +125,11 @@ void Graph::bruteForceInit()
 	yellow4.setVisited(false);
 
 	//Magenta
-	Node magentaBox = new Node();
-	Node magenta1 = new Node();
-	Node magenta2 = new Node();
-	Node magenta3 = new Node();
-	Node magenta4 = new Node();
+	Node* magentaBox = new Node();
+	Node* magenta1 = new Node();
+	Node* magenta2 = new Node();
+	Node* magenta3 = new Node();
+	Node* magenta4 = new Node();
 	magentaBox.setName(Node::Name::M);
 	magenta1.setName(Node::Name::M1);
 	magenta2.setName(Node::Name::M2);
@@ -138,11 +142,11 @@ void Graph::bruteForceInit()
 	magenta4.setVisited(false);
 
 	//Cyan
-	Node cyanBox = new Node();
-	Node cyan1 = new Node();
-	Node cyan2 = new Node();
-	Node cyan3 = new Node();
-	Node cyan4 = new Node();
+	Node* cyanBox = new Node();
+	Node* cyan1 = new Node();
+	Node* cyan2 = new Node();
+	Node* cyan3 = new Node();
+	Node* cyan4 = new Node();
 	cyanBox.setName(Node::Name::C);
 	cyan1.setName(Node::Name::C1);
 	cyan2.setName(Node::Name::C2);
@@ -155,17 +159,17 @@ void Graph::bruteForceInit()
 	cyan4.setVisited(false);
 
 	//Grey
-	Node greyBox = new Node();
+	Node* greyBox = new Node();
 	greyBox.setName(Node::Name::X);
 	greyBox.setVisited(false);
 
 /////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	//Red
-	Node adjR  [8] = {NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL};		//each element represents a direction:
-	Node adjR1 [8] = {NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL};	//{up, up-right, right, down-right, down, down-left, left, up-left}
-	Node adjR2 [8] = {NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL};
-	Node adjR3 [8] = {NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL};
-	Node adjR4 [8] = {NULL, NULL, cyan4, greyBox, green4, NULL, NULL, NULL};
+	Node* adjR  [8] = {NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL};		//each element represents a direction:
+	Node* adjR1 [8] = {NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL};	//{up, up-right, right, down-right, down, down-left, left, up-left}
+	Node* adjR2 [8] = {NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL};
+	Node* adjR3 [8] = {NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL};
+	Node* adjR4 [8] = {NULL, NULL, cyan4, greyBox, green4, NULL, NULL, NULL};
 	graph[0](redBox, adjR);
 	graph[1](red1, adjR1);
 	graph[2](red2, adjR2);
@@ -178,11 +182,11 @@ void Graph::bruteForceInit()
 	iterator[4] = red4;
 
 	//Green
-	Node adjG  [8] = {NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL};
-	Node adjG1 [8] = {red1, NULL, green2, NULL, blue1, NULL, NULL, NULL};
-	Node adjG2 [8] = {red2, NULL, green3, NULL, blue2, NULL, NULL, NULL};
-	Node adjG3 [8] = {red3, NULL, green4, NULL, blue3, NULL, NULL, NULL};
-	Node adjG4 [8] = {red4, NULL, greyBox, NULL, blue4, NULL, NULL, NULL};
+	Node* adjG  [8] = {NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL};
+	Node* adjG1 [8] = {red1, NULL, green2, NULL, blue1, NULL, NULL, NULL};
+	Node* adjG2 [8] = {red2, NULL, green3, NULL, blue2, NULL, NULL, NULL};
+	Node* adjG3 [8] = {red3, NULL, green4, NULL, blue3, NULL, NULL, NULL};
+	Node* adjG4 [8] = {red4, NULL, greyBox, NULL, blue4, NULL, NULL, NULL};
 	graph[5](greenBox, adjG);
 	graph[6](green1, adjG1);
 	graph[7](green2, adjG2);
@@ -195,11 +199,11 @@ void Graph::bruteForceInit()
 	iterator[9] = green4;
 
 	//Blue
-	Node adjB  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
-	Node adjB1 [8] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
-	Node adjB2 [8] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
-	Node adjB3 [8] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
-	Node adjB4 [8] = {green4, greyBox, yellow4, NULL, NULL, NULL, NULL, NULL};
+	Node* adjB  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
+	Node* adjB1 [8] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
+	Node* adjB2 [8] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
+	Node* adjB3 [8] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
+	Node* adjB4 [8] = {green4, greyBox, yellow4, NULL, NULL, NULL, NULL, NULL};
 	graph[10](blueBox, adjB);
 	graph[11](blue1, adjB1);
 	graph[12](blue2, adjB2);
@@ -212,11 +216,11 @@ void Graph::bruteForceInit()
 	iterator[14] = blue4;
 
 	//Yellows:
-	Node adjY  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1};
-	Node adjY1 [8] = {magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2};
-	Node adjY2 [8] = {magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3};
-	Node adjY3 [8] = {magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4};
-	Node adjY4 [8] = {magenta4, NULL, NULL, NULL, NULL, NULL, blue4, greyBox};
+	Node* adjY  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1};
+	Node* adjY1 [8] = {magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2};
+	Node* adjY2 [8] = {magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3};
+	Node* adjY3 [8] = {magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4};
+	Node* adjY4 [8] = {magenta4, NULL, NULL, NULL, NULL, NULL, blue4, greyBox};
 	graph[15](yellowBox, adjY);
 	graph[16](yellow1, adjY1);
 	graph[17](yellow2, adjY2);
@@ -229,11 +233,11 @@ void Graph::bruteForceInit()
 	iterator[19] = yellow4;
 
 	//Magentas:
-	Node adjM  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL};
-	Node adjM1 [8] = {cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL};
-	Node adjM2 [8] = {cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL};
-	Node adjM3 [8] = {cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL};
-	Node adjM4 [8] = {cyan4, NULL, NULL, NULL, yellow4, NULL, greyBox, NULL};
+	Node* adjM  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL};
+	Node* adjM1 [8] = {cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL};
+	Node* adjM2 [8] = {cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL};
+	Node* adjM3 [8] = {cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL};
+	Node* adjM4 [8] = {cyan4, NULL, NULL, NULL, yellow4, NULL, greyBox, NULL};
 	graph[20](magentaBox, adjM);
 	graph[21](magenta1, adjM1);
 	graph[22](magenta2, adjM2);
@@ -246,11 +250,11 @@ void Graph::bruteForceInit()
 	iterator[24] = magenta4;
 
 	//Cyans:
-	Node adjC  [8] = {NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL};
-	Node adjC1 [8] = {NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL};
-	Node adjC2 [8] = {NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL};
-	Node adjC3 [8] = {NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL};
-	Node adjC4 [8] = {NULL, NULL, NULL, NULL, magenta4, greyBox, red4, NULL};
+	Node* adjC  [8] = {NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL};
+	Node* adjC1 [8] = {NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL};
+	Node* adjC2 [8] = {NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL};
+	Node* adjC3 [8] = {NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL};
+	Node* adjC4 [8] = {NULL, NULL, NULL, NULL, magenta4, greyBox, red4, NULL};
 	graph[25](cyanBox, adjC);
 	graph[26](cyan1, adjC1);
 	graph[27](cyan2, adjC2);
@@ -263,7 +267,7 @@ void Graph::bruteForceInit()
 	iterator[29] = cyan4;
 
 	//Greys:
-	Node adjX  [8] = {NULL, cyan4, magenta4, yellow4, NULL, blue4, green4, red4};
+	Node* adjX  [8] = {NULL, cyan4, magenta4, yellow4, NULL, blue4, green4, red4};
 	graph[30](greyBox, adjX)
 	iterator[30] = greyBox;
 }
