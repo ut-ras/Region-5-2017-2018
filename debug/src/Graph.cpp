@@ -8,7 +8,7 @@ void Graph::Graph()
 }
 
 /* returns the node the bot is currently located at */
-Node Graph::getCurrentNode() {
+Node* Graph::getCurrentNode() {
 		return currentNode;
 }
 
@@ -28,9 +28,20 @@ void Graph::setCurrentDirection(int direction){
 }
 
 /* returns the neighbor (Node) in the cardinal direction DIRECTION of N */
-Node getNeighbor(Node n, int direction) {
+Node* Graph::getNeighbor(Node::Node n, int direction) {
 	Node[8] adj = graph.getValueOf(n);
 	return adj[direction];
+}
+
+Node* Graph::moveInDirection(int dir) {
+	currentNode = getNeighbor(currentNode, dir);
+	currentDirection = dir;
+}
+
+Node* Graph::getNode(Node::Name n) {
+	//TODO iterate through hashmap and find node with name
+
+
 }
 
 /* BEAST of a function to create the entire map:
