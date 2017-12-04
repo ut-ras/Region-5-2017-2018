@@ -51,7 +51,9 @@ void forwardToIntersection(){
 		moveForward();
 }
 
-void depositIfEnough(Node::Color c, int max){
+void depositIfEnough(Node::Color c, int min, int current){
+	if(current >= min)
+		tokenControl::depositTokens();
 
 }
 
