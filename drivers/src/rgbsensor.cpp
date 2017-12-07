@@ -21,42 +21,42 @@ String rgbsensor::getColor(){
   return getClosestColor(red,green,blue);
 }
 
-String rgbsensor::getClosestColor(int red,int green, int blue)
+Node::Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
   int whiteThreshold = 1500;
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
-  String color = "none";
+  Node::Color color = Node::electromagnet;
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    color = "red";
+    color = Node::red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
   {
-    color = "purple";
+    color = Node::magenta;
   }
   if(((blue - red) > threshold && (blue - green) > threshold))
   {
-    color = "dark blue";
+    color = Node::blue;
   }
   if(((green - red) > threshold && (blue - green) < cyanThreshold))
   {
-    color = "cyan";
+    color = Node::cyan;
   }
   if(((green - red) > greenThreshold && (green - blue) > threshold))
   {
-    color = "green";
+    color = Node::green;
   }
   if(((green - red) < threshold && (green - blue) > threshold))
   {
-    color = "yellow";
+    color = Node::yellow;
   }
   if(red > whiteThreshold && green > whiteThreshold && blue > whiteThreshold)
   {
-    color = "white";
+    color = Node::grey;
   }
   return color;
 }
