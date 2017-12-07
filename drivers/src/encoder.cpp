@@ -1,4 +1,4 @@
-#include ../inc/encoder.h
+#include "../inc/encoder.h"
 
 #define c_EncoderInterruptA 0
 #define c_EncoderInterruptB 1
@@ -9,7 +9,7 @@
 encoder::encoder(int _masterAddress, int _slaveAddress){
 	Wire.begin(_slaveAddress);
 	Wire.onRequest(requestEvent);
-	
+
 	pinMode(c_EncoderPinA, INPUT);      // sets pin A as input
 	digitalWrite(c_EncoderPinA, HIGH);  // turn on pullup resistors
 	pinMode(c_EncoderPinB, INPUT);      // sets pin B as input
@@ -29,9 +29,9 @@ void encoder::resetEncoder(){
 void encoder::HandleMotorInterruptA(){
   _EncoderBSet = digitalReadFast(c_EncoderPinB);
   _EncoderASet = digitalReadFast(c_EncoderPinA);
-  
+
   _EncoderTicks+=ParseEncoder();
-  
+
   _EncoderAPrev = _EncoderASet;
   _EncoderBPrev = _EncoderBSet;
 }
@@ -40,9 +40,9 @@ void encoder::HandleMotorInterruptB(){
   // Test transition;
   _EncoderBSet = digitalReadFast(c_EncoderPinB);
   _EncoderASet = digitalReadFast(c_EncoderPinA);
-  
+
   _EncoderTicks+=ParseEncoder();
-  
+
   _EncoderAPrev = _EncoderASet;
   _EncoderBPrev = _EncoderBSet;
 }
@@ -65,11 +65,11 @@ int encoder::ParseEncoder(){
 
 void encoder::requestEvent(){
   digitalWriteFast(LED_BUILTIN, HIGH);
-  
+
   Wire.write((byte)((_EncoderTicks & 0xFF000000) >> 24));
   Wire.write((byte)((_EncoderTicks & 0x00FF0000) >> 16));
   Wire.write((byte)((_EncoderTicks & 0x0000FF00) >> 8));
   Wire.write((byte)((_EncoderTicks & 0x000000FF)));
-  
+
   digitalWriteFast(LED_BUILTIN, LOW);
 }
