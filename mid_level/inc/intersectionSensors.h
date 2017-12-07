@@ -38,5 +38,7 @@ private:
   pointline r1;
   pointline r2;
 
+  pointlineData[8] dataRedNorth;
+
   pointlineData getPointlineFor(Node::Color c, int dir);
 };

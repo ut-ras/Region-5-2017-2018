@@ -8,6 +8,16 @@ intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, i
     r1 = new pointline(r1pin);
     r2 = new pointline(r2pin);
     map = mapGraph;
+
+    dataRedNorth = new pointlineData[8];
+    dataRedNorth[0] = createPointlineData(1, 0, 0, 0, 1, 1);
+    dataRedNorth[1] = createPointlineData(0, 1, 0, 1, 1, 1);
+    dataRedNorth[2] = createPointlineData(0, 0, 1, 1, 1, 0);
+    dataRedNorth[3] = createPointlineData(1, 0, 0, 1, 0, 0);
+    dataRedNorth[4] = createPointlineData(1, 1, 0, 0, 0, 1);
+    dataRedNorth[5] = createPointlineData(1, 1, 1, 0, 1, 0);
+    dataRedNorth[6] = createPointlineData(0, 1, 1, 1, 0, 0);
+    dataRedNorth[7] = createPointlineData(0, 0, 1, 0, 0, 1);
 }
 
 pointlineData intersectionSensors::getData() {
@@ -31,16 +41,6 @@ pointlineData intersectionSensors::getNextIntersection() {
 
 pointlineData intersectionSensors::getPointlineFor(Node::Color c, int dir) {
   if ((intersectionType == Node::Color.red) || (intersectionType == Node::Color.cyan) || (intersectionType == Node::Color.yellow) || (intersectionType == Node::Color.blue)) {
-    pointlineData[8] data = new pointlineData[8];
-    data[0] = createPointlineData(1, 0, 0, 0, 1, 1);
-    data[1] = createPointlineData(0, 1, 0, 1, 1, 1);
-    data[2] = createPointlineData(0, 0, 1, 1, 1, 0);
-    data[3] = createPointlineData(1, 0, 0, 1, 0, 0);
-    data[4] = createPointlineData(1, 1, 0, 0, 0, 1);
-    data[5] = createPointlineData(1, 1, 1, 0, 1, 0);
-    data[6] = createPointlineData(0, 1, 1, 1, 0, 0);
-    data[7] = createPointlineData(0, 0, 1, 0, 0, 1);
-
     switch(intersectionType) {
       case Node::Color.cyan:
         offset = -2; break;
@@ -51,7 +51,7 @@ pointlineData intersectionSensors::getPointlineFor(Node::Color c, int dir) {
     }
     index = dir + offset;
     index = (index >= 0) ? (index) : (8 + index);   //shift for different colors
-    return data[index];
+    return dataRedNorth[index];
   }
   else if ((intersectionType == Node::Color.magenta) || (intersectionType == Node::Color.green)) {
     if (dir % 2 == 0) {
@@ -61,9 +61,7 @@ pointlineData intersectionSensors::getPointlineFor(Node::Color c, int dir) {
       return createPointlineData(0, 0, 1, 0, 0, 1);
     }
   }
-  else if (intersectionType == Node::Color.grey) {
-    return createPointlineData(0, 1, 0, 0, 1, 0);
-  }
+
   //also need something for drop off zones
 }
 
