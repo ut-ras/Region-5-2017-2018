@@ -26,4 +26,4 @@ long time = micros();
 while (digitalRead(QRE1113_Pin) == HIGH && micros() - time < 3000);
 int diff = micros() - time;
 return (diff >= 175 && diff < 300 || diff > 650);
- }
+}
