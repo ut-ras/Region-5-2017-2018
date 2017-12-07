@@ -10,12 +10,16 @@
 
 class arrayline {
 private:
-	
+	SensorBar arrayLine;
+	bool[LINESENSOR_SIZE] boolArray;
 
+	uint8_t rawValue;
 public:
 
-	arrayline(uint8_t _I2C_ADDRESS);
-	
+	//Since we only have 1 line sensor we can just
+	//use the macro number I2C_ADDRESS
+	arrayline();
+
     //Get line sensor array for line sensor values
     bool[LINESENSOR_SIZE] getLineSensor();
 
