@@ -39,7 +39,6 @@ Node* Graph::moveInDirection(int dir) {
 }
 
 Node* Graph::getNode(Node::Name n) {
-	//TODO iterate through hashmap and find node with name
 	for (int i = 0; i < NUMBER_OF_NODES; i++) {
 		if (iterator[i]->getName() == n) {
 			return iterator[i];

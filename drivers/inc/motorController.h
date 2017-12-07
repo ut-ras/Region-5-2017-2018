@@ -24,6 +24,11 @@ public:
 	//I2C receive event
 	void receiveEvent(int numbytes);
 	
+	void setSpeed(uint8_t _speed);
+	
+	void moveForwardIndefinitely();
+	void moveBackwardsIndefinitely();
+	
 private:
 	Adafruit_MotorShield AFMS;
 
@@ -31,6 +36,8 @@ private:
 	Adafruit_DCMotor *leftMotor;
 	
 	float oneRotation;
+	
+	uint8_t speed;
 
 };
 
