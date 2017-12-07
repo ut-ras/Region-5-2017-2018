@@ -39,6 +39,16 @@ Node::Color tokenControl::storeToken() {
     delete(colour);
 }
 
+void tokenControl::depositTokens(Node::Color c) {
+    rotateDiskToColor(c);
+    pickupFromFunnel();
+    resetDisk(c);
+    lowerMagnet(maxHeight);
+    delay(dropTime);
+    magnetController.magnetOff();
+    delay(dropTime);
+    raiseMagnet(maxHeight);
+}
 
 //Private
 
@@ -60,14 +70,6 @@ void tokenControl::rotateDiskToColor(Node::Color c) {
     }
 }
 
-void tokenControl::depositInFunnel() {
-    lowerMagnet(funnelHeight);
-    delay(dropTime);
-    magnetController.magnetOff();
-    delay(dropTime);
-    raiseMagnet();
-}
-
 void tokenControl::resetDisk(Node::Color c) {
     if(c > 3){
         diskController.rotateDisk(toFirstToken + toRGBSensor, stepper::CLOCKWISE);
@@ -76,4 +78,19 @@ void tokenControl::resetDisk(Node::Color c) {
         diskController.rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
         diskController.rotateDisk(c*tokenToToken, stepper::COUNTERCLOCKWISE);
     }
+}
+
+void tokenControl::depositInFunnel() {
+    lowerMagnet(funnelHeight);
+    delay(dropTime);
+    magnetController.magnetOff();
+    delay(dropTime);
+    raiseMagnet(funnelHeight);
+}
+
+void tokenControll::pickupFromFunnel() {
+    lowerMagnet(funnelHeight);
+    magnetController.magnetOn();
+    delay(pickupTime);
+    raiseMagnet(funnelHeight);
 }

@@ -23,6 +23,7 @@ private:
     void rotateDiskToColor(Node::Color c);
     void resetDisk(Node::Color c);
     void depositInFunnel();
+    void pickupFromFunnel();
 
     servo pulleyController;
     stepper diskController;
