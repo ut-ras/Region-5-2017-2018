@@ -1,11 +1,11 @@
 #include "../inc/motorController.h"
 
-motorController::motorController(int _boardAddress, int _shieldAddress){
+motorController::motorController(int _boardAddress){
 
 	speed = 0;
 
 	Wire.onReceive(receiveEvent);
-	Wire.begin(0x10);
+	Wire.begin(_boardAddress);
 	//Attach the board to the shield
 	Adafruit_MotorShield AFMS = Adafruit_MotorShield(0x61);
 

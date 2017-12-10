@@ -10,7 +10,7 @@ class motorController {
 public:
 	//Initializes the motor shield and i2c communication between
 	//the Mega and the UNO controlling the shield
-	motorController(int _boardAddress, int _shieldAddress);
+	motorController(int _boardAddress);
 
     //Moves forward a certain distance
     void moveForward(float distance);
