@@ -1,7 +1,7 @@
 #include "../inc/motorController.h"
 
 motorController::motorController(int _boardAddress, int _shieldAddress){
-	
+
 	speed = 0;
 
 	Wire.onReceive(receiveEvent);
@@ -28,6 +28,11 @@ motorController::motorController(int _boardAddress, int _shieldAddress){
 
 void motorController::setSpeed(uint8_t _speed){
 	speed = _speed;
+}
+
+void motorController::stop(){
+	rightMotor->run(RELEASE);
+	leftMotor->run(RELEASE);
 }
 
 void motorController::moveForwardIndefinitely(){
