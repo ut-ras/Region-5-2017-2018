@@ -1,7 +1,8 @@
-#include "motorController.h"
-#include "rgbsensor.h"
-#include "tokenControl.h"
-#include "intersectionSensors.h"
+#include <Arduino.h>
+#include "drivers/inc/*"
+#include "control/inc/*"
+#include "test/*"
+
 
 void setup() {
   // put your setup code here, to run once:

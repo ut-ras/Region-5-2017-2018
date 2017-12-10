@@ -1,4 +1,4 @@
-#include<string>
+#include <string>
 
 
 //base class
@@ -13,8 +13,8 @@ protected:
 	bool visited;
 	Node* adjList;
 	String[] nameTable = {"Red Box", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5",
-	                      "Green Box", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5", 
-						  "Blue Box", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5", 
+	                      "Green Box", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5",
+						  "Blue Box", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
 						  "Yellow Box", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5",
 						  "Magenta Box", "Magenta 1", "Magenta 2", "Magenta 3", "Magenta 4", "Magenta 5",
 						  "Cyan Box", "Cyan 1", "Cyan 2", "Cyan 3", "Cyan 4", "Cyan 5",
