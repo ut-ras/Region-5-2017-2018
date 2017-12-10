@@ -2,7 +2,7 @@
 
 rgbsensor rgb;
 
-void setupRGB() {
+void setupRGBTest() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println("Color View Test!");
@@ -11,7 +11,7 @@ void setupRGB() {
 
 }
 
-void loopRGB() {
+void loopRGBTest() {
   // put your main code here, to run repeatedly:
   Serial.println(rgb.getColor());
 

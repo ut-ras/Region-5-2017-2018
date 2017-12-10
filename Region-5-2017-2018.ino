@@ -6,13 +6,13 @@
 
 void setup() {
   // put your setup code here, to run once:
-
+	setupMotorsTest();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-
+	loopMotorsTest();
 }
 
 void round1(){
