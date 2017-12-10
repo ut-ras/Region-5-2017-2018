@@ -1,3 +1,6 @@
+#include "../control/inc/Graph.h"
+
+
 using namespace std;
 
 int main(){
