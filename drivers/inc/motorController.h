@@ -18,25 +18,28 @@ public:
     //Move backward a certain distance
     void moveBackward(float distance);
 
+	//Stop the motors
+	void stop();
+
     //Turn at an angle
     void turn(float angleDegrees);
-	
+
 	//I2C receive event
 	void receiveEvent(int numbytes);
-	
+
 	void setSpeed(uint8_t _speed);
-	
+
 	void moveForwardIndefinitely();
 	void moveBackwardsIndefinitely();
-	
+
 private:
 	Adafruit_MotorShield AFMS;
 
 	Adafruit_DCMotor *rightMotor;
 	Adafruit_DCMotor *leftMotor;
-	
+
 	float oneRotation;
-	
+
 	uint8_t speed;
 
 };
