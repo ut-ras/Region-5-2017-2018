@@ -3,15 +3,22 @@
 #include "tokenControl.h"
 #include "intersectionSensors.h"
 #include <Time.h>
+#include <Arduino.h>
+#include "drivers/inc/*"
+#include "control/inc/*"
+#include "test/*"
+
 
 void setup() {
   // put your setup code here, to run once:
-  setupMotorsTest();
-}
+setupMotorsTest();
+}	
 
 void loop() {
   // put your main code here, to run repeatedly:
-  loopMotorsTest();
+
+
+	loopMotorsTest();
 
 }
 

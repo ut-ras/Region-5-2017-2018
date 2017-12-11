@@ -3,11 +3,12 @@
  * picking up tokens, storing tokens, releasing tokens
  */
 
+/*
 #include "../../debug/inc/Node.h"
 #include "../../drivers/inc/stepper.h"
 #include "../../drivers/inc/servo.h"
 #include "../../drivers/inc/rgbsensor.h"
-#include "../../drivers/inc/magnet.h"
+#include "../../drivers/inc/magnet.h"*/
 
 class tokenControl {
 

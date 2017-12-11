@@ -1,8 +1,8 @@
-#include "../inc/rgbsensor.h"
+
 
 rgbsensor rgb;
 
-void setup() {
+void setupRGBTest() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println("Color View Test!");
@@ -11,7 +11,7 @@ void setup() {
 
 }
 
-void loop() {
+void loopRGBTest() {
   // put your main code here, to run repeatedly:
   Serial.println(rgb.getColor());
 

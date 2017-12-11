@@ -1,4 +1,4 @@
-#include "Graph.h"
+//#include "Graph.h"
 #define MAX_MEMORY 4096
 
 class Log {
@@ -10,6 +10,6 @@ protected:
   String startSequence = "START HERE";
 private:
   dataAddr = 0;
-  static void writeString(String str);  
+  static void writeString(String str);
 
 };

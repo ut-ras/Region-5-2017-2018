@@ -1,7 +1,6 @@
 #ifndef arrayline_h
 #def arrayline_h
 
-#include "Arduino.h"
 #include "Wire.h"
 #include "sensorbar."
 
