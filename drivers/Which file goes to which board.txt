@@ -1,0 +1,3 @@
+Arduino Nanos: Encoder.cpp
+Arduino Uno for motor shield: motorController.cpp
+Arduino Mega: Everything else
