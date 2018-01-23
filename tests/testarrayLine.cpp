@@ -1,11 +1,21 @@
 SensorBar arrayLine;
 
-void setuparrayLineTest(){
-	serial.begin(9600);
+bool [8] lineSensor;
+void setupArrayLineTest(){
+	Serial.begin(9600);
 
-	arrayLine = new SensorBar(I2C_ADDRESS); 
+	arrayline();
 }
 
-void looparrayLineTest(){
-	Serial.println(arrayLine.isLine());
+void loopArrayLineTest(){
+    int i;
+    lineSensor = getLineSensor();
+    
+    for(int i = 0; i<8; i++)
+    {
+        Serial.print(lineSensor[i]);
+    }
+    
+    Serial.println();
+ 
 }
