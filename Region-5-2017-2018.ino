@@ -1,12 +1,6 @@
-#include "motorController.h"
-#include "rgbsensor.h"
-#include "tokenControl.h"
-#include "intersectionSensors.h"
 #include <Time.h>
 #include <Arduino.h>
-#include "drivers/inc/*"
-#include "control/inc/*"
-#include "test/*"
+#include "tests/testGraph.cpp"
 
 
 void setup() {
