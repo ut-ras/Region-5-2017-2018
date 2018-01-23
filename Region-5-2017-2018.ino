@@ -11,15 +11,15 @@
 
 void setup() {
   // put your setup code here, to run once:
-setupMotorsTest();
-}	
+	//setupMotorsTest();
+	setupGraphTest();
+}
 
 void loop() {
   // put your main code here, to run repeatedly:
-
-
-	loopMotorsTest();
-
+	
+	//loopMotorsTest();
+	loopGraphTest();
 }
 
 void round1(){
@@ -77,11 +77,11 @@ void round1(){
     }
     depositIfEnough(Node::Color::blue, 3, inventory[2]);
     //---------------------------------------------------
-    
+
 
 
 	} else{ // first color is red
-  
+
 
 	}
 }

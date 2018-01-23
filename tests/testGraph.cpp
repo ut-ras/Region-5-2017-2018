@@ -7,7 +7,7 @@ void setupGraphTest() {
 	g = new Graph();
 	g.setCurrentNode(g.getNode(Node::Name::Y));
 	g.setCurrentDirection(0);
-
+}
 
 void loopGraphTest() {
 	cout << "Current Node is: " << g.getCurrentNode() << "\nCurrent Direction is: " << g.getCurrentDirection();
@@ -15,5 +15,4 @@ void loopGraphTest() {
 		cout << "Get neighbor test 1 passed";
 	else
 		cout << "Get neighbor test 1 failed";
-}
 }
