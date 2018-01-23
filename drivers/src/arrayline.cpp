@@ -1,6 +1,5 @@
 #include "../inc/arrayline.h"
 
-<<<<<<< HEAD
 arrayline::arrayline(){
 	arrayLine = new SensorBar(I2C_ADDRESS);
 
@@ -26,8 +25,4 @@ bool[LINESENSOR_SIZE] arrayline::getLineSensor(){
 
 bool arrayline::isLine(){
 	
-=======
-arrayline::arrayline(uint8_t _I2C_ADDRESS){
-
->>>>>>> 3a612d926e51497f15cc639e5b2b9520b6da8f29
 }
