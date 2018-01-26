@@ -5,7 +5,7 @@
 #ifndef servo_h
 #define servo_h
 
-#include <servo.h>
+#include <Servo.h>
 
 class servo {
 public:
@@ -13,6 +13,13 @@ public:
      * direction, where true is up and false is down.
      */
     void movePulley(double distance, bool direction);
+    
+    /*Constructor to initialize the servo*/
+    servo();
+private:
+	Servo thisServo;
+	int servoPin;
+	int servoPos;
 };
 
 #endif
