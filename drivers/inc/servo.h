@@ -13,12 +13,11 @@ public:
      * direction, where true is up and false is down.
      */
     void movePulley(double distance, bool direction);
-    
+
     /*Constructor to initialize the servo*/
     servo();
 private:
 	Servo thisServo;
-	int servoPin;
 	int servoPos;
 };
 

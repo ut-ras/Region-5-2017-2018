@@ -3,7 +3,6 @@
 
 //servo inputs go from 10 - 180 , running below 10 results in constant slow rotation
 servo::servo(int _servoPin){
-	servoPin = _servoPin;
 	servoPos = 180;
 	thisServo.attach(_servoPin);
 	thisServo.write(servoPos);	//initialize the servo to the start servo position
