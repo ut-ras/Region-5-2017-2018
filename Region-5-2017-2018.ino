@@ -1,26 +1,28 @@
-#include "motorController.h"
-#include "rgbsensor.h"
-#include "tokenControl.h"
-#include "intersectionSensors.h"
+//#include "motorController.h"
+//#include "rgbsensor.h"
+//#include "tokenControl.h"
+//#include "intersectionSensors.h"
 #include <Time.h>
 #include <Arduino.h>
-#include "drivers/inc/*"
-#include "control/inc/*"
-#include "test/*"
+#include "drivers/inc/arrayline.h"
+//#include "control/inc/*"
+#include "tests/testarrayLine.h"
 
 
-void setup() {
-  // put your setup code here, to run once:
-    setupArrayLineTest();
+
+void setup() {  
+    // put your setup code here, to run once:
+    testarrayLine* test = new testarrayLine();
 }	
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-    loopArrayLineTest();	
+    //test->loopArrayLineTest();	
 
 }
 
+/*
 void round1(){
 	int[] inventory = new int[6];
   time_t t = now();
@@ -111,3 +113,4 @@ Node::Color whichSide(){
 	moveForward(distance to colored square);
 	return getColor();
 }
+*/

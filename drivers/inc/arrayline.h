@@ -1,8 +1,8 @@
 #ifndef arrayline_h
-#def arrayline_h
+#define arrayline_h
 
 #include "Wire.h"
-#include "sensorbar."
+#include "sensorbar.h"
 
 #define LINESENSOR_SIZE 8
 #define I2C_ADDRESS 0x3E
@@ -10,7 +10,7 @@
 class arrayline {
 private:
 	SensorBar arrayLine;
-	bool[LINESENSOR_SIZE] boolArray;
+	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;
 public:
@@ -20,7 +20,7 @@ public:
 	arrayline();
 
     //Get line sensor array for line sensor values
-    bool[LINESENSOR_SIZE] getLineSensor();
+    bool* getLineSensor();
 
     //Check if any of the 8 sensors are true
     bool isLine();

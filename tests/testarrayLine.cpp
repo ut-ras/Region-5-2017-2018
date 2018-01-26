@@ -1,13 +1,14 @@
-SensorBar arrayLine;
+#include "testArrayLine.h"
 
-bool [8] lineSensor;
-void setupArrayLineTest(){
+testArrayLine::testArrayLine()
+{
 	Serial.begin(9600);
 
 	arrayline();
 }
 
-void loopArrayLineTest(){
+
+void testArrayLine::loopArrayLineTest(){
     int i;
     lineSensor = getLineSensor();
     
