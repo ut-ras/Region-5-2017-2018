@@ -1,10 +1,19 @@
-#include <string>
+//#include <string>
 
 
 //base class
 class Node
 {
-protected:
+	protected:
+	enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
+	enum Name { R, R1, R2, R3, R4, R5, 
+				G, G1, G2, G3, G4, G5, 
+				B, B1, B2, B3, B4, B5, 
+				Y, Y1, Y2, Y3, Y4, Y5, 
+				M, M1, M2, M3, M4, M5, 
+				C, C1, C2, C3, C4, C5, 
+				X};	//'X' is grey cuz it's the 'crossroads'
+
 	Name name;
 	Color mapColor;
 	int depth;
@@ -23,16 +32,15 @@ protected:
     String[] colorTable = {"red", "green", "blue", "yellow", "magenta", "cyan", "grey", "unknown"}
 
 public:
-	enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
-	enum Name {R, R1, R2, R3, R4, R5, G, G1, G2, G3, G4, G5, B, B1, B2, B3, B4, B5, Y, Y1, Y2, Y3, Y4, Y5, M, M1, M2, M3, M4, M5, C, C1, C2, C3, C4, C5, X};	//'X' is grey cuz it's the 'crossroads'
+	
 
-	Node();
-	Node(Name n, Color mc, int d);
-	Name getName();
-	void setName(Name n);
+	void Node();
+	void Node(int n, int mc, int d); //n = Name, mc = Color
+	int getName();
+	void setName(int n); //n = Name
 	bool getVisited();
 	void setVisited(bool visit);
-	Color getMapColor();
+	int getMapColor();
 
 	String toString();
 
@@ -40,4 +48,8 @@ public:
 	char colorToChar(Color c);
 	String nameToString();
 	*/
+
+
+
+
 };

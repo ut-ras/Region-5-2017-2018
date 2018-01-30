@@ -15,7 +15,7 @@ void loop() {
 	//loopMotorsTest();
 	loopGraphTest();
 }
-
+/*
 void round1(){
 	int[] inventory = new int[6];
   time_t t = now();
@@ -105,4 +105,4 @@ void depositIfEnough(Node::Color c, int min, int current){
 Node::Color whichSide(){
 	moveForward(distance to colored square);
 	return getColor();
-}
+} */ 
