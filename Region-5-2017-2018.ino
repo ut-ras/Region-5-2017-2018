@@ -6,15 +6,14 @@
 #include <Arduino.h>
 #include "drivers/inc/arrayline.h"
 //#include "control/inc/*"
-#include "tests/testarrayLine.h"
+#include "tests\testarrayLine.h"
 
 
 
 void setup() {  
     // put your setup code here, to run once:
-    testarrayLine* test = new testarrayLine();
-}	
-
+    testarrayLine::loopArrayLineTest();
+}
 void loop() {
   // put your main code here, to run repeatedly:
 

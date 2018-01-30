@@ -12,7 +12,7 @@ private:
 	SensorBar arrayLine;
 public:
 	testarrayLine();
-	void loopArrayLineTest();
+	static void loopArrayLineTest();
 
 };
 
