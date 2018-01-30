@@ -1,8 +1,8 @@
 #include "../inc/tokenControl.h"
 
-//Distance from maxheight to ground
+//Distance from maxheight to ground - 10.5in
 #define maxHeight 10.5
-//Distance to fall into the funnel
+//Distance to fall into the funnel - 5in
 #define funnelHeight 5.0
 //Sets the direction of the magnet
 #define up true
@@ -19,48 +19,54 @@
 #define tokenToToken 43.33333333333333333333333333333333333333333333333333333333333333333333333333333333
 //Degrees to first funnel from the RGB Sensor
 #define toFirstToken 30
-//Pin for the stepper motor
+//Pin for the stepper motor - needs proper assignment
 #define stepperPin 10
+//Pin for the magnet - needs proper assignment
+#define magnetPin 11
+//Pin for the servo - needs proper assignment
+#define servoPin 12
 
 //Public
 
 tokenControl::tokenControl() {
     //Initialize starter variables
     diskController(stepperPin);
-    pulleyController();
+    pulleyController(servoPin);
     tokenReader();
-    magnetController();
+    magnetController(magnetPin);
 }
 
-void tokenControl::pickUpToken() {
+Node::Color tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
     lowerMagnet(maxHeight);
     magnetController.magnetOn();
     delay(pickupTime);
     raiseMagnet(maxHeight);
-}
 
-Node::Color tokenControl::storeToken() {
     //Reads token colour and if there is no token returns the electromagnet
     Node::Color colour = tokenReader.getColor();
     if(colour == Node::electromagnet)
         return colour;
+
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
     rotateDisktoColor(colour);
     depositInFunnel();
     resetDisk(colour);
+    return colour;
 }
 
 void tokenControl::depositTokens(Node::Color c) {
     //Moves to the correct funnel and picks up all the tokens
     rotateDiskToColor(c);
     pickupFromFunnel();
+
     //Moves token to center then deposits the tokens
     resetDisk(c);
     lowerMagnet(maxHeight);
     delay(dropTime);
     magnetController.magnetOff();
     delay(dropTime);
+
     //Reset the magnet
     raiseMagnet(maxHeight);
 }

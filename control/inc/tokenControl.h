@@ -3,28 +3,24 @@
  * picking up tokens, storing tokens, releasing tokens
  */
 
-/*
 #include "../../debug/inc/Node.h"
 #include "../../drivers/inc/stepper.h"
 #include "../../drivers/inc/servo.h"
-#include "../../drivers/inc/rgbsensor.h"
-#include "../../drivers/inc/magnet.h"*/
+#include "../../drivers/src/rgbsensor.h"
+#include "../../drivers/inc/magnet.h"
 
 class tokenControl {
 
 public:
     //Constructor
     tokenControl();
+
     /* Picks up a token on the field
      * assuming the robot is in the
-     * correct position.
+     * correct position, then stores
+     * it into the appropriate funnel.
      */
-    void pickUpToken();
-
-    /* Stores a picked up token into
-     * the funnel in the appropriate slot
-     */
-    Node::Color storeToken();
+    Node::Color pickUpToken();
 
     /* Picks up from the funnel and
      * deposits onto the field, the
