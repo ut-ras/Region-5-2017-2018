@@ -2,6 +2,7 @@
 #include "../inc/Graph.h"
 //#include <Hashmap.h>
 
+
 void Graph::Graph()
 {
 	bruteForceInit();
