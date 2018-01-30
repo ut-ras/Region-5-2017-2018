@@ -1,6 +1,6 @@
-#include "testArrayLine.h"
 
-testArrayLine::testArrayLine()
+
+void setupTestArrayLine()
 {
 	Serial.begin(9600);
 
@@ -8,7 +8,7 @@ testArrayLine::testArrayLine()
 }
 
 
-void testArrayLine::loopArrayLineTest(){
+ void loopArrayLineTest(){
     int i;
     lineSensor = getLineSensor();
     
