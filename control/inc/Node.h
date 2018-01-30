@@ -6,7 +6,7 @@
 enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
 enum Name { R, R1, R2, R3, R4, R5, 
 			G, G1, G2, G3, G4, G5, 
-			B, B1, B2, B3, B4, B5, 
+			Bl, Bl1, Bl2, Bl3, Bl4, Bl5, 
 			Y, Y1, Y2, Y3, Y4, Y5, 
 			M, M1, M2, M3, M4, M5, 
 			C, C1, C2, C3, C4, C5, 
