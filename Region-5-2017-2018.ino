@@ -3,16 +3,18 @@
 #include "arrayline.h"
 //#include "./drivers/inc/arrayline.h"
 
-
+arrayline* line;
 void setup() {  
-    // put your setup code here, to run once:
-    arrayline line;
-    //pointline point(12);
+    // put your setup code here, to run once:]
+    Serial.begin(9600);
+    line = new arrayline();
     }
 void loop() {
   // put your main code here, to run repeatedly:
-
-    //loopArrayLineTest();	
+    line->getLineSensor();
+    /*for(int i = 0;i < 8;i++){
+      Serial.println(line->getLineSensor());
+    }*/
 
 }
 
