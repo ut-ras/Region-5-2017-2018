@@ -5,17 +5,17 @@ arrayline::arrayline(){
 
 	//Set it to strobe mode
 	//IR only activates when read
-	arrayLine.setBarStrobe();
+	arrayLine->setBarStrobe();
 
 	//Use this to continually have the IR active
 	//arrayLine.clearBarStrobe();
 
 	//White map with dark line:
-	arrayLine.clearInvertBits();
+	arrayLine->clearInvertBits();
 }
 
-bool[LINESENSOR_SIZE] arrayline::getLineSensor(){
-	uint8_t rawValue = arrayLine.getRaw();
+bool* arrayline::getLineSensor(){
+	uint8_t rawValue = arrayLine->getRaw();
 
 	//Print the binary value to the serial buffer.
 	for( int i = 7; i >= 0; i--){
