@@ -1,5 +1,6 @@
 #include "../inc/tokenControl.h"
 
+//Servo Distances
 //Distance from maxheight to ground - 10.5in
 #define maxHeight 10.5
 //Distance to fall into the funnel - 5in
@@ -7,10 +8,15 @@
 //Sets the direction of the magnet
 #define up true
 #define down false
+
+//Magnet Times
 //Delay to allow tokens to latch to magnet
 #define pickupTime 1000;
-//Delay pre and post drop off for stabalization
+//Delay pre and post drop off for stbalization
 #define dropTime 250;
+
+
+//Stepper Distances
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
