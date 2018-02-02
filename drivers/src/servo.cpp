@@ -10,7 +10,7 @@ servo::servo(int _servoPin){
 }
 
 void servo::movePulley(double distance, bool direction){
-	if(direction)
+	if(!direction)
 		servoPos -= (distance / 4) * 170;
 	else
 		servoPos += (distance / 4) * 170;
