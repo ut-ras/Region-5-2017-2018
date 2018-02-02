@@ -1,23 +1,18 @@
-//#include "motorController.h"
-//#include "rgbsensor.h"
-//#include "tokenControl.h"
-//#include "intersectionSensors.h"
 #include <Time.h>
 #include <Arduino.h>
-#include "drivers/inc/arrayline.h"
-//#include "control/inc/*"
-#include "tests/testarrayLine.cpp"
-
+#include "arrayline.h"
+//#include "./drivers/inc/arrayline.h"
 
 
 void setup() {  
     // put your setup code here, to run once:
-    loopArrayLineTest();
-}
+    arrayline line;
+    //pointline point(12);
+    }
 void loop() {
   // put your main code here, to run repeatedly:
 
-    //test->loopArrayLineTest();	
+    //loopArrayLineTest();	
 
 }
 
