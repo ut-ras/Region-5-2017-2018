@@ -1,20 +1,18 @@
 #include <Time.h>
 #include <Arduino.h>
-#include "arrayline.h"
-//#include "./drivers/inc/arrayline.h"
+#include "tests/testarrayLine.cpp"
+#include "tests/testGraph.cpp"
 
-arrayline* line;
 void setup() {  
     // put your setup code here, to run once:]
     Serial.begin(9600);
-    line = new arrayline();
+    setupGraphTest();
+    setupTestArrayLine();
     }
 void loop() {
   // put your main code here, to run repeatedly:
-    line->getLineSensor();
-    /*for(int i = 0;i < 8;i++){
-      Serial.println(line->getLineSensor());
-    }*/
+  loopArrayLineTest();
+  loopGraphTest();
 
 }
 
@@ -74,11 +72,11 @@ void round1(){
     }
     depositIfEnough(Node::Color::blue, 3, inventory[2]);
     //---------------------------------------------------
-    
+
 
 
 	} else{ // first color is red
-  
+
 
 	}
 }
@@ -108,5 +106,6 @@ void depositIfEnough(Node::Color c, int min, int current){
 Node::Color whichSide(){
 	moveForward(distance to colored square);
 	return getColor();
+<<<<<<< HEAD
 }
 */

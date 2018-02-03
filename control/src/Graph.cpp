@@ -1,6 +1,7 @@
 
 #include "../inc/Graph.h"
-#include <Hashmap.h>
+//#include <Hashmap.h>
+
 
 void Graph::Graph()
 {
@@ -102,12 +103,12 @@ void Graph::bruteForceInit()
 	Node* blue3 = new Node();
 	Node* blue4 = new Node();
 	Node* blue5 = new Node();
-	blueBox.setName(Node::Name::B);
-	blue1.setName(Node::Name::B1);
-	blue2.setName(Node::Name::B2);
-	blue3.setName(Node::Name::B3);
-	blue4.setName(Node::Name::B4);
-	blue5.setName(Node::Name::B5);
+	blueBox.setName(Node::Name::Bl);
+	blue1.setName(Node::Name::Bl1);
+	blue2.setName(Node::Name::Bl2);
+	blue3.setName(Node::Name::Bl3);
+	blue4.setName(Node::Name::Bl4);
+	blue5.setName(Node::Name::Bl5);
 	blueBox.setVisited(false);
 	blue1.setVisited(false);
 	blue2.setVisited(false);
@@ -222,18 +223,18 @@ void Graph::bruteForceInit()
 	iterator[11] = green5;
 
 	//Blue
-	Node* adjB  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
-	Node* adjB1 [8] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
-	Node* adjB2 [8] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
-	Node* adjB3 [8] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
-	Node* adjB4 [8] = {green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL};
-	Node* adjB5 [8] = {green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl1 [8] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl2 [8] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl3 [8] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl4 [8] = {green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL};
+	Node* adjBl5 [8] = {green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL};
 	graph[12](blueBox, adjB);
-	graph[13](blue1, adjB1);
-	graph[14](blue2, adjB2);
-	graph[15](blue3, adjB3);
-	graph[16](blue4, adjB4);
-	graph[17](blue5, adjB5);
+	graph[13](blue1, adjBl1);
+	graph[14](blue2, adjBl2);
+	graph[15](blue3, adjBl3);
+	graph[16](blue4, adjBl4);
+	graph[17](blue5, adjBl5);
 	iterator[12] = blueBox;
 	iterator[13] = blue1;
 	iterator[14] = blue2;

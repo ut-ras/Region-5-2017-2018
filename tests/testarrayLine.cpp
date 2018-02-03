@@ -1,17 +1,16 @@
-#include "./drivers/inc/arrayline.h"
+#include "../drivers/inc/arrayline.h"
 
 bool* lineSensor;
+arrayline* line;
 void setupTestArrayLine()
 {
-	Serial.begin(9600);
-	arrayline line = arrayline();
+	line = new arrayline();
 	lineSensor = new bool[8];
 }
 
 
 void loopArrayLineTest(){
-  /*  int i;
-    lineSensor = [false];
+    int i;
     
     for(int i = 0; i<8; i++)
     {
@@ -19,5 +18,5 @@ void loopArrayLineTest(){
     }
     
     Serial.println();
- */
+
 }

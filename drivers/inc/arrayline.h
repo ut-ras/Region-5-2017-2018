@@ -9,7 +9,7 @@
 
 class arrayline {
 private:
-	SensorBar arrayLine;
+	SensorBar* arrayLine;
 	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;

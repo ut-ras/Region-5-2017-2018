@@ -9,9 +9,6 @@ public:
 
     magnet();
 
-    //Direction for rotation
-
-    //Rotate stepper motor based on a radian degree input
     void magnetOn();
     void magnetOff();
 
