@@ -7,7 +7,6 @@ void setupGraphTest() {
 	g = new Graph();
 	g.setCurrentNode(g.getNode(Node::Name::Y));
 	g.setCurrentDirection(0);
-	Serial.begin(9600);
 }
 
 void loopGraphTest() {

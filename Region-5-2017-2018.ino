@@ -1,20 +1,21 @@
 #include <Time.h>
 #include <Arduino.h>
+#include "tests/testarrayLine.cpp"
 #include "tests/testGraph.cpp"
 
-
-void setup() {
-  // put your setup code here, to run once:
-	//setupMotorsTest();
-	setupGraphTest();
-}
-
+void setup() {  
+    // put your setup code here, to run once:]
+    Serial.begin(9600);
+    setupGraphTest();
+    setupTestArrayLine();
+    }
 void loop() {
   // put your main code here, to run repeatedly:
-	
-	//loopMotorsTest();
-	loopGraphTest();
+  loopArrayLineTest();
+  loopGraphTest();
+
 }
+
 /*
 void round1(){
 	int[] inventory = new int[6];
@@ -105,4 +106,6 @@ void depositIfEnough(Node::Color c, int min, int current){
 Node::Color whichSide(){
 	moveForward(distance to colored square);
 	return getColor();
-} */ 
+<<<<<<< HEAD
+}
+*/
