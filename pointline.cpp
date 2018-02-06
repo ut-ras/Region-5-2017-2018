@@ -1,4 +1,4 @@
-#include "../inc/pointline.h"
+#include "pointline.h"
 
 
 /*

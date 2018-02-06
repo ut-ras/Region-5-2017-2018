@@ -1,4 +1,4 @@
-#include "../inc/Log.h"
+#include "Log.h"
 
 Log::Log() {
  writeString(StartSequence); 

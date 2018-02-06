@@ -1,4 +1,4 @@
-#include "../inc/Node.h"
+#include "Node.h"
 
 Node::Node() {
 	visited = false;

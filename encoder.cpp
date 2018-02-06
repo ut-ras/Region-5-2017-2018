@@ -1,4 +1,4 @@
-#include "../inc/encoder.h"
+#include "encoder.h"
 
 #define c_EncoderInterruptA 0
 #define c_EncoderInterruptB 1

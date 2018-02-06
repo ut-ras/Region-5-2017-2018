@@ -1,4 +1,4 @@
-#include "../inc/motorController.h"
+#include "motorController.h"
 
 motorController::motorController(int _boardAddress){
 

@@ -1,4 +1,4 @@
-#include "../inc/stepper.h"
+#include "stepper.h"
 
 //servo inputs go from 10 - 180 , running below 10 results in constant slow rotation
 stepper::stepper(int _stepperPin){

@@ -1,5 +1,5 @@
 
-#include "../inc/Graph.h"
+#include "Graph.h"
 //#include <Hashmap.h>
 
 

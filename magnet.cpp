@@ -1,4 +1,4 @@
-#include "../inc/magnet.h"
+#include "magnet.h"
 
 magnet::magnet(int _magnetPin){
 	pinMode(_magnetPin, OUTPUT);

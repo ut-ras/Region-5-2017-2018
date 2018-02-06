@@ -1,4 +1,4 @@
-#include "../inc/intersectionSensors.h"
+#include "intersectionSensors.h"
 
 intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin) {
     l0 = new pointline(l0pin);

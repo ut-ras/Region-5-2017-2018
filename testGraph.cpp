@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include "../control/inc/Graph.h"
+//#include <stdio.h>
+#include "Graph.h"
 
 Graph* g;
 

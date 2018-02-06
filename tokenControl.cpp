@@ -1,4 +1,4 @@
-#include "../inc/tokenControl.h"
+#include "tokenControl.h"
 
 //Servo Distances
 //Distance from maxheight to ground - 10.5in

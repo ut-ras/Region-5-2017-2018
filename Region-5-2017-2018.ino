@@ -1,18 +1,21 @@
 #include <Time.h>
 #include <Arduino.h>
-#include "tests/testarrayLine.cpp"
-#include "tests/testGraph.cpp"
+//#include "testarrayLine.cpp"
+//#include "testGraph.cpp"
+#include "testPointline.cpp"
 
 void setup() {  
     // put your setup code here, to run once:]
     Serial.begin(9600);
-    setupGraphTest();
-    setupTestArrayLine();
+    //setupGraphTest();
+    setupPointLineTest(0);
+  //  setupTestArrayLine();
     }
 void loop() {
   // put your main code here, to run repeatedly:
-  loopArrayLineTest();
-  loopGraphTest();
+  //loopArrayLineTest();
+  loopPointLineTest();
+  //loopGraphTest();
 
 }
 

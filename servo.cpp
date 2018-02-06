@@ -1,4 +1,4 @@
-#include "../inc/servo.h"
+#include "servo.h"
 #include <Servo.h>
 
 //servo inputs go from 10 - 180 , running below 10 results in constant slow rotation
