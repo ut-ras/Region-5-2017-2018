@@ -24,7 +24,7 @@ public:
 	Node getCurrentNode();
 	int getCurrentDirection();
 	Node getNeighbor(Node n, int direction);
-	String toString();
+	const char* toString();
 	Node* moveInDirection(int dir);
 
 private:
