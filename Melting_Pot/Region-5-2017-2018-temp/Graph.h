@@ -22,8 +22,10 @@ public:
 	int getNumTokens(int c); //c is Color
 	int addToken(int c); //c is Color
 	Node* getCurrentNode();
+	void setCurrentNode(Node *n);
+	void setCurrentDirection(int direction);
 	int getCurrentDirection();
-	Node getNeighbor(Node n, int direction);
+	Node* getNeighbor(Node *n, int direction);
 	const char* toString();
 	Node* moveInDirection(int dir);
 

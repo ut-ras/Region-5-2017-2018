@@ -18,7 +18,7 @@ int Graph::getCurrentDirection() {
 }
 
 /*sets the current node to the Node n*/
-void Graph::setCurrentNode(Node n){
+void Graph::setCurrentNode(Node *n){
 	currentNode = n;
 }
 
@@ -28,8 +28,8 @@ void Graph::setCurrentDirection(int direction){
 }
 
 /* returns the neighbor (Node) in the cardinal direction DIRECTION of N */
-Node* Graph::getNeighbor(Node::Node n, int direction) {
-	Node[8] adj = graph.getValueOf(n);
+Node* Graph::getNeighbor(Node *n, int direction) {
+	Node* adj[8] = graph.getValueOf(n);
 	return adj[direction];
 }
 
