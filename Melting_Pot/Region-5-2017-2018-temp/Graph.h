@@ -21,7 +21,7 @@ public:
 	Node* getNode(int n);  //n is Name
 	int getNumTokens(int c); //c is Color
 	int addToken(int c); //c is Color
-	Node getCurrentNode();
+	Node* getCurrentNode();
 	int getCurrentDirection();
 	Node getNeighbor(Node n, int direction);
 	const char* toString();

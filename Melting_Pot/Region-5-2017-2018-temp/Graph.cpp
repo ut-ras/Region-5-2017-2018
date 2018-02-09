@@ -2,7 +2,7 @@
 #include "Graph.h"
 
 
-void Graph::Graph()
+Graph::Graph()
 {
 	bruteForceInit();
 }
@@ -309,7 +309,7 @@ void Graph::bruteForceInit()
     - Nodes are '/' delimited
     - per-node information is formatted as described in Node::toString()
  */
-String Graph::toString() {
+const char* Graph::toString() {
 	String result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
 		result += iterator[i].toString();		// legal syntax in C++ ?
