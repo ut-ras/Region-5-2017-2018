@@ -212,12 +212,12 @@ void Graph::bruteForceInit()
 	iterator[11] = green5;
 
 	//Blue
-	Node* adjBl  [8] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
-	Node* adjBl1 [8] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
-	Node* adjBl2 [8] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
-	Node* adjBl3 [8] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
-	Node* adjBl4 [8] = {green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL};
-	Node* adjBl5 [8] = {green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL};
+	adj[12] = {NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL};
+	adj[13] = {green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL};
+	adj[14] = {green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL};
+	adj[15] = {green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL};
+	adj[16] = {green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL};
+	adj[17] = {green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL};
 	/*
 	graph[12](blueBox, adjB);
 	graph[13](blue1, adjBl1);
@@ -234,12 +234,12 @@ void Graph::bruteForceInit()
 	iterator[17] = blue5;
 
 	//Yellows:
-	Node* adjY  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1};
-	Node* adjY1 [8] = {magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2};
-	Node* adjY2 [8] = {magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3};
-	Node* adjY3 [8] = {magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4};
-	Node* adjY4 [8] = {magenta4, NULL, NULL, NULL, NULL, NULL, blue4, yellow5};
-	Node* adjY5 [8] = {magenta5, NULL, NULL, NULL, NULL, NULL, blue5, greyBox};
+	adj[18] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1};
+	adj[19] = {magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2};
+	adj[20] = {magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3};
+	adj[21] = {magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4};
+	adj[22] = {magenta4, NULL, NULL, NULL, NULL, NULL, blue4, yellow5};
+	adj[23] = {magenta5, NULL, NULL, NULL, NULL, NULL, blue5, greyBox};
 	/*
 	graph[18](yellowBox, adjY);
 	graph[19](yellow1, adjY1);
@@ -256,12 +256,12 @@ void Graph::bruteForceInit()
 	iterator[23] = yellow5;
 
 	//Magentas:
-	Node* adjM  [8] = {NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL};
-	Node* adjM1 [8] = {cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL};
-	Node* adjM2 [8] = {cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL};
-	Node* adjM3 [8] = {cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL};
-	Node* adjM4 [8] = {cyan4, NULL, NULL, NULL, yellow4, NULL, magenta5, NULL};
-	Node* adjM5 [8] = {cyan5, NULL, NULL, NULL, yellow5, NULL, greyBox, NULL};
+	adj[24] = {NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL};
+	adj[25] = {cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL};
+	adj[26] = {cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL};
+	adj[27] = {cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL};
+	adj[28] = {cyan4, NULL, NULL, NULL, yellow4, NULL, magenta5, NULL};
+	adj[29] = {cyan5, NULL, NULL, NULL, yellow5, NULL, greyBox, NULL};
 	/*
 	graph[24](magentaBox, adjM);
 	graph[25](magenta1, adjM1);
@@ -278,12 +278,12 @@ void Graph::bruteForceInit()
 	iterator[29] = magenta5;
 
 	//Cyans:
-	Node* adjC  [8] = {NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL};
-	Node* adjC1 [8] = {NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL};
-	Node* adjC2 [8] = {NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL};
-	Node* adjC3 [8] = {NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL};
-	Node* adjC4 [8] = {NULL, NULL, NULL, NULL, magenta4, cyan5, red4, NULL};
-	Node* adjC5 [8] = {NULL, NULL, NULL, NULL, magenta5, greyBox, red5, NULL};
+	adj[30] = {NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL};
+	adj[31] = {NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL};
+	adj[32] = {NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL};
+	adj[33] = {NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL};
+	adj[34] = {NULL, NULL, NULL, NULL, magenta4, cyan5, red4, NULL};
+	adj[35] = {NULL, NULL, NULL, NULL, magenta5, greyBox, red5, NULL};
 	/*
 	graph[30](cyanBox, adjC);
 	graph[31](cyan1, adjC1);
@@ -300,7 +300,7 @@ void Graph::bruteForceInit()
 	iterator[35] = cyan5;
 
 	//Greys:
-	Node* adjX  [8] = {NULL, cyan5, magenta5, yellow5, NULL, blue5, green5, red5};
+	adj[36] = {NULL, cyan5, magenta5, yellow5, NULL, blue5, green5, red5};
 	//graph[36](greyBox, adjX)
 	iterator[36] = greyBox;
 }
