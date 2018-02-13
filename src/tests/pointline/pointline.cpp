@@ -6,12 +6,12 @@ Code to use a single point line sensor
 
  */
 
-pointline::pointline(int _sensorPin) {
+Pointline::Pointline(int _sensorPin) {
   //Set Line Sensor Pin Value
   QRE1113_Pin = _sensorPin;
 }
 
-bool pointline::getValue() {
+bool Pointline::getValue() {
 //Returns value from the QRE1113
 //Lower numbers mean more refleacive
 //More than 3000 means nothing was reflected.

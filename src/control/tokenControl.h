@@ -4,10 +4,10 @@
  */
 
 #include "Node.h"
-#include "stepper.h"
-#include "servo.h"
-#include "rgbsensor.h"
-#include "magnet.h"
+#include "../drivers/stepper.h"
+#include "../drivers/servo.h"
+#include "../drivers/rgbsensor.h"
+#include "../drivers/magnet.h"
 
 class tokenControl {
 

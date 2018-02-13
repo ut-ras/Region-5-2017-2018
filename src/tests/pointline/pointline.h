@@ -1,11 +1,10 @@
-#ifndef POINTLINE_H
+#ifdef POINTLINE_H
 #define POINTLINE_H
-#include <Arduino.h>
-#include <Time.h>
-class pointline {
+
+class Pointline {
 public:
 	// Sets pin value
-  pointline(int _sensorPin);
+  Pointline(int _sensorPin);
 
   // True is black, False is white		
   bool getValue();
