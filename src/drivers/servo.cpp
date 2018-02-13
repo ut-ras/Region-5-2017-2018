@@ -9,11 +9,8 @@ servo::servo(int _servoPin){
 	delay(100);
 }
 
-void servo::movePulley(double distance, bool direction){
-	if(!direction)
-		servoPos -= (distance / 4) * 170;
-	else
-		servoPos += (distance / 4) * 170;
+void servo::movePulley(double degrees){
+	servoPos = degrees;
 	thisServo.write(servoPos);
 	delay(100);
 }
