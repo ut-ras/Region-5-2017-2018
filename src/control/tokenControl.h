@@ -29,10 +29,6 @@ public:
     void depositTokens(Node::Color c);
 
 private:
-    //Lower magnet distance
-    void lowerMagnet(double distance);
-    //Raise magnet distance
-    void raiseMagnet(double distance);
     //Rotates the token disk to input colour
     //Prereq: Magnet is centered
     void rotateDiskToColor(Node::Color c);
