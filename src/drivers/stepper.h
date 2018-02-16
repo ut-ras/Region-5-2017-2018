@@ -1,8 +1,10 @@
 #include <stdint.h>
+#include "A4988.h"
+
 class stepper {
 public:
 
-    stepper(int _stepperPin);
+    stepper(int _stepperPin, int _directionPin);
 
     //Direction for rotation
     typedef enum {CLOCKWISE, COUNTERCLOCKWISE} Direction;
@@ -12,4 +14,5 @@ public:
 
 private:
 	int stepperPos;
+	A4988 stepperMotor;
 };
