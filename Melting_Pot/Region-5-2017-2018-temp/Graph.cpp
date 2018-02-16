@@ -50,8 +50,7 @@ Node* Graph::getNode(Name n) {
    	- Map stored as hashmap between node and adjacency list (array)
     - Nodes also stored in array by name enum (index) for quick iteration
 */
-void Graph::bruteForceInit()
-{
+void Graph::bruteForceInit() {
 	int nodeCounter;
 
 	//Red
@@ -61,18 +60,18 @@ void Graph::bruteForceInit()
 	Node* red3 = new Node();
 	Node* red4 = new Node();
 	Node* red5 = new Node();
-	redBox.setName(Node::Name::R);	//assign the enums (names)
-	red1.setName(Node::Name::R1);
-	red2.setName(Node::Name::R2);
-	red3.setName(Node::Name::R3);
-	red4.setName(Node::Name::R4);
-	red5.setName(Node::Name::R5);
-	redBox.setVisited(false);			//initialize visited boolean
-	red1.setVisited(false);
-	red2.setVisited(false);
-	red3.setVisited(false);
-	red4.setVisited(false);
-	red5.setVisited(false);
+	redBox->setName(Name::R);	//assign the enums (names)
+	red1->setName(Name::R1);
+	red2->setName(Name::R2);
+	red3->setName(Name::R3);
+	red4->setName(Name::R4);
+	red5->setName(Name::R5);
+	redBox->setVisited(false);			//initialize visited boolean
+	red1->setVisited(false);
+	red2->setVisited(false);
+	red3->setVisited(false);
+	red4->setVisited(false);
+	red5->setVisited(false);
 
 	//Green
 	Node* greenBox = new Node();
@@ -81,18 +80,18 @@ void Graph::bruteForceInit()
 	Node* green3 = new Node();
 	Node* green4 = new Node();
 	Node* green5 = new Node();
-	greenBox.setName(Node::Name::G);
-	green1.setName(Node::Name::G1);
-	green2.setName(Node::Name::G2);
-	green3.setName(Node::Name::G3);
-	green4.setName(Node::Name::G4);
-	green5.setName(Node::Name::G5);
-	greenBox.setVisited(false);
-	green1.setVisited(false);
-	green2.setVisited(false);
-	green3.setVisited(false);
-	green4.setVisited(false);
-	green5.setVisited(false);
+	greenBox->setName(Name::G);
+	green1->setName(Name::G1);
+	green2->setName(Name::G2);
+	green3->setName(Name::G3);
+	green4->setName(Name::G4);
+	green5->setName(Name::G5);
+	greenBox->setVisited(false);
+	green1->setVisited(false);
+	green2->setVisited(false);
+	green3->setVisited(false);
+	green4->setVisited(false);
+	green5->setVisited(false);
 
 	//Blue
 	Node* blueBox = new Node();
@@ -101,18 +100,18 @@ void Graph::bruteForceInit()
 	Node* blue3 = new Node();
 	Node* blue4 = new Node();
 	Node* blue5 = new Node();
-	blueBox.setName(Node::Name::Bl);
-	blue1.setName(Node::Name::Bl1);
-	blue2.setName(Node::Name::Bl2);
-	blue3.setName(Node::Name::Bl3);
-	blue4.setName(Node::Name::Bl4);
-	blue5.setName(Node::Name::Bl5);
-	blueBox.setVisited(false);
-	blue1.setVisited(false);
-	blue2.setVisited(false);
-	blue3.setVisited(false);
-	blue4.setVisited(false);
-	blue5.setVisited(false);
+	blueBox->setName(Name::Bl);
+	blue1->setName(Name::Bl1);
+	blue2->setName(Name::Bl2);
+	blue3->setName(Name::Bl3);
+	blue4->setName(Name::Bl4);
+	blue5->setName(Name::Bl5);
+	blueBox->setVisited(false);
+	blue1->setVisited(false);
+	blue2->setVisited(false);
+	blue3->setVisited(false);
+	blue4->setVisited(false);
+	blue5->setVisited(false);
 
 	//Yellow
 	Node* yellowBox = new Node();
@@ -121,18 +120,18 @@ void Graph::bruteForceInit()
 	Node* yellow3 = new Node();
 	Node* yellow4 = new Node();
 	Node* yellow5 = new Node();
-	yellowBox.setName(Node::Name::Y);
-	yellow1.setName(Node::Name::Y1);
-	yellow2.setName(Node::Name::Y2);
-	yellow3.setName(Node::Name::Y3);
-	yellow4.setName(Node::Name::Y4);
-	yellow5.setName(Node::Name::Y5);
-	yellowBox.setVisited(false);
-	yellow1.setVisited(false);
-	yellow2.setVisited(false);
-	yellow3.setVisited(false);
-	yellow4.setVisited(false);
-	yellow5.setVisited(false);
+	yellowBox->setName(Name::Y);
+	yellow1->setName(Name::Y1);
+	yellow2->setName(Name::Y2);
+	yellow3->setName(Name::Y3);
+	yellow4->setName(Name::Y4);
+	yellow5->setName(Name::Y5);
+	yellowBox->setVisited(false);
+	yellow1->setVisited(false);
+	yellow2->setVisited(false);
+	yellow3->setVisited(false);
+	yellow4->setVisited(false);
+	yellow5->setVisited(false);
 
 	//Magenta
 	Node* magentaBox = new Node();
@@ -141,18 +140,18 @@ void Graph::bruteForceInit()
 	Node* magenta3 = new Node();
 	Node* magenta4 = new Node();
 	Node* magenta5 = new Node();
-	magentaBox.setName(Node::Name::M);
-	magenta1.setName(Node::Name::M1);
-	magenta2.setName(Node::Name::M2);
-	magenta3.setName(Node::Name::M3);
-	magenta4.setName(Node::Name::M4);
-	magenta5.setName(Node::Name::M5);
-	magentaBox.setVisited(false);
-	magenta1.setVisited(false);
-	magenta2.setVisited(false);
-	magenta3.setVisited(false);
-	magenta4.setVisited(false);
-	magenta5.setVisited(false);
+	magentaBox->setName(Name::M);
+	magenta1->setName(Name::M1);
+	magenta2->setName(Name::M2);
+	magenta3->setName(Name::M3);
+	magenta4->setName(Name::M4);
+	magenta5->setName(Name::M5);
+	magentaBox->setVisited(false);
+	magenta1->setVisited(false);
+	magenta2->setVisited(false);
+	magenta3->setVisited(false);
+	magenta4->setVisited(false);
+	magenta5->setVisited(false);
 
 	//Cyan
 	Node* cyanBox = new Node();
@@ -161,23 +160,23 @@ void Graph::bruteForceInit()
 	Node* cyan3 = new Node();
 	Node* cyan4 = new Node();
 	Node* cyan5 = new Node();
-	cyanBox.setName(Node::Name::C);
-	cyan1.setName(Node::Name::C1);
-	cyan2.setName(Node::Name::C2);
-	cyan3.setName(Node::Name::C3);
-	cyan4.setName(Node::Name::C4);
-	cyan5.setName(Node::Name::C5);
-	cyanBox.setVisited(false);
-	cyan1.setVisited(false);
-	cyan2.setVisited(false);
-	cyan3.setVisited(false);
-	cyan4.setVisited(false);
-	cyan5.setVisited(false);
+	cyanBox->setName(Name::C);
+	cyan1->setName(Name::C1);
+	cyan2->setName(Name::C2);
+	cyan3->setName(Name::C3);
+	cyan4->setName(Name::C4);
+	cyan5->setName(Name::C5);
+	cyanBox->setVisited(false);
+	cyan1->setVisited(false);
+	cyan2->setVisited(false);
+	cyan3->setVisited(false);
+	cyan4->setVisited(false);
+	cyan5->setVisited(false);
 
 	//Grey
 	Node* greyBox = new Node();
-	greyBox.setName(Node::Name::X);
-	greyBox.setVisited(false);
+	greyBox->setName(Name::X);
+	greyBox->setVisited(false);
 
 /////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 	
@@ -188,7 +187,7 @@ void Graph::bruteForceInit()
 				   	{NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL},
 				   	{NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL},
 		      	   	{NULL, NULL, cyan4, red5, green4, NULL, NULL, NULL},
-		 		   	{NULL, NULL, cyan5, greyBox, green5, NULL, NULL, NULL}}
+		 		   	{NULL, NULL, cyan5, greyBox, green5, NULL, NULL, NULL},
 				   	{NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL},
 				   	{red1, NULL, green2, NULL, blue1, NULL, NULL, NULL},
 					{red2, NULL, green3, NULL, blue2, NULL, NULL, NULL},
@@ -317,10 +316,10 @@ void Graph::bruteForceInit()
     - per-node information is formatted as described in Node::toString()
  */
 const char* Graph::toString() {
-	String result;
+	const char* result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
-		result += iterator[i].toString();		// legal syntax in C++ ?
+		*result += iterator[i].toString();		// legal syntax in C++ ?
 		if(i != NUMBER_OF_NODES)
-			result += "/"; 		// nodes will be '/' delimited
+			*result += "/"; 		// nodes will be '/' delimited
 	}
 }
