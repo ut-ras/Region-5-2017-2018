@@ -1,4 +1,4 @@
-#include "../drivers/inc/arrayline.h"
+#include "arrayline.h"
 
 bool* lineSensor;
 arrayline* line;
