@@ -1,12 +1,16 @@
 #include <Time.h>
 #include <Arduino.h>
 <<<<<<< HEAD
-#include "testarrayLine.cpp"
+/*#include "testarrayLine.cpp"
 #include "testGraph.cpp"
 =======
 //#include "testarrayLine.cpp"
 //#include "testGraph.cpp"
-#include "src/tests/testPointline.cpp"
+#include "src/tests/testPointline.cpp"*/
+#include "rgbsensor.h"
+#include "testRGB.cpp"
+#include "sensorbar.h"
+//#include "src/tests/testPointline.cpp"
 >>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
 
 void setup() {  
@@ -14,19 +18,21 @@ void setup() {
     Serial.begin(9600);
     //setupGraphTest();
 <<<<<<< HEAD
-    setupTestArrayLine();
+    //setupTestArrayLine();
+    setupRGBTest();
     }
-void loop() {
+/*void loop() {
   // put your main code here, to run repeatedly:
   loopArrayLineTest();
 =======
     setupPointLineTest(0);
   //  setupTestArrayLine();
-    }
+    }*/
 void loop() {
   // put your main code here, to run repeatedly:
   //loopArrayLineTest();
-  loopPointLineTest();
+  //loopPointLineTest();
+  loopRGBTest();
 >>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
   //loopGraphTest();
 

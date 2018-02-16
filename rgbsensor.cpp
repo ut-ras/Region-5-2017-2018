@@ -1,6 +1,7 @@
 #include "rgbsensor.h"
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
+
 rgbsensor::rgbsensor() {
   tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
   boolean error = false;
@@ -20,7 +21,7 @@ String rgbsensor::getColor(){
   return getClosestColor(red,green,blue);
 }
 
-Node::Color rgbsensor::getClosestColor(int red,int green, int blue)
+Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
   int whiteThreshold = 1500;

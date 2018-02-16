@@ -1,6 +1,4 @@
-#include "rgbsensor.h"
-#include <Wire.h>
-#include "Adafruit_TCS34725.h"
+
 rgbsensor::rgbsensor() {
   tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
   boolean error = false;
@@ -9,7 +7,7 @@ rgbsensor::rgbsensor() {
   }
 }
 
-String rgbsensor::getColor(){
+Color rgbsensor::getColor(){
   uint16_t clear, red, green, blue;
 
   delay(60);  // takes 50ms to read
@@ -19,43 +17,42 @@ String rgbsensor::getColor(){
   tcs.setInterrupt(true);  // turn on LED
   return getClosestColor(red,green,blue);
 }
-
-Node::Color rgbsensor::getClosestColor(int red,int green, int blue)
+Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
   int whiteThreshold = 1500;
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
-  Node::Color color = Node::electromagnet;
+  Color color;
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    color = Node::red;
+    color = red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
   {
-    color = Node::magenta;
+    color = magenta;
   }
   if(((blue - red) > threshold && (blue - green) > threshold))
   {
-    color = Node::blue;
+    color = blue;
   }
   if(((green - red) > threshold && (blue - green) < cyanThreshold))
   {
-    color = Node::cyan;
+    color = cyan;
   }
   if(((green - red) > greenThreshold && (green - blue) > threshold))
   {
-    color = Node::green;
+    color = green;
   }
   if(((green - red) < threshold && (green - blue) > threshold))
   {
-    color = Node::yellow;
+    color = yellow;
   }
   if(red > whiteThreshold && green > whiteThreshold && blue > whiteThreshold)
   {
-    color = Node::grey;
+    color = grey;
   }
   return color;
 }
