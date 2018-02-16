@@ -1,10 +1,12 @@
-#include "tokenControl.h"
+	#include "tokenControl.h"
 
 //Servo Distances
-//Distance from maxheight to ground - 10.5in
-#define maxHeight 10.5
+//Distance from max height to ground - 10.5in
+#define maxHeight 160
 //Distance to fall into the funnel - 5in
-#define funnelHeight 5.0
+#define funnelHeight 175
+//Resting position
+#define  resting 180
 //Sets the direction of the magnet
 #define up true
 #define down false
@@ -44,10 +46,10 @@ tokenControl::tokenControl() {
 
 Node::Color tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
-    lowerMagnet(maxHeight);
+    pulleyController.movePulley(maxheight);
     magnetController.magnetOn();
     delay(pickupTime);
-    raiseMagnet(maxHeight);
+    pulleyController.movePulley(resting);
 
     //Reads token colour and if there is no token returns the electromagnet
     Node::Color colour = tokenReader.getColor();
@@ -68,24 +70,16 @@ void tokenControl::depositTokens(Node::Color c) {
 
     //Moves token to center then deposits the tokens
     resetDisk(c);
-    lowerMagnet(maxHeight);
+    pulleyController.movePulley(maxHeight);
     delay(dropTime);
     magnetController.magnetOff();
     delay(dropTime);
 
     //Reset the magnet
-    raiseMagnet(maxHeight);
+    pulleyController.movePulley(resting);
 }
 
 //Private
-
-void tokenControl::lowerMagnet(double distance){
-    pulleyController.movePulley(distance, up);
-}
-
-void tokenControl::raiseMagnet(double distance) {
-    pulleyController.movePulley(distance, down);
-}
 
 void tokenControl::rotateDiskToColor(Node::Color c) {
     //Finds most efficient direction for rotation
@@ -110,16 +104,16 @@ void tokenControl::resetDisk(Node::Color c) {
 }
 
 void tokenControl::depositInFunnel() {
-    lowerMagnet(funnelHeight);
+    pulleyController.movePulley(funnelHeight);
     delay(dropTime);
     magnetController.magnetOff();
     delay(dropTime);
-    raiseMagnet(funnelHeight);
+    pulleyController.movePulley(resting);
 }
 
 void tokenControll::pickupFromFunnel() {
-    lowerMagnet(funnelHeight);
+	pulleyController.movePulley(funnelHeight);
     magnetController.magnetOn();
     delay(pickupTime);
-    raiseMagnet(funnelHeight);
+    pulleyController.movePulley(resting);
 }

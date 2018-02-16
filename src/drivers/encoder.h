@@ -1,5 +1,5 @@
 #ifndef encoder_h
-#def encoder_h
+#define encoder_h
 
 #include "Arduino.h"
 #include <Wire.h>

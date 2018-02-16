@@ -12,7 +12,7 @@ public:
     /* Moves the pulley a given distance in the given
      * direction, where true is up and false is down.
      */
-    void movePulley(double distance, bool direction);
+    void movePulley(double degrees);
 
     /*Constructor to initialize the servo*/
     servo();

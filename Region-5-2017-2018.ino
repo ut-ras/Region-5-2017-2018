@@ -2,7 +2,7 @@
 #include <Arduino.h>
 //#include "testarrayLine.cpp"
 //#include "testGraph.cpp"
-#include "testPointline.cpp"
+#include "src/tests/testPointline.cpp"
 
 void setup() {  
     // put your setup code here, to run once:]
