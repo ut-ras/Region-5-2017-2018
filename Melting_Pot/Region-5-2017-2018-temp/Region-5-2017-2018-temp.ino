@@ -1,57 +1,40 @@
 #include <Time.h>
 #include <Arduino.h>
-<<<<<<< HEAD
-#include "testarrayLine.cpp"
 #include "testGraph.cpp"
-=======
-//#include "testarrayLine.cpp"
-//#include "testGraph.cpp"
-#include "src/tests/testPointline.cpp"
->>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
 
-void setup() {  
-    // put your setup code here, to run once:]
-    Serial.begin(9600);
-    //setupGraphTest();
-<<<<<<< HEAD
-    setupTestArrayLine();
-    }
-void loop() {
-  // put your main code here, to run repeatedly:
-  loopArrayLineTest();
-=======
-    setupPointLineTest(0);
-  //  setupTestArrayLine();
-    }
-void loop() {
-  // put your main code here, to run repeatedly:
-  //loopArrayLineTest();
-  loopPointLineTest();
->>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
-  //loopGraphTest();
 
+void setup() {
+  // put your setup code here, to run once:
+  //setupMotorsTest();
+  setupGraphTest();
 }
 
+void loop() {
+  // put your main code here, to run repeatedly:
+  
+  //loopMotorsTest();
+  loopGraphTest();
+}
 /*
 void round1(){
-	int[] inventory = new int[6];
+  int[] inventory = new int[6];
   time_t t = now();
-	if(whichSide() == Node::Color::yellow){
+  if(whichSide() == Node::Color::yellow){
   //Collection
-		turn(PI / 4);
+    turn(PI / 4);
    //collect across diagonal going from yellow to red
-		for(int i = 0; i < 4; i++){
-			forwardToIntersection();
-			pickUpToken();
-			updateInventory(storeToken(), inventory);
-		}
-		moveForward(distance across grey square);
-		for(int i = 0; i < 4; i++){
-			forwardToIntersection();
-			pickUpToken();
-			updateInventory(storeToken(), inventory);
-		}
-		depositIfEnough(Node::Color::red, 3, inventory[0]);
+    for(int i = 0; i < 4; i++){
+      forwardToIntersection();
+      pickUpToken();
+      updateInventory(storeToken(), inventory);
+    }
+    moveForward(distance across grey square);
+    for(int i = 0; i < 4; i++){
+      forwardToIntersection();
+      pickUpToken();
+      updateInventory(storeToken(), inventory);
+    }
+    depositIfEnough(Node::Color::red, 3, inventory[0]);
    //go to green
     turn(3 * PI / 4);
     forwardToIntersection();
@@ -91,23 +74,23 @@ void round1(){
 
 
 
-	} else{ // first color is red
+  } else{ // first color is red
 
 
-	}
+  }
 }
 
 void round2(){
-	int[] inventory = new int[6];
+  int[] inventory = new int[6];
 }
 
 void round3(){
-	int[] inventory = new int[7];
+  int[] inventory = new int[7];
 }
 
 void forwardToIntersection(){
-	while(getData() != getNextIntersection())
-		moveForward();
+  while(getData() != getNextIntersection())
+    moveForward();
 }
 
 void updateInventory(Node::Color c, int[] inventory){
@@ -115,13 +98,11 @@ void updateInventory(Node::Color c, int[] inventory){
 }
 
 void depositIfEnough(Node::Color c, int min, int current){
-	if(current >= min)
-		tokenControl::depositTokens();
+  if(current >= min)
+    tokenControl::depositTokens();
 }
 
 Node::Color whichSide(){
-	moveForward(distance to colored square);
-	return getColor();
-<<<<<<< HEAD
-}
-*/
+  moveForward(distance to colored square);
+  return getColor();
+} */ 
