@@ -11,6 +11,7 @@ protected:
 	int V;
 	//HashMap<Node*, Node*[8]> graph;
 	Node* adj[37][8];
+
 	int numTokens[7];
 	Node* currentNode;
 	int currentDirection;	//integer 0-7 to determine the current direction of the bot. 0=north, 1=NE, etc
@@ -18,7 +19,7 @@ protected:
 
 public:
 	Graph();
-	Node* getNode(int n);  //n is Name
+	Node* getNode(Name n);  //n is Name
 	int getNumTokens(int c); //c is Color
 	int addToken(int c); //c is Color
 	Node* getCurrentNode();
