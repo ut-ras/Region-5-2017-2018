@@ -1,6 +1,7 @@
+#ifndef rgbsensor_h
+#define rgbsensor_h
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
-#include "color.h"
 //#include "Node.h"
 
 class rgbsensor
@@ -15,3 +16,4 @@ class rgbsensor
   Adafruit_TCS34725 tcs;
 
 };
+#endif
