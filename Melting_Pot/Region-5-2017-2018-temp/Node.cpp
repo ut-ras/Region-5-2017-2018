@@ -1,4 +1,5 @@
 #include "Node.h"
+#include <String.h>
 
 Node::Node() {
 	visited = false;
@@ -35,9 +36,16 @@ Color Node::getMapColor() {
 //"[R1 v:true t:G]"
 //<name:visited:tokenColor>
 char* Node::toString() {
-	//char* s = nameTable[name] + ':' + (char *)((visited = true)? "true" : "false") + ':' + colorTable[tokenColor];
-	return "temp";
+	char s[30];
+	strcat(s, nameTable[name]);
+	strcat(s, ":");
+	strcat(s, (visited? "t" : "f"));
+	strcat(s, ":");
+	strcat(s, colorTable[tokenColor]);
+	return s;
 }
+
+
 
 /*
 char Node::colorToChar(Color c) {

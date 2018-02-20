@@ -22,17 +22,13 @@ void loop() {
 
 void setupGraphTest() {
   g = new Graph();
-  g->setCurrentNode(g->getNode(Name::Y));
+  g->setCurrentNode(g->getNode(Name::Y1));
   g->setCurrentDirection(0);
 }
 
 void loopGraphTest() {
 
-  //Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
-  if(g->getNeighbor(g->getCurrentNode(), 0)->getName() ==  Name::M) {
-    //Serial.println("Get neighbor test 1 passed");
-  }
-  else {
-    //Serial.println("Get neighbor test 1 failed");
-  }
+  Serial.println(g->getCurrentNode()->toString());
+  Serial.println(g->getNeighbor(g->getCurrentNode(), 0)->toString());
+  while(1);
 }
