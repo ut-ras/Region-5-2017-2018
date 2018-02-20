@@ -43,7 +43,7 @@ Node* Graph::getNode(Name n) {
 			return iterator[i];
 		}
 	}
-	return null;
+	return NULL;
 }
 
 /* BEAST of a function to create the entire map:
@@ -178,47 +178,49 @@ void Graph::bruteForceInit() {
 	greyBox->setName(Name::X);
 	greyBox->setVisited(false);
 
-/////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-	
+/////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+  Node * adj2[37][8] = {	{NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL},		//each element represents a direction:
+								{NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL}, 	//{up, up-right, right, down-right, down, down-left, left, up-left}
+					{NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL},
+					{NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL},
+							{NULL, NULL, cyan4, red5, green4, NULL, NULL, NULL},
+					{NULL, NULL, cyan5, greyBox, green5, NULL, NULL, NULL},
+					{NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL},
+					{red1, NULL, green2, NULL, blue1, NULL, NULL, NULL},
+				{red2, NULL, green3, NULL, blue2, NULL, NULL, NULL},
+				{red3, NULL, green4, NULL, blue3, NULL, NULL, NULL},
+				{red4, NULL, green5, NULL, blue4, NULL, NULL, NULL},
+				{red5, NULL, greyBox, NULL, blue5, NULL, NULL, NULL},
+				{NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL},
+				{green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL},
+				{green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL},
+				{green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL},
+				{green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL},
+				{green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL},
+				{NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1},
+				{magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2},
+				{magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3},
+				{magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4},
+				{magenta4, NULL, NULL, NULL, NULL, NULL, blue4, yellow5},
+				{magenta5, NULL, NULL, NULL, NULL, NULL, blue5, greyBox},
+				{NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL},
+				{cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL},
+				{cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL},
+				{cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL},
+				{cyan4, NULL, NULL, NULL, yellow4, NULL, magenta5, NULL},
+				{cyan5, NULL, NULL, NULL, yellow5, NULL, greyBox, NULL},
+				{NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL},
+				{NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL},
+				{NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL},
+				{NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL},
+				{NULL, NULL, NULL, NULL, magenta4, cyan5, red4, NULL},
+				{NULL, NULL, NULL, NULL, magenta5, greyBox, red5, NULL},
+				{NULL, cyan5, magenta5, yellow5, NULL, blue5, green5, red5} };
+
+  memcpy(adj, adj2, 37*8*sizeof(Node *));
 	//Red
-	adj[37][37] = {	{NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL},		//each element represents a direction:
-	               	{NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL}, 	//{up, up-right, right, down-right, down, down-left, left, up-left}
-				   	{NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL},
-				   	{NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL},
-		      	   	{NULL, NULL, cyan4, red5, green4, NULL, NULL, NULL},
-		 		   	{NULL, NULL, cyan5, greyBox, green5, NULL, NULL, NULL},
-				   	{NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL},
-				   	{red1, NULL, green2, NULL, blue1, NULL, NULL, NULL},
-					{red2, NULL, green3, NULL, blue2, NULL, NULL, NULL},
-					{red3, NULL, green4, NULL, blue3, NULL, NULL, NULL},
-					{red4, NULL, green5, NULL, blue4, NULL, NULL, NULL},
-					{red5, NULL, greyBox, NULL, blue5, NULL, NULL, NULL},
-					{NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL},
-					{green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL},
-					{green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL},
-					{green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL},
-					{green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL},
-					{green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL},
-					{NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1},
-					{magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2},
-					{magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3},
-					{magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4},
-					{magenta4, NULL, NULL, NULL, NULL, NULL, blue4, yellow5},
-					{magenta5, NULL, NULL, NULL, NULL, NULL, blue5, greyBox},
-					{NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL},
-					{cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL},
-					{cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL},
-					{cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL},
-					{cyan4, NULL, NULL, NULL, yellow4, NULL, magenta5, NULL},
-					{cyan5, NULL, NULL, NULL, yellow5, NULL, greyBox, NULL},
-					{NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL},
-					{NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL},
-					{NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL},
-					{NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL},
-					{NULL, NULL, NULL, NULL, magenta4, cyan5, red4, NULL},
-					{NULL, NULL, NULL, NULL, magenta5, greyBox, red5, NULL},
-					{NULL, cyan5, magenta5, yellow5, NULL, blue5, green5, red5} };
+
 
 	iterator[0] = redBox;
 	iterator[1] = red1;
@@ -316,10 +318,10 @@ void Graph::bruteForceInit() {
     - per-node information is formatted as described in Node::toString()
  */
 const char* Graph::toString() {
-	const char* result;
+	char* result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
-		*result += iterator[i].toString();		// legal syntax in C++ ?
+		*result += iterator[i]->toString();		// legal syntax in C++ ?
 		if(i != NUMBER_OF_NODES)
-			*result += "/"; 		// nodes will be '/' delimited
+			*result += '/'; 		// nodes will be '/' delimited
 	}
 }

@@ -9,7 +9,7 @@ Node::Node(Name n, Color mc) {
 	visited = false;
 	mapColor = mc;
 	tokenColor = unknown;
-	depth = (name == X)? 5 : name % 6;	// see the Name enum to understand the relationship between depth and 'index' in Name enum (actually the integer value the name represents)	
+	depth = (name == X)? 5 : name % 6;	// see the Name enum to understand the relationship between depth and 'index' in Name enum (actually the integer value the name represents)
 }
 
 Name Node::getName() {
@@ -34,9 +34,9 @@ Color Node::getMapColor() {
 
 //"[R1 v:true t:G]"
 //<name:visited:tokenColor>
-String Node::toString() {
-	String s = "" + nameTable[name] + ":" + ((visited = true)? "true" : "false") + ":" + colorTable[tokenColor];
-	return s;
+char* Node::toString() {
+	//char* s = nameTable[name] + ':' + (char *)((visited = true)? "true" : "false") + ':' + colorTable[tokenColor];
+	return "temp";
 }
 
 /*

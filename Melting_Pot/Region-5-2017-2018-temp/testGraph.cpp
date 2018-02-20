@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include "Graph.h"
+#include "Node.h"
 
-Graph* g;
+Graph* gA;
 
-void setupGraphTest() {
-	g = new Graph();
-	g.setCurrentNode(g.getNode(Node::Name::Y));
-	g.setCurrentDirection(0);
+void setupGraphTestA() {
+	gA = new Graph();
+	gA->setCurrentNode(gA->getNode(Name::Y));
+	gA->setCurrentDirection(0);
 }
 
-void loopGraphTest() {
+void loopGraphTestA() {
 
-	Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
-	if(g->getNeighbor(g->getCurrentNode(), 0).getName() ==  Node::Name::M)
-		Serial.println("Get neighbor test 1 passed");
-	else
-		Serial.println("Get neighbor test 1 failed");
+	//Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
+	if(gA->getNeighbor(gA->getCurrentNode(), 0)->getName() ==  Name::M) {
+		//Serial.println("Get neighbor test 1 passed");
+	}
+	else {
+		//Serial.println("Get neighbor test 1 failed");
+	}
 }
