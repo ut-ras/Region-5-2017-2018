@@ -1,6 +1,6 @@
 
 #include "Graph.h"
-
+#include <Arduino.h>
 
 Graph::Graph()
 {
@@ -325,3 +325,42 @@ const char* Graph::toString() {
 			*result += '/'; 		// nodes will be '/' delimited
 	}
 }
+
+/* TESTS */
+
+
+
+//call in loop or setup or wherever, it will stop at end
+void Graph::graphTest() {
+  Serial.println("Graph Test - inside graph test");
+  Graph* gA;
+  int loopPath[6] = {0, 0, 2, 4, 4, 1};
+  int numPathDirs;
+  Node *endNode;
+
+  gA = new Graph();
+  gA->setCurrentNode(gA->getNode(Name::Bl1));
+  gA->setCurrentDirection(0);
+  numPathDirs = 6;  //loopPath.size();
+  endNode = gA->getNode(Name::X); //so we're ending in the center
+
+  //Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
+  int nextDir;
+  Node *currentNode;
+  Node *nextNode;
+  for(int i=0; currentNode->getName() != endNode->getName(); i++) {
+    //Serial.print("Traversal reached node: ");
+    //Serial.println(currentNode->toString());
+    /*
+    if(currentNode->getName() != expectedNames[i]){
+      Serial.println("Graph traversal test failed on step %d, node: %s and actual %s\n", i, currentNode->getName());
+    }
+    */
+    nextDir = loopPath[i % numPathDirs];
+    nextNode = gA->getNeighbor(currentNode, nextDir);
+    gA->setCurrentNode(nextNode);
+    currentNode = gA->getCurrentNode();
+  }
+
+}
+

@@ -30,6 +30,7 @@ public:
 	Node* getNeighbor(Node *n, int direction);
 	const char* toString();
 	Node* moveInDirection(int dir);
+  void graphTest();
 
 private:
 	void bruteForceInit();
