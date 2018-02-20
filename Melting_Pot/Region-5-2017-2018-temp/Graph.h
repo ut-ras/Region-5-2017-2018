@@ -1,4 +1,5 @@
-
+#ifndef GRAPH_H
+#define GRAPH_H
 
 //#include <HashMap.h>
 #include "Node.h"
@@ -33,3 +34,5 @@ public:
 private:
 	void bruteForceInit();
 };
+
+#endif
