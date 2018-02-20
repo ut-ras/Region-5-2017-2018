@@ -8,7 +8,8 @@ class rgbsensor
 {
   public:
   rgbsensor();
-  enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
+  enum Color {unknown, Green, Blue, Yellow, Magenta, Cyan, Grey, Red, Black};
+  char* colorTable[9] = {"unknown", "green", "blue", "yellow", "magenta", "cyan", "grey", "red", "black"};
   Color getColor();
   
   private:

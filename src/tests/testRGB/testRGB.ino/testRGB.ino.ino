@@ -13,7 +13,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   // put your main code here, to run repeatedly:
-  Serial.println(rgb->getColor());
+  Serial.println(rgb->colorTable[rgb->getColor()]);
 
   /*Serial.print("C:\t"); Serial.print(clear);
   Serial.print("\tR:\t"); Serial.print(red);
