@@ -9,12 +9,13 @@ rgbsensor::rgbsensor() {
 
 rgbsensor::Color rgbsensor::getColor(){
   uint16_t clear, red, green, blue;
-
+  
+  tcs.setInterrupt(false);
+  
   delay(60);  // takes 50ms to read
-
-  tcs.getRawData(&red, &green, &blue, &clear);
-
+   tcs.getRawData(&red, &green, &blue, &clear);
   tcs.setInterrupt(true);  // turn on LED
+
   return getClosestColor(red,green,blue);
 }
 rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
@@ -24,35 +25,38 @@ rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
-  Color color;
+  Color color = unknown;
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    color = red;
+    Serial.print("\tR:\t"); Serial.print(red);
+    Serial.print("\tG:\t"); Serial.print(green);
+    Serial.print("\tB:\t"); Serial.println(blue);
+    color = Red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
   {
-    color = magenta;
+    color = Magenta;
   }
   if(((blue - red) > threshold && (blue - green) > threshold))
   {
-    color = blue;
+    color = Blue;
   }
   if(((green - red) > threshold && (blue - green) < cyanThreshold))
   {
-    color = cyan;
+    color = Cyan;
   }
   if(((green - red) > greenThreshold && (green - blue) > threshold))
   {
-    color = green;
+    color = Green;
   }
   if(((green - red) < threshold && (green - blue) > threshold))
   {
-    color = yellow;
+    color = Yellow;
   }
   if(red > whiteThreshold && green > whiteThreshold && blue > whiteThreshold)
   {
-    color = grey;
+    color = Grey;
   }
   return color;
 }
