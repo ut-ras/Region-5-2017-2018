@@ -21,7 +21,7 @@ rgbsensor::Color rgbsensor::getColor(){
 rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
-  int whiteThreshold = 1500;
+  int greyThreshold = 50;
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
@@ -29,9 +29,6 @@ rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    Serial.print("\tR:\t"); Serial.print(red);
-    Serial.print("\tG:\t"); Serial.print(green);
-    Serial.print("\tB:\t"); Serial.println(blue);
     color = Red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
@@ -54,9 +51,16 @@ rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
   {
     color = Yellow;
   }
-  if(red > whiteThreshold && green > whiteThreshold && blue > whiteThreshold)
+  if(((red - blue) < greyThreshold && (red - green) < greyThreshold))
   {
     color = Grey;
   }
+  if(red < 300 && green < 270 && blue < 270)
+  {
+    color = Black;
+  }
+    Serial.print("\tR:\t"); Serial.print(red);
+    Serial.print("\tG:\t"); Serial.print(green);
+    Serial.print("\tB:\t"); Serial.println(blue);
   return color;
 }
