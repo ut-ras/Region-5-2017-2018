@@ -1,5 +1,3 @@
-
-
 rgbsensor rgb;
 
 void setupRGBTest() {

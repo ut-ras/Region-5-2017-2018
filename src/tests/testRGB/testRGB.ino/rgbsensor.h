@@ -1,13 +1,13 @@
 #include <Wire.h>
-#include "rgbsensor.h"
 #include "Adafruit_TCS34725.h"
-#include <Arduino.h>
+#include "color.h"
 //#include "Node.h"
 
 class rgbsensor
 {
   public:
   rgbsensor();
+  enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
   Color getColor();
   
   private:

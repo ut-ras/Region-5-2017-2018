@@ -1,4 +1,5 @@
-
+#include "rgbsensor.h"
+#include "color.h"
 rgbsensor::rgbsensor() {
   tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
   boolean error = false;
@@ -24,7 +25,7 @@ Color rgbsensor::getClosestColor(int red,int green, int blue)
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
-  Color color;
+  color_t color;
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
