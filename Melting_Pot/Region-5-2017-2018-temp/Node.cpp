@@ -3,6 +3,7 @@
 
 Node::Node() {
 	visited = false;
+	isNullNode = false;
 }
 
 Node::Node(Name n, Color mc) {
@@ -33,6 +34,17 @@ Color Node::getMapColor() {
 	return mapColor;
 }
 
+static char* nameTable[37] = {"Red Box", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5",
+                          "Green Box", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5",
+                "Blue Box", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
+                "Yellow Box", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5",
+                "Magenta Box", "Magenta 1", "Magenta 2", "Magenta 3", "Magenta 4", "Magenta 5",
+                "Cyan Box", "Cyan 1", "Cyan 2", "Cyan 3", "Cyan 4", "Cyan 5",
+                "Grey Box"};
+
+static char* colorTable[8] = {"red", "green", "blue", "yellow", "magenta", "cyan", "grey", "unknown"};
+
+
 //"[R1 v:true t:G]"
 //<name:visited:tokenColor>
 char* Node::toString() {
@@ -45,7 +57,13 @@ char* Node::toString() {
 	return s;
 }
 
+void Node::setAsNull() {
+	isNullNode = true;
+}
 
+bool Node::isNull() {
+	return isNullNode;
+}
 
 /*
 char Node::colorToChar(Color c) {

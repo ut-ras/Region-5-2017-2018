@@ -4,7 +4,9 @@
 
 Graph::Graph()
 {
-	bruteForceInit();
+  Serial.println("Graph Test - inside init");
+  delay(1000);
+	//bruteForceInit();
 }
 
 /* returns the node the bot is currently located at */
@@ -29,7 +31,7 @@ void Graph::setCurrentDirection(int direction){
 
 /* returns the neighbor (Node) in the cardinal direction DIRECTION of N */
 Node* Graph::getNeighbor(Node *n, int direction) {
-	return adj[n->getName()][direction];
+	return &adj[n->getName()][direction];
 }
 
 Node* Graph::moveInDirection(int dir) {
@@ -51,193 +53,209 @@ Node* Graph::getNode(Name n) {
     - Nodes also stored in array by name enum (index) for quick iteration
 */
 void Graph::bruteForceInit() {
+  Serial.println("Graph Test - inside bf init");
+  delay(1000);
+  
 	int nodeCounter;
 
 	//Red
-	Node* redBox = new Node();		//create the nodes
-	Node* red1 = new Node();
-	Node* red2 = new Node();
-	Node* red3 = new Node();
-	Node* red4 = new Node();
-	Node* red5 = new Node();
-	redBox->setName(Name::R);	//assign the enums (names)
-	red1->setName(Name::R1);
-	red2->setName(Name::R2);
-	red3->setName(Name::R3);
-	red4->setName(Name::R4);
-	red5->setName(Name::R5);
-	redBox->setVisited(false);			//initialize visited boolean
-	red1->setVisited(false);
-	red2->setVisited(false);
-	red3->setVisited(false);
-	red4->setVisited(false);
-	red5->setVisited(false);
+	Node redBox;		//create the nodes
+	Node red1;
+	Node red2;
+	Node red3;
+	Node red4;
+	Node red5;
+	redBox.setName(Name::R);	//assign the enums (names)
+	red1.setName(Name::R1);
+	red2.setName(Name::R2);
+	red3.setName(Name::R3);
+	red4.setName(Name::R4);
+	red5.setName(Name::R5);
+	redBox.setVisited(false);			//initialize visited boolean
+	red1.setVisited(false);
+	red2.setVisited(false);
+	red3.setVisited(false);
+	red4.setVisited(false);
+	red5.setVisited(false);
 
 	//Green
-	Node* greenBox = new Node();
-	Node* green1 = new Node();
-	Node* green2 = new Node();
-	Node* green3 = new Node();
-	Node* green4 = new Node();
-	Node* green5 = new Node();
-	greenBox->setName(Name::G);
-	green1->setName(Name::G1);
-	green2->setName(Name::G2);
-	green3->setName(Name::G3);
-	green4->setName(Name::G4);
-	green5->setName(Name::G5);
-	greenBox->setVisited(false);
-	green1->setVisited(false);
-	green2->setVisited(false);
-	green3->setVisited(false);
-	green4->setVisited(false);
-	green5->setVisited(false);
+	Node greenBox;
+	Node green1;
+	Node green2;
+	Node green3;
+	Node green4;
+	Node green5;
+	greenBox.setName(Name::G);
+	green1.setName(Name::G1);
+	green2.setName(Name::G2);
+	green3.setName(Name::G3);
+	green4.setName(Name::G4);
+	green5.setName(Name::G5);
+	greenBox.setVisited(false);
+	green1.setVisited(false);
+	green2.setVisited(false);
+	green3.setVisited(false);
+	green4.setVisited(false);
+	green5.setVisited(false);
 
 	//Blue
-	Node* blueBox = new Node();
-	Node* blue1 = new Node();
-	Node* blue2 = new Node();
-	Node* blue3 = new Node();
-	Node* blue4 = new Node();
-	Node* blue5 = new Node();
-	blueBox->setName(Name::Bl);
-	blue1->setName(Name::Bl1);
-	blue2->setName(Name::Bl2);
-	blue3->setName(Name::Bl3);
-	blue4->setName(Name::Bl4);
-	blue5->setName(Name::Bl5);
-	blueBox->setVisited(false);
-	blue1->setVisited(false);
-	blue2->setVisited(false);
-	blue3->setVisited(false);
-	blue4->setVisited(false);
-	blue5->setVisited(false);
+	Node blueBox;
+	Node blue1;
+	Node blue2;
+	Node blue3;
+	Node blue4;
+	Node blue5;
+	blueBox.setName(Name::Bl);
+	blue1.setName(Name::Bl1);
+	blue2.setName(Name::Bl2);
+	blue3.setName(Name::Bl3);
+	blue4.setName(Name::Bl4);
+	blue5.setName(Name::Bl5);
+	blueBox.setVisited(false);
+	blue1.setVisited(false);
+	blue2.setVisited(false);
+	blue3.setVisited(false);
+	blue4.setVisited(false);
+	blue5.setVisited(false);
 
 	//Yellow
-	Node* yellowBox = new Node();
-	Node* yellow1 = new Node();
-	Node* yellow2 = new Node();
-	Node* yellow3 = new Node();
-	Node* yellow4 = new Node();
-	Node* yellow5 = new Node();
-	yellowBox->setName(Name::Y);
-	yellow1->setName(Name::Y1);
-	yellow2->setName(Name::Y2);
-	yellow3->setName(Name::Y3);
-	yellow4->setName(Name::Y4);
-	yellow5->setName(Name::Y5);
-	yellowBox->setVisited(false);
-	yellow1->setVisited(false);
-	yellow2->setVisited(false);
-	yellow3->setVisited(false);
-	yellow4->setVisited(false);
-	yellow5->setVisited(false);
+	Node yellowBox;
+	Node yellow1;
+	Node yellow2;
+	Node yellow3;
+	Node yellow4;
+	Node yellow5;
+	yellowBox.setName(Name::Y);
+	yellow1.setName(Name::Y1);
+	yellow2.setName(Name::Y2);
+	yellow3.setName(Name::Y3);
+	yellow4.setName(Name::Y4);
+	yellow5.setName(Name::Y5);
+	yellowBox.setVisited(false);
+	yellow1.setVisited(false);
+	yellow2.setVisited(false);
+	yellow3.setVisited(false);
+	yellow4.setVisited(false);
+	yellow5.setVisited(false);
 
 	//Magenta
-	Node* magentaBox = new Node();
-	Node* magenta1 = new Node();
-	Node* magenta2 = new Node();
-	Node* magenta3 = new Node();
-	Node* magenta4 = new Node();
-	Node* magenta5 = new Node();
-	magentaBox->setName(Name::M);
-	magenta1->setName(Name::M1);
-	magenta2->setName(Name::M2);
-	magenta3->setName(Name::M3);
-	magenta4->setName(Name::M4);
-	magenta5->setName(Name::M5);
-	magentaBox->setVisited(false);
-	magenta1->setVisited(false);
-	magenta2->setVisited(false);
-	magenta3->setVisited(false);
-	magenta4->setVisited(false);
-	magenta5->setVisited(false);
+	Node magentaBox;
+	Node magenta1;
+	Node magenta2;
+	Node magenta3;
+	Node magenta4;
+	Node magenta5;
+	magentaBox.setName(Name::M);
+	magenta1.setName(Name::M1);
+	magenta2.setName(Name::M2);
+	magenta3.setName(Name::M3);
+	magenta4.setName(Name::M4);
+	magenta5.setName(Name::M5);
+	magentaBox.setVisited(false);
+	magenta1.setVisited(false);
+	magenta2.setVisited(false);
+	magenta3.setVisited(false);
+	magenta4.setVisited(false);
+	magenta5.setVisited(false);
 
 	//Cyan
-	Node* cyanBox = new Node();
-	Node* cyan1 = new Node();
-	Node* cyan2 = new Node();
-	Node* cyan3 = new Node();
-	Node* cyan4 = new Node();
-	Node* cyan5 = new Node();
-	cyanBox->setName(Name::C);
-	cyan1->setName(Name::C1);
-	cyan2->setName(Name::C2);
-	cyan3->setName(Name::C3);
-	cyan4->setName(Name::C4);
-	cyan5->setName(Name::C5);
-	cyanBox->setVisited(false);
-	cyan1->setVisited(false);
-	cyan2->setVisited(false);
-	cyan3->setVisited(false);
-	cyan4->setVisited(false);
-	cyan5->setVisited(false);
+	Node cyanBox;
+	Node cyan1;
+	Node cyan2;
+	Node cyan3;
+	Node cyan4;
+	Node cyan5;
+	cyanBox.setName(Name::C);
+	cyan1.setName(Name::C1);
+	cyan2.setName(Name::C2);
+	cyan3.setName(Name::C3);
+	cyan4.setName(Name::C4);
+	cyan5.setName(Name::C5);
+	cyanBox.setVisited(false);
+	cyan1.setVisited(false);
+	cyan2.setVisited(false);
+	cyan3.setVisited(false);
+	cyan4.setVisited(false);
+	cyan5.setVisited(false);
 
 	//Grey
-	Node* greyBox = new Node();
-	greyBox->setName(Name::X);
-	greyBox->setVisited(false);
+	Node greyBox;
+	greyBox.setName(Name::X);
+	greyBox.setVisited(false);
 
+	//empty nodes for blank spaces
+	Node nullNode;
+	nullNode.setAsNull();
+
+  Serial.println("Graph Test - nodes created bf init");
+  delay(1000);
+  
 /////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  Node * adj2[37][8] = {	{NULL, NULL, NULL, red1, NULL, NULL, NULL, NULL},		//each element represents a direction:
-								{NULL, NULL, cyan1, red2, green1, NULL, NULL, NULL}, 	//{up, up-right, right, down-right, down, down-left, left, up-left}
-					{NULL, NULL, cyan2, red3, green2, NULL, NULL, NULL},
-					{NULL, NULL, cyan3, red4, green3, NULL, NULL, NULL},
-							{NULL, NULL, cyan4, red5, green4, NULL, NULL, NULL},
-					{NULL, NULL, cyan5, greyBox, green5, NULL, NULL, NULL},
-					{NULL, NULL, green1, NULL, NULL, NULL, NULL, NULL},
-					{red1, NULL, green2, NULL, blue1, NULL, NULL, NULL},
-				{red2, NULL, green3, NULL, blue2, NULL, NULL, NULL},
-				{red3, NULL, green4, NULL, blue3, NULL, NULL, NULL},
-				{red4, NULL, green5, NULL, blue4, NULL, NULL, NULL},
-				{red5, NULL, greyBox, NULL, blue5, NULL, NULL, NULL},
-				{NULL, blue1, NULL, NULL, NULL, NULL, NULL, NULL},
-				{green1, blue2, yellow1, NULL, NULL, NULL, NULL, NULL},
-				{green2, blue3, yellow2, NULL, NULL, NULL, NULL, NULL},
-				{green3, blue4, yellow3, NULL, NULL, NULL, NULL, NULL},
-				{green4, blue5, yellow4, NULL, NULL, NULL, NULL, NULL},
-				{green5, greyBox, yellow5, NULL, NULL, NULL, NULL, NULL},
-				{NULL, NULL, NULL, NULL, NULL, NULL, NULL, yellow1},
-				{magenta1, NULL, NULL, NULL, NULL, NULL, blue1, yellow2},
-				{magenta2, NULL, NULL, NULL, NULL, NULL, blue2, yellow3},
-				{magenta3, NULL, NULL, NULL, NULL, NULL, blue3, yellow4},
-				{magenta4, NULL, NULL, NULL, NULL, NULL, blue4, yellow5},
-				{magenta5, NULL, NULL, NULL, NULL, NULL, blue5, greyBox},
-				{NULL, NULL, NULL, NULL, NULL, NULL, magenta1, NULL},
-				{cyan1, NULL, NULL, NULL, yellow1, NULL, magenta2, NULL},
-				{cyan2, NULL, NULL, NULL, yellow2, NULL, magenta3, NULL},
-				{cyan3, NULL, NULL, NULL, yellow3, NULL, magenta4, NULL},
-				{cyan4, NULL, NULL, NULL, yellow4, NULL, magenta5, NULL},
-				{cyan5, NULL, NULL, NULL, yellow5, NULL, greyBox, NULL},
-				{NULL, NULL, NULL, NULL, NULL, cyan1, NULL, NULL},
-				{NULL, NULL, NULL, NULL, magenta1, cyan2, red1, NULL},
-				{NULL, NULL, NULL, NULL, magenta2, cyan3, red2, NULL},
-				{NULL, NULL, NULL, NULL, magenta3, cyan4, red3, NULL},
-				{NULL, NULL, NULL, NULL, magenta4, cyan5, red4, NULL},
-				{NULL, NULL, NULL, NULL, magenta5, greyBox, red5, NULL},
-				{NULL, cyan5, magenta5, yellow5, NULL, blue5, green5, red5} };
+  Node adj2[37][8] = {	{nullNode, nullNode, nullNode, red1, nullNode, nullNode, nullNode, nullNode},		//each element represents a direction:
+				{nullNode, nullNode, cyan1, red2, green1, nullNode, nullNode, nullNode}, 	//{up, up-right, right, down-right, down, down-left, left, up-left}
+				{nullNode, nullNode, cyan2, red3, green2, nullNode, nullNode, nullNode},
+				{nullNode, nullNode, cyan3, red4, green3, nullNode, nullNode, nullNode},
+				{nullNode, nullNode, cyan4, red5, green4, nullNode, nullNode, nullNode},
+				{nullNode, nullNode, cyan5, greyBox, green5, nullNode, nullNode, nullNode},
+				{nullNode, nullNode, green1, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{red1, nullNode, green2, nullNode, blue1, nullNode, nullNode, nullNode},
+				{red2, nullNode, green3, nullNode, blue2, nullNode, nullNode, nullNode},
+				{red3, nullNode, green4, nullNode, blue3, nullNode, nullNode, nullNode},
+				{red4, nullNode, green5, nullNode, blue4, nullNode, nullNode, nullNode},
+				{red5, nullNode, greyBox, nullNode, blue5, nullNode, nullNode, nullNode},
+				{nullNode, blue1, nullNode, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{green1, blue2, yellow1, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{green2, blue3, yellow2, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{green3, blue4, yellow3, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{green4, blue5, yellow4, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{green5, greyBox, yellow5, nullNode, nullNode, nullNode, nullNode, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, yellow1},
+				{magenta1, nullNode, nullNode, nullNode, nullNode, nullNode, blue1, yellow2},
+				{magenta2, nullNode, nullNode, nullNode, nullNode, nullNode, blue2, yellow3},
+				{magenta3, nullNode, nullNode, nullNode, nullNode, nullNode, blue3, yellow4},
+				{magenta4, nullNode, nullNode, nullNode, nullNode, nullNode, blue4, yellow5},
+				{magenta5, nullNode, nullNode, nullNode, nullNode, nullNode, blue5, greyBox},
+				{nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, magenta1, nullNode},
+				{cyan1, nullNode, nullNode, nullNode, yellow1, nullNode, magenta2, nullNode},
+				{cyan2, nullNode, nullNode, nullNode, yellow2, nullNode, magenta3, nullNode},
+				{cyan3, nullNode, nullNode, nullNode, yellow3, nullNode, magenta4, nullNode},
+				{cyan4, nullNode, nullNode, nullNode, yellow4, nullNode, magenta5, nullNode},
+				{cyan5, nullNode, nullNode, nullNode, yellow5, nullNode, greyBox, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, nullNode, cyan1, nullNode, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, magenta1, cyan2, red1, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, magenta2, cyan3, red2, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, magenta3, cyan4, red3, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, magenta4, cyan5, red4, nullNode},
+				{nullNode, nullNode, nullNode, nullNode, magenta5, greyBox, red5, nullNode},
+				{nullNode, cyan5, magenta5, yellow5, nullNode, blue5, green5, red5} };
 
+  Serial.println("Graph Test - array created bf init");
+  delay(1000);
+  
   memcpy(adj, adj2, 37*8*sizeof(Node *));
-	//Red
+	
 
+  Serial.println("Graph Test - memcpy done bf init");
+  delay(1000);
 
-	iterator[0] = redBox;
-	iterator[1] = red1;
-	iterator[2] = red2;
-	iterator[3] = red3;
-	iterator[4] = red4;
-	iterator[5] = red5;
+  //Red
+	iterator[0] = &redBox;
+	iterator[1] = &red1;
+	iterator[2] = &red2;
+	iterator[3] = &red3;
+	iterator[4] = &red4;
+	iterator[5] = &red5;
 
 
 	//Green
 
-	iterator[6] = greenBox;
-	iterator[7] = green1;
-	iterator[8] = green2;
-	iterator[9] = green3;
-	iterator[10] = green4;
-	iterator[11] = green5;
+	iterator[6] = &greenBox;
+	iterator[7] = &green1;
+	iterator[8] = &green2;
+	iterator[9] = &green3;
+	iterator[10] = &green4;
+	iterator[11] = &green5;
 
 	//Blue
 
@@ -249,12 +267,12 @@ void Graph::bruteForceInit() {
 	graph[16](blue4, adjBl4);
 	graph[17](blue5, adjBl5);
 	*/
-	iterator[12] = blueBox;
-	iterator[13] = blue1;
-	iterator[14] = blue2;
-	iterator[15] = blue3;
-	iterator[16] = blue4;
-	iterator[17] = blue5;
+	iterator[12] = &blueBox;
+	iterator[13] = &blue1;
+	iterator[14] = &blue2;
+	iterator[15] = &blue3;
+	iterator[16] = &blue4;
+	iterator[17] = &blue5;
 
 	//Yellows:
 
@@ -266,12 +284,12 @@ void Graph::bruteForceInit() {
 	graph[22](yellow4, adjY4);
 	graph[23](yellow5, adjY5);
 	*/
-	iterator[18] = yellowBox;
-	iterator[19] = yellow1;
-	iterator[20] = yellow2;
-	iterator[21] = yellow3;
-	iterator[22] = yellow4;
-	iterator[23] = yellow5;
+	iterator[18] = &yellowBox;
+	iterator[19] = &yellow1;
+	iterator[20] = &yellow2;
+	iterator[21] = &yellow3;
+	iterator[22] = &yellow4;
+	iterator[23] = &yellow5;
 
 	//Magentas:
 
@@ -283,12 +301,12 @@ void Graph::bruteForceInit() {
 	graph[28](magenta4, adjM4);
 	graph[29](magenta5, adjM5);
 	*/
-	iterator[24] = magentaBox;
-	iterator[25] = magenta1;
-	iterator[26] = magenta2;
-	iterator[27] = magenta3;
-	iterator[28] = magenta4;
-	iterator[29] = magenta5;
+	iterator[24] = &magentaBox;
+	iterator[25] = &magenta1;
+	iterator[26] = &magenta2;
+	iterator[27] = &magenta3;
+	iterator[28] = &magenta4;
+	iterator[29] = &magenta5;
 
 	//Cyans:
 
@@ -300,17 +318,20 @@ void Graph::bruteForceInit() {
 	graph[34](cyan4, adjC4);
 	graph[35](cyan5, adjC5);
 	*/
-	iterator[30] = cyanBox;
-	iterator[31] = cyan1;
-	iterator[32] = cyan2;
-	iterator[33] = cyan3;
-	iterator[34] = cyan4;
-	iterator[35] = cyan5;
+	iterator[30] = &cyanBox;
+	iterator[31] = &cyan1;
+	iterator[32] = &cyan2;
+	iterator[33] = &cyan3;
+	iterator[34] = &cyan4;
+	iterator[35] = &cyan5;
 
 	//Greys:
 
 	//graph[36](greyBox, adjX)
-	iterator[36] = greyBox;
+	iterator[36] = &greyBox;
+
+  Serial.println("Graph Test - end of bf init\n");
+  delay(1000);
 }
 
 /* Iterates through every node and creates a string describing the map's current state such that
@@ -332,35 +353,41 @@ const char* Graph::toString() {
 
 //call in loop or setup or wherever, it will stop at end
 void Graph::graphTest() {
-  Serial.println("Graph Test - inside graph test");
-  Graph* gA;
+  Serial.println("Graph Test - inside graph test\n");
+  delay(1000);
+
+  Graph gA;
+  Node *endNode = gA.getNode(Name::X); //so we're ending in the center
+
+
   int loopPath[6] = {0, 0, 2, 4, 4, 1};
   int numPathDirs;
-  Node *endNode;
 
-  gA = new Graph();
-  gA->setCurrentNode(gA->getNode(Name::Bl1));
-  gA->setCurrentDirection(0);
+  gA.setCurrentNode(gA.getNode(Name::Bl1));
+  gA.setCurrentDirection(0);
   numPathDirs = 6;  //loopPath.size();
-  endNode = gA->getNode(Name::X); //so we're ending in the center
 
   //Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
   int nextDir;
   Node *currentNode;
   Node *nextNode;
   for(int i=0; currentNode->getName() != endNode->getName(); i++) {
-    //Serial.print("Traversal reached node: ");
-    //Serial.println(currentNode->toString());
+    Serial.print("Traversal reached node: ");
+    delay(500);
+    Serial.println(currentNode->toString());
+    delay(1000);
     /*
     if(currentNode->getName() != expectedNames[i]){
       Serial.println("Graph traversal test failed on step %d, node: %s and actual %s\n", i, currentNode->getName());
     }
     */
     nextDir = loopPath[i % numPathDirs];
-    nextNode = gA->getNeighbor(currentNode, nextDir);
-    gA->setCurrentNode(nextNode);
-    currentNode = gA->getCurrentNode();
+    nextNode = gA.getNeighbor(currentNode, nextDir);
+    gA.setCurrentNode(nextNode);
+    currentNode = gA.getCurrentNode();
+    delay(1000);
   }
 
-}
+  while(1);
 
+}

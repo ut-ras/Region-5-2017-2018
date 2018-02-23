@@ -11,7 +11,7 @@ class Graph		//class or struct?
 protected:
 	int V;
 	//HashMap<Node*, Node*[8]> graph;
-	Node* adj[37][8];
+	Node adj[37][8];
 
 	int numTokens[7];
 	Node* currentNode;
@@ -32,7 +32,7 @@ public:
 	Node* moveInDirection(int dir);
   void graphTest();
 
-private:
+
 	void bruteForceInit();
 };
 
