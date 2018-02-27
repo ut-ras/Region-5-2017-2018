@@ -196,46 +196,308 @@ void Graph::bruteForceInit() {
 
 /////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  Node* adj2[37][8] = {
-			  { nullNode, nullNode, nullNode, red1, nullNode, nullNode, nullNode, nullNode},		//each element represents a direction:
-				{ nullNode, nullNode, cyan1, red2, green1, nullNode, nullNode, nullNode}, 	//{ up, up-right, right, down-right, down, down-left, left, up-left}
-				{ nullNode, nullNode, cyan2, red3, green2, nullNode, nullNode, nullNode},
-				{ nullNode, nullNode, cyan3, red4, green3, nullNode, nullNode, nullNode},
-				{ nullNode, nullNode, cyan4, red5, green4, nullNode, nullNode, nullNode},
-				{ nullNode, nullNode, cyan5, greyBox, green5, nullNode, nullNode, nullNode},
-				{ nullNode, nullNode, green1, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ red1, nullNode, green2, nullNode, blue1, nullNode, nullNode, nullNode},
-				{ red2, nullNode, green3, nullNode, blue2, nullNode, nullNode, nullNode},
-				{ red3, nullNode, green4, nullNode, blue3, nullNode, nullNode, nullNode},
-				{ red4, nullNode, green5, nullNode, blue4, nullNode, nullNode, nullNode},
-				{ red5, nullNode, greyBox, nullNode, blue5, nullNode, nullNode, nullNode},
-				{ nullNode, blue1, nullNode, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ green1, blue2, yellow1, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ green2, blue3, yellow2, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ green3, blue4, yellow3, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ green4, blue5, yellow4, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ green5, greyBox, yellow5, nullNode, nullNode, nullNode, nullNode, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, yellow1},
-				{ magenta1, nullNode, nullNode, nullNode, nullNode, nullNode, blue1, yellow2},
-				{ magenta2, nullNode, nullNode, nullNode, nullNode, nullNode, blue2, yellow3},
-				{ magenta3, nullNode, nullNode, nullNode, nullNode, nullNode, blue3, yellow4},
-				{ magenta4, nullNode, nullNode, nullNode, nullNode, nullNode, blue4, yellow5},
-				{ magenta5, nullNode, nullNode, nullNode, nullNode, nullNode, blue5, greyBox},
-				{ nullNode, nullNode, nullNode, nullNode, nullNode, nullNode, magenta1, nullNode},
-				{ cyan1, nullNode, nullNode, nullNode, yellow1, nullNode, magenta2, nullNode},
-				{ cyan2, nullNode, nullNode, nullNode, yellow2, nullNode, magenta3, nullNode},
-				{ cyan3, nullNode, nullNode, nullNode, yellow3, nullNode, magenta4, nullNode},
-				{ cyan4, nullNode, nullNode, nullNode, yellow4, nullNode, magenta5, nullNode},
-				{ cyan5, nullNode, nullNode, nullNode, yellow5, nullNode, greyBox, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, nullNode, cyan1, nullNode, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, magenta1, cyan2, red1, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, magenta2, cyan3, red2, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, magenta3, cyan4, red3, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, magenta4, cyan5, red4, nullNode},
-				{ nullNode, nullNode, nullNode, nullNode, magenta5, greyBox, red5, nullNode},
-				{ nullNode, cyan5, magenta5, yellow5, nullNode, blue5, green5, red5} };
+adj[0][0] =  nullNode;
+adj[0][1] =  nullNode;
+adj[0][2] =  nullNode;
+adj[0][3] =  red1;
+adj[0][4] =  nullNode;
+adj[0][5] =  nullNode;
+adj[0][6] =  nullNode;
+adj[0][7] =  nullNode;
+adj[1][0] =  nullNode;
+adj[1][1] =  nullNode;
+adj[1][2] =  cyan1;
+adj[1][3] =  red2;
+adj[1][4] =  green1;
+adj[1][5] =  nullNode;
+adj[1][6] =  nullNode;
+adj[1][7] =  nullNode;
+adj[2][0] =  nullNode;
+adj[2][1] =  nullNode;
+adj[2][2] =  cyan2;
+adj[2][3] =  red3;
+adj[2][4] =  green2;
+adj[2][5] =  nullNode;
+adj[2][6] =  nullNode;
+adj[2][7] =  nullNode;
+adj[3][0] =  nullNode;
+adj[3][1] =  nullNode;
+adj[3][2] =  cyan3;
+adj[3][3] =  red4;
+adj[3][4] =  green3;
+adj[3][5] =  nullNode;
+adj[3][6] =  nullNode;
+adj[3][7] =  nullNode;
+adj[4][0] =  nullNode;
+adj[4][1] =  nullNode;
+adj[4][2] =  cyan4;
+adj[4][3] =  red5;
+adj[4][4] =  green4;
+adj[4][5] =  nullNode;
+adj[4][6] =  nullNode;
+adj[4][7] =  nullNode;
+adj[5][0] =  nullNode;
+adj[5][1] =  nullNode;
+adj[5][2] =  cyan5;
+adj[5][3] =  greyBox;
+adj[5][4] =  green5;
+adj[5][5] =  nullNode;
+adj[5][6] =  nullNode;
+adj[5][7] =  nullNode;
+adj[6][0] =  nullNode;
+adj[6][1] =  nullNode;
+adj[6][2] =  green1;
+adj[6][3] =  nullNode;
+adj[6][4] =  nullNode;
+adj[6][5] =  nullNode;
+adj[6][6] =  nullNode;
+adj[6][7] =  nullNode;
+adj[7][0] =  red1;
+adj[7][1] =  nullNode;
+adj[7][2] =  green2;
+adj[7][3] =  nullNode;
+adj[7][4] =  blue1;
+adj[7][5] =  nullNode;
+adj[7][6] =  nullNode;
+adj[7][7] =  nullNode;
+adj[8][0] =  red2;
+adj[8][1] =  nullNode;
+adj[8][2] =  green3;
+adj[8][3] =  nullNode;
+adj[8][4] =  blue2;
+adj[8][5] =  nullNode;
+adj[8][6] =  nullNode;
+adj[8][7] =  nullNode;
+adj[9][0] =  red3;
+adj[9][1] =  nullNode;
+adj[9][2] =  green4;
+adj[9][3] =  nullNode;
+adj[9][4] =  blue3;
+adj[9][5] =  nullNode;
+adj[9][6] =  nullNode;
+adj[9][7] =  nullNode;
+adj[10][0] =  red4;
+adj[10][1] =  nullNode;
+adj[10][2] =  green5;
+adj[10][3] =  nullNode;
+adj[10][4] =  blue4;
+adj[10][5] =  nullNode;
+adj[10][6] =  nullNode;
+adj[10][7] =  nullNode;
+adj[11][0] =  red5;
+adj[11][1] =  nullNode;
+adj[11][2] =  greyBox;
+adj[11][3] =  nullNode;
+adj[11][4] =  blue5;
+adj[11][5] =  nullNode;
+adj[11][6] =  nullNode;
+adj[11][7] =  nullNode;
+adj[12][0] =  nullNode;
+adj[12][1] =  blue1;
+adj[12][2] =  nullNode;
+adj[12][3] =  nullNode;
+adj[12][4] =  nullNode;
+adj[12][5] =  nullNode;
+adj[12][6] =  nullNode;
+adj[12][7] =  nullNode;
+adj[13][0] =  green1;
+adj[13][1] =  blue2;
+adj[13][2] =  yellow1;
+adj[13][3] =  nullNode;
+adj[13][4] =  nullNode;
+adj[13][5] =  nullNode;
+adj[13][6] =  nullNode;
+adj[13][7] =  nullNode;
+adj[14][0] =  green2;
+adj[14][1] =  blue3;
+adj[14][2] =  yellow2;
+adj[14][3] =  nullNode;
+adj[14][4] =  nullNode;
+adj[14][5] =  nullNode;
+adj[14][6] =  nullNode;
+adj[14][7] =  nullNode;
+adj[15][0] =  green3;
+adj[15][1] =  blue4;
+adj[15][2] =  yellow3;
+adj[15][3] =  nullNode;
+adj[15][4] =  nullNode;
+adj[15][5] =  nullNode;
+adj[15][6] =  nullNode;
+adj[15][7] =  nullNode;
+adj[16][0] =  green4;
+adj[16][1] =  blue5;
+adj[16][2] =  yellow4;
+adj[16][3] =  nullNode;
+adj[16][4] =  nullNode;
+adj[16][5] =  nullNode;
+adj[16][6] =  nullNode;
+adj[16][7] =  nullNode;
+adj[17][0] =  green5;
+adj[17][1] =  greyBox;
+adj[17][2] =  yellow5;
+adj[17][3] =  nullNode;
+adj[17][4] =  nullNode;
+adj[17][5] =  nullNode;
+adj[17][6] =  nullNode;
+adj[17][7] =  nullNode;
+adj[18][0] =  nullNode;
+adj[18][1] =  nullNode;
+adj[18][2] =  nullNode;
+adj[18][3] =  nullNode;
+adj[18][4] =  nullNode;
+adj[18][5] =  nullNode;
+adj[18][6] =  nullNode;
+adj[18][7] =  yellow1;
+adj[19][0] =  magenta1;
+adj[19][1] =  nullNode;
+adj[19][2] =  nullNode;
+adj[19][3] =  nullNode;
+adj[19][4] =  nullNode;
+adj[19][5] =  nullNode;
+adj[19][6] =  blue1;
+adj[19][7] =  yellow2;
+adj[20][0] =  magenta2;
+adj[20][1] =  nullNode;
+adj[20][2] =  nullNode;
+adj[20][3] =  nullNode;
+adj[20][4] =  nullNode;
+adj[20][5] =  nullNode;
+adj[20][6] =  blue2;
+adj[20][7] =  yellow3;
+adj[21][0] =  magenta3;
+adj[21][1] =  nullNode;
+adj[21][2] =  nullNode;
+adj[21][3] =  nullNode;
+adj[21][4] =  nullNode;
+adj[21][5] =  nullNode;
+adj[21][6] =  blue3;
+adj[21][7] =  yellow4;
+adj[22][0] =  magenta4;
+adj[22][1] =  nullNode;
+adj[22][2] =  nullNode;
+adj[22][3] =  nullNode;
+adj[22][4] =  nullNode;
+adj[22][5] =  nullNode;
+adj[22][6] =  blue4;
+adj[22][7] =  yellow5;
+adj[23][0] =  magenta5;
+adj[23][1] =  nullNode;
+adj[23][2] =  nullNode;
+adj[23][3] =  nullNode;
+adj[23][4] =  nullNode;
+adj[23][5] =  nullNode;
+adj[23][6] =  blue5;
+adj[23][7] =  greyBox;
+adj[24][0] =  nullNode;
+adj[24][1] =  nullNode;
+adj[24][2] =  nullNode;
+adj[24][3] =  nullNode;
+adj[24][4] =  nullNode;
+adj[24][5] =  nullNode;
+adj[24][6] =  magenta1;
+adj[24][7] =  nullNode;
+adj[25][0] =  cyan1;
+adj[25][1] =  nullNode;
+adj[25][2] =  nullNode;
+adj[25][3] =  nullNode;
+adj[25][4] =  yellow1;
+adj[25][5] =  nullNode;
+adj[25][6] =  magenta2;
+adj[25][7] =  nullNode;
+adj[26][0] =  cyan2;
+adj[26][1] =  nullNode;
+adj[26][2] =  nullNode;
+adj[26][3] =  nullNode;
+adj[26][4] =  yellow2;
+adj[26][5] =  nullNode;
+adj[26][6] =  magenta3;
+adj[26][7] =  nullNode;
+adj[27][0] =  cyan3;
+adj[27][1] =  nullNode;
+adj[27][2] =  nullNode;
+adj[27][3] =  nullNode;
+adj[27][4] =  yellow3;
+adj[27][5] =  nullNode;
+adj[27][6] =  magenta4;
+adj[27][7] =  nullNode;
+adj[28][0] =  cyan4;
+adj[28][1] =  nullNode;
+adj[28][2] =  nullNode;
+adj[28][3] =  nullNode;
+adj[28][4] =  yellow4;
+adj[28][5] =  nullNode;
+adj[28][6] =  magenta5;
+adj[28][7] =  nullNode;
+adj[29][0] =  cyan5;
+adj[29][1] =  nullNode;
+adj[29][2] =  nullNode;
+adj[29][3] =  nullNode;
+adj[29][4] =  yellow5;
+adj[29][5] =  nullNode;
+adj[29][6] =  greyBox;
+adj[29][7] =  nullNode;
+adj[30][0] =  nullNode;
+adj[30][1] =  nullNode;
+adj[30][2] =  nullNode;
+adj[30][3] =  nullNode;
+adj[30][4] =  nullNode;
+adj[30][5] =  cyan1;
+adj[30][6] =  nullNode;
+adj[30][7] =  nullNode;
+adj[31][0] =  nullNode;
+adj[31][1] =  nullNode;
+adj[31][2] =  nullNode;
+adj[31][3] =  nullNode;
+adj[31][4] =  magenta1;
+adj[31][5] =  cyan2;
+adj[31][6] =  red1;
+adj[31][7] =  nullNode;
+adj[32][0] =  nullNode;
+adj[32][1] =  nullNode;
+adj[32][2] =  nullNode;
+adj[32][3] =  nullNode;
+adj[32][4] =  magenta2;
+adj[32][5] =  cyan3;
+adj[32][6] =  red2;
+adj[32][7] =  nullNode;
+adj[33][0] =  nullNode;
+adj[33][1] =  nullNode;
+adj[33][2] =  nullNode;
+adj[33][3] =  nullNode;
+adj[33][4] =  magenta3;
+adj[33][5] =  cyan4;
+adj[33][6] =  red3;
+adj[33][7] =  nullNode;
+adj[34][0] =  nullNode;
+adj[34][1] =  nullNode;
+adj[34][2] =  nullNode;
+adj[34][3] =  nullNode;
+adj[34][4] =  magenta4;
+adj[34][5] =  cyan5;
+adj[34][6] =  red4;
+adj[34][7] =  nullNode;
+adj[35][0] =  nullNode;
+adj[35][1] =  nullNode;
+adj[35][2] =  nullNode;
+adj[35][3] =  nullNode;
+adj[35][4] =  magenta5;
+adj[35][5] =  greyBox;
+adj[35][6] =  red5;
+adj[35][7] =  nullNode;
+adj[36][0] =  nullNode;
+adj[36][1] =  cyan5;
+adj[36][2] =  magenta5;
+adj[36][3] =  yellow5;
+adj[36][4] =  nullNode;
+adj[36][5] =  blue5;
+adj[36][6] =  green5;
+adj[36][7] =  red5;
 
 
+
+//Add Comment
+
+/*
   //this does not work
   //array is not being created correctly for some reason
   Serial.println(adj2[0][0]->toString());
@@ -257,7 +519,7 @@ void Graph::bruteForceInit() {
 
   memcpy(adj, adj2, sizeof(adj2));
 
-
+*/
   //Serial.println("Graph Test - memcpy done bf init");
   //delay(1000);
 
