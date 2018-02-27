@@ -11,7 +11,7 @@ class Graph		//class or struct?
 protected:
 	int V;
 	//HashMap<Node*, Node*[8]> graph;
-	Node adj[37][8];
+	Node* adj[37][8];
 
 	int numTokens[7];
 	Node* currentNode;
@@ -31,9 +31,20 @@ public:
 	const char* toString();
 	Node* moveInDirection(int dir);
   void graphTest();
+  void printRawGraph();
 
 
 	void bruteForceInit();
+  
+
+private:
+    Node * redBox, * red1, * red2, * red3, * red4, * red5,
+		* greenBox, * green1, * green2, * green3, * green4, * green5,
+		* blueBox, * blue1, * blue2, * blue3, * blue4, * blue5,
+    * yellowBox, * yellow1, * yellow2, * yellow3, * yellow4, * yellow5,
+		* magentaBox,  * magenta1, * magenta2, * magenta3, * magenta4, * magenta5,
+		* cyanBox, * cyan1, * cyan2, * cyan3, * cyan4, * cyan5,
+		* greyBox, * nullNode;
 };
 
 #endif

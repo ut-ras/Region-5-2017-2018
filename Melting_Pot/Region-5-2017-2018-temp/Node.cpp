@@ -1,5 +1,6 @@
 #include "Node.h"
 #include <String.h>
+#include <Arduino.h>
 
 Node::Node() {
 	visited = false;
@@ -49,6 +50,14 @@ static char* colorTable[8] = {"red", "green", "blue", "yellow", "magenta", "cyan
 //<name:visited:tokenColor>
 char* Node::toString() {
 	char s[30];
+ 
+  //Serial.print("Node toString - name: ");
+  //Serial.println(name);
+  //delay(500);
+  //Serial.print("Node toString - tokenColor: ");
+  //Serial.println(tokenColor);
+  //delay(500);
+  
 	strcat(s, nameTable[name]);
 	strcat(s, ":");
 	strcat(s, (visited? "t" : "f"));

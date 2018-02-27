@@ -14,8 +14,6 @@ enum Name { R, R1, R2, R3, R4, R5,
 			C, C1, C2, C3, C4, C5,
 			X};	//'X' is grey cuz it's the 'crossroads'
 
-
-
 class Node
 {
 	public:
