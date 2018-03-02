@@ -39,12 +39,10 @@ Node* Graph::moveInDirection(int dir) {
 }
 
 Node* Graph::getNode(Name n) {
-	for (int i = 0; i < NUMBER_OF_NODES; i++) {
-		if (iterator[i]->getName() == n) {
-			return iterator[i];
-		}
+	if (n < 0 || n >= NUMBER_OF_NODES) {
+    return NULL;
 	}
-	return NULL;
+	return iterator[n];
 }
 
 /* BEAST of a function to create the entire map:
@@ -57,471 +55,352 @@ void Graph::bruteForceInit() {
 
 	int nodeCounter;
 
-  redBox = new Node();
-	red1 = new Node();
-	red2 = new Node();
-	red3 = new Node();
-	red4 = new Node();
-	red5 = new Node();
-  greenBox = new Node();
-	green1 = new Node();
-	green2 = new Node();
-	green3 = new Node();
-	green4 = new Node();
-	green5 = new Node();
-  blueBox = new Node();
-	blue1 = new Node();
-	blue2 = new Node();
-	blue3 = new Node();
-	blue4 = new Node();
-	blue5 = new Node();
-  yellowBox = new Node();
-	yellow1 = new Node();
-	yellow2 = new Node();
-	yellow3 = new Node();
-	yellow4 = new Node();
-	 yellow5 = new Node();
-  magentaBox = new Node();
-	 magenta1 = new Node();
-	 magenta2 = new Node();
-	magenta3 = new Node();
-	 magenta4 = new Node();
-	magenta5 = new Node();
-  cyanBox = new Node();
-	cyan1 = new Node();
-	 cyan2 = new Node();
-	 cyan3 = new Node();
-	 cyan4 = new Node();
-	 cyan5 = new Node();
-  greyBox = new Node();
-	 nullNode = new Node();
-
-
-	//Red
-	redBox->setName(Name::R);	//assign the enums (names)
-	red1->setName(Name::R1);
-	red2->setName(Name::R2);
-	red3->setName(Name::R3);
-	red4->setName(Name::R4);
-	red5->setName(Name::R5);
-	redBox->setVisited(false);			//initialize visited boolean
-	red1->setVisited(false);
-	red2->setVisited(false);
-	red3->setVisited(false);
-	red4->setVisited(false);
-	red5->setVisited(false);
-
-	//Green
-	greenBox->setName(Name::G);
-	green1->setName(Name::G1);
-	green2->setName(Name::G2);
-	green3->setName(Name::G3);
-	green4->setName(Name::G4);
-	green5->setName(Name::G5);
-	greenBox->setVisited(false);
-	green1->setVisited(false);
-	green2->setVisited(false);
-	green3->setVisited(false);
-	green4->setVisited(false);
-	green5->setVisited(false);
-
-	//Blue
-	blueBox->setName(Name::Bl);
-	blue1->setName(Name::Bl1);
-	blue2->setName(Name::Bl2);
-	blue3->setName(Name::Bl3);
-	blue4->setName(Name::Bl4);
-	blue5->setName(Name::Bl5);
-	blueBox->setVisited(false);
-	blue1->setVisited(false);
-	blue2->setVisited(false);
-	blue3->setVisited(false);
-	blue4->setVisited(false);
-	blue5->setVisited(false);
-
-	//Yellow
-	yellowBox->setName(Name::Y);
-	yellow1->setName(Name::Y1);
-	yellow2->setName(Name::Y2);
-	yellow3->setName(Name::Y3);
-	yellow4->setName(Name::Y4);
-	yellow5->setName(Name::Y5);
-	yellowBox->setVisited(false);
-	yellow1->setVisited(false);
-	yellow2->setVisited(false);
-	yellow3->setVisited(false);
-	yellow4->setVisited(false);
-	yellow5->setVisited(false);
-
-	//Magenta
-	magentaBox->setName(Name::M);
-	magenta1->setName(Name::M1);
-	magenta2->setName(Name::M2);
-	magenta3->setName(Name::M3);
-	magenta4->setName(Name::M4);
-	magenta5->setName(Name::M5);
-	magentaBox->setVisited(false);
-	magenta1->setVisited(false);
-	magenta2->setVisited(false);
-	magenta3->setVisited(false);
-	magenta4->setVisited(false);
-	magenta5->setVisited(false);
-
-	//Cyan
-	cyanBox->setName(Name::C);
-	cyan1->setName(Name::C1);
-	cyan2->setName(Name::C2);
-	cyan3->setName(Name::C3);
-	cyan4->setName(Name::C4);
-	cyan5->setName(Name::C5);
-	cyanBox->setVisited(false);
-	cyan1->setVisited(false);
-	cyan2->setVisited(false);
-	cyan3->setVisited(false);
-	cyan4->setVisited(false);
-	cyan5->setVisited(false);
-
-	//Grey
-	greyBox->setName(Name::X);
-	greyBox->setVisited(false);
-
-	//empty Nodes for blank spaces
-	nullNode->setAsNull();
+  redBox = new Node(Name::R, red);
+	red1 = new Node(Name::R1, red);
+	red2 = new Node(Name::R2, red);
+	red3 = new Node(Name::R3, red);
+	red4 = new Node(Name::R4, red);
+	red5 = new Node(Name::R5, red);
+  greenBox = new Node(Name::G, green);
+	green1 = new Node(Name::G1, green);
+	green2 = new Node(Name::G2, green);
+	green3 = new Node(Name::G3, green);
+	green4 = new Node(Name::G4, green);
+	green5 = new Node(Name::G5, green);
+  blueBox = new Node(Name::Bl, blue);
+	blue1 = new Node(Name::Bl1, blue);
+	blue2 = new Node(Name::Bl2, blue);
+	blue3 = new Node(Name::Bl3, blue);
+	blue4 = new Node(Name::Bl4, blue);
+	blue5 = new Node(Name::Bl5, blue);
+  yellowBox = new Node(Name::Y, yellow);
+	yellow1 = new Node(Name::Y1, yellow);
+	yellow2 = new Node(Name::Y2, yellow);
+	yellow3 = new Node(Name::Y3, yellow);
+	yellow4 = new Node(Name::Y4, yellow);
+	yellow5 = new Node(Name::Y5, yellow);
+  magentaBox = new Node(Name::M, magenta);
+	magenta1 = new Node(Name::M1, magenta);
+	magenta2 = new Node(Name::M2, magenta);
+	magenta3 = new Node(Name::M3, magenta);
+	magenta4 = new Node(Name::M4, magenta);
+	magenta5 = new Node(Name::M5, magenta);
+  cyanBox = new Node(Name::C, cyan);
+	cyan1 = new Node(Name::C1, cyan);
+	cyan2 = new Node(Name::C2, cyan);
+	cyan3 = new Node(Name::C3, cyan);
+	cyan4 = new Node(Name::C4, cyan);
+	cyan5 = new Node(Name::C5, cyan);
+  greyBox = new Node(Name::X, grey);
+	nullNode = new Node();
+  nullNode->setAsNull();
+	
 
   Serial.println("Graph Test - nodes created bf init");
   delay(500);
-
-  //this works
-  Serial.println(cyan4->toString());
-
-/////////////////////   Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-adj[0][0] =  nullNode;
-adj[0][1] =  nullNode;
-adj[0][2] =  nullNode;
-adj[0][3] =  red1;
-adj[0][4] =  nullNode;
-adj[0][5] =  nullNode;
-adj[0][6] =  nullNode;
-adj[0][7] =  nullNode;
-adj[1][0] =  nullNode;
-adj[1][1] =  nullNode;
-adj[1][2] =  cyan1;
-adj[1][3] =  red2;
-adj[1][4] =  green1;
-adj[1][5] =  nullNode;
-adj[1][6] =  nullNode;
-adj[1][7] =  nullNode;
-adj[2][0] =  nullNode;
-adj[2][1] =  nullNode;
-adj[2][2] =  cyan2;
-adj[2][3] =  red3;
-adj[2][4] =  green2;
-adj[2][5] =  nullNode;
-adj[2][6] =  nullNode;
-adj[2][7] =  nullNode;
-adj[3][0] =  nullNode;
-adj[3][1] =  nullNode;
-adj[3][2] =  cyan3;
-adj[3][3] =  red4;
-adj[3][4] =  green3;
-adj[3][5] =  nullNode;
-adj[3][6] =  nullNode;
-adj[3][7] =  nullNode;
-adj[4][0] =  nullNode;
-adj[4][1] =  nullNode;
-adj[4][2] =  cyan4;
-adj[4][3] =  red5;
-adj[4][4] =  green4;
-adj[4][5] =  nullNode;
-adj[4][6] =  nullNode;
-adj[4][7] =  nullNode;
-adj[5][0] =  nullNode;
-adj[5][1] =  nullNode;
-adj[5][2] =  cyan5;
-adj[5][3] =  greyBox;
-adj[5][4] =  green5;
-adj[5][5] =  nullNode;
-adj[5][6] =  nullNode;
-adj[5][7] =  nullNode;
-adj[6][0] =  nullNode;
-adj[6][1] =  nullNode;
-adj[6][2] =  green1;
-adj[6][3] =  nullNode;
-adj[6][4] =  nullNode;
-adj[6][5] =  nullNode;
-adj[6][6] =  nullNode;
-adj[6][7] =  nullNode;
-adj[7][0] =  red1;
-adj[7][1] =  nullNode;
-adj[7][2] =  green2;
-adj[7][3] =  nullNode;
-adj[7][4] =  blue1;
-adj[7][5] =  nullNode;
-adj[7][6] =  nullNode;
-adj[7][7] =  nullNode;
-adj[8][0] =  red2;
-adj[8][1] =  nullNode;
-adj[8][2] =  green3;
-adj[8][3] =  nullNode;
-adj[8][4] =  blue2;
-adj[8][5] =  nullNode;
-adj[8][6] =  nullNode;
-adj[8][7] =  nullNode;
-adj[9][0] =  red3;
-adj[9][1] =  nullNode;
-adj[9][2] =  green4;
-adj[9][3] =  nullNode;
-adj[9][4] =  blue3;
-adj[9][5] =  nullNode;
-adj[9][6] =  nullNode;
-adj[9][7] =  nullNode;
-adj[10][0] =  red4;
-adj[10][1] =  nullNode;
-adj[10][2] =  green5;
-adj[10][3] =  nullNode;
-adj[10][4] =  blue4;
-adj[10][5] =  nullNode;
-adj[10][6] =  nullNode;
-adj[10][7] =  nullNode;
-adj[11][0] =  red5;
-adj[11][1] =  nullNode;
-adj[11][2] =  greyBox;
-adj[11][3] =  nullNode;
-adj[11][4] =  blue5;
-adj[11][5] =  nullNode;
-adj[11][6] =  nullNode;
-adj[11][7] =  nullNode;
-adj[12][0] =  nullNode;
-adj[12][1] =  blue1;
-adj[12][2] =  nullNode;
-adj[12][3] =  nullNode;
-adj[12][4] =  nullNode;
-adj[12][5] =  nullNode;
-adj[12][6] =  nullNode;
-adj[12][7] =  nullNode;
-adj[13][0] =  green1;
-adj[13][1] =  blue2;
-adj[13][2] =  yellow1;
-adj[13][3] =  nullNode;
-adj[13][4] =  nullNode;
-adj[13][5] =  nullNode;
-adj[13][6] =  nullNode;
-adj[13][7] =  nullNode;
-adj[14][0] =  green2;
-adj[14][1] =  blue3;
-adj[14][2] =  yellow2;
-adj[14][3] =  nullNode;
-adj[14][4] =  nullNode;
-adj[14][5] =  nullNode;
-adj[14][6] =  nullNode;
-adj[14][7] =  nullNode;
-adj[15][0] =  green3;
-adj[15][1] =  blue4;
-adj[15][2] =  yellow3;
-adj[15][3] =  nullNode;
-adj[15][4] =  nullNode;
-adj[15][5] =  nullNode;
-adj[15][6] =  nullNode;
-adj[15][7] =  nullNode;
-adj[16][0] =  green4;
-adj[16][1] =  blue5;
-adj[16][2] =  yellow4;
-adj[16][3] =  nullNode;
-adj[16][4] =  nullNode;
-adj[16][5] =  nullNode;
-adj[16][6] =  nullNode;
-adj[16][7] =  nullNode;
-adj[17][0] =  green5;
-adj[17][1] =  greyBox;
-adj[17][2] =  yellow5;
-adj[17][3] =  nullNode;
-adj[17][4] =  nullNode;
-adj[17][5] =  nullNode;
-adj[17][6] =  nullNode;
-adj[17][7] =  nullNode;
-adj[18][0] =  nullNode;
-adj[18][1] =  nullNode;
-adj[18][2] =  nullNode;
-adj[18][3] =  nullNode;
-adj[18][4] =  nullNode;
-adj[18][5] =  nullNode;
-adj[18][6] =  nullNode;
-adj[18][7] =  yellow1;
-adj[19][0] =  magenta1;
-adj[19][1] =  nullNode;
-adj[19][2] =  nullNode;
-adj[19][3] =  nullNode;
-adj[19][4] =  nullNode;
-adj[19][5] =  nullNode;
-adj[19][6] =  blue1;
-adj[19][7] =  yellow2;
-adj[20][0] =  magenta2;
-adj[20][1] =  nullNode;
-adj[20][2] =  nullNode;
-adj[20][3] =  nullNode;
-adj[20][4] =  nullNode;
-adj[20][5] =  nullNode;
-adj[20][6] =  blue2;
-adj[20][7] =  yellow3;
-adj[21][0] =  magenta3;
-adj[21][1] =  nullNode;
-adj[21][2] =  nullNode;
-adj[21][3] =  nullNode;
-adj[21][4] =  nullNode;
-adj[21][5] =  nullNode;
-adj[21][6] =  blue3;
-adj[21][7] =  yellow4;
-adj[22][0] =  magenta4;
-adj[22][1] =  nullNode;
-adj[22][2] =  nullNode;
-adj[22][3] =  nullNode;
-adj[22][4] =  nullNode;
-adj[22][5] =  nullNode;
-adj[22][6] =  blue4;
-adj[22][7] =  yellow5;
-adj[23][0] =  magenta5;
-adj[23][1] =  nullNode;
-adj[23][2] =  nullNode;
-adj[23][3] =  nullNode;
-adj[23][4] =  nullNode;
-adj[23][5] =  nullNode;
-adj[23][6] =  blue5;
-adj[23][7] =  greyBox;
-adj[24][0] =  nullNode;
-adj[24][1] =  nullNode;
-adj[24][2] =  nullNode;
-adj[24][3] =  nullNode;
-adj[24][4] =  nullNode;
-adj[24][5] =  nullNode;
-adj[24][6] =  magenta1;
-adj[24][7] =  nullNode;
-adj[25][0] =  cyan1;
-adj[25][1] =  nullNode;
-adj[25][2] =  nullNode;
-adj[25][3] =  nullNode;
-adj[25][4] =  yellow1;
-adj[25][5] =  nullNode;
-adj[25][6] =  magenta2;
-adj[25][7] =  nullNode;
-adj[26][0] =  cyan2;
-adj[26][1] =  nullNode;
-adj[26][2] =  nullNode;
-adj[26][3] =  nullNode;
-adj[26][4] =  yellow2;
-adj[26][5] =  nullNode;
-adj[26][6] =  magenta3;
-adj[26][7] =  nullNode;
-adj[27][0] =  cyan3;
-adj[27][1] =  nullNode;
-adj[27][2] =  nullNode;
-adj[27][3] =  nullNode;
-adj[27][4] =  yellow3;
-adj[27][5] =  nullNode;
-adj[27][6] =  magenta4;
-adj[27][7] =  nullNode;
-adj[28][0] =  cyan4;
-adj[28][1] =  nullNode;
-adj[28][2] =  nullNode;
-adj[28][3] =  nullNode;
-adj[28][4] =  yellow4;
-adj[28][5] =  nullNode;
-adj[28][6] =  magenta5;
-adj[28][7] =  nullNode;
-adj[29][0] =  cyan5;
-adj[29][1] =  nullNode;
-adj[29][2] =  nullNode;
-adj[29][3] =  nullNode;
-adj[29][4] =  yellow5;
-adj[29][5] =  nullNode;
-adj[29][6] =  greyBox;
-adj[29][7] =  nullNode;
-adj[30][0] =  nullNode;
-adj[30][1] =  nullNode;
-adj[30][2] =  nullNode;
-adj[30][3] =  nullNode;
-adj[30][4] =  nullNode;
-adj[30][5] =  cyan1;
-adj[30][6] =  nullNode;
-adj[30][7] =  nullNode;
-adj[31][0] =  nullNode;
-adj[31][1] =  nullNode;
-adj[31][2] =  nullNode;
-adj[31][3] =  nullNode;
-adj[31][4] =  magenta1;
-adj[31][5] =  cyan2;
-adj[31][6] =  red1;
-adj[31][7] =  nullNode;
-adj[32][0] =  nullNode;
-adj[32][1] =  nullNode;
-adj[32][2] =  nullNode;
-adj[32][3] =  nullNode;
-adj[32][4] =  magenta2;
-adj[32][5] =  cyan3;
-adj[32][6] =  red2;
-adj[32][7] =  nullNode;
-adj[33][0] =  nullNode;
-adj[33][1] =  nullNode;
-adj[33][2] =  nullNode;
-adj[33][3] =  nullNode;
-adj[33][4] =  magenta3;
-adj[33][5] =  cyan4;
-adj[33][6] =  red3;
-adj[33][7] =  nullNode;
-adj[34][0] =  nullNode;
-adj[34][1] =  nullNode;
-adj[34][2] =  nullNode;
-adj[34][3] =  nullNode;
-adj[34][4] =  magenta4;
-adj[34][5] =  cyan5;
-adj[34][6] =  red4;
-adj[34][7] =  nullNode;
-adj[35][0] =  nullNode;
-adj[35][1] =  nullNode;
-adj[35][2] =  nullNode;
-adj[35][3] =  nullNode;
-adj[35][4] =  magenta5;
-adj[35][5] =  greyBox;
-adj[35][6] =  red5;
-adj[35][7] =  nullNode;
-adj[36][0] =  nullNode;
-adj[36][1] =  cyan5;
-adj[36][2] =  magenta5;
-adj[36][3] =  yellow5;
-adj[36][4] =  nullNode;
-adj[36][5] =  blue5;
-adj[36][6] =  green5;
-adj[36][7] =  red5;
-
-
-
-//Add Comment
-
-/*
-  //this does not work
-  //array is not being created correctly for some reason
-  Serial.println(adj2[0][0]->toString());
   
-  int r = 0;
-  int c = 0;
-  for (r = 0; r < 37; r++) {
-    for (c = 0; c < 8; c++) {
-      Serial.print("[");
-      Serial.print(adj2[r][c]->toString());
-      Serial.print("]");
-      delay(500);
-    }
-    Serial.print("\n");
-  }
+  // Now set up each individual adjacency lists and add them to the hash map and iterator  \\\\\\\\\\
+  
+  adj[0][0] =  nullNode;
+  adj[0][1] =  nullNode;
+  adj[0][2] =  nullNode;
+  adj[0][3] =  red1;
+  adj[0][4] =  nullNode;
+  adj[0][5] =  nullNode;
+  adj[0][6] =  nullNode;
+  adj[0][7] =  nullNode;
+  adj[1][0] =  nullNode;
+  adj[1][1] =  nullNode;
+  adj[1][2] =  cyan1;
+  adj[1][3] =  red2;
+  adj[1][4] =  green1;
+  adj[1][5] =  nullNode;
+  adj[1][6] =  nullNode;
+  adj[1][7] =  nullNode;
+  adj[2][0] =  nullNode;
+  adj[2][1] =  nullNode;
+  adj[2][2] =  cyan2;
+  adj[2][3] =  red3;
+  adj[2][4] =  green2;
+  adj[2][5] =  nullNode;
+  adj[2][6] =  nullNode;
+  adj[2][7] =  nullNode;
+  adj[3][0] =  nullNode;
+  adj[3][1] =  nullNode;
+  adj[3][2] =  cyan3;
+  adj[3][3] =  red4;
+  adj[3][4] =  green3;
+  adj[3][5] =  nullNode;
+  adj[3][6] =  nullNode;
+  adj[3][7] =  nullNode;
+  adj[4][0] =  nullNode;
+  adj[4][1] =  nullNode;
+  adj[4][2] =  cyan4;
+  adj[4][3] =  red5;
+  adj[4][4] =  green4;
+  adj[4][5] =  nullNode;
+  adj[4][6] =  nullNode;
+  adj[4][7] =  nullNode;
+  adj[5][0] =  nullNode;
+  adj[5][1] =  nullNode;
+  adj[5][2] =  cyan5;
+  adj[5][3] =  greyBox;
+  adj[5][4] =  green5;
+  adj[5][5] =  nullNode;
+  adj[5][6] =  nullNode;
+  adj[5][7] =  nullNode;
+  adj[6][0] =  nullNode;
+  adj[6][1] =  nullNode;
+  adj[6][2] =  green1;
+  adj[6][3] =  nullNode;
+  adj[6][4] =  nullNode;
+  adj[6][5] =  nullNode;
+  adj[6][6] =  nullNode;
+  adj[6][7] =  nullNode;
+  adj[7][0] =  red1;
+  adj[7][1] =  nullNode;
+  adj[7][2] =  green2;
+  adj[7][3] =  nullNode;
+  adj[7][4] =  blue1;
+  adj[7][5] =  nullNode;
+  adj[7][6] =  nullNode;
+  adj[7][7] =  nullNode;
+  adj[8][0] =  red2;
+  adj[8][1] =  nullNode;
+  adj[8][2] =  green3;
+  adj[8][3] =  nullNode;
+  adj[8][4] =  blue2;
+  adj[8][5] =  nullNode;
+  adj[8][6] =  nullNode;
+  adj[8][7] =  nullNode;
+  adj[9][0] =  red3;
+  adj[9][1] =  nullNode;
+  adj[9][2] =  green4;
+  adj[9][3] =  nullNode;
+  adj[9][4] =  blue3;
+  adj[9][5] =  nullNode;
+  adj[9][6] =  nullNode;
+  adj[9][7] =  nullNode;
+  adj[10][0] =  red4;
+  adj[10][1] =  nullNode;
+  adj[10][2] =  green5;
+  adj[10][3] =  nullNode;
+  adj[10][4] =  blue4;
+  adj[10][5] =  nullNode;
+  adj[10][6] =  nullNode;
+  adj[10][7] =  nullNode;
+  adj[11][0] =  red5;
+  adj[11][1] =  nullNode;
+  adj[11][2] =  greyBox;
+  adj[11][3] =  nullNode;
+  adj[11][4] =  blue5;
+  adj[11][5] =  nullNode;
+  adj[11][6] =  nullNode;
+  adj[11][7] =  nullNode;
+  adj[12][0] =  nullNode;
+  adj[12][1] =  blue1;
+  adj[12][2] =  nullNode;
+  adj[12][3] =  nullNode;
+  adj[12][4] =  nullNode;
+  adj[12][5] =  nullNode;
+  adj[12][6] =  nullNode;
+  adj[12][7] =  nullNode;
+  adj[13][0] =  green1;
+  adj[13][1] =  blue2;
+  adj[13][2] =  yellow1;
+  adj[13][3] =  nullNode;
+  adj[13][4] =  nullNode;
+  adj[13][5] =  nullNode;
+  adj[13][6] =  nullNode;
+  adj[13][7] =  nullNode;
+  adj[14][0] =  green2;
+  adj[14][1] =  blue3;
+  adj[14][2] =  yellow2;
+  adj[14][3] =  nullNode;
+  adj[14][4] =  nullNode;
+  adj[14][5] =  nullNode;
+  adj[14][6] =  nullNode;
+  adj[14][7] =  nullNode;
+  adj[15][0] =  green3;
+  adj[15][1] =  blue4;
+  adj[15][2] =  yellow3;
+  adj[15][3] =  nullNode;
+  adj[15][4] =  nullNode;
+  adj[15][5] =  nullNode;
+  adj[15][6] =  nullNode;
+  adj[15][7] =  nullNode;
+  adj[16][0] =  green4;
+  adj[16][1] =  blue5;
+  adj[16][2] =  yellow4;
+  adj[16][3] =  nullNode;
+  adj[16][4] =  nullNode;
+  adj[16][5] =  nullNode;
+  adj[16][6] =  nullNode;
+  adj[16][7] =  nullNode;
+  adj[17][0] =  green5;
+  adj[17][1] =  greyBox;
+  adj[17][2] =  yellow5;
+  adj[17][3] =  nullNode;
+  adj[17][4] =  nullNode;
+  adj[17][5] =  nullNode;
+  adj[17][6] =  nullNode;
+  adj[17][7] =  nullNode;
+  adj[18][0] =  nullNode;
+  adj[18][1] =  nullNode;
+  adj[18][2] =  nullNode;
+  adj[18][3] =  nullNode;
+  adj[18][4] =  nullNode;
+  adj[18][5] =  nullNode;
+  adj[18][6] =  nullNode;
+  adj[18][7] =  yellow1;
+  adj[19][0] =  magenta1;
+  adj[19][1] =  nullNode;
+  adj[19][2] =  nullNode;
+  adj[19][3] =  nullNode;
+  adj[19][4] =  nullNode;
+  adj[19][5] =  nullNode;
+  adj[19][6] =  blue1;
+  adj[19][7] =  yellow2;
+  adj[20][0] =  magenta2;
+  adj[20][1] =  nullNode;
+  adj[20][2] =  nullNode;
+  adj[20][3] =  nullNode;
+  adj[20][4] =  nullNode;
+  adj[20][5] =  nullNode;
+  adj[20][6] =  blue2;
+  adj[20][7] =  yellow3;
+  adj[21][0] =  magenta3;
+  adj[21][1] =  nullNode;
+  adj[21][2] =  nullNode;
+  adj[21][3] =  nullNode;
+  adj[21][4] =  nullNode;
+  adj[21][5] =  nullNode;
+  adj[21][6] =  blue3;
+  adj[21][7] =  yellow4;
+  adj[22][0] =  magenta4;
+  adj[22][1] =  nullNode;
+  adj[22][2] =  nullNode;
+  adj[22][3] =  nullNode;
+  adj[22][4] =  nullNode;
+  adj[22][5] =  nullNode;
+  adj[22][6] =  blue4;
+  adj[22][7] =  yellow5;
+  adj[23][0] =  magenta5;
+  adj[23][1] =  nullNode;
+  adj[23][2] =  nullNode;
+  adj[23][3] =  nullNode;
+  adj[23][4] =  nullNode;
+  adj[23][5] =  nullNode;
+  adj[23][6] =  blue5;
+  adj[23][7] =  greyBox;
+  adj[24][0] =  nullNode;
+  adj[24][1] =  nullNode;
+  adj[24][2] =  nullNode;
+  adj[24][3] =  nullNode;
+  adj[24][4] =  nullNode;
+  adj[24][5] =  nullNode;
+  adj[24][6] =  magenta1;
+  adj[24][7] =  nullNode;
+  adj[25][0] =  cyan1;
+  adj[25][1] =  nullNode;
+  adj[25][2] =  nullNode;
+  adj[25][3] =  nullNode;
+  adj[25][4] =  yellow1;
+  adj[25][5] =  nullNode;
+  adj[25][6] =  magenta2;
+  adj[25][7] =  nullNode;
+  adj[26][0] =  cyan2;
+  adj[26][1] =  nullNode;
+  adj[26][2] =  nullNode;
+  adj[26][3] =  nullNode;
+  adj[26][4] =  yellow2;
+  adj[26][5] =  nullNode;
+  adj[26][6] =  magenta3;
+  adj[26][7] =  nullNode;
+  adj[27][0] =  cyan3;
+  adj[27][1] =  nullNode;
+  adj[27][2] =  nullNode;
+  adj[27][3] =  nullNode;
+  adj[27][4] =  yellow3;
+  adj[27][5] =  nullNode;
+  adj[27][6] =  magenta4;
+  adj[27][7] =  nullNode;
+  adj[28][0] =  cyan4;
+  adj[28][1] =  nullNode;
+  adj[28][2] =  nullNode;
+  adj[28][3] =  nullNode;
+  adj[28][4] =  yellow4;
+  adj[28][5] =  nullNode;
+  adj[28][6] =  magenta5;
+  adj[28][7] =  nullNode;
+  adj[29][0] =  cyan5;
+  adj[29][1] =  nullNode;
+  adj[29][2] =  nullNode;
+  adj[29][3] =  nullNode;
+  adj[29][4] =  yellow5;
+  adj[29][5] =  nullNode;
+  adj[29][6] =  greyBox;
+  adj[29][7] =  nullNode;
+  adj[30][0] =  nullNode;
+  adj[30][1] =  nullNode;
+  adj[30][2] =  nullNode;
+  adj[30][3] =  nullNode;
+  adj[30][4] =  nullNode;
+  adj[30][5] =  cyan1;
+  adj[30][6] =  nullNode;
+  adj[30][7] =  nullNode;
+  adj[31][0] =  nullNode;
+  adj[31][1] =  nullNode;
+  adj[31][2] =  nullNode;
+  adj[31][3] =  nullNode;
+  adj[31][4] =  magenta1;
+  adj[31][5] =  cyan2;
+  adj[31][6] =  red1;
+  adj[31][7] =  nullNode;
+  adj[32][0] =  nullNode;
+  adj[32][1] =  nullNode;
+  adj[32][2] =  nullNode;
+  adj[32][3] =  nullNode;
+  adj[32][4] =  magenta2;
+  adj[32][5] =  cyan3;
+  adj[32][6] =  red2;
+  adj[32][7] =  nullNode;
+  adj[33][0] =  nullNode;
+  adj[33][1] =  nullNode;
+  adj[33][2] =  nullNode;
+  adj[33][3] =  nullNode;
+  adj[33][4] =  magenta3;
+  adj[33][5] =  cyan4;
+  adj[33][6] =  red3;
+  adj[33][7] =  nullNode;
+  adj[34][0] =  nullNode;
+  adj[34][1] =  nullNode;
+  adj[34][2] =  nullNode;
+  adj[34][3] =  nullNode;
+  adj[34][4] =  magenta4;
+  adj[34][5] =  cyan5;
+  adj[34][6] =  red4;
+  adj[34][7] =  nullNode;
+  adj[35][0] =  nullNode;
+  adj[35][1] =  nullNode;
+  adj[35][2] =  nullNode;
+  adj[35][3] =  nullNode;
+  adj[35][4] =  magenta5;
+  adj[35][5] =  greyBox;
+  adj[35][6] =  red5;
+  adj[35][7] =  nullNode;
+  adj[36][0] =  nullNode;
+  adj[36][1] =  cyan5;
+  adj[36][2] =  magenta5;
+  adj[36][3] =  yellow5;
+  adj[36][4] =  nullNode;
+  adj[36][5] =  blue5;
+  adj[36][6] =  green5;
+  adj[36][7] =  red5;
+  
   
   Serial.println("Graph Test - array created bf init");
   delay(500);
-
-  memcpy(adj, adj2, sizeof(adj2));
-
-*/
-  //Serial.println("Graph Test - memcpy done bf init");
-  //delay(1000);
 
   //Red
 	iterator[0] = redBox;
@@ -542,15 +421,6 @@ adj[36][7] =  red5;
 	iterator[11] = green5;
 
 	//Blue
-
-	/*
-	graph[12](blueBox, adjB);
-	graph[13](blue1, adjBl1);
-	graph[14](blue2, adjBl2);
-	graph[15](blue3, adjBl3);
-	graph[16](blue4, adjBl4);
-	graph[17](blue5, adjBl5);
-	*/
 	iterator[12] = blueBox;
 	iterator[13] = blue1;
 	iterator[14] = blue2;
@@ -559,15 +429,6 @@ adj[36][7] =  red5;
 	iterator[17] = blue5;
 
 	//Yellows:
-
-	/*
-	graph[18](yellowBox, adjY);
-	graph[19](yellow1, adjY1);
-	graph[20](yellow2, adjY2);
-	graph[21](yellow3, adjY3);
-	graph[22](yellow4, adjY4);
-	graph[23](yellow5, adjY5);
-	*/
 	iterator[18] = yellowBox;
 	iterator[19] = yellow1;
 	iterator[20] = yellow2;
@@ -576,15 +437,6 @@ adj[36][7] =  red5;
 	iterator[23] = yellow5;
 
 	//Magentas:
-
-	/*
-	graph[24](magentaBox, adjM);
-	graph[25](magenta1, adjM1);
-	graph[26](magenta2, adjM2);
-	graph[27](magenta3, adjM3);
-	graph[28](magenta4, adjM4);
-	graph[29](magenta5, adjM5);
-	*/
 	iterator[24] = magentaBox;
 	iterator[25] = magenta1;
 	iterator[26] = magenta2;
@@ -593,15 +445,6 @@ adj[36][7] =  red5;
 	iterator[29] = magenta5;
 
 	//Cyans:
-
-	/*
-	graph[30](cyanBox, adjC);
-	graph[31](cyan1, adjC1);
-	graph[32](cyan2, adjC2);
-	graph[33](cyan3, adjC3);
-	graph[34](cyan4, adjC4);
-	graph[35](cyan5, adjC5);
-	*/
 	iterator[30] = cyanBox;
 	iterator[31] = cyan1;
 	iterator[32] = cyan2;
@@ -610,15 +453,44 @@ adj[36][7] =  red5;
 	iterator[35] = cyan5;
 
 	//Greys:
-
-	//graph[36](greyBox, adjX)
 	iterator[36] = greyBox;
 
   Serial.println("Graph Test - end of bf init\n");
   delay(500);
 }
 
-/* Iterates through every node and creates a string describing the map's current state such that
+void Graph::printRawGraph() {
+  int r = 0;
+  int c = 0;
+
+  Serial.println("Node\t\t\tAdjacency List");
+   
+  for (r = 0; r < 37; r++) {
+    Serial.print("[");
+    Serial.print(iterator[r]->nameToString());
+    if (iterator[r]->getMapColor() == red) {
+      Serial.print("]   \t");
+    }else {
+      Serial.print("]\t");
+    }
+    
+    for (c = 0; c < 8; c++) {
+      Node * current = adj[r][c];
+      Serial.print("[");
+      Serial.print(current->nameToString());
+      if (current->getMapColor() == red) {
+        Serial.print("]   \t\t");
+      }else {
+        Serial.print("]\t\t");
+      }
+      delay(30);
+    }
+    Serial.print("\n");
+  }
+}
+
+/* Not tested
+ *  Iterates through every node and creates a string describing the map's current state such that
     - Nodes are '/' delimited
     - per-node information is formatted as described in Node::toString()
  */
@@ -632,7 +504,6 @@ const char* Graph::toString() {
 }
 
 /* TESTS */
-
 
 
 //call in loop or setup or wherever, it will stop at end
@@ -688,17 +559,4 @@ void Graph::graphTest() {
 
 }
 
-void Graph::printRawGraph() {
-  int r = 0;
-  int c = 0;
 
-  for (r = 0; r < 37; r++) {
-    for (c = 0; c < 8; c++) {
-      Serial.print("[");
-      Node * current = adj[r][c];
-      Serial.print(current->getName());
-      Serial.print("]");
-    }
-    Serial.print("\n");
-  }
-}

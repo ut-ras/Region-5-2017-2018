@@ -20,7 +20,6 @@ class Node
 
 		Node();
     Node(Name n, Color mc);
-		//Node(int n, int mc, int d); //n = Name, mc = Color
 		Name getName();
 		void setName(Name n);
 		bool getVisited();
@@ -32,6 +31,9 @@ class Node
 		void setAsNull();
 		bool isNull();
 
+    char* nameToString();
+    char* colorToChar(Color c);
+    
 	protected:
 
 		Name name;
@@ -44,11 +46,7 @@ class Node
 
 		bool isNullNode;
 
-		char* nameToString();
 
-	/* Use the lookup  tables for these values
-	char colorToChar(Color c);
-*/
 
 
 };

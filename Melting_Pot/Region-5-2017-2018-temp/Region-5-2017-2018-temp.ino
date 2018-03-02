@@ -16,7 +16,7 @@ void loop() {
 
   
   g.bruteForceInit();
-  //g.printRawGraph();
+  g.printRawGraph();
   g.graphTest();
 }
 

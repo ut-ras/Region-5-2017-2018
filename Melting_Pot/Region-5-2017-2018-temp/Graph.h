@@ -1,17 +1,16 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-//#include <HashMap.h>
 #include "Node.h"
-//https://playground.arduino.cc/Code/HashMap		 graph[0](Node,Node[8]);
-#define NUMBER_OF_NODES 31
+
+#define NUMBER_OF_NODES 37
 
 class Graph		//class or struct?
 {
 protected:
 	int V;
 	//HashMap<Node*, Node*[8]> graph;
-	Node* adj[37][8];
+	Node* adj[NUMBER_OF_NODES][8];
 
 	int numTokens[7];
 	Node* currentNode;
