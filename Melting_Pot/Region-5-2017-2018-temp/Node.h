@@ -33,6 +33,8 @@ class Node
 
     char* nameToString();
     char* colorToChar(Color c);
+
+    int getDepth();
     
 	protected:
 

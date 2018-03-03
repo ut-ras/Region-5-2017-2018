@@ -459,11 +459,12 @@ void Graph::bruteForceInit() {
   delay(500);
 }
 
+
 void Graph::printRawGraph() {
   int r = 0;
   int c = 0;
 
-  Serial.println("Node\t\t\tAdjacency List");
+  Serial.println("Node\t\tAdjacency List");
    
   for (r = 0; r < 37; r++) {
     Serial.print("[");
@@ -477,7 +478,7 @@ void Graph::printRawGraph() {
     for (c = 0; c < 8; c++) {
       Node * current = adj[r][c];
       Serial.print("[");
-      Serial.print(current->nameToString());
+      Serial.print(current->toString());
       if (current->getMapColor() == red) {
         Serial.print("]   \t\t");
       }else {
@@ -489,11 +490,9 @@ void Graph::printRawGraph() {
   }
 }
 
-/* Not tested
- *  Iterates through every node and creates a string describing the map's current state such that
+/* Not tested - Iterates through every node and creates a string describing the map's current state such that
     - Nodes are '/' delimited
-    - per-node information is formatted as described in Node::toString()
- */
+    - per-node information is formatted as described in Node::toString()  */
 const char* Graph::toString() {
 	char* result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
@@ -503,8 +502,10 @@ const char* Graph::toString() {
 	}
 }
 
-/* TESTS */
 
+
+
+/* TESTS */
 
 //call in loop or setup or wherever, it will stop at end
 void Graph::graphTest() {

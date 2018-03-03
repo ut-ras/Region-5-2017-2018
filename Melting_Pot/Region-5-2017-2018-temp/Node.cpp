@@ -38,6 +38,10 @@ Color Node::getMapColor() {
 	return mapColor;
 }
 
+int Node::getDepth() {
+  return depth;
+}
+
 static char* nameTable[37] = {"Red B", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5",
                           "Green B", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5",
                 "Blue B", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
@@ -58,7 +62,10 @@ char* Node::toString() {
     strcat(s, nameToString());
   }
   else {
-	  strcat(s, nameToString());
+	  strcat(s, colorToChar(mapColor));
+    char d[2];
+    itoa(depth, d, 10);
+    strcat(s, d);
     strcat(s, ":");
     strcat(s, (visited? "t" : "f"));
     strcat(s, ":");
