@@ -496,7 +496,7 @@ void Graph::printRawGraph() {
 const char* Graph::toString() {
 	char* result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
-		*result = iterator[i]->toString();		// legal syntax in C++ ?
+		result = iterator[i]->toString();		// legal syntax in C++ ?
 		Serial.print(result);
 	}
 }
@@ -553,7 +553,7 @@ void Graph::graphTest() {
     //Serial.println("End of Loop");
     //delay(500);
 
-    Serial.println(gA.toString);
+    Serial.println(gA.toString());
   }
 
   while(1);
