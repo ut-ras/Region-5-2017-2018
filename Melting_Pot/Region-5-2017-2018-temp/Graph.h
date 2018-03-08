@@ -19,9 +19,9 @@ protected:
 
 public:
 	Graph();
-	Node* getNode(Name n);  //n is Name
-	int getNumTokens(int c); //c is Color
-	int addToken(int c); //c is Color
+	Node* getNode(Name n);  	//n is Name
+	int getNumTokens(int c); 	//c is Color
+	int addToken(int c); 		//c is Color
 	Node* getCurrentNode();
 	void setCurrentNode(Node *n);
 	void setCurrentDirection(int direction);
@@ -29,9 +29,8 @@ public:
 	Node* getNeighbor(Node *n, int direction);
 	const char* toString();
 	Node* moveInDirection(int dir);
-  void graphTest();
-  void printRawGraph();
-
+  	void graphTest();
+  	void printRawGraph();
 
 	void bruteForceInit();
   

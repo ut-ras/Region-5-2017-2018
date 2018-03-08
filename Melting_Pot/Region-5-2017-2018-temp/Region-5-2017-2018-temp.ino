@@ -9,7 +9,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Graph Test - main loop");
+  //Serial.println("Graph Test - main loop");
   delay(1000);
   Graph g;
 
@@ -17,6 +17,7 @@ void loop() {
   
   g.bruteForceInit();
   g.printRawGraph();
-  g.graphTest();
+  //g.graphTest();
+  delay(60000);
 }
-
+  

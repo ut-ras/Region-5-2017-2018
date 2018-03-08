@@ -496,9 +496,8 @@ void Graph::printRawGraph() {
 const char* Graph::toString() {
 	char* result;
 	for(int i=0; i < NUMBER_OF_NODES; i++) {
-		*result += iterator[i]->toString();		// legal syntax in C++ ?
-		if(i != NUMBER_OF_NODES)
-			*result += '/'; 		// nodes will be '/' delimited
+		result = iterator[i]->toString();		// legal syntax in C++ ?
+		Serial.print(result);
 	}
 }
 
@@ -509,14 +508,14 @@ const char* Graph::toString() {
 
 //call in loop or setup or wherever, it will stop at end
 void Graph::graphTest() {
-  Serial.println("Graph Test - inside graph test\n");
+  //Serial.println("Graph Test - inside graph test\n");
   delay(1000);
 
   Graph gA;
   Node *endNode = gA.getNode(Name::X); //so we're ending in the center
   //Serial.print("end node: ");
   //Serial.println(endNode->toString());
-  delay(500);
+  //delay(500);
 
   int loopPath[6] = {0, 0, 2, 4, 4, 1};
   int numPathDirs;
@@ -530,10 +529,10 @@ void Graph::graphTest() {
   Node *currentNode;
   Node *nextNode;
   for(int i=0; currentNode->getName() != endNode->getName(); i++) {
-    Serial.print("Traversal reached node: ");
-    delay(500);
-    Serial.println(currentNode->toString());
-    delay(500);
+    //Serial.print("Traversal reached node: ");
+    //delay(500);
+    //Serial.println(currentNode->toString());
+    //delay(500);
 
     /*if(currentNode->getName() != expectedNames[i]){
       Serial.println("Graph traversal test failed on step %d, node: %s and actual %s\n", i, currentNode->getName());
@@ -542,18 +541,19 @@ void Graph::graphTest() {
     nextDir = loopPath[i % numPathDirs];
     nextNode = gA.getNeighbor(currentNode, nextDir);
 
-    Serial.println("Found next node");
-    delay(500);
+    //Serial.println("Found next node");
+    //delay(500);
 
     gA.setCurrentNode(nextNode);
     currentNode = gA.getCurrentNode();
 
-    Serial.println("Set Next Node");
-    delay(500);
+    //Serial.println("Set Next Node");
+    //delay(500);
 
+    //Serial.println("End of Loop");
+    //delay(500);
 
-    Serial.println("End of Loop");
-    delay(500);
+    Serial.println(gA.toString());
   }
 
   while(1);
