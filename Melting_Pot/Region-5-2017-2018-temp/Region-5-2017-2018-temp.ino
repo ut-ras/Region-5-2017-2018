@@ -4,20 +4,18 @@
 
 void setup() {
   Serial.begin(9600);
-  //Serial.println("Graph Test - setup");
+  Serial.println("Graph Test - setup");
   delay(1000);
 }
 
 void loop() {
-  //Serial.println("Graph Test - main loop");
+  Serial.println("Graph Test - main loop");
   delay(1000);
-  Graph g;
-
-
   
-  g.bruteForceInit();
+  Graph g;
   g.printRawGraph();
-  //g.graphTest();
+  g.graphTest();
+  
   delay(60000);
 }
   

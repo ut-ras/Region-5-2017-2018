@@ -5,7 +5,7 @@
 Graph::Graph() {
   //Serial.println("Graph Test - inside init");
   //delay(1000);
-	//bruteForceInit();
+	bruteForceInit();
 }
 
 /* returns the node the bot is currently located at */
@@ -480,7 +480,7 @@ void Graph::printRawGraph() {
       }else {
         Serial.print("]\t\t");
       }
-      delay(30);
+      delay(10);
     }
     Serial.print("\n");
   }
@@ -511,54 +511,53 @@ char* Graph::toString() {
 
 //call in loop or setup or wherever, it will stop at end
 void Graph::graphTest() {
-
-  //BIG TODO: this test should either use the graph object that we are inside of, or call bfinit on gA
   
-  //Serial.println("Graph Test - inside graph test\n");
+  Serial.println("Graph Test - inside graph test\n");
   delay(1000);
 
-  Graph gA;
-  Node *endNode = gA.getNode(Name::X); //so we're ending in the center
-  //Serial.print("end node: ");
-  //Serial.println(endNode->toString());
-  //delay(500);
+  Node *endNode = getNode(Name::X); //so we're ending in the center
+  Serial.print("end node: ");
+  Serial.println(endNode->toString());
+  delay(500);
 
-  int loopPath[6] = {0, 0, 2, 4, 4, 1};
-  int numPathDirs;
+  int loopPath[7] = {0, 0, 2, 4, 4, 7, 6};
+  int numPathDirs = 7;
+  int nextDir = 0;
 
-  gA.setCurrentNode(gA.getNode(Name::Bl1));
-  gA.setCurrentDirection(0);
-  numPathDirs = 6;  //loopPath.size();
-
-  //Serial.println("Current Node is: " + g->getCurrentNode() + "\nCurrent Direction is: " + g->getCurrentDirection());
-  int nextDir;
-  Node *currentNode;
+  setCurrentNode(getNode(Name::Bl1));
+  setCurrentDirection(0);
   Node *nextNode;
-  for(int i=0; currentNode->getName() != endNode->getName(); i++) {
-    Serial.print("Traversal reached node: ");
-    delay(500);
+  
+  for(int i=0; getCurrentNode()->getName() != endNode->getName(); i++) {
+    Serial.print("Current Node: ");
 
     //Remove all print statements in this file except this one for gui test, not sure if we want print or println, depends if gui looks for new line or not
-    Serial.println(currentNode->toString());    
-    delay(500);
+    Serial.println(getCurrentNode()->toString());    
 
     /*if(currentNode->getName() != expectedNames[i]){
       Serial.println("Graph traversal test failed on step %d, node: %s and actual %s\n", i, currentNode->getName());
     }*/
 
-    nextDir = loopPath[i % numPathDirs];
-    nextNode = gA.getNeighbor(currentNode, nextDir);
-
-    Serial.println("Found next node");
-    delay(500);
-
-    gA.setCurrentNode(nextNode);
-    currentNode = gA.getCurrentNode();
-
-    Serial.println("Set Next Node, End of Loop");
+    if(getCurrentNode()->isNull()){
+      Serial.println("Hit an empty node");
+      break;
+    } 
+    else {
+      nextDir = loopPath[i % numPathDirs];
+      setCurrentDirection(nextDir);
+      nextNode = getNeighbor(getCurrentNode(), nextDir);
+      setCurrentNode(nextNode);
+  
+      Serial.print("Moved in direction: ");
+      Serial.println(getCurrentDirection());
+    }
+    
     delay(500);
   }
-
+  
+  Serial.print("Current Node: ");
+  Serial.println(getCurrentNode()->toString()); 
+     
   /* NOTES FROM LAST WEEK BEFORE SPRING BREAK
    *  I reverted some stuff in Graph back a few commits for a few reasons
    *    - if testing with gui, each loop we should just be printing the Node toString not the entire graph, only one node changes at a time
