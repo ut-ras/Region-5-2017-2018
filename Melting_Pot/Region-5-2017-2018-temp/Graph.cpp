@@ -4,7 +4,6 @@
 
 Graph::Graph() {
   //Serial.println("Graph Test - inside init");
-  //delay(1000);
 	bruteForceInit();
 }
 
@@ -449,12 +448,12 @@ void Graph::bruteForceInit() {
 	//Greys:
 	iterator[36] = &greyBox;
 
-  Serial.println("Graph Test - end of bf init\n");
-  delay(500);
+  //Serial.println("Graph Test - end of bf init\n");
+  //delay(500);
 }
 
 
-void Graph::printRawGraph() {
+void Graph::printSerial() {
   int r = 0;
   int c = 0;
 
@@ -486,35 +485,21 @@ void Graph::printRawGraph() {
   }
 }
 
-/* NOTICE: read the comments/ func names, toString isnt supposed to be a serial function
-    also we aren't using this yet, if you are looking for the function that just easily prints over serial check printRawGraph 
-    this string is really long and unfriendly to our memory so we might not use this at all */
-/* Not tested or being used yet - Iterates through every node and creates a string describing the map's current state such that
-    - Nodes are '/' delimited
-    - per-node information is formatted as described in Node::toString()  
-    - returns a char*         */
-char* Graph::toString() {
-	char result[370];
-	for(int i=0; i < NUMBER_OF_NODES; i++) {
-		strcat(result, iterator[i]->toString());
-		if(i != NUMBER_OF_NODES) {
-      strcat(result, "/");     // nodes will be '/' delimited
-		}
-	}
- return result;
-}
-
-
-
 
 /* TESTS */
 
-//call in loop or setup or wherever, it will stop at end
+/* Graph Traversal Test
+ * call in loop or setup or wherever, it will halt program at end of test
+ * Spirals to center of map through all nodes, prints each node
+ * Tests on this graph object
+ */
 void Graph::graphTest() {
   
   Serial.println("Graph Test - inside graph test\n");
   delay(1000);
 
+  printSerial();
+  
   Node *endNode = getNode(Name::X); //so we're ending in the center
   Serial.print("end node: ");
   Serial.println(endNode->toString());
@@ -531,7 +516,7 @@ void Graph::graphTest() {
   for(int i=0; getCurrentNode()->getName() != endNode->getName(); i++) {
     Serial.print("Current Node: ");
 
-    //Remove all print statements in this file except this one for gui test, not sure if we want print or println, depends if gui looks for new line or not
+    //Remove all print statements in this file except this one for gui test
     Serial.println(getCurrentNode()->toString());    
 
     /*if(currentNode->getName() != expectedNames[i]){
@@ -555,20 +540,28 @@ void Graph::graphTest() {
     delay(500);
   }
   
-  Serial.print("Current Node: ");
+  Serial.print("Final Node: ");
   Serial.println(getCurrentNode()->toString()); 
-     
-  /* NOTES FROM LAST WEEK BEFORE SPRING BREAK
-   *  I reverted some stuff in Graph back a few commits for a few reasons
-   *    - if testing with gui, each loop we should just be printing the Node toString not the entire graph, only one node changes at a time
-   *        > dont forget, should remove all other serial prints for gui test, there are a bunch in this file we should clean up
-   *    - calling Serial.print(gA.toString()) doesn't make sense if toString is calling Serial.print() inside it
-   *    - toString functions should always only return strings, and do nothing else (should be called something else if there is Serial.print, like printRawGraph)
-   *  So basically I fixed graph toString, the idea is to eventually use it to clean up printRawGraph, but that isnt important at the moment
-   */
 
   while(1);
-
 }
 
+
+/* NOTICE: we aren't using this yet, if you are looking for the function that just easily prints over serial check printRawGraph 
+ * this string is really long and unfriendly to our memory so we might not use this at all
+ * Iterates through every node and creates a string describing the map's current state such that
+    - Nodes are '/' delimited
+    - per-node information is formatted as described in Node::toString()  
+    - returns a char*         
+*/
+char* Graph::toString() {
+  char result[370];
+  for(int i=0; i < NUMBER_OF_NODES; i++) {
+    strcat(result, iterator[i]->toString());
+    if(i != NUMBER_OF_NODES) {
+      strcat(result, "/");     // nodes will be '/' delimited
+    }
+  }
+ return result;
+}
 

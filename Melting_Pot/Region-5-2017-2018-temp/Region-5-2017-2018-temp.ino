@@ -13,7 +13,6 @@ void loop() {
   delay(1000);
   
   Graph g;
-  g.printRawGraph();
   g.graphTest();
   
   delay(60000);
