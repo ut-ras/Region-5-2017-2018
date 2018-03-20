@@ -26,6 +26,8 @@ public:
     bool r2;
   } pointlineData;
 
+  char* PLDatatoString(pointlineData data);
+
   intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
   pointlineData getData();
   pointlineData getNextIntersection();  //based on current location and direction in map
