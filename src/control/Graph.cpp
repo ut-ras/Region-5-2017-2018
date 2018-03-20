@@ -479,7 +479,7 @@ void Graph::printSerial() {
       }else {
         Serial.print("]\t\t");
       }
-      delay(10);
+      delay(20);
     }
     Serial.print("\n");
   }
