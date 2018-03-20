@@ -31,6 +31,7 @@ public:
   pointlineData getNextIntersection();  //based on current location and direction in map
   pointlineData createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2);
   Color intersectionType;
+  printDataRedNorth();
 private:
   Graph map;
   pointline *l0;

@@ -14,13 +14,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   Serial.println("Next Frame");
-  intersectionSensors::pointlineData data = sensor->getData();
-  Serial.println(data.l0);
-  Serial.println(data.l1);
-  Serial.println(data.l2);
-  Serial.println(data.r0);
-  Serial.println(data.r1);
-  Serial.println(data.r2);
+  sensor->printDataRedNorth();
   delay(100);
 
 

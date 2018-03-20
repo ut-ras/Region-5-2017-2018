@@ -23,8 +23,6 @@ intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, i
 intersectionSensors::pointlineData intersectionSensors::getData() {
   pointlineData data;
   data.l0 = l0->getValue();
-  //Serial.println( data.l0);
-  //delay(100);
   data.l1 = l1->getValue();
   data.l2 = l2->getValue();
   data.r0 = r0->getValue();
@@ -67,7 +65,19 @@ intersectionSensors::pointlineData intersectionSensors::getPointlineFor(Color c,
 
   //also need something for drop off zones
 }
-
+intersectionSensors::printDataRedNorth()
+{
+  for(int i = 0; i<8; i++)
+  {
+    Serial.print(dataRedNorth[i].l0);
+    Serial.print(dataRedNorth[i].l1);
+    Serial.print(dataRedNorth[i].l2);
+    Serial.print(dataRedNorth[i].r0);
+    Serial.print(dataRedNorth[i].r1);
+    Serial.print(dataRedNorth[i].r2);
+    Serial.println();
+  }
+}
 intersectionSensors::pointlineData intersectionSensors::createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2) {
   pointlineData d;
   d.l0 = l0;
