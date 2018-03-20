@@ -39,7 +39,7 @@ private:
   pointline *r0;
   pointline *r1;
   pointline *r2;
-
+  pointlineData *data;
   pointlineData *dataRedNorth;
 
   pointlineData getPointlineFor(Color c, int dir);

@@ -2,6 +2,18 @@
 #include <String.h>
 #include <Arduino.h>
 
+
+static char* nameTable[37] = {"Red B", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5",
+                          "Green B", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5",
+                "Blue B", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
+                "Yellow B", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5",
+                "Magenta B", "Magenta 1", "Magenta 2", "Magenta 3", "Magenta 4", "Magenta 5",
+                "Cyan B", "Cyan 1", "Cyan 2", "Cyan 3", "Cyan 4", "Cyan 5",
+                "Grey B"};
+
+static char* colorTable[8] = {"red", "green", "blue", "yellow", "magenta", "cyan", "grey", "unknown"};
+
+
 Node::Node() {
 	visited = false;
 	isNullNode = false;
@@ -42,19 +54,9 @@ int Node::getDepth() {
   return depth;
 }
 
-static char* nameTable[37] = {"Red B", "Red 1", "Red 2", "Red 3", "Red 4", "Red 5",
-                          "Green B", "Green 1", "Green 2", "Green 3", "Green 4", "Green 5",
-                "Blue B", "Blue 1", "Blue 2", "Blue 3", "Blue 4", "Blue 5",
-                "Yellow B", "Yellow 1", "Yellow 2", "Yellow 3", "Yellow 4", "Yellow 5",
-                "Magenta B", "Magenta 1", "Magenta 2", "Magenta 3", "Magenta 4", "Magenta 5",
-                "Cyan B", "Cyan 1", "Cyan 2", "Cyan 3", "Cyan 4", "Cyan 5",
-                "Grey B"};
 
-static char* colorTable[8] = {"red", "green", "blue", "yellow", "magenta", "cyan", "grey", "unknown"};
-
-
-//"[R1 v:true t:G]"
-//<name:visited:tokenColor>
+//[R1:t:U]
+//[name:visited:tokenColor]
 char* Node::toString() {
 	char s[40] = "";
 
@@ -100,7 +102,6 @@ char * Node::colorToChar(Color c) {
 	return s;
 }
 
-//TODO
 char* Node::nameToString() {
   if (isNull()) {
     return "empty node";

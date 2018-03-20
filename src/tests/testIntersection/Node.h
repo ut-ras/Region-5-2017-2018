@@ -2,7 +2,6 @@
 
 #ifndef NODE_H
 #define NODE_H
-//base class
 
 enum Color {red, green, blue, yellow, magenta, cyan, grey, unknown};
 
@@ -20,17 +19,17 @@ class Node
 
 		Node();
     Node(Name n, Color mc);
+    
 		Name getName();
 		void setName(Name n);
 		bool getVisited();
 		void setVisited(bool visit);
 		Color getMapColor();
 
-		char* toString();
-
 		void setAsNull();
 		bool isNull();
-
+    
+    char* toString();
     char* nameToString();
     char* colorToChar(Color c);
 
