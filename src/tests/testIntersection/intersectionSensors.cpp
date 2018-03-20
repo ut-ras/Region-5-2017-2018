@@ -78,3 +78,14 @@ intersectionSensors::pointlineData intersectionSensors::createPointlineData(int 
   d.r2 = r2;
   return d;
 }
+
+char * intersectionSensors::PLDatatoString(pointlineData data) {
+  char s[40] = "";
+  strcat(s, data.l0?"[l0:1]":"[l0:0]");
+  strcat(s, data.l1?"[l1:1]":"[l1:0]");
+  strcat(s, data.l2?"[l2:1]":"[l2:0]");
+  strcat(s, data.r0?"[r0:1]":"[r0:0]");
+  strcat(s, data.r1?"[r1:1]":"[r1:0]");
+  strcat(s, data.r2?"[r2:1]":"[r2:0]");
+  return s;
+}
