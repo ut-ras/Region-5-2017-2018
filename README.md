@@ -3,10 +3,11 @@
 
 ### This year we are using the Arduino IDE to program our microcontrollers.
 #### [install link](https://www.arduino.cc/en/Main/Software)
-#### To install the libraries
+#### To set up your laptop:
+#### 0. Install the Arduino IDE
 #### 1. Clone the Repository
 #### 2. Add all the libraries in the ./src/librares/ folder through the arduino IDE
-### The lead of Software is Cole Thompson 
+### The lead of Software is Cole Thompson
 
 
 
@@ -21,7 +22,7 @@
 ## YEAH WE ARE!!!
 
 ## Groups
-### [MEMES](https://www.youtube.com/watch?v=QQpsbPaHBB0)
+### [MEMES](https://www.youtube.com/watch?v=cCeovAd7iOQ)
 ### [MEMES](https://www.youtube.com/watch?v=pD_imYhNoQ4)
 ### [MEMES](https://www.youtube.com/watch?v=BwBK2xkjaSU)
 ## [DANK MEMES](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
@@ -29,5 +30,3 @@
 
 # NEVER GIVE UP, NEVER SURRENDER
 ![alt text](https://cdn.vox-cdn.com/thumbor/SjXzMXmSyvsccVXmpAMBzAMrq3Q=/0x2:554x371/1280x854/cdn.vox-cdn.com/uploads/chorus_image/image/48401727/Screen_Shot_2015-12-21_at_8.21.47_AM.0.0.png)
-
-
