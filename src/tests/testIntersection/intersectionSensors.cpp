@@ -23,6 +23,8 @@ intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, i
 intersectionSensors::pointlineData intersectionSensors::getData() {
   pointlineData data;
   data.l0 = l0->getValue();
+  //Serial.println( data.l0);
+  //delay(100);
   data.l1 = l1->getValue();
   data.l2 = l2->getValue();
   data.r0 = r0->getValue();
