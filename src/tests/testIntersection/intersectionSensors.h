@@ -13,33 +13,35 @@
  * usage: in high level code, determine the desired pointlineData for the next intersection, then move and getData until data matches
  */
 
+typedef struct pointlineData {
+  bool l0;
+  bool l1;
+  bool l2;
+  bool r0;
+  bool r1;
+  bool r2;
+} pointlineData;
 
 class intersectionSensors {
 public:
+  char* PLDatatoString(pointlineData data);
 
-  typedef struct pointlineData {
-    bool l0;
-    bool l1;
-    bool l2;
-    bool r0;
-    bool r1;
-    bool r2;
-  } pointlineData;
-
-  intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
+  intersectionSensors(Graph * mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
   pointlineData getData();
   pointlineData getNextIntersection();  //based on current location and direction in map
   pointlineData createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2);
   Color intersectionType;
+  printDataRedNorth();
+  
 private:
-  Graph map;
+  Graph * map;
   pointline *l0;
   pointline *l1;
   pointline *l2;
   pointline *r0;
   pointline *r1;
   pointline *r2;
-
+  pointlineData *data;
   pointlineData *dataRedNorth;
 
   pointlineData getPointlineFor(Color c, int dir);

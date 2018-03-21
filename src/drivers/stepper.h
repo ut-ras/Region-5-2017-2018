@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "A4988.h"
+#include "arduino.h"
 
 class stepper {
 public:
@@ -10,9 +10,10 @@ public:
     typedef enum {CLOCKWISE, COUNTERCLOCKWISE} Direction;
 
     //Rotate stepper motor based on a radian degree input
-    void rotateDisk(uint8_t holeOffset, Direction rotationDirection);
+    void rotateDisk(float, Direction rotationDirection);
 
 private:
 	int stepperPos;
-	A4988 stepperMotor;
+	int stepperPin;
+	int directionPin;
 };
