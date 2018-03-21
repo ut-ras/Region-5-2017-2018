@@ -26,6 +26,7 @@ public:
 	Node* getNode(Name n);  	//n is Name
   Node* getNeighbor(Node *n, int direction);
   Node* moveInDirection(int dir);
+  Node* getNextIntersection();
 
   Node* getCurrentNode();
 	void setCurrentNode(Node *n);

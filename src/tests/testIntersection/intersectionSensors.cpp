@@ -1,6 +1,7 @@
 #include "intersectionSensors.h"
 #include "Node.h"
-intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin) {
+
+intersectionSensors::intersectionSensors(Graph * mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin) {
     l0 = new pointline(l0pin);
     l1 = new pointline(l1pin);
     l2 = new pointline(l2pin);
@@ -20,7 +21,7 @@ intersectionSensors::intersectionSensors(Graph mapGraph, int l0pin, int l1pin, i
     dataRedNorth[7] = createPointlineData(0, 0, 1, 0, 0, 1);
 }
 
-intersectionSensors::pointlineData intersectionSensors::getData() {
+pointlineData intersectionSensors::getData() {
   pointlineData data;
   data.l0 = l0->getValue();
   data.l1 = l1->getValue();
@@ -31,15 +32,13 @@ intersectionSensors::pointlineData intersectionSensors::getData() {
   return data;
 }
 
-intersectionSensors::pointlineData intersectionSensors::getNextIntersection() {
-  Node *currentNode = map.getCurrentNode();
-	int dir = map.getCurrentDirection();
-  Node *neighbor = map.getNeighbor(currentNode, dir);
+pointlineData intersectionSensors::getNextIntersection() {
+  Node *neighbor = map->getNextIntersection();
   intersectionType = neighbor->getMapColor();
-  return getPointlineFor(intersectionType, dir);
+  return getPointlineFor(intersectionType, map->getCurrentDirection());
 }
 
-intersectionSensors::pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
+pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
     int offset, index;
   if ((intersectionType == red) || (intersectionType == cyan) || (intersectionType == yellow) || (intersectionType == blue)) {
     switch(intersectionType) {
@@ -65,20 +64,8 @@ intersectionSensors::pointlineData intersectionSensors::getPointlineFor(Color c,
 
   //also need something for drop off zones
 }
-intersectionSensors::printDataRedNorth()
-{
-  for(int i = 0; i<8; i++)
-  {
-    Serial.print(dataRedNorth[i].l0);
-    Serial.print(dataRedNorth[i].l1);
-    Serial.print(dataRedNorth[i].l2);
-    Serial.print(dataRedNorth[i].r0);
-    Serial.print(dataRedNorth[i].r1);
-    Serial.print(dataRedNorth[i].r2);
-    Serial.println();
-  }
-}
-intersectionSensors::pointlineData intersectionSensors::createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2) {
+
+pointlineData intersectionSensors::createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2) {
   pointlineData d;
   d.l0 = l0;
   d.l1 = l1;
@@ -99,3 +86,17 @@ char * intersectionSensors::PLDatatoString(pointlineData data) {
   strcat(s, data.r2?"[r2:1]":"[r2:0]");
   return s;
 }
+
+intersectionSensors::printDataRedNorth() {
+  for(int i = 0; i<8; i++)
+  {
+    Serial.print(dataRedNorth[i].l0);
+    Serial.print(dataRedNorth[i].l1);
+    Serial.print(dataRedNorth[i].l2);
+    Serial.print(dataRedNorth[i].r0);
+    Serial.print(dataRedNorth[i].r1);
+    Serial.print(dataRedNorth[i].r2);
+    Serial.println();
+  }
+}
+
