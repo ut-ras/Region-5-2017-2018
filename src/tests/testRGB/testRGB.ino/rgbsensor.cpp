@@ -10,11 +10,11 @@ rgbsensor::rgbsensor() {
 rgbsensor::Color rgbsensor::getColor(){
   uint16_t clear, red, green, blue;
   
-  tcs.setInterrupt(false);
+  //tcs.setInterrupt(false);
   
   delay(60);  // takes 50ms to read
-   tcs.getRawData(&red, &green, &blue, &clear);
-  tcs.setInterrupt(true);  // turn on LED
+  tcs.getRawData(&red, &green, &blue, &clear);
+  //tcs.setInterrupt(true);  // turn on LED
 
   return getClosestColor(red,green,blue);
 }
