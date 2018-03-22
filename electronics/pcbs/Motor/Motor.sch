@@ -635,16 +635,10 @@ Wire Wire Line
 Wire Wire Line
 	3700 1550 3650 1550
 Wire Wire Line
-	3650 1850 3700 1850
-Wire Wire Line
-	3700 1850 3700 1900
-Wire Wire Line
-	3650 1650 3850 1650
-Wire Wire Line
-	3650 1750 3850 1750
-Text Label 3850 1650 0    60   ~ 0
-L_EN_A
+	3700 1650 3700 1900
 Text Label 3850 1750 0    60   ~ 0
+L_EN_A
+Text Label 3850 1850 0    60   ~ 0
 L_EN_B
 $Comp
 L Conn_01x04 J2
@@ -684,16 +678,10 @@ Wire Wire Line
 Wire Wire Line
 	4600 1550 4550 1550
 Wire Wire Line
-	4550 1850 4600 1850
-Wire Wire Line
-	4600 1850 4600 1900
-Wire Wire Line
-	4550 1650 4750 1650
-Wire Wire Line
-	4550 1750 4750 1750
-Text Label 4750 1650 0    60   ~ 0
-R_EN_A
+	4600 1650 4600 1900
 Text Label 4750 1750 0    60   ~ 0
+R_EN_A
+Text Label 4750 1850 0    60   ~ 0
 R_EN_B
 Text Notes 3700 1200 0    120  ~ 24
 Encoders
@@ -840,28 +828,11 @@ Wire Wire Line
 	6850 1450 6850 1500
 Wire Wire Line
 	6850 1500 6800 1500
-$Comp
-L GND #PWR019
-U 1 1 5AB34935
-P 6850 1850
-F 0 "#PWR019" H 6850 1600 50  0001 C CNN
-F 1 "GND" H 6850 1700 50  0000 C CNN
-F 2 "" H 6850 1850 50  0000 C CNN
-F 3 "" H 6850 1850 50  0000 C CNN
-	1    6850 1850
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	6800 1800 6850 1800
-Wire Wire Line
-	6850 1800 6850 1850
-Wire Wire Line
-	6800 1600 6900 1600
-Wire Wire Line
-	6800 1700 6900 1700
-Text Label 6900 1600 0    60   ~ 0
-20(SDA)
+	6850 1600 6850 1850
 Text Label 6900 1700 0    60   ~ 0
+20(SDA)
+Text Label 6900 1800 0    60   ~ 0
 21(SCL)
 Text Label 3700 2300 2    60   ~ 0
 L_EN_A
@@ -963,4 +934,33 @@ NoConn ~ 9800 5350
 Text Label 8650 1650 2    60   ~ 0
 +3.3V
 NoConn ~ 8650 1650
+Wire Wire Line
+	3650 1650 3700 1650
+Wire Wire Line
+	3650 1750 3850 1750
+Wire Wire Line
+	3850 1850 3650 1850
+Wire Wire Line
+	4550 1650 4600 1650
+Wire Wire Line
+	4550 1750 4750 1750
+Wire Wire Line
+	4750 1850 4550 1850
+$Comp
+L GND #PWR019
+U 1 1 5AB34935
+P 6850 1850
+F 0 "#PWR019" H 6850 1600 50  0001 C CNN
+F 1 "GND" H 6850 1700 50  0000 C CNN
+F 2 "" H 6850 1850 50  0000 C CNN
+F 3 "" H 6850 1850 50  0000 C CNN
+	1    6850 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6850 1600 6800 1600
+Wire Wire Line
+	6800 1700 6900 1700
+Wire Wire Line
+	6900 1800 6800 1800
 $EndSCHEMATC

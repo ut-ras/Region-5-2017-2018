@@ -587,9 +587,9 @@ F 3 "" H 6250 1600 50  0000 C CNN
 $EndComp
 Text Notes 5650 750  0    60   ~ 12
 I2C Bus\n(Uno, Line Sensor Array)
-Text Label 6150 1350 2    60   ~ 0
-20(SDA)
 Text Label 6150 1450 2    60   ~ 0
+20(SDA)
+Text Label 6150 1550 2    60   ~ 0
 21(SCL)
 Wire Wire Line
 	9100 1200 9100 1650
@@ -812,36 +812,12 @@ Wire Wire Line
 	2000 3750 1900 3750
 Connection ~ 2000 3250
 Wire Wire Line
-	1900 1450 2100 1450
-Wire Wire Line
-	2100 1450 2100 4150
-Wire Wire Line
-	1900 3950 2100 3950
-Connection ~ 2100 3950
-Wire Wire Line
-	1900 3450 2100 3450
-Connection ~ 2100 3450
-Wire Wire Line
-	1900 2950 2100 2950
-Connection ~ 2100 2950
-Wire Wire Line
-	1900 2450 2100 2450
-Connection ~ 2100 2450
-Wire Wire Line
-	1900 1950 2100 1950
-Connection ~ 2100 1950
-Wire Wire Line
-	1900 1350 2300 1350
-Wire Wire Line
-	1900 1850 2300 1850
-Wire Wire Line
-	1900 2350 2300 2350
-Wire Wire Line
-	1900 2850 2300 2850
-Wire Wire Line
-	1900 3350 2300 3350
-Wire Wire Line
-	1900 3850 2300 3850
+	2100 1350 2100 4150
+Connection ~ 2100 3850
+Connection ~ 2100 3350
+Connection ~ 2100 2850
+Connection ~ 2100 2350
+Connection ~ 2100 1850
 Wire Notes Line
 	1300 550  3000 550 
 Wire Notes Line
@@ -893,9 +869,7 @@ Wire Wire Line
 Wire Wire Line
 	6250 1250 6300 1250
 Wire Wire Line
-	6300 1550 6250 1550
-Wire Wire Line
-	6250 1550 6250 1600
+	6250 1350 6250 1600
 Wire Notes Line
 	6800 550  5600 550 
 Wire Notes Line
@@ -931,26 +905,22 @@ $EndComp
 $Comp
 L GND #PWR014
 U 1 1 5AB1284A
-P 3550 3050
-F 0 "#PWR014" H 3550 2800 50  0001 C CNN
-F 1 "GND" H 3550 2900 50  0000 C CNN
-F 2 "" H 3550 3050 50  0000 C CNN
-F 3 "" H 3550 3050 50  0000 C CNN
-	1    3550 3050
+P 3550 3100
+F 0 "#PWR014" H 3550 2850 50  0001 C CNN
+F 1 "GND" H 3550 2950 50  0000 C CNN
+F 2 "" H 3550 3100 50  0000 C CNN
+F 3 "" H 3550 3100 50  0000 C CNN
+	1    3550 3100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3450 3050 3550 3050
-Wire Wire Line
 	3550 2850 3450 2850
-Wire Wire Line
-	3450 2950 3700 2950
 Wire Notes Line
 	3100 2500 3100 3300
 Wire Notes Line
-	3100 3300 5750 3300
+	3100 3300 5500 3300
 Wire Notes Line
-	3100 2500 5750 2500
+	3100 2500 5500 2500
 $Comp
 L Pololu_D24V50F5 J13
 U 1 1 5AB13432
@@ -1189,7 +1159,7 @@ Electromagnet
 Wire Wire Line
 	4550 2950 4800 2950
 Wire Notes Line
-	5750 2500 5750 3300
+	5500 2500 5500 3300
 Text Label 4850 1300 0    60   ~ 12
 B+
 Text Label 4850 1400 0    60   ~ 12
@@ -1202,21 +1172,21 @@ Text Label 3400 1300 2    60   ~ 0
 6(**)
 Text Label 3400 1400 2    60   ~ 0
 7(**)
-Text Label 3700 2950 0    60   ~ 0
+Text Label 3700 3050 0    60   ~ 0
 12(**)
 Text Label 4800 2950 0    60   ~ 0
 48
-Text Label 2300 1350 0    60   ~ 0
+Text Label 2300 1450 0    60   ~ 0
 46
-Text Label 2300 1850 0    60   ~ 0
+Text Label 2300 1950 0    60   ~ 0
 44
-Text Label 2300 3850 0    60   ~ 0
+Text Label 2300 3950 0    60   ~ 0
 30
-Text Label 2300 3350 0    60   ~ 0
+Text Label 2300 3450 0    60   ~ 0
 34
-Text Label 2300 2850 0    60   ~ 0
+Text Label 2300 2950 0    60   ~ 0
 38
-Text Label 2300 2350 0    60   ~ 0
+Text Label 2300 2450 0    60   ~ 0
 40
 NoConn ~ 9500 4850
 $Comp
@@ -1271,10 +1241,6 @@ Connection ~ 10700 850
 Connection ~ 10800 850 
 Connection ~ 10900 850 
 Connection ~ 11000 850 
-Wire Wire Line
-	6150 1350 6300 1350
-Wire Wire Line
-	6300 1450 6150 1450
 $Comp
 L +BATT #PWR029
 U 1 1 5AB2CF23
@@ -1286,4 +1252,40 @@ F 3 "" H 8900 1200 50  0001 C CNN
 	1    8900 1200
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	1900 3850 2100 3850
+Wire Wire Line
+	2100 3350 1900 3350
+Wire Wire Line
+	2100 2850 1900 2850
+Wire Wire Line
+	2100 2350 1900 2350
+Wire Wire Line
+	2100 1850 1900 1850
+Wire Wire Line
+	2100 1350 1900 1350
+Wire Wire Line
+	2300 1450 1900 1450
+Wire Wire Line
+	2300 1950 1900 1950
+Wire Wire Line
+	2300 2450 1900 2450
+Wire Wire Line
+	2300 2950 1900 2950
+Wire Wire Line
+	2300 3450 1900 3450
+Wire Wire Line
+	2300 3950 1900 3950
+Wire Wire Line
+	3450 2950 3550 2950
+Wire Wire Line
+	3550 2950 3550 3100
+Wire Wire Line
+	3700 3050 3450 3050
+Wire Wire Line
+	6250 1350 6300 1350
+Wire Wire Line
+	6150 1450 6300 1450
+Wire Wire Line
+	6300 1550 6150 1550
 $EndSCHEMATC
