@@ -877,9 +877,9 @@ Text Label 3950 2400 0    60   ~ 0
 2(**)
 Text Label 3950 2300 0    60   ~ 0
 3(**)
-Text Label 4850 2300 0    60   ~ 0
-18(Tx1)
 Text Label 4850 2400 0    60   ~ 0
+18(Tx1)
+Text Label 4850 2300 0    60   ~ 0
 19(Rx1)
 Wire Wire Line
 	4600 2300 4850 2300
