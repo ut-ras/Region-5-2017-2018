@@ -1,6 +1,8 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
+#include <digitalWriteFast.h>
+
 class encoder {
 
 public:
