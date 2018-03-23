@@ -14,6 +14,6 @@ private:
   int pinA, pinB;
   int pos;
 
-}
+};
 
 #endif

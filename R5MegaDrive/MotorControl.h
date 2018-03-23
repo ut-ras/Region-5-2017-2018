@@ -37,6 +37,6 @@ private:
   double rightKi;
   double rightKd;
   PID rightMotorPID;
-}
+};
 
 #endif
