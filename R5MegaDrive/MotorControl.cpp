@@ -52,6 +52,32 @@ MotorControl::MotorControl() {
   Serial.print("DELAYDONE");
 }
 
+void MotorControl::setMotorAction(char a){
+  motorAction = a;
+}
+
+void MotorControl::setMotorSpeed(char s){
+  if(s == 1){
+    motorSpeed = 90;  
+  }
+  if(s == 2){
+    motorSpeed = 135;  
+  }
+  if(s == 3){
+    motorSpeed = 180;  
+  }    
+}
+
+void MotorControl::setMotorDirection(char d){
+  if(d == 'f'){
+    motorDirection = 1;  
+  }
+  if(d = 'b'){
+    motorDirection = -1;  
+  }  
+}
+
+
 void MotorControl::update(){
   int16_t leftPosition,rightPosition;
   
@@ -66,32 +92,21 @@ void MotorControl::update(){
   */
   
   velocity(leftPosition,rightPosition);
-  setSpeed(90,90);
-}
 
-//true -> fwd, false -> backward
-void MotorControl::move(bool fwd) {
-  if(fwd){
-    setSpeed(90,90)
-  }else{
-    setSpeed(-90,-90)    
+  switch(char c){
+    case m:
+      setPIDSpeed(motorSpeed*motorDirection,motorSpeed*motorDirection);
+      break;
+    case t:
+      setPIDSpeed(motorSpeed*motorDirection,motorSpeed*motorDirection*-1);
+      break;
+    case s:
+      setPIDSpeed(0,0);
+      break;         
   }
 }
 
-//true -> left, false -> right 
-void MotorControl::turn(bool left) {
-  if(left){
-    setSpeed(90,-90)
-  }else{
-    setSpeed(90,-90)    
-  }
-}
-
-void MotorControl::stop() {
-  setSpeed(0,0);
-}
-
-void MotorControl::setSpeed(int leftSpeed, int rightSpeed) {
+void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
   leftSetpoint = leftSpeed;
   leftMotorPID.Compute();
   if(leftPower < 0 ){

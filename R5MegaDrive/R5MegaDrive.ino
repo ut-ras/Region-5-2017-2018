@@ -4,6 +4,10 @@
 MotorControl m;
 
 void setup() {
+  m.setMotorAction(s);
+  m.setMotorSpeed(1);
+  m.setMotorDirection(f);
+  
   //I2C Initialization
   Wire.begin();        // join i2c bus (address optional for master)
   Serial.begin(9600);  // start serial for output
@@ -24,31 +28,49 @@ void receiveEvent(int howMany) {
     char c = Wire.read();      // receive byte as a character
 
     switch(c){
-      case m:
-        
+      case m1f:
+        m.setMotorAction(m);
+        m.setMotorSpeed(1);
+        m.setMotorDirection(f);
         break;
-      case m:
-        
+      case m2f:
+        m.setMotorAction(m);
+        m.setMotorSpeed(2);
+        m.setMotorDirection(f);        
         break;
-      case m:
-        
+      case m3f:
+        m.setMotorAction(m);
+        m.setMotorSpeed(3);
+        m.setMotorDirection(f);
         break;
-      case m:
-        
+      case m1b:
+        m.setMotorAction(m);
+        m.setMotorSpeed(1);
+        m.setMotorDirection(b);        
         break;
-      case m:
-        
+      case m2b:
+        m.setMotorAction(m);
+        m.setMotorSpeed(2);
+        m.setMotorDirection(b);        
         break;
-      case m:
-        
+      case m3b:
+        m.setMotorAction(m);
+        m.setMotorSpeed(3);
+        m.setMotorDirection(b);        
         break;
-      case m:
-        
+      case t1f:
+        m.setMotorAction(t);
+        m.setMotorSpeed(1);
+        m.setMotorDirection(f);        
         break;
-
-        
-        
-      
+      case t1b:
+        m.setMotorAction(t);
+        m.setMotorSpeed(1);
+        m.setMotorDirection(b);        
+        break;
+      case s:
+        m.setMotorAction(s);        
+        break;
     }
   }
 }

@@ -8,19 +8,21 @@ class MotorControl {
 
 public:
   MotorControl();
-  void move(bool fwd);
-  void turn(bool left);
-  void stop();
   void update();
+  void setMotorAction();
+  void setMotorSpeed();
+  void setMotorDirection();
 
 private:
-  void setSpeed(int leftSpeed, int rightSpeed);
+  void setPIDSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
   
-  
-
   //Motor Variables
 
+  char motorAction;
+  int motorSpeed;
+  int motorDirection;
+  
   encoder* leftEncoder;
   encoder* rightEncoder;
   
