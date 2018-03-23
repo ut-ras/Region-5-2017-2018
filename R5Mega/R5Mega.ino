@@ -1,40 +1,27 @@
 #include <Time.h>
 #include <Arduino.h>
-<<<<<<< HEAD
-/*#include "testarrayLine.cpp"
-#include "testGraph.cpp"
-=======
-//#include "testarrayLine.cpp"
-//#include "testGraph.cpp"
-#include "src/tests/testPointline.cpp"*/
+
+#include "testarrayLine.cpp"
+#include "src/tests/testPointline.cpp"
 #include "rgbsensor.h"
 #include "testRGB.cpp"
 #include "sensorbar.h"
-//#include "src/tests/testPointline.cpp"
->>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
 
 void setup() {  
-    // put your setup code here, to run once:]
-    Serial.begin(9600);
-    //setupGraphTest();
-<<<<<<< HEAD
-    //setupTestArrayLine();
-    setupRGBTest();
-    }
-/*void loop() {
-  // put your main code here, to run repeatedly:
-  loopArrayLineTest();
-=======
-    setupPointLineTest(0);
+  // put your setup code here, to run once:]
+  Serial.begin(9600);
+  //setupTestArrayLine();
+  setupRGBTest();
+  setupPointLineTest(0);
   //  setupTestArrayLine();
-    }*/
+}
+
+
 void loop() {
   // put your main code here, to run repeatedly:
   //loopArrayLineTest();
   //loopPointLineTest();
   loopRGBTest();
->>>>>>> 01994964d0b2952e89b2ca3a758c6b91656febcf
-  //loopGraphTest();
 
 }
 
@@ -128,6 +115,5 @@ void depositIfEnough(Node::Color c, int min, int current){
 Node::Color whichSide(){
 	moveForward(distance to colored square);
 	return getColor();
-<<<<<<< HEAD
 }
 */
