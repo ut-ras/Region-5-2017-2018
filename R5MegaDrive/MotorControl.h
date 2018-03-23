@@ -2,6 +2,7 @@
 #define MOTORCONTROL_H
 #include <Adafruit_MotorShield.h>
 #include <PID_v1.h>
+#include "utility/Adafruit_MS_PWMServoDriver.h"
 
 class MotorControl {
 
@@ -10,11 +11,12 @@ public:
   void move(bool fwd);
   void turn(bool left);
   void stop();
+  void update();
 
 private:
   void setSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
-  void update();
+  
   
 
   //Motor Variables

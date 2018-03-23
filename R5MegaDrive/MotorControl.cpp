@@ -1,6 +1,7 @@
 #include "MotorControl.h"
 #include <Adafruit_MotorShield.h>
 #include <PID_v1.h>
+#include "utility/Adafruit_MS_PWMServoDriver.h"
 
 MotorControl::MotorControl() {
   //Field Initializations
@@ -27,11 +28,6 @@ MotorControl::MotorControl() {
   rightKi = 5;
   rightKd = 1;
   rightMotorPID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
-  
-  //I2C Initialization
-  Wire.begin();        // join i2c bus (address optional for master)
-  Serial.begin(9600);  // start serial for output
-  Serial.println("Adafruit Motorshield v2 - DC Motor test!");
 
   //Motor Initialization
   AFMS.begin();  // create with the default frequency 1.6KHz
@@ -81,7 +77,6 @@ void MotorControl::move(bool fwd) {
     setSpeed(-90,-90)    
   }
 }
-
 
 //true -> left, false -> right 
 void MotorControl::turn(bool left) {
