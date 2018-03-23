@@ -1,6 +1,9 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
+//required libraries:
+//Digital Write Fast
+
 class encoder {
 
 public:

@@ -1,11 +1,11 @@
 #include <Wire.h>
 #include "MotorControl.h"
 
-enum Commands{m1f, m2f, m3f, m1b, m2b, m3b, t1f, t1b, s};
-
 MotorControl m;
 
 void setup() {
+  m.setMotorMode(s);
+
   //I2C Initialization
   Wire.begin();        // join i2c bus (address optional for master)
   Serial.begin(9600);  // start serial for output
@@ -22,7 +22,7 @@ void loop() {
 }
 
 void testMotorSetup() {
-  m.move(true);
+  m.setMotorMode(m1f);
 }
 
 
@@ -31,33 +31,6 @@ void testMotorSetup() {
 void receiveEvent(int howMany) {
   while (Wire.available()) {   // loop through all but the last
     char c = Wire.read();      // receive byte as a character
-
-    switch(c){
-      case m:
-
-        break;
-      case m:
-
-        break;
-      case m:
-
-        break;
-      case m:
-
-        break;
-      case m:
-
-        break;
-      case m:
-
-        break;
-      case m:
-
-        break;
-
-
-
-
-    }
+    m.setMotorMode(c);
   }
 }
