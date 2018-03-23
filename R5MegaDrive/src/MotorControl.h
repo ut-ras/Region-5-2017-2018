@@ -1,4 +1,5 @@
 #ifndef MOTORCONTROL_H
+#define MOTORCONTROL_H
 
 class MotorControl {
 
@@ -17,3 +18,5 @@ private:
   int time;
 
 }
+
+#endif
