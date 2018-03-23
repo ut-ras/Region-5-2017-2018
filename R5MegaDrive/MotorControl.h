@@ -1,4 +1,8 @@
 #ifndef MOTORCONTROL_H
+#define MOTORCONTROL_H
+#include <Adafruit_MotorShield.h>
+#include <PID_v1.h>
+#include "utility/Adafruit_MS_PWMServoDriver.h"
 
 class MotorControl {
 
@@ -7,14 +11,20 @@ public:
   void move(bool fwd);
   void turn(bool left);
   void stop();
+  void update();
 
 private:
-  void setSpeed(int s);
+  void setSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
+  
+  
 
   //Motor Variables
+
+  encoder* leftEncoder;
+  encoder* rightEncoder;
   
-  Adafruit_MotorShield AFMS; 
+  Adafruit_MotorShield AFMS;
 
   Adafruit_DCMotor *myMotor;
   Adafruit_DCMotor *myOtherMotor;
@@ -36,4 +46,6 @@ private:
   double rightKi;
   double rightKd;
   PID rightMotorPID;
-}
+};
+
+#endif
