@@ -4,6 +4,13 @@
 #include <PID_v1.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 
+#include "encoder.h"
+
+//required libraries:
+//Adafruit_MotorShield v2
+//PID by Brett
+
+
 class MotorControl {
 
 public:
@@ -24,7 +31,7 @@ private:
   encoder* leftEncoder;
   encoder* rightEncoder;
   
-  Adafruit_MotorShield AFMS;
+  Adafruit_MotorShield *AFMS;
 
   Adafruit_DCMotor *myMotor;
   Adafruit_DCMotor *myOtherMotor;
@@ -38,14 +45,14 @@ private:
   double leftKp;
   double leftKi;
   double leftKd;
-  PID leftMotorPID;
+  PID * leftMotorPID;
 
   int rightPrevEncoderPos;
   double rightSetpoint, rightVelocity, rightPower;
   double rightKp;
   double rightKi;
   double rightKd;
-  PID rightMotorPID;
+  PID * rightMotorPID;
 };
 
 #endif
