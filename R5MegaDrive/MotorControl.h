@@ -1,4 +1,5 @@
 #ifndef MOTORCONTROL_H
+#define MOTORCONTROL_H
 
 class MotorControl {
 
@@ -13,8 +14,8 @@ private:
   void calculateVelocity();
 
   //Motor Variables
-  
-  Adafruit_MotorShield AFMS; 
+
+  Adafruit_MotorShield AFMS;
 
   Adafruit_DCMotor *myMotor;
   Adafruit_DCMotor *myOtherMotor;
@@ -37,3 +38,5 @@ private:
   double rightKd;
   PID rightMotorPID;
 }
+
+#endif
