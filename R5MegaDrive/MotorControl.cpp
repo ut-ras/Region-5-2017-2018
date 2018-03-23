@@ -1,28 +1,32 @@
-
 #include "MotorControl.h"
+#include <Adafruit_MotorShield.h>
+#include <PID_v1.h>
 
 MotorControl::MotorControl() {
   //Field Initializations
-  Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-
-  Adafruit_DCMotor *myMotor = AFMS.getMotor(1);
-  Adafruit_DCMotor *myOtherMotor = AFMS.getMotor(2);
+  leftEncoder = encoder(2,4);
+  rightEncoder = encoder(3,5);
   
-  int prevTime = 0;
+  AFMS = Adafruit_MotorShield(); 
 
-  int leftPrevEncoderPos = 0;
+  myMotor = AFMS.getMotor(1);
+  myOtherMotor = AFMS.getMotor(2);
   
-  double leftKp = 2;
-  double leftKi = 5;
-  double leftKd = 1;
-  PID leftMotorPID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
+  prevTime = 0;
 
-  int rightPrevEncoderPos = 0;
+  leftPrevEncoderPos = 0;
   
-  double rightKp = 2;
-  double rightKi = 5;
-  double rightKd = 1;
-  PID rightMotorPID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
+  leftKp = 2;
+  leftKi = 5;
+  leftKd = 1;
+  leftMotorPID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
+
+  rightPrevEncoderPos = 0;
+  
+  rightKp = 2;
+  rightKi = 5;
+  rightKd = 1;
+  rightMotorPID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
   
   //I2C Initialization
   Wire.begin();        // join i2c bus (address optional for master)
@@ -53,41 +57,70 @@ MotorControl::MotorControl() {
 }
 
 void MotorControl::update(){
-  byte leftHigh,leftLow,rightHigh,rightLow;
   int16_t leftPosition,rightPosition;
-  Wire.requestFrom(8,4);    // request 2 bytes from slave device #8
-  leftHigh = Wire.read();
-  leftLow = Wire.read();
-  rightHigh = Wire.read();
-  rightLow = Wire.read();
   
-  leftPosition = word(leftHigh,leftLow);
-  rightPosition = word(rightHigh,rightLow);
+  leftPosition = leftEncoder.getPos();
+  rightPosition = rightEncoder.getPos();
+
+  /* For Testing Purposes
   Serial.print(leftPosition);
   Serial.print(", ");
   Serial.print(rightPosition);
   Serial.print("\n");
-
+  */
+  
   velocity(leftPosition,rightPosition);
   setSpeed(90,90);
 }
 
+//true -> fwd, false -> backward
 void MotorControl::move(bool fwd) {
-
+  if(fwd){
+    setSpeed(90,90)
+  }else{
+    setSpeed(-90,-90)    
+  }
 }
 
-void MotorControl::turn(bool left) {
 
+//true -> left, false -> right 
+void MotorControl::turn(bool left) {
+  if(left){
+    setSpeed(90,-90)
+  }else{
+    setSpeed(90,-90)    
+  }
 }
 
 void MotorControl::stop() {
-
+  setSpeed(0,0);
 }
 
-void MotorControl::setSpeed(int s) {
+void MotorControl::setSpeed(int leftSpeed, int rightSpeed) {
+  leftSetpoint = leftSpeed;
+  leftMotorPID.Compute();
+  if(leftPower < 0 ){
+    myMotor->run(BACKWARD);
+  }else{
+    myMotor->run(FORWARD);
+  }
+  myMotor->setSpeed(abs((int)leftPower));
 
+  rightSetpoint = rightSpeed;
+  rightMotorPID.Compute();
+    if(rightPower < 0 ){
+    myOtherMotor->run(BACKWARD);
+  }else{
+    myOtherMotor->run(FORWARD);
+  }
+  myOtherMotor->setSpeed(abs((int)rightPower));
 }
 
 void MotorControl::calculateVelocity() {
-
+  time = 0.001*millis();
+  leftVelocity = 2*(leftEncoder - leftPrevEncoderPos)/(time-prevTime); //need to linearize
+  leftPrevEncoderPos = leftEncoder;
+  rightVelocity = 2*(rightEncoder - rightPrevEncoderPos)/(time-prevTime); //need to linearize
+  rightPrevEncoderPos = rightEncoder;
+  prevTime = time;
 }
