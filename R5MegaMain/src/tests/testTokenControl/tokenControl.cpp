@@ -40,7 +40,6 @@ tokenControl::tokenControl() {
     //Initialize starter variables
     diskController(stepperPin);
     pulleyController(servoPin);
-    tokenReader();
     magnetController(magnetPin);
 }
 
