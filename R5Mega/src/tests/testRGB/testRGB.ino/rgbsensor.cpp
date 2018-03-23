@@ -7,7 +7,7 @@ rgbsensor::rgbsensor() {
   }
 }
 
-rgbsensor::Color rgbsensor::getColor(){
+Color rgbsensor::getColor(){
   uint16_t clear, red, green, blue;
   
   //tcs.setInterrupt(false);
@@ -18,7 +18,7 @@ rgbsensor::Color rgbsensor::getColor(){
 
   return getClosestColor(red,green,blue);
 }
-rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
+Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
   int greyThreshold = 50;
@@ -29,36 +29,33 @@ rgbsensor::Color rgbsensor::getClosestColor(int red,int green, int blue)
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    color = Red;
+    color = red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
   {
-    color = Magenta;
+    color = magenta;
   }
   if(((blue - red) > threshold && (blue - green) > threshold))
   {
-    color = Blue;
+    color = blue;
   }
   if(((green - red) > threshold && (blue - green) < cyanThreshold))
   {
-    color = Cyan;
+    color = cyan;
   }
   if(((green - red) > greenThreshold && (green - blue) > threshold))
   {
-    color = Green;
+    color = green;
   }
   if(((green - red) < threshold && (green - blue) > threshold))
   {
-    color = Yellow;
+    color = yellow;
   }
   if(((red - blue) < greyThreshold && (red - green) < greyThreshold))
   {
-    color = Grey;
+    color = grey;
   }
-  if(red < 300 && green < 270 && blue < 270)
-  {
-    color = Black;
-  }
+
     Serial.print("\tR:\t"); Serial.print(red);
     Serial.print("\tG:\t"); Serial.print(green);
     Serial.print("\tB:\t"); Serial.println(blue);

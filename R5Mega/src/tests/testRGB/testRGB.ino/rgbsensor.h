@@ -2,13 +2,12 @@
 #define rgbsensor_h
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
-//#include "Node.h"
+#include "Node.h"
 
 class rgbsensor
 {
   public:
   rgbsensor();
-  enum Color {unknown, Green, Blue, Yellow, Magenta, Cyan, Grey, Red, Black};
   char* colorTable[9] = {"unknown", "green", "blue", "yellow", "magenta", "cyan", "grey", "red", "black"};
   Color getColor();
   

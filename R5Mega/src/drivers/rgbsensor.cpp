@@ -16,46 +16,46 @@ String rgbsensor::getColor(){
 
   tcs.getRawData(&red, &green, &blue, &clear);
 
-  tcs.setInterrupt(true);  // turn on LED
+  //tcs.setInterrupt(true);  // turn on LED
   return getClosestColor(red,green,blue);
 }
 
-Node::Color rgbsensor::getClosestColor(int red,int green, int blue)
+Color rgbsensor::getClosestColor(int red,int green, int blue)
 {
   int threshold = 200;
   int whiteThreshold = 1500;
   int cyanThreshold = 250;
   int greenThreshold = 150;
   int purpleThreshold = 500;
-  Node::Color color = Node::electromagnet;
+  Color color = Node::electromagnet;
 
   if(((red - blue) > threshold && (red - green) > threshold))
   {
-    color = Node::red;
+    color = red;
   }
   if(((red - blue) < purpleThreshold && (red - green) > threshold))
   {
-    color = Node::magenta;
+    color = magenta;
   }
   if(((blue - red) > threshold && (blue - green) > threshold))
   {
-    color = Node::blue;
+    color = blue;
   }
   if(((green - red) > threshold && (blue - green) < cyanThreshold))
   {
-    color = Node::cyan;
+    color = cyan;
   }
   if(((green - red) > greenThreshold && (green - blue) > threshold))
   {
-    color = Node::green;
+    color = green;
   }
   if(((green - red) < threshold && (green - blue) > threshold))
   {
-    color = Node::yellow;
+    color = yellow;
   }
   if(red > whiteThreshold && green > whiteThreshold && blue > whiteThreshold)
   {
-    color = Node::grey;
+    color = grey;
   }
   return color;
 }
