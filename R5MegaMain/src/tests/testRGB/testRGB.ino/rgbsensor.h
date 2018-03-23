@@ -8,7 +8,7 @@ class rgbsensor
 {
   public:
   rgbsensor();
-  char* colorTable[9] = {"unknown", "green", "blue", "yellow", "magenta", "cyan", "grey", "red", "black"};
+  char* colorTable[8] = {"red", "green", "blue", "yellow", "magenta", "cyan", "grey", "unknown"};
   Color getColor();
   
   private:
