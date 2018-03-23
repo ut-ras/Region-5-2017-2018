@@ -6,7 +6,6 @@
 #include "Node.h"
 #include "../drivers/stepper.h"
 #include "../drivers/servo.h"
-#include "../drivers/rgbsensor.h"
 #include "../drivers/magnet.h"
 
 class tokenControl {
@@ -44,6 +43,5 @@ private:
 
     servo pulleyController;
     stepper diskController;
-    rgbsensor tokenReader;
     magnet magnetController;
 };
