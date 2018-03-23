@@ -5,11 +5,11 @@
 
 void setup() {
   tokenControl t;
-
+  delay(1000);
 }
 
 void loop() {
-
+  t.pickUpToken();
 
   while(1);
 }

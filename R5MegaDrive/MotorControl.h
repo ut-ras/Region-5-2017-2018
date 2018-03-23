@@ -1,5 +1,7 @@
 #ifndef MOTORCONTROL_H
 #define MOTORCONTROL_H
+#include <Adafruit_MotorShield.h>
+#include <PID_v1.h>
 
 class MotorControl {
 
@@ -10,11 +12,16 @@ public:
   void stop();
 
 private:
-  void setSpeed(int s);
+  void setSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
+  void update();
+  
 
   //Motor Variables
 
+  encoder* leftEncoder;
+  encoder* rightEncoder;
+  
   Adafruit_MotorShield AFMS;
 
   Adafruit_DCMotor *myMotor;
