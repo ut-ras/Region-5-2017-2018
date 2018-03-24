@@ -6,7 +6,7 @@
 class encoder {
 
 public:
-  encoder(int pa, int pb);
+  encoder(int pa, int pb);  //pinA MUST be interrupt capable
   int getPos();
 
 

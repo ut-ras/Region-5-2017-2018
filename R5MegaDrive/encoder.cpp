@@ -14,11 +14,11 @@ int encoder::getPos() {
 int encoder::updatePos() {
   switch(digitalReadFast(pinA)){
   case 0:
-    if(digitalReadFast(pinB))pos++;
+    if(digitalReadFast(pinB)) pos++;
     else pos--;
     break;
   case 1:
-    if(digitalReadFast(pinB))pos--;
+    if(digitalReadFast(pinB)) pos--;
     else pos++;
     break;
     }
