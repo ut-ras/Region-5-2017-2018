@@ -1,7 +1,12 @@
 #include <Wire.h>
 #include "MotorControl.h"
 
-MotorControl m;
+#define leftA 2
+
+MotorControl m(2, 4, 3, 5);
+
+encoder* leftEncoder;
+encoder* rightEncoder;
 
 void setup() {
   m.setMotorMode(s);
@@ -12,6 +17,12 @@ void setup() {
 
   Wire.begin(8);
   Wire.onReceive(receiveEvent);
+
+  leftEncoder = m.getLeftEncoder();
+  rightEncoder = m.getRightEncoder();
+  
+  attachInterrupt(digitalPinToInterrupt(2), leftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(3), rightEncoderISR, CHANGE);
 
   testMotorSetup();
 }
@@ -34,3 +45,13 @@ void receiveEvent(int howMany) {
     m.setMotorMode(c);
   }
 }
+
+void leftEncoderISR() {
+  leftEncoder->updatePos();
+}
+
+void rightEncoderISR() {
+  rightEncoder->updatePos();
+}
+
+

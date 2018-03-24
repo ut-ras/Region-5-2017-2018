@@ -3,11 +3,11 @@
 #include <PID_v1.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 
-MotorControl::MotorControl() {
+MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Field Initializations
 
-  leftEncoder = new encoder(2,4);
-  rightEncoder = new encoder(3,5);
+  leftEncoder = new encoder(lA,lB);
+  rightEncoder = new encoder(rA,rB);
 
   AFMS = new Adafruit_MotorShield();
 
@@ -52,6 +52,14 @@ MotorControl::MotorControl() {
   Serial.print("DELAYDONE");
 }
 
+encoder* MotorControl::getLeftEncoder() {
+  return leftEncoder;
+}
+
+encoder* MotorControl::getRightEncoder() {
+  return rightEncoder;
+}
+  
 void MotorControl::setMotorAction(char a){
   motorAction = a;
 }

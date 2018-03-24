@@ -9,11 +9,9 @@ class encoder {
 public:
   encoder(int pa, int pb);
   int getPos();
-
-
-private:
   int updatePos();
 
+private:
   int pinA, pinB;
   int pos;
 

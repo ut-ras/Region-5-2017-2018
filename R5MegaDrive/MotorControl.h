@@ -15,9 +15,12 @@ enum Commands{m1f, m2f, m3f, m1b, m2b, m3b, t1f, t1b, s};
 class MotorControl {
 
 public:
-  MotorControl();
+  MotorControl(int lA, int lB, int rA, int rB);
   void update();
   void setMotorMode(int c);
+
+  encoder* getLeftEncoder();
+  encoder* getRightEncoder();
 
 private:
 
