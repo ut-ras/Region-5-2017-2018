@@ -1,18 +1,17 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 
-#include <digitalWriteFast.h>
+//required libraries:
+//Digital Write Fast
 
 class encoder {
 
 public:
   encoder(int pa, int pb);  //pinA MUST be interrupt capable
   int getPos();
-
-
-private:
   int updatePos();
 
+private:
   int pinA, pinB;
   int pos;
 

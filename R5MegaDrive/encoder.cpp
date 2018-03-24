@@ -1,10 +1,13 @@
 
+#include <Arduino.h>
 #include "encoder.h"
+#include "digitalWriteFast.h"
 
-encoder::encoder() {
+encoder::encoder(int pa, int pb) {
+  pinA = pa;
+  pinB = pb;
   pinModeFast(pinA, INPUT);
   pinModeFast(pinB, INPUT);
-  attatchInterrupt(digitalPinToINterrupt(pinA), updatePos, CHANGE);
 }
 
 int encoder::getPos() {
