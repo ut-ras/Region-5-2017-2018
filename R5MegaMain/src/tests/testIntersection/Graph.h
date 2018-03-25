@@ -6,13 +6,13 @@
 #define NUMBER_OF_NODES 37
 
 class Graph	{
-  
+
 protected:
   Node* iterator[NUMBER_OF_NODES];  //list of all nodes, in order of Node Name enum
 	Node* adj[NUMBER_OF_NODES][8];    //adjacency lists for each node, in order of Node Name enum
 
 	int numTokens[7];   //token storage information
- 
+
 	Node* currentNode;    //currrent location
 	int currentDirection;	//integer 0-7 to determine the current direction of the bot. 0=north, 1=NE, etc
 
@@ -22,7 +22,7 @@ public:
   //token storage information
   int getNumTokens(int c);  //c is Color
   int addToken(int c);    //c is Color
-  
+
 	Node* getNode(Name n);  	//n is Name
   Node* getNeighbor(Node *n, int direction);
   Node* moveInDirection(int dir);
@@ -43,7 +43,7 @@ public:
 
 private:
     void bruteForceInit();
-      
+
     Node  redBox,  red1,  red2,  red3,  red4,  red5,
 		 greenBox,  green1,  green2,  green3,  green4,  green5,
 		 blueBox,  blue1,  blue2,  blue3,  blue4,  blue5,

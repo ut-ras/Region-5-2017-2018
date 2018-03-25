@@ -59,7 +59,7 @@ encoder* MotorControl::getLeftEncoder() {
 encoder* MotorControl::getRightEncoder() {
   return rightEncoder;
 }
-  
+
 void MotorControl::setMotorAction(char a){
   motorAction = a;
 }
@@ -103,10 +103,10 @@ void MotorControl::update(){
 
   switch(motorAction){
     case 'm':
-      setPIDSpeed(motorSpeed*motorDirection,motorSpeed*motorDirection);
+      setPIDSpeed(motorSpeed*motorDirection, motorSpeed*motorDirection);
       break;
     case 't':
-      setPIDSpeed(motorSpeed*motorDirection,motorSpeed*motorDirection*-1);
+      setPIDSpeed(motorSpeed*motorDirection, motorSpeed*motorDirection*-1);
       break;
     case 's':
       setPIDSpeed(0,0);
@@ -126,7 +126,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
 
   rightSetpoint = rightSpeed;
   rightMotorPID->Compute();
-    if(rightPower < 0 ){
+  if(rightPower < 0 ){
     myOtherMotor->run(BACKWARD);
   }else{
     myOtherMotor->run(FORWARD);
@@ -145,47 +145,47 @@ void MotorControl::calculateVelocity() {
 
 void MotorControl::setMotorMode(int c) {
   switch(c){
-    case m1f:
+    case F1:
       setMotorAction('m');
       setMotorSpeed('1');
       setMotorDirection('f');
       break;
-    case m2f:
+    case F2:
       setMotorAction('m');
       setMotorSpeed('2');
       setMotorDirection('f');
       break;
-    case m3f:
+    case F3:
       setMotorAction('m');
       setMotorSpeed('3');
       setMotorDirection('f');
       break;
-    case m1b:
+    case B1:
       setMotorAction('m');
       setMotorSpeed('1');
       setMotorDirection('b');
       break;
-    case m2b:
+    case B2:
       setMotorAction('m');
       setMotorSpeed('2');
       setMotorDirection('b');
       break;
-    case m3b:
+    case B3:
       setMotorAction('m');
       setMotorSpeed('3');
       setMotorDirection('b');
       break;
-    case t1f:
+    case L:
       setMotorAction('t');
       setMotorSpeed('1');
       setMotorDirection('f');
       break;
-    case t1b:
+    case R:
       setMotorAction('t');
       setMotorSpeed('1');
       setMotorDirection('b');
       break;
-    case s:
+    case S:
       setMotorAction(s);
       break;
   }

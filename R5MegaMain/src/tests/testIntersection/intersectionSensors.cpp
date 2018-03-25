@@ -38,6 +38,20 @@ pointlineData intersectionSensors::getNextIntersection() {
   return getPointlineFor(intersectionType, map->getCurrentDirection());
 }
 
+//for turn in place
+pointlineData intersectionSensors::getTurn45Intersection(int steps) {
+  Node *current = map->getCurrentNode();
+  intersectionType = current->getMapColor();
+  return getPointlineFor(intersectionType, map->getCurrentDirection() + steps);
+}
+
+//turn to a specific direction
+pointlineData intersectionSensors::getTurnToIntersection(int dir) {
+  Node *current = map->getCurrentNode();
+  intersectionType = current->getMapColor();
+  return getPointlineFor(intersectionType, dir);
+}
+
 pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
     int offset, index;
   if ((intersectionType == red) || (intersectionType == cyan) || (intersectionType == yellow) || (intersectionType == blue)) {
@@ -87,7 +101,7 @@ char * intersectionSensors::PLDatatoString(pointlineData data) {
   return s;
 }
 
-intersectionSensors::printDataRedNorth() {
+void intersectionSensors::printDataRedNorth() {
   for(int i = 0; i<8; i++)
   {
     Serial.print(dataRedNorth[i].l0);
@@ -99,4 +113,3 @@ intersectionSensors::printDataRedNorth() {
     Serial.println();
   }
 }
-

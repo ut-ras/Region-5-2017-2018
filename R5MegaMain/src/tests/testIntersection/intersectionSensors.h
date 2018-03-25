@@ -3,13 +3,9 @@
 #include "pointline.h"
 #include "Graph.h"
 #include "Node.h"
+
 /*
  * Class that abstracts the pointline class, array of line sensors for detecting intersections of lines
- * TODO: add enum or something to describe [intersection type]
- * TODO: add something to describe [direction of movement]
- * TODO: add static function that converts current [direction of movement] and [intersection type]
- *       and returns the desired pointlineData for the next intersection
- * get the [intersection type] and [direction of movement] from the data logging code
  * usage: in high level code, determine the desired pointlineData for the next intersection, then move and getData until data matches
  */
 
@@ -20,6 +16,21 @@ typedef struct pointlineData {
   bool r0;
   bool r1;
   bool r2;
+  pointlineData& operator=(const pointlineData& a) {
+      l0 = a.l0;
+      l1 = a.l1;
+      l2 = a.l2;
+      r0 = a.r0;
+      r1 = a.r1;
+      r2 = a.r2;
+      return *this;
+  }
+  bool operator==(const pointlineData& a) const {
+      return (l0 == a.l0 && l1 == a.l1 && l2 == a.l2 && r0 == a.r0 && r1 == a.r1 && r2 == a.r2);
+  }
+  bool operator!=(const pointlineData& a) const {
+      return !(l0 == a.l0 && l1 == a.l1 && l2 == a.l2 && r0 == a.r0 && r1 == a.r1 && r2 == a.r2);
+  }
 } pointlineData;
 
 class intersectionSensors {
@@ -29,10 +40,15 @@ public:
   intersectionSensors(Graph * mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
   pointlineData getData();
   pointlineData getNextIntersection();  //based on current location and direction in map
+
+  pointlineData getTurn45Intersection(int steps);  //for turn in place
+  pointlineData getTurnToIntersection(int dir);  //turn to a specific direction
+
   pointlineData createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2);
+
   Color intersectionType;
-  printDataRedNorth();
-  
+  void printDataRedNorth();
+
 private:
   Graph * map;
   pointline *l0;

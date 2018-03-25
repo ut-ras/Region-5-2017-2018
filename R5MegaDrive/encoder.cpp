@@ -6,6 +6,7 @@
 encoder::encoder(int pa, int pb) {
   pinA = pa;
   pinB = pb;
+  pos = 0;
   pinModeFast(pinA, INPUT);
   pinModeFast(pinB, INPUT);
 }
