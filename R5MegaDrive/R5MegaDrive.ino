@@ -29,7 +29,7 @@ void initI2c() {
 }
 
 void initMotorControl() {
-  m.setMotorMode(s);
+  m.setMotorMode(STOP);
   leftEncoder = m.getLeftEncoder();
   rightEncoder = m.getRightEncoder();
   attachInterrupt(digitalPinToInterrupt(ENCODER_L_A), leftEncoderISR, CHANGE);
@@ -63,5 +63,5 @@ void rightEncoderISR() {
 
 //test function that starts motor moving fwd
 void testMotorSetup() {
-  m.setMotorMode(m1f);
+  m.setMotorMode(FWD1);
 }

@@ -10,7 +10,7 @@
 //Adafruit_MotorShield v2
 //PID by Brett
 
-enum Commands{F1, F2, F3, B1, B2, B3, L, R, S};
+enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFT, RIGHT, STOP};
 
 class MotorControl {
 

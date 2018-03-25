@@ -145,48 +145,48 @@ void MotorControl::calculateVelocity() {
 
 void MotorControl::setMotorMode(int c) {
   switch(c){
-    case F1:
+    case FWD1:
       setMotorAction('m');
       setMotorSpeed('1');
       setMotorDirection('f');
       break;
-    case F2:
+    case FWD2:
       setMotorAction('m');
       setMotorSpeed('2');
       setMotorDirection('f');
       break;
-    case F3:
+    case FWD3:
       setMotorAction('m');
       setMotorSpeed('3');
       setMotorDirection('f');
       break;
-    case B1:
+    case BACK1:
       setMotorAction('m');
       setMotorSpeed('1');
       setMotorDirection('b');
       break;
-    case B2:
+    case BACK2:
       setMotorAction('m');
       setMotorSpeed('2');
       setMotorDirection('b');
       break;
-    case B3:
+    case BACK3:
       setMotorAction('m');
       setMotorSpeed('3');
       setMotorDirection('b');
       break;
-    case L:
+    case LEFT:
       setMotorAction('t');
       setMotorSpeed('1');
       setMotorDirection('f');
       break;
-    case R:
+    case RIGHT:
       setMotorAction('t');
       setMotorSpeed('1');
       setMotorDirection('b');
       break;
-    case S:
-      setMotorAction(s);
+    case STOP:
+      setMotorAction('s');
       break;
   }
 }
