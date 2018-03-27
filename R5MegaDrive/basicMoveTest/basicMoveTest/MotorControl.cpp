@@ -9,32 +9,32 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   leftEncoder = new encoder(lA,lB);
   rightEncoder = new encoder(rA,rB);
 
-  Serial.println("inside init");
+  //Serial.println("inside init");
   
   AFMS = new Adafruit_MotorShield();
 
   myMotor = AFMS->getMotor(3);
-  myOtherMotor = AFMS->getMotor(1);
+  myOtherMotor = AFMS->getMotor(4);
 
-  Serial.println("AFMS init");
+  //Serial.println("AFMS init");
   
   prevTime = 0;
 
   leftPrevEncoderPos = 0;
 
-  leftKp = 0.2;
-  leftKi = 0.5;
-  leftKd = 0.1;
+  leftKp = 0.15;  //0.3 (0.1 - 1) 
+  leftKi = 75;   //5 - 70
+  leftKd = 0;   //0
   leftMotorPID = new PID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
 
   rightPrevEncoderPos = 0;
 
-  rightKp = 0.2;
-  rightKi = 0.5;
-  rightKd = 0.1;
+  rightKp = 0;
+  rightKi = 0;
+  rightKd = 0;
   rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
 
-  Serial.println("PID init");
+  //Serial.println("PID init");
   
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
@@ -45,17 +45,17 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   myOtherMotor->setSpeed(120);
 
   //PID Initialization
-  leftMotorPID->SetSampleTime(10);
+  leftMotorPID->SetSampleTime(3);
   leftMotorPID->SetMode(AUTOMATIC);
   leftMotorPID->SetOutputLimits(-255,255);
 
-  rightMotorPID->SetSampleTime(10);
+  rightMotorPID->SetSampleTime(3);
   rightMotorPID->SetMode(AUTOMATIC);
   rightMotorPID->SetOutputLimits(-255,255);
 
   //delay for testing purposes
   delay(1000);
-  Serial.println("Motor Control Initialized");
+  //Serial.println("Motor Control Initialized");
 }
 
 encoder* MotorControl::getLeftEncoder() {
@@ -106,8 +106,12 @@ void MotorControl::update(){
   */
   calculateVelocity();
   
-  Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
-  Serial.print("Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
+  //Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
+  //Serial.print("Set:" + String(leftSetpoint) + " / " + String(rightSetpoint));
+  //Serial.print("Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
+  Serial.println(int(leftVelocity));
+  Serial.print(" ");
+  //Serial.print(leftPower);
 
   switch(motorAction){
     case 'm':

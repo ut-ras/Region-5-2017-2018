@@ -20,24 +20,24 @@ int isrCount[2] = {0, 0};
 void setup() {
   Serial.begin(115200);  // start serial for testing outputs
   delay(1000);
-  Serial.println("welcome to this test");
+  //Serial.println("welcome to this test");
 
   initMotorControl();
   testMotorSetup();
-  Serial.println("end of setup - main");
+  //Serial.println("end of setup - main");
 
 }
 
 void loop() {
-  delay(20);
-  Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
+  delay(10);
+  //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos())); 
   m->update();
 }
 
 //test function that starts motor moving fwd
 void testMotorSetup() {
-  m->setMotorMode(FWD1);
+  m->setMotorMode(FWD3);
 }
 
 void initMotorControl() {
@@ -50,7 +50,7 @@ void initMotorControl() {
 
   attachInterrupt(digitalPinToInterrupt(ENCODER_L_A), leftEncoderISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ENCODER_R_A), rightEncoderISR, CHANGE);
-  Serial.println("motor control initialized in main");
+  //Serial.println("motor control initialized in main");
 }
 
 void leftEncoderISR() {
