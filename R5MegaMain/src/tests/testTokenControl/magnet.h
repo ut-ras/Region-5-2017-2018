@@ -7,10 +7,12 @@
 class magnet {
 public:
 
-    magnet();
+    magnet(int _magnetPin);
 
     void magnetOn();
     void magnetOff();
+
+    int magPin;
 
 };
 #endif //REGION_5_2017_2018_MASTER_MAGNET_H
