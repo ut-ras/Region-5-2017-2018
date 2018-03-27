@@ -26,6 +26,18 @@ bool* arrayline::getLineSensor(){
  //Serial.println();
 }
 
+int arrayline::getWeightedValue()
+{
+  uint8_t rawValue = arrayLine->getRaw();
+  int sum = 0;
+  for(int i = 0; i<8; i++)
+  {
+    sum = weights[i]*((rawValue>>i)&0x01);
+  }
+  return sum;
+}
+
+
 bool arrayline::isLine(){
 	
 }

@@ -1,6 +1,6 @@
 #include <Wire.h>
 #include "MotorControl.h"
-
+#include "arrayline.h"
 #define DRIVE_MEGA_I2C 8
 
 #define ENCODER_L_A 2
@@ -12,6 +12,7 @@ MotorControl m(ENCODER_L_A, ENCODER_L_B, ENCODER_R_A, ENCODER_R_B);
 
 encoder* leftEncoder;
 encoder* rightEncoder;
+arrayline* lineArray;
 
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
@@ -27,7 +28,10 @@ void initI2c() {
   Wire.begin(DRIVE_MEGA_I2C);
   Wire.onReceive(receiveEvent);
 }
-
+void initArrayLine()
+{
+  lineArray = new arrayline();
+}
 void initMotorControl() {
   m.setMotorMode(STOP);
   leftEncoder = m.getLeftEncoder();

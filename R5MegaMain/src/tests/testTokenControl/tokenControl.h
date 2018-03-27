@@ -3,10 +3,13 @@
  * picking up tokens, storing tokens, releasing tokens
  */
 
+ #ifndef TOKENCONTROL_H
+ #define TOKENCONTROL_H
+
 #include "Node.h"
-#include "../drivers/stepper.h"
-#include "../drivers/servo.h"
-#include "../drivers/magnet.h"
+#include "stepper.h"
+#include "r5servo.h"
+#include "magnet.h"
 
 class tokenControl {
 
@@ -19,21 +22,21 @@ public:
      * correct position, then stores
      * it into the appropriate funnel.
      */
-    Node::Color pickUpToken();
+    int pickUpToken();
 
     /* Picks up from the funnel and
      * deposits onto the field, the
      * tokens of the input colour c.
      */
-    void depositTokens(Node::Color c);
+    void depositTokens(int c);
 
 private:
     //Rotates the token disk to input colour
     //Prereq: Magnet is centered
-    void rotateDiskToColor(Node::Color c);
+    void rotateDiskToColor(int c);
     //Resets the disk from input colour to center
     //Prereq: Magnet is at c
-    void resetDisk(Node::Color c);
+    void resetDisk(int c);
     //Deposits held tokens into the funnel
     //Prereq: Over a funnel
     void depositInFunnel();
@@ -41,7 +44,8 @@ private:
     //Prereq: Over a funnel
     void pickupFromFunnel();
 
-    servo pulleyController;
-    stepper diskController;
-    magnet magnetController;
+    r5servo *pulleyController;
+    stepper *diskController;
+    magnet *magnetController;
 };
+#endif
