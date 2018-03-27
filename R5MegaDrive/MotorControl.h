@@ -23,11 +23,11 @@ public:
   encoder* getRightEncoder();
 
 private:
-
   void setMotorAction(char a);
   void setMotorSpeed(char s);
   void setMotorDirection(char d);
 
+  void calculateCorrections(int* correctionLeft, int* correctionRight);
   void setPIDSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
 
@@ -42,12 +42,13 @@ private:
 
   Adafruit_MotorShield *AFMS;
 
-  Adafruit_DCMotor *myMotor;
-  Adafruit_DCMotor *myOtherMotor;
+  Adafruit_DCMotor *leftMotor;
+  Adafruit_DCMotor *rightMotor;
 
   //PID Variables
   int time;
   int prevTime;
+  arrayline lineSensor;
 
   int leftPrevEncoderPos;
   double leftSetpoint, leftVelocity, leftPower;

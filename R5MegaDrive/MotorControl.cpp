@@ -11,8 +11,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  myMotor = AFMS->getMotor(1);
-  myOtherMotor = AFMS->getMotor(2);
+  leftMotor = AFMS->getMotor(1);
+  rightMotor = AFMS->getMotor(2);
 
   prevTime = 0;
 
@@ -33,10 +33,10 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
-  myMotor->run(FORWARD);
-  myOtherMotor->run(FORWARD);
-  myMotor->setSpeed(120);
-  myOtherMotor->setSpeed(120);
+  leftMotor->run(FORWARD);
+  rightMotor->run(FORWARD);
+  leftMotor->setSpeed(120);
+  rightMotor->setSpeed(120);
 
   //PID Initialization
   leftMotorPID->SetSampleTime(10);
@@ -100,10 +100,14 @@ void MotorControl::update(){
   */
 
   calculateVelocity();
-
+  
   switch(motorAction){
     case 'm':
-      setPIDSpeed(motorSpeed*motorDirection, motorSpeed*motorDirection);
+      int correctionL = 0;
+      int correctionR = 0;
+      
+      calculateCorrections(correctionL, int* correctionR);
+      setPIDSpeed(motorSpeed*motorDirection + correctionL, motorSpeed*motorDirection + correctionR);
       break;
     case 't':
       setPIDSpeed(motorSpeed*motorDirection, motorSpeed*motorDirection*-1);
@@ -118,20 +122,33 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
   leftSetpoint = leftSpeed;
   leftMotorPID->Compute();
   if(leftPower < 0 ){
-    myMotor->run(BACKWARD);
+    leftMotor->run(BACKWARD);
   }else{
-    myMotor->run(FORWARD);
+    leftMotor->run(FORWARD);
   }
-  myMotor->setSpeed(abs((int)leftPower));
+  leftMotor->setSpeed(abs((int)leftPower));
 
   rightSetpoint = rightSpeed;
   rightMotorPID->Compute();
   if(rightPower < 0 ){
-    myOtherMotor->run(BACKWARD);
+    rightMotor->run(BACKWARD);
   }else{
-    myOtherMotor->run(FORWARD);
+    rightMotor->run(FORWARD);
   }
-  myOtherMotor->setSpeed(abs((int)rightPower));
+  rightMotor->setSpeed(abs((int)rightPower));
+}
+
+void MotorControl::calculateCorrections(int* correctionLeft, int* correctionRight){
+  int lineSensorWeight = lineSensor.getWeightedValue();
+  if(lineSensorWeight < -8){
+    correctionLeft = 4;   
+  }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
+    correctionLeft = 2;
+  }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
+    correctionRight = 2;   
+  }else if(lineSensorWeight > 8){
+    correctionRight = 4;   
+  }
 }
 
 void MotorControl::calculateVelocity() {
