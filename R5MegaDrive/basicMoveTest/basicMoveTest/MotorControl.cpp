@@ -10,19 +10,19 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   rightEncoder = new encoder(rA,rB);
 
   //Serial.println("inside init");
-  
+
   AFMS = new Adafruit_MotorShield();
 
   myMotor = AFMS->getMotor(3);
   myOtherMotor = AFMS->getMotor(4);
 
   //Serial.println("AFMS init");
-  
+
   prevTime = 0;
 
   leftPrevEncoderPos = 0;
 
-  leftKp = 0.15;  //0.3 (0.1 - 1) 
+  leftKp = 0.15;  //0.3 (0.1 - 1)
   leftKi = 75;   //5 - 70
   leftKd = 0;   //0
   leftMotorPID = new PID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
@@ -35,7 +35,7 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
 
   //Serial.println("PID init");
-  
+
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
@@ -105,7 +105,7 @@ void MotorControl::update(){
   Serial.print("\n");
   */
   calculateVelocity();
-  
+
   //Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
   //Serial.print("Set:" + String(leftSetpoint) + " / " + String(rightSetpoint));
   //Serial.print("Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
@@ -135,7 +135,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
     myMotor->run(FORWARD);
   }
   myMotor->setSpeed(abs((int)leftPower));
-  
+
   rightSetpoint = rightSpeed;
   rightMotorPID->Compute();
   if(rightPower < 0 ){
@@ -148,12 +148,22 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
 }
 
 void MotorControl::calculateVelocity() {
-  time = millis();
-  leftVelocity = 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
-  leftPrevEncoderPos = leftEncoder->getPos();
-  rightVelocity = 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
-  rightPrevEncoderPos = rightEncoder->getPos();
-  prevTime = time;
+  if (vSampleCount < numVSamples) {
+    unsigned long time = millis();
+    leftVSampleSum += 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
+    leftPrevEncoderPos = leftEncoder->getPos();
+    rightVSampleSum += 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
+    rightPrevEncoderPos = rightEncoder->getPos();
+    prevTime = time;
+    vSampleCount++;
+  }
+  if (vSampleCount == numVSamples) {
+    leftVelocity = leftVSampleSum / numVSamples;
+    rightVelocity = rightVSampleSum / numVSamples;
+    leftVSampleSum = 0;
+    rightVSampleSum = 0;
+    vSampleCount = 0;
+  }
 }
 
 void MotorControl::setMotorMode(int c) {
