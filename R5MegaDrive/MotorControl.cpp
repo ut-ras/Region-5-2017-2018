@@ -11,8 +11,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  myMotor = AFMS->getMotor(1);
-  myOtherMotor = AFMS->getMotor(2);
+  myOtherMotor = AFMS->getMotor(1);
+  myMotor = AFMS->getMotor(2);
+  
 
   prevTime = 0;
 

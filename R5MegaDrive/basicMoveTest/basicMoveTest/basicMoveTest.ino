@@ -2,8 +2,8 @@
 
 #define DRIVE_MEGA_I2C 8
 
-#define ENCODER_L_A 2
-#define ENCODER_L_B 4
+#define ENCODER_L_A 19
+#define ENCODER_L_B 18
 #define ENCODER_R_A 3
 #define ENCODER_R_B 5
 
