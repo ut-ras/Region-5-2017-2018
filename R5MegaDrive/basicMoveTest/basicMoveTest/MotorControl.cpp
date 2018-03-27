@@ -9,11 +9,15 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   leftEncoder = new encoder(lA,lB);
   rightEncoder = new encoder(rA,rB);
 
+  Serial.println("inside init");
+  
   AFMS = new Adafruit_MotorShield();
 
-  myMotor = AFMS->getMotor(1);
-  myOtherMotor = AFMS->getMotor(2);
+  myMotor = AFMS->getMotor(3);
+  myOtherMotor = AFMS->getMotor(1);
 
+  Serial.println("AFMS init");
+  
   prevTime = 0;
 
   leftPrevEncoderPos = 0;
@@ -30,11 +34,13 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   rightKd = 1;
   rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
 
+  Serial.println("PID init");
+  
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
-  myMotor->run(FORWARD);
-  myOtherMotor->run(FORWARD);
+  //myMotor->run(FORWARD);
+  //myOtherMotor->run(FORWARD);
   myMotor->setSpeed(120);
   myOtherMotor->setSpeed(120);
 
@@ -48,8 +54,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   rightMotorPID->SetOutputLimits(-255,255);
 
   //delay for testing purposes
-  delay(5000);
-  Serial.print("DELAYDONE");
+  delay(1000);
+  Serial.println("Motor Control Initialized");
 }
 
 encoder* MotorControl::getLeftEncoder() {
@@ -123,7 +129,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
     myMotor->run(FORWARD);
   }
   myMotor->setSpeed(abs((int)leftPower));
-
+  
   rightSetpoint = rightSpeed;
   rightMotorPID->Compute();
   if(rightPower < 0 ){
@@ -132,6 +138,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
     myOtherMotor->run(FORWARD);
   }
   myOtherMotor->setSpeed(abs((int)rightPower));
+  //Serial.println("Set Motor Speeds");
 }
 
 void MotorControl::calculateVelocity() {
