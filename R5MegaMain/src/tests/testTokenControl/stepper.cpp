@@ -6,6 +6,8 @@
 #define MOTOR_STEPS 6400
 #define HOLES 800
 
+#include "stepper.h"
+
 // Initializer
 stepper::stepper(int _stepperPin, int _directionPin)
 {
@@ -19,7 +21,7 @@ stepper::stepper(int _stepperPin, int _directionPin)
 }
 
 // Rotate disk by angle in Direction
-void rotateDisk(float angle, Direction rotationDirection)
+void stepper::rotateDisk(float angle, stepper::Direction rotationDirection)
 {
 	digitalWrite(directionPin, rotationDirection);
 
