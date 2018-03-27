@@ -106,8 +106,8 @@ void MotorControl::update(){
   */
   calculateVelocity();
   
-  Serial.print("Power:" + String(leftVelocity) +  " / " + String(rightVelocity));
-  Serial.print(" Velocity:" + String(leftPower) +  " / " + String(rightPower) + "\n");
+  Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
+  Serial.print("Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
 
   switch(motorAction){
     case 'm':
@@ -144,10 +144,10 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
 }
 
 void MotorControl::calculateVelocity() {
-  time = 0.001*millis();
-  leftVelocity = 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(time-prevTime); //need to linearize
+  time = millis();
+  leftVelocity = 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
   leftPrevEncoderPos = leftEncoder->getPos();
-  rightVelocity = 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(time-prevTime); //need to linearize
+  rightVelocity = 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
   rightPrevEncoderPos = rightEncoder->getPos();
   prevTime = time;
 }

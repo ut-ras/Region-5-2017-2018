@@ -46,8 +46,8 @@ private:
   Adafruit_DCMotor *myOtherMotor;
 
   //PID Variables
-  double time;
-  double prevTime;
+  unsigned long time;   //stored as milliseconds, converted to second in calculateVelocity
+  unsigned long prevTime;
 
   int leftPrevEncoderPos;
   double leftSetpoint, leftVelocity, leftPower;
