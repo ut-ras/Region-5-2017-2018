@@ -4,8 +4,8 @@
 
 #define DRIVE_MEGA_I2C 8
 
-#define ENCODER_L_A 18
-#define ENCODER_L_B 19
+#define ENCODER_L_A 19
+#define ENCODER_L_B 18
 #define ENCODER_R_A 3
 #define ENCODER_R_B 5
 
@@ -15,7 +15,7 @@ MotorControl * m;
 encoder* leftEncoder;
 encoder* rightEncoder;
 
-int isrCount[2] = {0};
+int isrCount[2] = {0, 0};
 
 void setup() {
   Serial.begin(115200);  // start serial for testing outputs
@@ -30,7 +30,8 @@ void setup() {
 
 void loop() {
   delay(20);
-  Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
+  //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
+  Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos())); 
   m->update();
 }
 
@@ -40,11 +41,6 @@ void testMotorSetup() {
 }
 
 void initMotorControl() {
-  pinModeFast(ENCODER_L_A, INPUT);
-  pinModeFast(ENCODER_L_B, INPUT);
-  pinModeFast(ENCODER_R_A, INPUT);
-  pinModeFast(ENCODER_R_B, INPUT);
-
   m = new MotorControl(ENCODER_L_A, ENCODER_L_B, ENCODER_R_A, ENCODER_R_B);
 
   m->setMotorMode(STOP);
@@ -60,11 +56,11 @@ void initMotorControl() {
 
 void leftEncoderISR() {
   isrCount[0]++;
-  //leftEncoder->updatePos();
+  leftEncoder->updatePos();
 }
 
 void rightEncoderISR() {
   isrCount[1]++;
-  //rightEncoder->updatePos();
+  rightEncoder->updatePos();
 }
 
