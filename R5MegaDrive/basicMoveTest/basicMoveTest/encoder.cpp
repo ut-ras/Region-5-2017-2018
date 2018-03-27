@@ -16,7 +16,7 @@ int encoder::getPos() {
 }
 
 int encoder::updatePos() {
-  /*switch(digitalRead(pinA)){
+  switch(digitalRead(pinA)){
     case 0:
       if(digitalRead(pinB))pos++;
       else pos--;
@@ -26,7 +26,7 @@ int encoder::updatePos() {
       else pos++;
       break;
   }
-  */
-  if(digitalRead(pinB)) pos-=2;
-  else pos+=2;
+  
+  //if(digitalRead(pinB)) pos-=2;
+  //else pos+=2;
 }

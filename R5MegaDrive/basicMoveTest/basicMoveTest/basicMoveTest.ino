@@ -31,7 +31,7 @@ void setup() {
 void loop() {
   delay(20);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
-  Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos())); 
+  //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos())); 
   m->update();
 }
 
@@ -49,8 +49,8 @@ void initMotorControl() {
   rightEncoder = m->getRightEncoder();
 
 
-  attachInterrupt(digitalPinToInterrupt(ENCODER_L_A), leftEncoderISR, RISING);
-  attachInterrupt(digitalPinToInterrupt(ENCODER_R_A), rightEncoderISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_L_A), leftEncoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_R_A), rightEncoderISR, CHANGE);
   Serial.println("motor control initialized in main");
 }
 

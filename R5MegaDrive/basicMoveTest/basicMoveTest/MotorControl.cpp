@@ -22,16 +22,16 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   leftPrevEncoderPos = 0;
 
-  leftKp = 2;
-  leftKi = 5;
-  leftKd = 1;
+  leftKp = 0.2;
+  leftKi = 0.5;
+  leftKd = 0.1;
   leftMotorPID = new PID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
 
   rightPrevEncoderPos = 0;
 
-  rightKp = 2;
-  rightKi = 5;
-  rightKd = 1;
+  rightKp = 0.2;
+  rightKi = 0.5;
+  rightKd = 0.1;
   rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
 
   Serial.println("PID init");
@@ -104,8 +104,10 @@ void MotorControl::update(){
   Serial.print(rightPosition);
   Serial.print("\n");
   */
-
   calculateVelocity();
+  
+  Serial.print("Power:" + String(leftVelocity) +  " / " + String(rightVelocity));
+  Serial.print(" Velocity:" + String(leftPower) +  " / " + String(rightPower) + "\n");
 
   switch(motorAction){
     case 'm':
