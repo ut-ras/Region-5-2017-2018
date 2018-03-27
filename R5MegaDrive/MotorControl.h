@@ -5,6 +5,7 @@
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 
 #include "encoder.h"
+#include "arrayline.h"
 
 //required libraries:
 //Adafruit_MotorShield v2
@@ -48,7 +49,7 @@ private:
   //PID Variables
   int time;
   int prevTime;
-  arrayline lineSensor;
+  arrayline* lineSensor;
 
   int leftPrevEncoderPos;
   double leftSetpoint, leftVelocity, leftPower;

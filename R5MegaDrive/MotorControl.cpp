@@ -14,6 +14,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   leftMotor = AFMS->getMotor(1);
   rightMotor = AFMS->getMotor(2);
 
+  lineSensor = new arrayline();
+
   prevTime = 0;
 
   leftPrevEncoderPos = 0;
@@ -85,6 +87,18 @@ void MotorControl::setMotorDirection(char d){
   }
 }
 
+void MotorControl::calculateCorrections(int* correctionLeft, int* correctionRight){
+  int lineSensorWeight = lineSensor->getWeightedValue();
+  if(lineSensorWeight < -8){
+    *correctionLeft = 4;   
+  }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
+    *correctionLeft = 2;
+  }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
+    *correctionRight = 2;   
+  }else if(lineSensorWeight > 8){
+    *correctionRight = 4;   
+  }
+}
 
 void MotorControl::update(){
   int16_t leftPosition,rightPosition;
@@ -100,13 +114,13 @@ void MotorControl::update(){
   */
 
   calculateVelocity();
-  
+
+  int correctionL, correctionR;
   switch(motorAction){
     case 'm':
-      int correctionL = 0;
-      int correctionR = 0;
-      
-      calculateCorrections(correctionL, int* correctionR);
+      correctionL = 0;
+      correctionR = 0;
+      calculateCorrections(&correctionL, &correctionR);
       setPIDSpeed(motorSpeed*motorDirection + correctionL, motorSpeed*motorDirection + correctionR);
       break;
     case 't':
@@ -138,18 +152,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
   rightMotor->setSpeed(abs((int)rightPower));
 }
 
-void MotorControl::calculateCorrections(int* correctionLeft, int* correctionRight){
-  int lineSensorWeight = lineSensor.getWeightedValue();
-  if(lineSensorWeight < -8){
-    correctionLeft = 4;   
-  }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
-    correctionLeft = 2;
-  }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
-    correctionRight = 2;   
-  }else if(lineSensorWeight > 8){
-    correctionRight = 4;   
-  }
-}
+
 
 void MotorControl::calculateVelocity() {
   time = 0.001*millis();
