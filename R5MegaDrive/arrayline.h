@@ -13,6 +13,8 @@ private:
 	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;
+  int8_t weights[8] = {-8, -4, -2, -1, 1, 2, 4, 8};
+
 public:
 
 	//Since we only have 1 line sensor we can just
@@ -24,6 +26,8 @@ public:
 
     //Check if any of the 8 sensors are true
     bool isLine();
+
+    int getWeightedValue();
 
 };
 
