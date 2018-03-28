@@ -13,8 +13,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  myMotor = AFMS->getMotor(3);
-  myOtherMotor = AFMS->getMotor(4);
+  myOtherMotor = AFMS->getMotor(3);
+  myMotor = AFMS->getMotor(4);
 
   //Serial.println("AFMS init");
 
@@ -29,8 +29,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   rightPrevEncoderPos = 0;
 
-  rightKp = 0;
-  rightKi = 0;
+  rightKp = 0.15;
+  rightKi = 75;
   rightKd = 0;
   rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
 
@@ -39,19 +39,19 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
+  //myMotor->setSpeed(120);
+  //myOtherMotor->setSpeed(120);
   //myMotor->run(FORWARD);
   //myOtherMotor->run(FORWARD);
-  myMotor->setSpeed(120);
-  myOtherMotor->setSpeed(120);
 
   //PID Initialization
   leftMotorPID->SetSampleTime(3);
   leftMotorPID->SetMode(AUTOMATIC);
-  leftMotorPID->SetOutputLimits(-255,255);
+  leftMotorPID->SetOutputLimits(-255, 255);
 
   rightMotorPID->SetSampleTime(3);
   rightMotorPID->SetMode(AUTOMATIC);
-  rightMotorPID->SetOutputLimits(-255,255);
+  rightMotorPID->SetOutputLimits(-255, 255);
 
   //delay for testing purposes
   delay(1000);
@@ -74,20 +74,20 @@ void MotorControl::setMotorSpeed(char s){
   if(s == '1'){
     motorSpeed = 90;
   }
-  if(s == '2'){
+  else if(s == '2'){
     motorSpeed = 135;
   }
-  if(s == '3'){
+  else if(s == '3'){
     motorSpeed = 180;
   }
 }
 
 void MotorControl::setMotorDirection(char d){
   if(d == 'f'){
-    motorDirection = 1;
-  }
-  if(d = 'b'){
     motorDirection = -1;
+  }
+  else if(d == 'b'){
+    motorDirection = 1;
   }
 }
 
@@ -106,12 +106,15 @@ void MotorControl::update(){
   */
   calculateVelocity();
 
-  //Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
-  //Serial.print("Set:" + String(leftSetpoint) + " / " + String(rightSetpoint));
-  //Serial.print("Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
-  Serial.println(int(leftVelocity));
+  Serial.print("Velocity:" + String(leftVelocity) +  " / " + String(rightVelocity));
+  Serial.print(" Set:" + String(leftSetpoint) + " / " + String(rightSetpoint));
+  Serial.print(" Power:" + String(leftPower) +  " / " + String(rightPower) + "\n");
+  Serial.print(" Set Speed:" + String(motorSpeed) +  " / Set Direction: " + String(motorDirection) + "\n");
+  /* //Serial Plotter
+  Serial.println(int(rightVelocity));
+  Serial.println(int(leftPower));
   Serial.print(" ");
-  //Serial.print(leftPower);
+  */
 
   switch(motorAction){
     case 'm':
@@ -138,7 +141,7 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
 
   rightSetpoint = rightSpeed;
   rightMotorPID->Compute();
-  if(rightPower < 0 ){
+  if(rightPower > 0 ){
     myOtherMotor->run(BACKWARD);
   }else{
     myOtherMotor->run(FORWARD);
@@ -147,19 +150,32 @@ void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
   //Serial.println("Set Motor Speeds");
 }
 
+int MotorControl::normalizeSpeedForAFMS(double s) {
+  return (s / motorMaxSpeed) * 255;
+}
+
 void MotorControl::calculateVelocity() {
   if (vSampleCount < numVSamples) {
-    unsigned long time = millis();
-    leftVSampleSum += 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
+    unsigned long t = millis();
+    Serial.println("Left Encoder Pos " + String(leftEncoder->getPos()));
+    Serial.println("Time Diff " + String((t-prevTime)));
+    
+    leftVSampleSum += 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(t-prevTime)); 
     leftPrevEncoderPos = leftEncoder->getPos();
-    rightVSampleSum += 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(time-prevTime)); //need to linearize
+    rightVSampleSum += 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(t-prevTime));
     rightPrevEncoderPos = rightEncoder->getPos();
-    prevTime = time;
+    prevTime = t;
     vSampleCount++;
   }
   if (vSampleCount == numVSamples) {
-    leftVelocity = leftVSampleSum / numVSamples;
-    rightVelocity = rightVSampleSum / numVSamples;
+    double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
+    double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
+    if (lv != 0 ) {
+      leftVelocity = lv;
+    }
+    if (rv != 0 ) {
+      rightVelocity = lv;
+    }
     leftVSampleSum = 0;
     rightVSampleSum = 0;
     vSampleCount = 0;

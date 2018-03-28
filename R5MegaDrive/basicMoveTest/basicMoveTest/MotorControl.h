@@ -27,12 +27,13 @@ private:
   void setMotorAction(char a);
   void setMotorSpeed(char s);
   void setMotorDirection(char d);
-
+ 
   void setPIDSpeed(int leftSpeed, int rightSpeed);
   void calculateVelocity();
-
+  int normalizeSpeedForAFMS(double s);
+  
   //Motor Variables
-
+  double motorMaxSpeed = 950.0;
   char motorAction;
   int motorSpeed;
   int motorDirection;
@@ -41,7 +42,6 @@ private:
   encoder* rightEncoder;
 
   Adafruit_MotorShield *AFMS;
-
   Adafruit_DCMotor *myMotor;
   Adafruit_DCMotor *myOtherMotor;
 
@@ -63,8 +63,8 @@ private:
   PID * rightMotorPID;
 
   // velocity averaging stuff
+  const double numVSamples = 5;
   int vSampleCount = 0;
-  double numVSamples = 5;
   double leftVSampleSum = 0;
   double rightVSampleSum = 0;
 };
