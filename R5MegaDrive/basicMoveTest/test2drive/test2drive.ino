@@ -27,7 +27,6 @@ void setup() {
 
   //Serial.println("end of setup - main");
     while (Serial.available() <= 0) {
-    Serial.print('A');   // send a capital A
     delay(300);
   }
 
