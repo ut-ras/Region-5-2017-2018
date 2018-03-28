@@ -119,8 +119,8 @@ void MotorControl::calculateEncoderSpeeds() {
   if (vSampleCount < numVSamples) {
     unsigned long t = millis();
 
-    Serial.println("Left Encoder Diff " + String(l_Encoder->getPos() - l_PrevEncoderPos));
-    Serial.println("Time Diff " + String((t-prevTime)));
+    //Serial.print("Left Encoder Diff " + String(l_Encoder->getPos() - l_PrevEncoderPos));
+    //Serial.print(" Time Diff " + String((t-prevTime)));
 
     leftVSampleSum += abs(2*(l_Encoder->getPos() - l_PrevEncoderPos)/(.001*double(t-prevTime)));
     l_PrevEncoderPos = l_Encoder->getPos();
@@ -134,14 +134,15 @@ void MotorControl::calculateEncoderSpeeds() {
   if (vSampleCount == numVSamples) {
     //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
     //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
-    double lv = (leftVSampleSum / numVSamples);
-    double rv = (rightVSampleSum / numVSamples);
+    double lv = (leftVSampleSum/ numVSamples);
+    double rv = (rightVSampleSum/ numVSamples);
 
     //avoid bad values
-    if (lv != 0 && rv != 0) {
+
       l_EncoderSpeed = lv;
       r_EncoderSpeed = rv; 
-    }
+    
+
     
     leftVSampleSum = 0;
     rightVSampleSum = 0;
@@ -208,8 +209,16 @@ void MotorControl::serialDebugOutput(bool plotter) {
     Serial.print(" ");
   }
   else {
-    Serial.print("Encoder V:" + String(l_EncoderSpeed) +  " / " + String(r_EncoderSpeed));
-    Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
-    Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.print(String(l_EncoderSpeed) +  "  " + String(r_EncoderSpeed));
+   // Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
+    //Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.println();
   }
 }
+
+void MotorControl::setPValues(double p_val)
+{
+  l_PID->SetTunings(p_val, 0, 0);
+  r_PID->SetTunings(p_val, 0, 0);
+}
+

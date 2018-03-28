@@ -24,8 +24,12 @@ void setup() {
   
   //test
   m->setMotorMode(FWD1);
-  
+
   //Serial.println("end of setup - main");
+    while (Serial.available() <= 0) {
+    Serial.print('A');   // send a capital A
+    delay(300);
+  }
 
 }
 
@@ -33,11 +37,26 @@ void loop() {
   delay(10);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
-  m->updateMotorControl();
+
+    sweepPValues();
+
 }
 
 
-
+void sweepPValues()
+{
+  for(double i = 0; i<1; i+=.1)
+  {
+    Serial.println("P"+String(i));
+    m->setPValues(i);
+    for (int i =0; i<100; i++)
+  {
+    m->updateMotorControl();
+    delay(10);
+  }
+  }
+  Serial.println("Done");
+}
 
 //REQUIRED MAIN METHOD FUNCTIONS FOR MOTOR CONTROL
 
@@ -56,11 +75,11 @@ void initMotorControl() {
 }
 
 void leftEncoderISR() {
-  //isrCount[0]++;
+  isrCount[0]++;
   leftEncoder->updatePos();
 }
 
 void rightEncoderISR() {
-  //isrCount[1]++;
+  isrCount[1]++;
   rightEncoder->updatePos();
 }
