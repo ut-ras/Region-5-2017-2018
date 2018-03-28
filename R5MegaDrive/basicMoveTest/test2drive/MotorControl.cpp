@@ -37,7 +37,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   l_Motor->setSpeed(120);
   r_Motor->setSpeed(120);
-
+  l_PIDSpeed = 120;
+  r_PIDSpeed = 120;
+  
   //PID Initialization
   l_PID->SetSampleTime(3);
   l_PID->SetMode(AUTOMATIC);
@@ -66,7 +68,7 @@ encoder* MotorControl::getRightEncoder() {
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
-  setMotorSpeeds(l_PIDSpeed, r_PIDSpeed);
+  setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
 
   //debugging
   serialDebugOutput(false);
@@ -75,21 +77,21 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
   if (dir == RIGHT) {
     l_Motor->run(BACKWARD);
-    r_Motor->run(FORWARD);
+    r_Motor->run(BACKWARD);
   }
   else if (dir == LEFT) {
     l_Motor->run(FORWARD);
-    r_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
   }
 }
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
   if (dir == FWD) {
-    l_Motor->run(FORWARD);
+    l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
   else if (dir == BACK) {
-    l_Motor->run(BACKWARD);
+    l_Motor->run(FORWARD);
     r_Motor->run(BACKWARD);
   }
 }
@@ -136,9 +138,11 @@ void MotorControl::calculateEncoderSpeeds() {
     double rv = (rightVSampleSum / numVSamples);
 
     //avoid bad values
-    if (lv != 0 ) { l_EncoderSpeed = lv; }
-    if (rv != 0 ) { r_EncoderSpeed = rv; }
-
+    if (lv != 0 && rv != 0) {
+      l_EncoderSpeed = lv;
+      r_EncoderSpeed = rv; 
+    }
+    
     leftVSampleSum = 0;
     rightVSampleSum = 0;
     vSampleCount = 0;

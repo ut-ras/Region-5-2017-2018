@@ -78,7 +78,7 @@ private:
   unsigned long prevTime;   //stored as milliseconds, converted to second in calculateVelocity
 
   // velocity averaging vars
-  const double numVSamples = 5.0;
+  const double numVSamples = 1.0;
   int vSampleCount = 0;
   double leftVSampleSum = 0;
   double rightVSampleSum = 0;
