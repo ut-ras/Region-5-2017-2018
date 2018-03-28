@@ -159,8 +159,8 @@ void MotorControl::calculateVelocity() {
     unsigned long t = millis();
     Serial.println("Left Encoder Pos " + String(leftEncoder->getPos()));
     Serial.println("Time Diff " + String((t-prevTime)));
-    
-    leftVSampleSum += 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(t-prevTime)); 
+
+    leftVSampleSum += 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(.001*double(t-prevTime));
     leftPrevEncoderPos = leftEncoder->getPos();
     rightVSampleSum += 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(.001*double(t-prevTime));
     rightPrevEncoderPos = rightEncoder->getPos();
@@ -174,7 +174,7 @@ void MotorControl::calculateVelocity() {
       leftVelocity = lv;
     }
     if (rv != 0 ) {
-      rightVelocity = lv;
+      rightVelocity = rv;
     }
     leftVSampleSum = 0;
     rightVSampleSum = 0;
