@@ -20,13 +20,13 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   prevTime = 0;
 
-  leftKp = 0.15;  //0.3 (0.1 - 1)
-  leftKi = 75;   //5 - 70
+  leftKp = 0.0;  //0.3 (0.1 - 1)
+  leftKi = 0;   //5 - 70
   leftKd = 0;   //0
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp,leftKi,leftKd, DIRECT);
 
-  rightKp = 0.15;
-  rightKi = 75;
+  rightKp = 0.0;
+  rightKi = 0;
   rightKd = 0;
   r_PID = new PID(&r_EncoderSpeed, &r_PIDSpeed, &r_SetpointSpeed, rightKp,rightKi,rightKd, DIRECT);
 
