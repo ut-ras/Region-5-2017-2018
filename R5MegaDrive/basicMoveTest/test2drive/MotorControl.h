@@ -48,6 +48,7 @@ public:
 
   //PID tuning
   void setPValues(double p_val);
+  void setIValues(double i_val);
 
 private:
 

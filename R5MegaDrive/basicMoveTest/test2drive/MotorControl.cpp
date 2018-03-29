@@ -20,13 +20,13 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   prevTime = 0;
 
-  leftKp = 0.0;  //0.3 (0.1 - 1)
-  leftKi = 0;   //5 - 70
+  leftKp = 0.25;  //0.3 (0.1 - 1)
+  leftKi = 15;   //5 - 70
   leftKd = 0;   //0
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp,leftKi,leftKd, DIRECT);
 
-  rightKp = 0.0;
-  rightKi = 0;
+  rightKp = 0.25;
+  rightKi = 17;
   rightKd = 0;
   r_PID = new PID(&r_EncoderSpeed, &r_PIDSpeed, &r_SetpointSpeed, rightKp,rightKi,rightKd, DIRECT);
 
@@ -205,13 +205,15 @@ void MotorControl::setMotorMode(int c) {
 void MotorControl::serialDebugOutput(bool plotter) {
   if (plotter) {
     //Serial.println(int(l_EncoderSpeed));
-    Serial.println(int(l_PIDSpeed));
-    Serial.print(" ");
+    Serial.print(int(r_EncoderSpeed));
+    Serial.print(",");
+    Serial.println(int(l_EncoderSpeed));
+ 
   }
   else {
-    Serial.print(String(l_EncoderSpeed) +  "  " + String(r_EncoderSpeed));
-   // Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
-    //Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.print("  Encoder" +String(l_EncoderSpeed)+" / "+ String(r_EncoderSpeed));
+    Serial.print(" Set:" + String(l_SetpointSpeed)+ "/ " + String(r_SetpointSpeed));
+    Serial.print(" PID out:" + String(l_PIDSpeed)+ " / " +String(r_PIDSpeed) + "\n");
     Serial.println();
   }
 }
@@ -220,5 +222,13 @@ void MotorControl::setPValues(double p_val)
 {
   l_PID->SetTunings(p_val, 0, 0);
   r_PID->SetTunings(p_val, 0, 0);
+}
+
+void MotorControl::setIValues(double i_val)
+{
+  l_PID->SetTunings(0.25, i_val, 0);
+  r_PID->SetTunings(0.25, i_val, 0);
+  leftKi = i_val;
+  rightKi = i_val;
 }
 
