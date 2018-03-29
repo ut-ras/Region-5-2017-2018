@@ -46,6 +46,8 @@ public:
 
   void serialDebugOutput(boolean plotter);
 
+  void tunePID();
+  
 private:
 
   //updateMotorSpeeds functions

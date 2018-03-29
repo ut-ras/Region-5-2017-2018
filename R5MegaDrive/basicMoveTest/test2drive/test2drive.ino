@@ -15,18 +15,16 @@ encoder* rightEncoder;
 int isrCount[2] = {0, 0};
 
 void setup() {
-  //Serial.println("welcome to this test");
-  
   Serial.begin(115200);  // start serial for testing outputs
   delay(1000);
+  
+  //Serial.println("welcome to this test");
 
   initMotorControl();
-  
-  //test
-  m->setMotorMode(FWD1);
-  
-  //Serial.println("end of setup - main");
 
+  //tests
+  //m->tunePID(); doesnt work right now
+  m->setMotorMode(FWD1);
 }
 
 void loop() {
