@@ -24,14 +24,17 @@ void setup() {
 
   //tests
   //m->tunePID(); doesnt work right now
-  m->setMotorMode(FWD1);
+  m->setMotorMode(BACK2);
 }
 
 void loop() {
-  delay(10);
+  delay(100);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
+  
   m->updateMotorControl();
+  
+  m->serialDebugOutput(false);    //debugging
 }
 
 

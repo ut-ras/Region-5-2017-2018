@@ -21,13 +21,13 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   prevTime = 0;
 
-  leftKp = .25;  //0.3 (0.1 - 1)
-  leftKi = 35;   //5 - 70
+  leftKp = .25;  //0.1 - 1
+  leftKi = 15;   //5 - 70
   leftKd = 0;   //0
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp, leftKi, leftKd, DIRECT);
 
   rightKp = 0.25;
-  rightKi = 35;
+  rightKi = 17;
   rightKd = 0;
   r_PID = new PID(&r_EncoderSpeed, &r_PIDSpeed, &r_SetpointSpeed, rightKp, rightKi, rightKd, DIRECT);
 
@@ -70,9 +70,6 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
   setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
-
-  //debugging
-  serialDebugOutput(false);
 }
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
@@ -152,7 +149,7 @@ void MotorControl::calculatePIDSpeeds() {
 }
 void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set actual speeds, direct output to AFMS motors
   l_Motor->setSpeed(l_rotSpeed);
-  r_Motor->setSpeed(l_rotSpeed);
+  r_Motor->setSpeed(r_rotSpeed);
 }
 
 int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
