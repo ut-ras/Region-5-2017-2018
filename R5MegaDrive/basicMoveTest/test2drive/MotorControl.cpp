@@ -199,13 +199,14 @@ void MotorControl::setMotorMode(int c) {
 void MotorControl::serialDebugOutput(bool plotter) {
   if (plotter) {
     //Serial.println(int(l_EncoderSpeed));
-    Serial.println(int(l_PIDSpeed));
-    Serial.print(" ");
+    Serial.print(int(l_PIDSpeed));
+    Serial.print(",");
+    Serial.println(int(r_PIDSpeed));
   }
   else {
-    Serial.print(String(l_EncoderSpeed) +  "  " + String(r_EncoderSpeed));
-   // Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
-    //Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.print("Encoder Speeds: " + String(l_EncoderSpeed) +  " / " + String(r_EncoderSpeed));
+    Serial.print(" Set: " + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
+    Serial.print(" PID out: " + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
     Serial.println();
   }
 }

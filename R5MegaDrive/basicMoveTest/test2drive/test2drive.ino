@@ -33,20 +33,18 @@ void setup() {
 }
 
 void loop() {
-  delay(100);
+  delay(200);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
 
   m->updateMotorControl();
   m->serialDebugOutput(false);    //debugging
-
-    //sweepPValues();
-
+  
+  //sweepPValues();
 }
 
 
-void sweepPValues()
-{
+void sweepPValues() {
   for(double i = 0; i<1; i+=.1)
   {
     Serial.println("P"+String(i));
