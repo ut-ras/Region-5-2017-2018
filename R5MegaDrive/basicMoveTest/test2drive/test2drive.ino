@@ -36,7 +36,6 @@ void loop() {
   delay(200);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
-    m->updateMotorControl();
 
   m->updateMotorControl();
   m->serialDebugOutput(false);    //debugging
@@ -75,7 +74,10 @@ void sweepIValues()
   }
   Serial.println("Done");
 }
-//REQUIRED MAIN METHOD FUNCTIONS FOR MOTOR CONTROL
+
+
+
+//REQUIRED MAIN METHOD FUNCTIONS FOR MOTOR CONTROL BELOW
 
 void initMotorControl() {
   m = new MotorControl(ENCODER_L_A, ENCODER_L_B, ENCODER_R_A, ENCODER_R_B);

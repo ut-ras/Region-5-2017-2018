@@ -205,9 +205,9 @@ void MotorControl::serialDebugOutput(bool plotter) {
 
   }
   else {
-    Serial.print("  Encoder" +String(l_EncoderSpeed)+" / "+ String(r_EncoderSpeed));
-    Serial.print(" Set:" + String(l_SetpointSpeed)+ "/ " + String(r_SetpointSpeed));
-    Serial.print(" PID out:" + String(l_PIDSpeed)+ " / " +String(r_PIDSpeed) + "\n");
+    Serial.print(" Encoder: " +String(l_EncoderSpeed)+" / "+ String(r_EncoderSpeed));
+    Serial.print(" Set: " + String(l_SetpointSpeed)+ "/ " + String(r_SetpointSpeed));
+    Serial.print(" PID out: " + String(l_PIDSpeed)+ " / " +String(r_PIDSpeed) + "\n");
     Serial.println();
   }
 }
