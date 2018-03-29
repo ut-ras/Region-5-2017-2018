@@ -132,8 +132,8 @@ void MotorControl::calculateEncoderSpeeds() {
   if (vSampleCount == numVSamples) {
     //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
     //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
-    double lv = (leftVSampleSum / numVSamples);
-    double rv = (rightVSampleSum / numVSamples);
+    double lv = (leftVSampleSum/ numVSamples);
+    double rv = (rightVSampleSum/ numVSamples);
 
     l_EncoderSpeed = lv;
     r_EncoderSpeed = rv;
@@ -203,9 +203,10 @@ void MotorControl::serialDebugOutput(bool plotter) {
     Serial.print(" ");
   }
   else {
-    Serial.print("Encoder V:" + String(l_EncoderSpeed) +  " / " + String(r_EncoderSpeed));
-    Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
-    Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.print(String(l_EncoderSpeed) +  "  " + String(r_EncoderSpeed));
+   // Serial.print(" Set:" + String(l_SetpointSpeed) + " / " + String(r_SetpointSpeed));
+    //Serial.print(" PID out:" + String(l_PIDSpeed) +  " / " + String(r_PIDSpeed) + "\n");
+    Serial.println();
   }
 }
 
@@ -229,7 +230,7 @@ void MotorControl::tunePID() {
   while (l_tunePID.Runtime() == 0) {
     calculateEncoderSpeeds();
     Serial.println("Auto PID Left: p=" + String(l_tunePID.GetKp()) + " i=" + String(l_tunePID.GetKp()) + " d=" + String(l_tunePID.GetKd()));
-    delay(30);  
+    delay(30);
   }
 
   leftKp = l_tunePID.GetKp();
@@ -255,3 +256,8 @@ void MotorControl::tunePID() {
 }
 
 
+
+void MotorControl::setPValues(double p_val) {
+  l_PID->SetTunings(p_val, 0, 0);
+  r_PID->SetTunings(p_val, 0, 0);
+}
