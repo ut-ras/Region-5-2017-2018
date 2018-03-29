@@ -29,6 +29,7 @@ public:
   void turn45(bool left, int steps); //increments of 45 deg
   void turnTo(int dir);
 
+  //0, 1, or 2
   void setSpeed(int s);
   int getSpeed();
 

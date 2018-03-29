@@ -14,7 +14,7 @@
  * set up encoder ISR in main for both edges of pin A and call updatePos on the encoder
  * call updateMotorControl in a loop
  * use setMotorMode, move, turn, or stop to control
- * 
+ *
  * v2 of MotorControl class, motor directions and speed more straightforward
  */
 
@@ -45,6 +45,9 @@ public:
   void setSetpointSpeeds(int l_rotSpeed, int r_rotSpeed);   //deg / sec
 
   void serialDebugOutput(boolean plotter);
+
+
+  void tunePID();
 
   //PID tuning
   void setPValues(double p_val);
@@ -82,7 +85,7 @@ private:
   unsigned long prevTime;   //stored as milliseconds, converted to second in calculateVelocity
 
   // velocity averaging vars
-  const double numVSamples = 1.0;
+  const double numVSamples = 3.0;
   int vSampleCount = 0;
   double leftVSampleSum = 0;
   double rightVSampleSum = 0;

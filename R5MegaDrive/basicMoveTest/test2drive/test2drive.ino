@@ -15,38 +15,38 @@ encoder* rightEncoder;
 int isrCount[2] = {0, 0};
 
 void setup() {
-  //Serial.println("welcome to this test");
-  
   Serial.begin(115200);  // start serial for testing outputs
   delay(1000);
 
+  //Serial.println("welcome to this test");
+
   initMotorControl();
-  
+
   //test
   m->setMotorMode(FWD3);
 
   //Serial.println("end of setup - main");
-    //while (Serial.available() <= 0) {
-    //delay(300);
-  //}
 
+  //tests
+  //m->tunePID(); doesnt work right now
+  m->setMotorMode(BACK2);
 }
 
 void loop() {
-  delay(10);
+  delay(200);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
     m->updateMotorControl();
 
-   // sweepPValues();
-   sweepIValues();
+  m->updateMotorControl();
+  m->serialDebugOutput(false);    //debugging
 
+  //sweepPValues();
 }
 
 
-void sweepPValues()
-{
-  for(double i = .3; i<.4; i+=.01)
+void sweepPValues() {
+  for(double i = 0; i<1; i+=.1)
   {
     Serial.println("P"+String(i));
     m->setPValues(i);
@@ -87,7 +87,7 @@ void initMotorControl() {
 
   attachInterrupt(digitalPinToInterrupt(ENCODER_L_A), leftEncoderISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(ENCODER_R_A), rightEncoderISR, CHANGE);
-  
+
   //Serial.println("motor control initialized in main");
 }
 
