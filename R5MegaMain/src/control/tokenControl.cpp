@@ -12,6 +12,9 @@
 //Sets the direction of the magnet
 #define up true
 #define down false
+//Pulley waits
+#define funnelHeightWait 500
+#define fullHeighWait 2000
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
@@ -50,24 +53,17 @@ tokenControl::tokenControl(Graph * m) {
 
 int tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
-    /*pulleyController->movePulley(maxHeight);
+    moveToField(maxHeight);
     magnetController->magnetOn();
-    delay(2000);
     delay(pickupTime);
-    pulleyController->movePulley(resting);
-    delay(2000);*/
+    moveToField(resting);
     //Reads token colour and if there is no token returns the electromagnet
-    int colour = Color::green;
+    int colour = Color::magenta;
     if(colour == Color::grey)
         return colour;
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
-    diskController->rotateDisk(360,0);
-    delay(3000);
-    diskController->rotateDisk(360,1);
     rotateDiskToColor(colour);
-    depositInFunnel();
-    delay(3000);
     resetDisk(colour);
     return colour;
 }
@@ -79,13 +75,36 @@ void tokenControl::depositTokens(int c) {
 
     //Moves token to center then deposits the tokens
     resetDisk(c);
-    pulleyController->movePulley(maxHeight);
-    delay(dropTime);
+    moveToField(maxHeight);
     magnetController->magnetOff();
     delay(dropTime);
 
     //Reset the magnet
-    pulleyController->movePulley(resting);
+    moveToField(resting);
+}
+
+void tokenControl::goToEveryColour(){
+  for(int i = 0; i < 7; i ++){
+    rotateDiskToColor(i);
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+    resetDisk(i);
+  }
+}
+
+void tokenControl::pickUpTokenTest(){
+    moveToField(maxHeight);
+    magnetController->magnetOn();
+    dleay(pickupTime);
+    moveToField(maxHeight);
+}
+
+void pickupFromFunnelTest(int colour){
+    rotateDiskToColor(colour);
+    pickupFromFunnel();
+    resetDisk(colour);
 }
 
 //Private
@@ -93,11 +112,11 @@ void tokenControl::depositTokens(int c) {
 void tokenControl::rotateDiskToColor(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
-        diskController->rotateDisk((8-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
-        delay(2000);
+        diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
+        delay(500 * (7-c));
     }else{
         diskController->rotateDisk((c+1)*tokenToToken, stepper::CLOCKWISE);
-        delay(2000);
+        delay(500*(c+1));
     }
 }
 
@@ -105,13 +124,13 @@ void tokenControl::rotateDiskFromSensor(int c){
 	if(c > 3){
 		diskController->rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
 		delay(500);
-        diskController->rotateDisk((8-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
-        delay(2000);
+        diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
+        delay(500 * (7-c));
     }else{
         diskController->rotateDisk(toFirstToken, stepper::CLOCKWISE);
         delay(500);
         diskController->rotateDisk(c*tokenToToken, stepper::CLOCKWISE);
-        delay(2000);
+        delay(500*(c+1));
     }
 }
 
@@ -125,11 +144,11 @@ int tokenControl::readColour(){
 void tokenControl::resetDisk(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
-        diskController->rotateDisk(toFirstToken + toRGBSensor, stepper::CLOCKWISE);
         diskController->rotateDisk((7-c)*tokenToToken, stepper::CLOCKWISE);
+        delay(500 * (7-c));
     }else{
-        diskController->rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
-        diskController->rotateDisk(c*tokenToToken, stepper::COUNTERCLOCKWISE);
+        diskController->rotateDisk((c+1)*tokenToToken, stepper::COUNTERCLOCKWISE);
+        delay(500*(c+1));
     }
 }
 
@@ -142,8 +161,15 @@ void tokenControl::depositInFunnel() {
 }
 
 void tokenControl::pickupFromFunnel() {
-  pulleyController->movePulley(funnelHeight);
+    pulleyController->movePulley(funnelHeight);
+    delay(funnelHeightWait);
     magnetController->magnetOn();
     delay(pickupTime);
     pulleyController->movePulley(resting);
+    delay(funnelHeightWait);
+}
+
+void tokenControl::moveToField(int angle){
+    pulleyController->movePulley(angle);
+    delay(fullHeighWait);
 }

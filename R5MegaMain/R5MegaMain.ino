@@ -1,4 +1,4 @@
-#include <Time.h>
+ets#include <Time.h>
 #include <Arduino.h>
 
 #include "src/control/tokenControl.h"
@@ -32,12 +32,16 @@ void loop() {
 }
 
 void testTokenControl() {
+  Blink();
+  tokenController->goToEveryColour();
+  while(1);
+}
+
+void Blink(){
   digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
   digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
-  tokenController->pickUpToken();
-  while(1);
 }
 
 void testDriveControl() {

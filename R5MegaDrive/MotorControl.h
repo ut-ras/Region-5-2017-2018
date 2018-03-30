@@ -62,7 +62,7 @@ public:
   //turn maneuver
   void turnManeuver(int dir, int num45Deg);
   void moveStraightEncoderTicks(int dir, int encoderTicks);		//move fwd along lines an exact number of encoder encoderTicks
-  void turnEncoderTicks(int dir, int encoderTicks)    //use Directions enum LEFT or RIGHT
+  void turnEncoderTicks(int dir, int encoderTicks);    //use Directions enum LEFT or RIGHT
 
 
 private:
