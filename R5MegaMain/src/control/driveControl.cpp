@@ -85,8 +85,8 @@ void driveControl::turnTo(int dir) {
   if (diff >= 4 || ((diff < 0) && (diff >= -4))) {
     left = false;
   }
-  
-  turnManeuver(left);
+
+  turnManeuver(left, abs(diff));
   mapGraph->setCurrentDirection(dir);
 }
 
