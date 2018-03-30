@@ -12,6 +12,9 @@
 //Sets the direction of the magnet
 #define up true
 #define down false
+//Pulley waits
+#define funnelHeightWait 500;
+#define fullHeighWait 2000;
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
@@ -50,12 +53,10 @@ tokenControl::tokenControl(Graph * m) {
 
 int tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
-    pulleyController->movePulley(maxHeight);
+    moveToField(maxHeight);
     magnetController->magnetOn();
-    delay(2000);
     delay(pickupTime);
-    pulleyController->movePulley(resting);
-    delay(2000);
+    moveToField(resting);
     //Reads token colour and if there is no token returns the electromagnet
     int colour = Color::magenta;
     if(colour == Color::grey)
@@ -63,8 +64,6 @@ int tokenControl::pickUpToken() {
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
     rotateDiskToColor(colour);
-    //depositInFunnel();
-    //delay(3000);
     resetDisk(colour);
     return colour;
 }
@@ -76,13 +75,12 @@ void tokenControl::depositTokens(int c) {
 
     //Moves token to center then deposits the tokens
     resetDisk(c);
-    pulleyController->movePulley(maxHeight);
-    delay(dropTime);
+    moveToField(maxHeight);
     magnetController->magnetOff();
     delay(dropTime);
 
     //Reset the magnet
-    pulleyController->movePulley(resting);
+    moveToField(resting);
 }
 
 void tokenControl::goToEveryColour(){
@@ -150,8 +148,15 @@ void tokenControl::depositInFunnel() {
 }
 
 void tokenControl::pickupFromFunnel() {
-  pulleyController->movePulley(funnelHeight);
+    pulleyController->movePulley(funnelHeight);
+    delay(funnelHeightWait);
     magnetController->magnetOn();
     delay(pickupTime);
     pulleyController->movePulley(resting);
+    delay(funnelHeighWait);
+}
+
+void tokenControl::moveToField(int angle){
+    pulleyController->movePulley(angle);
+    delay(2000);
 }
