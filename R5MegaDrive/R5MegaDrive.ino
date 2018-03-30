@@ -23,9 +23,6 @@ void setup() {
   initMotorControl();
   initI2c();
 
-  //test
-  //m->setMotorMode(FWD2);
-
   //these will halt the program and print best values when done
   //use one at a time. P, set P in MotorControl, I, set I in MotorControl
   //we can tune on the field by running this, then plug into serial to see result
@@ -34,6 +31,10 @@ void setup() {
   //m->sweepIValues(15, 20, 1);
 
   Serial.println("end of setup - drive mega main");
+
+
+  //test
+  m->setMotorMode(FWD2);
 }
 
 void loop() {

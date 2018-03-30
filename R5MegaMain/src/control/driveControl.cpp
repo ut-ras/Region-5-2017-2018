@@ -3,9 +3,9 @@
 #include "Graph.h"
 #include "intersectionSensors.h"
 
-driveControl::driveControl(Graph * m) {
+driveControl::driveControl() {
   Wire.begin();    //only do this if i2c not already started
-  map = m;
+  map = new Graph();
   linesensors = new intersectionSensors(map, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
 }
 
@@ -15,6 +15,10 @@ void driveControl::sendCommand(int command) {
   Wire.endTransmission();
 }
 
+
+//Basic Move Commands
+
+//1 2 or 3
 void driveControl::move(bool fwd) {
   if (fwd) {
     sendCommand(FWD1 + speed - 1);
@@ -32,10 +36,19 @@ void driveControl::stop() {
   sendCommand(STOP);
 }
 
-//TODO change this to interrupt based movement if we want to use token control at same time
+
+void driveControl::setCurrentLocationForTest(int name, int dir) {
+  map->setCurrentNode(map->getNode(name));
+  map->setCurrentDirection(dir);
+}
+
+
+//Complex Move Commands
+
 void driveControl::forwardToIntersection() {
   move(true);
   pointlineData next = linesensors->getNextIntersection();
+  delay(1000);  //allow pointline sensors to get past the current intersection before polling
   while(linesensors->getData() != next) {
     delay(5);
   }
@@ -43,12 +56,18 @@ void driveControl::forwardToIntersection() {
   map->setCurrentNode(map->getNextIntersection());
 }
 
+
+
+//TODO
+//these turn functions are going to be replaced because of the orientation of the bot, it doesnt allow us to rotate around the token
+//so we need to add a hardcoded encoder function to Drive Mega that will move forward slightly and then rotate 45
+
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {
   if (steps >= 8 || steps <= 0) {
     return;
   }
-  
+
   steps = left?(8 - steps):steps;
   pointlineData next = linesensors->getTurn45Intersection(steps);
   turn(left);
@@ -56,7 +75,7 @@ void driveControl::turn45(bool left, int steps) {
     delay(5);
   }
   stop();
-  
+
   int nextDir = (map->getCurrentDirection() + steps) % 8;
   map->setCurrentDirection(nextDir);
 }
@@ -83,6 +102,8 @@ void driveControl::turnTo(int dir) {
   map->setCurrentDirection(dir);
 }
 
+
+
 void driveControl::setSpeed(int s) {
   speed = s;
 }
@@ -94,4 +115,3 @@ int driveControl::getSpeed() {
 intersectionSensors * driveControl::getIntersectionSensors() {
   return linesensors;
 }
-

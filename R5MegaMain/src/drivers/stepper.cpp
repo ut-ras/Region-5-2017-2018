@@ -6,28 +6,30 @@
 #define MOTOR_STEPS 6400
 #define HOLES 800
 
+#include "stepper.h"
+
 // Initializer
 stepper::stepper(int _stepperPin, int _directionPin)
 {
-	stepperPos = 0;
+  stepperPos = 0;
 
-	stepperPin = _stepperPin;
-	directionPin = _directionPin;
+  stepperPin = _stepperPin;
+  directionPin = _directionPin;
 
-	pinMode(stepperPin, OUTPUT);
-	pinMode(directionPin, OUTPUT);
+  pinMode(stepperPin, OUTPUT);
+  pinMode(directionPin, OUTPUT);
 }
 
 // Rotate disk by angle in Direction
-void rotateDisk(float angle, Direction rotationDirection)
+void stepper::rotateDisk(float angle, stepper::Direction rotationDirection)
 {
-	digitalWrite(directionPin, rotationDirection);
+  digitalWrite(directionPin, rotationDirection);
 
-  	for(int i=0; i<(angle * 160 / 9); i++)
-  	{
-    	digitalWrite(stepperPin, HIGH);
-    	delayMicroseconds(PERIOD * DUTY_CYCLE);
-    	digitalWrite(stepperPin, LOW);
-    	delayMicroseconds(PERIOD * (1-DUTY_CYCLE));
-  	}
+    for(int i=0; i<(angle * 160 / 9); i++)
+    {
+      digitalWrite(stepperPin, HIGH);
+      delayMicroseconds(PERIOD * DUTY_CYCLE);
+      digitalWrite(stepperPin, LOW);
+      delayMicroseconds(PERIOD * (1-DUTY_CYCLE));
+    }
 }

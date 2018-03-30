@@ -1,3 +1,6 @@
+#ifndef STEPPER_H
+#define STEPPER_H
+
 #include <stdint.h>
 #include "arduino.h"
 
@@ -10,10 +13,12 @@ public:
     typedef enum {CLOCKWISE, COUNTERCLOCKWISE} Direction;
 
     //Rotate stepper motor based on a radian degree input
-    void rotateDisk(float, Direction rotationDirection);
+    void rotateDisk(float angle, Direction rotationDirection);
 
 private:
-	int stepperPos;
-	int stepperPin;
-	int directionPin;
+  int stepperPos;
+  int stepperPin;
+  int directionPin;
 };
+
+#endif

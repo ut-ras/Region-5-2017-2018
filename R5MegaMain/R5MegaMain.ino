@@ -1,28 +1,43 @@
 #include <Time.h>
 #include <Arduino.h>
 
-#include "testarrayLine.cpp"
-#include "src/tests/testPointline.cpp"
-#include "rgbsensor.h"
-#include "testRGB.cpp"
-#include "sensorbar.h"
+#include "src/control/tokenControl.h"
+#include "src/control/driveControl.h"
 
-void setup() {  
+tokenControl * tokenController;
+driveControl * driveController;
+
+void setup() {
   // put your setup code here, to run once:]
   Serial.begin(9600);
-  //setupTestArrayLine();
-  setupRGBTest();
-  setupPointLineTest(0);
-  //  setupTestArrayLine();
+  tokenController = new tokenControl();
+  driveController = new driveControl();
+
+  testTokenControl();
+  //testDriveControl();
 }
 
 
 void loop() {
   // put your main code here, to run repeatedly:
-  //loopArrayLineTest();
-  //loopPointLineTest();
-  loopRGBTest();
 
+}
+
+void testTokenControl() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000);
+  tokenController->pickUpToken();
+  while(1);
+}
+
+void testDriveControl() {
+  driveController->move(2);
+
+  //driveController->setCurrentLocationForTest(R1, 0);   //where the bot is starting, (location, dir)
+  //driveController->forwardToIntersection();
+  while(1);
 }
 
 /*

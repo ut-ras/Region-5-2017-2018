@@ -3,9 +3,9 @@
 #include "Graph.h"
 #include "intersectionSensors.h"
 
-driveControl::driveControl(Graph * m) {
+driveControl::driveControl() {
   Wire.begin();    //only do this if i2c not already started
-  map = m;
+  map = new Graph();
   linesensors = new intersectionSensors(map, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
 }
 
@@ -48,7 +48,7 @@ void driveControl::turn45(bool left, int steps) {
   if (steps >= 8 || steps <= 0) {
     return;
   }
-  
+
   steps = left?(8 - steps):steps;
   pointlineData next = linesensors->getTurn45Intersection(steps);
   turn(left);
@@ -56,7 +56,7 @@ void driveControl::turn45(bool left, int steps) {
     delay(5);
   }
   stop();
-  
+
   int nextDir = (map->getCurrentDirection() + steps) % 8;
   map->setCurrentDirection(nextDir);
 }
@@ -94,4 +94,3 @@ int driveControl::getSpeed() {
 intersectionSensors * driveControl::getIntersectionSensors() {
   return linesensors;
 }
-
