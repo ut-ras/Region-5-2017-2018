@@ -36,6 +36,10 @@ public:
      */
     void depositTokens(int c);
 
+    //****TEST FUNCTIONS***
+    void goToEveryColour();
+
+
 
 private:
     //Rotates the token disk to input colour
