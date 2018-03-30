@@ -6,207 +6,337 @@
 MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Field Initializations
 
-  leftEncoder = new encoder(lA,lB);
-  rightEncoder = new encoder(rA,rB);
+  l_Encoder = new encoder(lA, lB);
+  r_Encoder = new encoder(rA, rB);
+
+  //Serial.println("inside init");
 
   AFMS = new Adafruit_MotorShield();
 
-  leftMotor = AFMS->getMotor(1);
-  rightMotor = AFMS->getMotor(2);
+  r_Motor = AFMS->getMotor(3);
+  l_Motor = AFMS->getMotor(4);
 
-  lineSensor = new arrayline();
+  //Serial.println("AFMS init");
 
   prevTime = 0;
 
-  leftPrevEncoderPos = 0;
+  leftKp = .25;  //0.1 - 1
+  leftKi = 15;   //5 - 70
+  leftKd = 0;   //0
+  l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp, leftKi, leftKd, DIRECT);
 
-  leftKp = 2;
-  leftKi = 5;
-  leftKd = 1;
-  leftMotorPID = new PID(&leftVelocity, &leftPower, &leftSetpoint,leftKp,leftKi,leftKd, DIRECT);
+  rightKp = 0.25;
+  rightKi = 17;
+  rightKd = 0;
+  r_PID = new PID(&r_EncoderSpeed, &r_PIDSpeed, &r_SetpointSpeed, rightKp, rightKi, rightKd, DIRECT);
 
-  rightPrevEncoderPos = 0;
-
-  rightKp = 2;
-  rightKi = 5;
-  rightKd = 1;
-  rightMotorPID = new PID(&rightVelocity, &rightPower, &rightSetpoint,rightKp,rightKi,rightKd, DIRECT);
+  //Serial.println("PID init");
 
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
-  leftMotor->run(FORWARD);
-  rightMotor->run(FORWARD);
-  leftMotor->setSpeed(120);
-  rightMotor->setSpeed(120);
+  l_Motor->setSpeed(120);
+  r_Motor->setSpeed(120);
+  l_PIDSpeed = 120;
+  r_PIDSpeed = 120;
 
   //PID Initialization
-  leftMotorPID->SetSampleTime(10);
-  leftMotorPID->SetMode(AUTOMATIC);
-  leftMotorPID->SetOutputLimits(-255,255);
+  l_PID->SetSampleTime(3);
+  l_PID->SetMode(AUTOMATIC);
+  l_PID->SetOutputLimits(0, 255);
 
-  rightMotorPID->SetSampleTime(10);
-  rightMotorPID->SetMode(AUTOMATIC);
-  rightMotorPID->SetOutputLimits(-255,255);
+  r_PID->SetSampleTime(3);
+  r_PID->SetMode(AUTOMATIC);
+  r_PID->SetOutputLimits(0, 255);
+
+
+  lineSensor = new arrayline();
 
   //delay for testing purposes
-  delay(5000);
-  Serial.print("DELAYDONE");
+  delay(500);
+  //Serial.println("Motor Control Initialized");
 }
 
+
+//Public Functions
+
 encoder* MotorControl::getLeftEncoder() {
-  return leftEncoder;
+  return l_Encoder;
 }
 
 encoder* MotorControl::getRightEncoder() {
-  return rightEncoder;
+  return r_Encoder;
 }
 
-void MotorControl::setMotorAction(char a){
-  motorAction = a;
+void MotorControl::updateMotorControl() {      //update motor speeds with PID
+  calculateLSCorrections();
+  calculateEncoderSpeeds();
+  calculatePIDSpeeds();
+  setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
 }
 
-void MotorControl::setMotorSpeed(char s){
-  if(s == '1'){
-    motorSpeed = 90;
+void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
+  if (dir == RIGHT) {
+    l_Motor->run(FORWARD);
+    r_Motor->run(FORWARD);
   }
-  if(s == '2'){
-    motorSpeed = 135;
-  }
-  if(s == '3'){
-    motorSpeed = 180;
-  }
-}
-
-void MotorControl::setMotorDirection(char d){
-  if(d == 'f'){
-    motorDirection = 1;
-  }
-  if(d = 'b'){
-    motorDirection = -1;
+  else if (dir == LEFT) {
+    l_Motor->run(BACKWARD);
+    r_Motor->run(BACKWARD);
   }
 }
 
-void MotorControl::calculateCorrections(int* correctionLeft, int* correctionRight){
+void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
+  if (dir == FWD) {
+    l_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
+  }
+  else if (dir == BACK) {
+    l_Motor->run(FORWARD);
+    r_Motor->run(BACKWARD);
+  }
+}
+
+void MotorControl::stopMotors() {
+  setMotorSpeeds(0, 0);
+}
+
+
+
+//Private Functions
+
+void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
   if(lineSensorWeight < -8){
-    *correctionLeft = 4;   
+    l_correction = 4;
   }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
-    *correctionLeft = 2;
+    l_correction = 2;
   }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
-    *correctionRight = 2;   
+    r_correction = 2;
   }else if(lineSensorWeight > 8){
-    *correctionRight = 4;   
+    r_correction = 4;
   }
+  l_SetpointSpeed += l_correction;
+  r_SetpointSpeed += r_correction;
 }
 
-void MotorControl::update(){
-  int16_t leftPosition,rightPosition;
-
-  leftPosition = leftEncoder->getPos();
-  rightPosition = rightEncoder->getPos();
-
-  /* For Testing Purposes
-  Serial.print(leftPosition);
-  Serial.print(", ");
-  Serial.print(rightPosition);
-  Serial.print("\n");
-  */
-
-  calculateVelocity();
-
-  int correctionL, correctionR;
-  switch(motorAction){
-    case 'm':
-      correctionL = 0;
-      correctionR = 0;
-      calculateCorrections(&correctionL, &correctionR);
-      setPIDSpeed(motorSpeed*motorDirection + correctionL, motorSpeed*motorDirection + correctionR);
-      break;
-    case 't':
-      setPIDSpeed(motorSpeed*motorDirection, motorSpeed*motorDirection*-1);
-      break;
-    case 's':
-      setPIDSpeed(0,0);
-      break;
-  }
+//set desired speeds
+void MotorControl::setSetpointSpeeds(int rotSpeed) {                      //deg / sec
+  setSetpointSpeeds(rotSpeed, rotSpeed);
 }
 
-void MotorControl::setPIDSpeed(int leftSpeed, int rightSpeed) {
-  leftSetpoint = leftSpeed;
-  leftMotorPID->Compute();
-  if(leftPower < 0 ){
-    leftMotor->run(BACKWARD);
-  }else{
-    leftMotor->run(FORWARD);
-  }
-  leftMotor->setSpeed(abs((int)leftPower));
-
-  rightSetpoint = rightSpeed;
-  rightMotorPID->Compute();
-  if(rightPower < 0 ){
-    rightMotor->run(BACKWARD);
-  }else{
-    rightMotor->run(FORWARD);
-  }
-  rightMotor->setSpeed(abs((int)rightPower));
+void MotorControl::setSetpointSpeeds(int l_rotSpeed, int r_rotSpeed) {    //deg / sec
+  l_SetpointSpeed = l_rotSpeed;
+  r_SetpointSpeed = r_rotSpeed;
 }
 
+//updateMotorSpeeds functions
+void MotorControl::calculateEncoderSpeeds() {
+  if (vSampleCount < numVSamples) {
+    unsigned long t = millis();
 
+    //Serial.println("Left Encoder Diff " + String(l_Encoder->getPos() - l_PrevEncoderPos));
+    //Serial.println("Time Diff " + String((t - prevTime)));
 
-void MotorControl::calculateVelocity() {
-  time = 0.001*millis();
-  leftVelocity = 2*(leftEncoder->getPos() - leftPrevEncoderPos)/(time-prevTime); //need to linearize
-  leftPrevEncoderPos = leftEncoder->getPos();
-  rightVelocity = 2*(rightEncoder->getPos() - rightPrevEncoderPos)/(time-prevTime); //need to linearize
-  rightPrevEncoderPos = rightEncoder->getPos();
-  prevTime = time;
+    leftVSampleSum += abs(2 * (l_Encoder->getPos() - l_PrevEncoderPos) / (.001 * double(t - prevTime)));
+    l_PrevEncoderPos = l_Encoder->getPos();
+
+    rightVSampleSum += abs(2 * (r_Encoder->getPos() - r_PrevEncoderPos) / (.001 * double(t - prevTime)));
+    r_PrevEncoderPos = r_Encoder->getPos();
+
+    prevTime = t;
+    vSampleCount++;
+  }
+  if (vSampleCount == numVSamples) {
+    //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
+    //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
+    double lv = (leftVSampleSum/ numVSamples);
+    double rv = (rightVSampleSum/ numVSamples);
+
+    l_EncoderSpeed = lv;
+    r_EncoderSpeed = rv;
+
+    leftVSampleSum = 0;
+    rightVSampleSum = 0;
+    vSampleCount = 0;
+
+    l_correction = 0;
+    r_correction = 0;
+  }
+}
+void MotorControl::calculatePIDSpeeds() {
+  l_PID->Compute();
+  r_PID->Compute();
+}
+void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set actual speeds, direct output to AFMS motors
+  l_Motor->setSpeed(l_rotSpeed);
+  r_Motor->setSpeed(r_rotSpeed);
+}
+
+int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
+  return (s / motorMaxSpeed) * 255;
 }
 
 void MotorControl::setMotorMode(int c) {
-  switch(c){
+  switch (c) {
     case FWD1:
-      setMotorAction('m');
-      setMotorSpeed('1');
-      setMotorDirection('f');
+      setSetpointSpeeds(90);
+      moveStraight(FWD);
       break;
     case FWD2:
-      setMotorAction('m');
-      setMotorSpeed('2');
-      setMotorDirection('f');
+      setSetpointSpeeds(135);
+      moveStraight(FWD);
       break;
     case FWD3:
-      setMotorAction('m');
-      setMotorSpeed('3');
-      setMotorDirection('f');
+      setSetpointSpeeds(180);
+      moveStraight(FWD);
       break;
     case BACK1:
-      setMotorAction('m');
-      setMotorSpeed('1');
-      setMotorDirection('b');
+      setSetpointSpeeds(90);
+      moveStraight(BACK);
       break;
     case BACK2:
-      setMotorAction('m');
-      setMotorSpeed('2');
-      setMotorDirection('b');
+      setSetpointSpeeds(135);
+      moveStraight(BACK);
       break;
     case BACK3:
-      setMotorAction('m');
-      setMotorSpeed('3');
-      setMotorDirection('b');
+      setSetpointSpeeds(180);
+      moveStraight(BACK);
       break;
-    case LEFT:
-      setMotorAction('t');
-      setMotorSpeed('1');
-      setMotorDirection('f');
+    case LEFTIP:
+      setSetpointSpeeds(90);
+      turninPlace(LEFT);
       break;
-    case RIGHT:
-      setMotorAction('t');
-      setMotorSpeed('1');
-      setMotorDirection('b');
+    case RIGHTIP:
+      setSetpointSpeeds(90);
+      turninPlace(RIGHT);
       break;
     case STOP:
-      setMotorAction('s');
+      stopMotors();
       break;
   }
+}
+
+void MotorControl::serialDebugOutput(bool plotter) {
+  if (plotter) {
+    //Serial.println(int(l_EncoderSpeed));
+    Serial.print(int(r_EncoderSpeed));
+    Serial.print(",");
+    Serial.println(int(l_EncoderSpeed));
+
+  }
+  else {
+    Serial.print("Line Sensor C: " + String(l_correction)+ " / " + String(r_correction));
+    Serial.print(" Encoder: " +String(l_EncoderSpeed)+" / "+ String(r_EncoderSpeed));
+    Serial.print(" Set: " + String(l_SetpointSpeed)+ "/ " + String(r_SetpointSpeed));
+    Serial.print(" PID out: " + String(l_PIDSpeed)+ " / " + String(r_PIDSpeed) + "\n");
+    Serial.println();
+  }
+}
+
+//AUTOTUNING PID's (our version)
+
+void MotorControl::sweepPValues(double minP, double maxP, double stepP) {
+  setIValues(0);
+
+  double r_bestP = 0;
+  double l_bestP = 0;
+
+  double r_minDiff = 1000;
+  double l_minDiff = 1000;
+
+  for(double i = minP; i<maxP; i+=stepP) {
+    Serial.println("P"+String(i));
+    setPValues(i);
+
+    double l_avgDiff = 0;
+    double r_avgDiff = 0;
+
+    for (int j =0; j<100; j++) {
+      updateMotorControl();
+      serialDebugOutput(false);
+      l_avgDiff += abs(l_EncoderSpeed - l_SetpointSpeed);
+      r_avgDiff += abs(r_EncoderSpeed - r_SetpointSpeed);
+      delay(LOOP_DELAY);
+    }
+
+    l_avgDiff /= 100;
+    r_avgDiff /= 100;
+
+    if (l_avgDiff < l_minDiff) {
+      l_minDiff = l_avgDiff;
+      l_bestP = i;
+    }
+    if (r_avgDiff < r_minDiff) {
+      r_minDiff = r_avgDiff;
+      r_bestP = i;
+    }
+  }
+
+  setMotorMode(STOP);
+  while(1) {
+    Serial.println("Best P vals: L=" + String(r_bestP) + " R=" + String(l_bestP));
+    delay(3000);
+  }
+}
+
+void MotorControl::sweepIValues(double minI, double maxI, double stepI) {
+  double r_bestI = 0;
+  double l_bestI = 0;
+
+  double r_minDiff = 1000;
+  double l_minDiff = 1000;
+
+  for(double i = minI; i<maxI; i+=stepI) {
+    Serial.println("I"+String(i));
+    setIValues(i);
+
+    double l_avgDiff = 0;
+    double r_avgDiff = 0;
+
+    for (int i =0; i<100; i++) {
+      updateMotorControl();
+      serialDebugOutput(false);
+      l_avgDiff += abs(l_EncoderSpeed - l_SetpointSpeed);
+      r_avgDiff += abs(r_EncoderSpeed - r_SetpointSpeed);
+      delay(LOOP_DELAY);
+    }
+
+    l_avgDiff /= 100;
+    r_avgDiff /= 100;
+
+    if (l_avgDiff < l_minDiff) {
+      l_minDiff = l_avgDiff;
+      l_bestI = i;
+    }
+    if (r_avgDiff < r_minDiff) {
+      r_minDiff = r_avgDiff;
+      r_bestI = i;
+    }
+
+    setIValues(0);
+    delay(100);
+  }
+
+  setMotorMode(STOP);
+  while(1) {
+    Serial.println("Best I vals: L=" + String(r_bestI) + " R=" + String(l_bestI));
+    delay(3000);
+  }
+}
+
+
+
+
+void MotorControl::setPValues(double p_val) {
+  l_PID->SetTunings(p_val, 0, 0);
+  r_PID->SetTunings(p_val, 0, 0);
+}
+
+void MotorControl::setIValues(double i_val)
+{
+  l_PID->SetTunings(0.25, i_val, 0);
+  r_PID->SetTunings(0.25, i_val, 0);
+  leftKi = i_val;
+  rightKi = i_val;
 }
