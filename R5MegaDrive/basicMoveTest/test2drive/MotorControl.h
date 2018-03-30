@@ -7,6 +7,9 @@
 
 #include "encoder.h"
 
+#define LOOP_DELAY 200
+
+
 //required libraries: Adafruit_MotorShield v2, PID by Brett
 
 
@@ -52,6 +55,11 @@ public:
   //PID tuning
   void setPValues(double p_val);
   void setIValues(double i_val);
+
+  void sweepPValues(double minP, double maxP, double stepP);
+  void sweepIValues(double minI, double maxI, double stepI);
+
+  
 
 private:
 

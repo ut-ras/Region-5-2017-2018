@@ -23,57 +23,27 @@ void setup() {
   initMotorControl();
 
   //test
-  m->setMotorMode(FWD3);
+  m->setMotorMode(FWD2);
 
   //Serial.println("end of setup - main");
 
-  //tests
-  //m->tunePID(); doesnt work right now
-  m->setMotorMode(BACK2);
+  //these will halt the program and print best values when done
+  //use one at a time. P, set P in MotorControl, I, set I in MotorControl
+  //we can tune on the field by running this, then plug into serial to see result
+  //args: (min, max, step)
+  //m->sweepPValues(.1, .8, .05);
+  //m->sweepIValues(15, 20, 1);
 }
 
 void loop() {
-  delay(200);
+  delay(LOOP_DELAY);
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
 
   m->updateMotorControl();
   m->serialDebugOutput(false);    //debugging
-
-  //sweepPValues();
 }
 
-
-void sweepPValues() {
-  for(double i = 0; i<1; i+=.1)
-  {
-    Serial.println("P"+String(i));
-    m->setPValues(i);
-    for (int i =0; i<100; i++)
-  {
-    m->updateMotorControl();
-    delay(10);
-  }
-  }
-  Serial.println("Done");
-}
-
-void sweepIValues()
-{
-    for(double i = 15; i<20; i+=1)
-  {
-    Serial.println("I"+String(i));
-    m->setIValues(i);
-    for (int i =0; i<100; i++)
-  {
-    m->updateMotorControl();
-    delay(100);
-  }
-  m->setIValues(0);
-  delay(100);
-  }
-  Serial.println("Done");
-}
 
 
 
@@ -102,3 +72,6 @@ void rightEncoderISR() {
   isrCount[1]++;
   rightEncoder->updatePos();
 }
+
+
+

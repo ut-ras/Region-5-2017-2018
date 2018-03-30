@@ -6,8 +6,8 @@ encoder::encoder(int pa, int pb) {
   pinA = pa;
   pinB = pb;
   pos = 0;
-  pinMode(pinA, INPUT);
-  pinMode(pinB, INPUT);
+  pinMode(pinA, INPUT_PULLUP);
+  pinMode(pinB, INPUT_PULLUP);
 }
 
 int encoder::getPos() {

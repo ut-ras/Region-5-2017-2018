@@ -212,7 +212,116 @@ void MotorControl::serialDebugOutput(bool plotter) {
   }
 }
 
-//auto tune - not currently working
+//AUTOTUNING PID's (our version)
+
+void MotorControl::sweepPValues(double minP, double maxP, double stepP) {
+  setIValues(0);
+  
+  double r_bestP = 0;
+  double l_bestP = 0;
+  
+  double r_minDiff = 1000;
+  double l_minDiff = 1000;
+  
+  for(double i = minP; i<maxP; i+=stepP) {
+    Serial.println("P"+String(i));
+    setPValues(i);
+    
+    double l_avgDiff = 0;
+    double r_avgDiff = 0;
+    
+    for (int j =0; j<100; j++) {
+      updateMotorControl();
+      serialDebugOutput(false);
+      l_avgDiff += abs(l_EncoderSpeed - l_SetpointSpeed);
+      r_avgDiff += abs(r_EncoderSpeed - r_SetpointSpeed);
+      delay(LOOP_DELAY);
+    }
+
+    l_avgDiff /= 100;
+    r_avgDiff /= 100;
+
+    if (l_avgDiff < l_minDiff) {
+      l_minDiff = l_avgDiff;
+      l_bestP = i;
+    }
+    if (r_avgDiff < r_minDiff) {
+      r_minDiff = r_avgDiff;
+      r_bestP = i;
+    }
+  }
+  
+  setMotorMode(STOP);
+  while(1) {
+    Serial.println("Best P vals: L=" + String(r_bestP) + " R=" + String(l_bestP));
+    delay(3000);
+  }
+}
+
+void MotorControl::sweepIValues(double minI, double maxI, double stepI) {
+  double r_bestI = 0;
+  double l_bestI = 0;
+  
+  double r_minDiff = 1000;
+  double l_minDiff = 1000;
+  
+  for(double i = minI; i<maxI; i+=stepI) {
+    Serial.println("I"+String(i));
+    setIValues(i);
+
+    double l_avgDiff = 0;
+    double r_avgDiff = 0;
+    
+    for (int i =0; i<100; i++) {
+      updateMotorControl();  
+      serialDebugOutput(false);    
+      l_avgDiff += abs(l_EncoderSpeed - l_SetpointSpeed);
+      r_avgDiff += abs(r_EncoderSpeed - r_SetpointSpeed);
+      delay(LOOP_DELAY);
+    }
+
+    l_avgDiff /= 100;
+    r_avgDiff /= 100;
+
+    if (l_avgDiff < l_minDiff) {
+      l_minDiff = l_avgDiff;
+      l_bestI = i;
+    }
+    if (r_avgDiff < r_minDiff) {
+      r_minDiff = r_avgDiff;
+      r_bestI = i;
+    }
+    
+    setIValues(0);
+    delay(100);
+  }
+  
+  setMotorMode(STOP);
+  while(1) {
+    Serial.println("Best I vals: L=" + String(r_bestI) + " R=" + String(l_bestI));
+    delay(3000);
+  }
+}
+
+
+
+
+void MotorControl::setPValues(double p_val) {
+  l_PID->SetTunings(p_val, 0, 0);
+  r_PID->SetTunings(p_val, 0, 0);
+}
+
+void MotorControl::setIValues(double i_val)
+{
+  l_PID->SetTunings(0.25, i_val, 0);
+  r_PID->SetTunings(0.25, i_val, 0);
+  leftKi = i_val;
+  rightKi = i_val;
+}
+
+
+//auto tune library - not currently working
+/*
 void MotorControl::tunePID() {
   PID_ATune l_tunePID(&l_EncoderSpeed, &l_PIDSpeed);
   PID_ATune r_tunePID(&r_EncoderSpeed, &r_PIDSpeed);
@@ -255,19 +364,5 @@ void MotorControl::tunePID() {
   stopMotors();
   r_tunePID.Cancel();
   l_tunePID.Cancel();
-}
+} */
 
-
-
-void MotorControl::setPValues(double p_val) {
-  l_PID->SetTunings(p_val, 0, 0);
-  r_PID->SetTunings(p_val, 0, 0);
-}
-
-void MotorControl::setIValues(double i_val)
-{
-  l_PID->SetTunings(0.25, i_val, 0);
-  r_PID->SetTunings(0.25, i_val, 0);
-  leftKi = i_val;
-  rightKi = i_val;
-}
