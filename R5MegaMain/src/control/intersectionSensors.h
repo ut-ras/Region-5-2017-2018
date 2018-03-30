@@ -1,6 +1,6 @@
 #ifndef intersectionsensors_h
 #define intersectionsensors_h
-#include "pointline.h"
+#include "../drivers/pointline.h"
 #include "Graph.h"
 #include "Node.h"
 
