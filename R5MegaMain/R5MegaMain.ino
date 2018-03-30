@@ -4,6 +4,10 @@
 #include "src/control/tokenControl.h"
 #include "src/control/driveControl.h"
 
+/* Required libraries (sketch/include library/manage libraries to add)
+ * Adafruit_TCS34725
+ */
+
 tokenControl * tokenController;
 driveControl * driveController;
 

@@ -1,6 +1,8 @@
 #include "MotorControl.h"
 #include <Arduino.h>
 
+//required libraries: Adafruit_MotorShield v2, PID by Brett, SparkFun Line Follower Array
+
 #define DRIVE_MEGA_I2C 8
 
 #define ENCODER_L_A 19
