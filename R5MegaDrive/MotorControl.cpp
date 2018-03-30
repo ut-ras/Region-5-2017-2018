@@ -20,9 +20,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   prevTime = 0;
 
-  leftKp = .25;  //0.1 - 1
-  leftKi = 15;   //5 - 70
-  leftKd = 0;   //0
+  leftKp = .25;
+  leftKi = 15;
+  leftKd = 0;
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp, leftKi, leftKd, DIRECT);
 
   rightKp = 0.25;
@@ -109,13 +109,16 @@ void MotorControl::stopMotors() {
 
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
-  if(lineSensorWeight < -8){
+  if(lineSensorWeight < -8) {
     l_correction = 4;
-  }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
+  }
+  else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
     l_correction = 2;
-  }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
+  }
+  else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
     r_correction = 2;
-  }else if(lineSensorWeight > 8){
+  } 
+  else if(lineSensorWeight > 8) {
     r_correction = 4;
   }
   l_SetpointSpeed += l_correction;
@@ -179,10 +182,14 @@ int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
   return (s / motorMaxSpeed) * 255;
 }
 
+// ----------setMotorMode----------
+// Some sort of intermediary function
+// Calls setSetpointSpeeds and moveStraight
+// Input: Commands Enum
 const uint8_t setMotorModeConstants[9] = {90, 135, 180, 90, 135, 180, 90, 90, 0};
 const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
-  if(!setMotorModeConstants[c]) {
+  if(setMotorModeConstants[c] == 0) {
     stopMotors();
     return;
   }
