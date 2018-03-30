@@ -179,43 +179,16 @@ int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
   return (s / motorMaxSpeed) * 255;
 }
 
+const uint8_t setMotorModeConstants[9] = {90, 135, 180, 90, 135, 180, 90, 90, 0};
+const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
-  switch (c) {
-    case FWD1:
-      setSetpointSpeeds(90);
-      moveStraight(FWD);
-      break;
-    case FWD2:
-      setSetpointSpeeds(135);
-      moveStraight(FWD);
-      break;
-    case FWD3:
-      setSetpointSpeeds(180);
-      moveStraight(FWD);
-      break;
-    case BACK1:
-      setSetpointSpeeds(90);
-      moveStraight(BACK);
-      break;
-    case BACK2:
-      setSetpointSpeeds(135);
-      moveStraight(BACK);
-      break;
-    case BACK3:
-      setSetpointSpeeds(180);
-      moveStraight(BACK);
-      break;
-    case LEFTIP:
-      setSetpointSpeeds(90);
-      turninPlace(LEFT);
-      break;
-    case RIGHTIP:
-      setSetpointSpeeds(90);
-      turninPlace(RIGHT);
-      break;
-    case STOP:
-      stopMotors();
-      break;
+  if(!setMotorModeConstants[c]) {
+    stopMotors();
+    return;
+  }
+  else {
+    setSetpointSpeeds(setMotorModeConstants[c]);
+    moveStraight(setMotorDirectionConstants[c]);
   }
 }
 
