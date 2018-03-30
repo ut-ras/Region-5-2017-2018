@@ -156,8 +156,6 @@ void MotorControl::calculateEncoderSpeeds() {
     vSampleCount++;
   }
   if (vSampleCount == numVSamples) {
-    //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
-    //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
     double lv = (leftVSampleSum/ numVSamples);
     double rv = (rightVSampleSum/ numVSamples);
 
@@ -181,9 +179,6 @@ void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set ac
   r_Motor->setSpeed(r_rotSpeed);
 }
 
-int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
-  return (s / motorMaxSpeed) * 255;
-}
 
 // ----------setMotorMode----------
 // Some sort of intermediary function

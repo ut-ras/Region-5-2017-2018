@@ -22,14 +22,14 @@ public:
   driveControl(Graph * m);
 
   void move(bool fwd);
-  void turn(bool left);
+  void turnManeuver(bool left, int steps);
   void stop();
 
   void forwardToIntersection();
   void turn45(bool left, int steps); //increments of 45 deg
   void turnTo(int dir);
 
-  //0, 1, or 2
+  //1, 2, 3
   void setSpeed(int s);
   int getSpeed();
 
