@@ -72,7 +72,6 @@ private:
   void calculateEncoderSpeeds();
   void calculatePIDSpeeds();
   void setMotorSpeeds(int l_rotSpeed, int r_rotSpeed);    //set actual speeds, direct output to AFMS motors
-  int normalizeSpeedForAFMS(double s);
 
   int currentCmd;
 
