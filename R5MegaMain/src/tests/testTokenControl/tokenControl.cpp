@@ -3,11 +3,11 @@
 
 //Servo Distances
 //Distance from max height to ground - 10->5in
-#define maxHeight 160
+#define maxHeight 177
 //Distance to fall into the funnel - 5in
-#define funnelHeight 175
+#define funnelHeight 162
 //Resting position
-#define  resting 180
+#define  resting 157
 //Sets the direction of the magnet
 #define up true
 #define down false
@@ -27,10 +27,10 @@
 //Degrees between each funnel
 #define tokenToToken 43.33333333333333333333333333333333333333333333333333333333333333333333333333333333
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 30
+#define toFirstToken 35
 //Pin for the stepper motor - needs proper assignment
-#define stepPin 22
-#define dirPin 24
+#define stepPin 6
+#define dirPin 7
 //Pin for the magnet - needs proper assignment
 #define magnetPin 11
 //Pin for the servo - needs proper assignment
@@ -39,27 +39,36 @@
 //Public
 
 tokenControl::tokenControl() {
-    //Initialize starter variables
-    diskController = new stepper(stepPin, dirPin);
-    pulleyController = new r5servo(servoPin);
-    magnetController = new magnet(magnetPin);
+    
 }
 
+void tokenControl::initialize(){
+  //Initialize starter variables
+    diskController = new stepper(stepPin, dirPin);
+    pulleyController = new r5servo();
+    pulleyController->init(servoPin);
+    magnetController = new magnet(magnetPin);
+}
 int tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
     pulleyController->movePulley(maxHeight);
     magnetController->magnetOn();
+    delay(2000);
     delay(pickupTime);
     pulleyController->movePulley(resting);
-
+    delay(2000);
     //Reads token colour and if there is no token returns the electromagnet
-    int colour = Color::red;
+    int colour = Color::green;
     if(colour == Color::grey)
         return colour;
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
+    diskController->rotateDisk(360,0);
+    delay(3000);
+    diskController->rotateDisk(360,1);
     rotateDiskToColor(colour);
     depositInFunnel();
+    delay(3000);
     resetDisk(colour);
     return colour;
 }
@@ -86,6 +95,7 @@ void tokenControl::rotateDiskToColor(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
         diskController->rotateDisk(toFirstToken + toRGBSensor, stepper::COUNTERCLOCKWISE);
+        delay(2000);
         diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
     }else{
         diskController->rotateDisk(toFirstToken, stepper::CLOCKWISE);
@@ -113,7 +123,7 @@ void tokenControl::depositInFunnel() {
 }
 
 void tokenControl::pickupFromFunnel() {
-	pulleyController->movePulley(funnelHeight);
+  pulleyController->movePulley(funnelHeight);
     magnetController->magnetOn();
     delay(pickupTime);
     pulleyController->movePulley(resting);

@@ -30,6 +30,8 @@ public:
      */
     void depositTokens(int c);
 
+    void initialize();
+
 private:
     //Rotates the token disk to input colour
     //Prereq: Magnet is centered

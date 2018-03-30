@@ -16,9 +16,9 @@ public:
     void rotateDisk(float angle, Direction rotationDirection);
 
 private:
-	int stepperPos;
-	int stepperPin;
-	int directionPin;
+  int stepperPos;
+  int stepperPin;
+  int directionPin;
 };
 
 #endif

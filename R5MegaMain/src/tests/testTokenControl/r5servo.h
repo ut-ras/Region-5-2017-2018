@@ -12,13 +12,15 @@ public:
     /* Moves the pulley a given distance in the given
      * direction, where true is up and false is down.
      */
-    void movePulley(double degrees);
+    void movePulley(int degrees);
 
-    /*Constructor to initialize the servo*/
-    r5servo(int _servoPin);
+    //initialize the servo
+    void init(int _servoPin);
+    //constructor
+    r5servo();
 private:
-	Servo thisServo;
-	int servoPos;
+  Servo thisServo;
+  int servoPos;
 };
 
 #endif
