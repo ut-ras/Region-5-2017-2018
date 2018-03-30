@@ -13,8 +13,8 @@
 #define up true
 #define down false
 //Pulley waits
-#define funnelHeightWait 500;
-#define fullHeighWait 2000;
+#define funnelHeightWait 500
+#define fullHeighWait 2000
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
@@ -153,10 +153,10 @@ void tokenControl::pickupFromFunnel() {
     magnetController->magnetOn();
     delay(pickupTime);
     pulleyController->movePulley(resting);
-    delay(funnelHeighWait);
+    delay(funnelHeightWait);
 }
 
 void tokenControl::moveToField(int angle){
     pulleyController->movePulley(angle);
-    delay(2000);
+    delay(fullHeighWait);
 }
