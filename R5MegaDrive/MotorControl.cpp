@@ -69,7 +69,9 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
+
   calculateLSCorrections();
+
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
   setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));

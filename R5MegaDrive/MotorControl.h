@@ -37,7 +37,7 @@ public:
   void setMotorMode(int c);
 
   void updateMotorControl();      //with PID output
-  void updateMotorControlLine(int dir);   //TODO add line following to updateMotorControl
+  void updateMotorControlLine(int dir);
 
   encoder* getLeftEncoder();     //use this to attatch interrupts to encoder pins in main. call updatePos in ISR
   encoder* getRightEncoder();
@@ -59,6 +59,10 @@ public:
   void sweepPValues(double minP, double maxP, double stepP);
   void sweepIValues(double minI, double maxI, double stepI);
 
+  //turn maneuver
+  void turnManeuver(int dir, int num45Deg);
+  void moveStraightEncoderTicks(int dir, int encoderTicks);		//move fwd along lines an exact number of encoder encoderTicks
+  void turnEncoderTicks(int dir, int encoderTicks)    //use Directions enum LEFT or RIGHT
 
 
 private:
