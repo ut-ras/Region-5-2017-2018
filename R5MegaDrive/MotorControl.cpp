@@ -226,20 +226,28 @@ void MotorControl::setMotorMode(int c) {
       turninPlace(RIGHT);
       break;
     case LEFT45:
+      turnManeuver(LEFT, 1);
       break;
     case LEFT90:
+      turnManeuver(LEFT, 2);
       break;
     case LEFT135:
+      turnManeuver(LEFT, 3);
       break;
     case LEFT180:
+      turnManeuver(LEFT, 4);
       break;
     case RIGHT45:
+      turnManeuver(RIGHT, 1);
       break;
     case RIGHT90:
+      turnManeuver(RIGHT, 2);
       break;
     case RIGHT135:
+      turnManeuver(RIGHT, 3);
       break;
     case RIGHT180:
+      turnManeuver(RIGHT, 4);
       break;
     case STOP:
       stopMotors();
@@ -422,13 +430,13 @@ void turnEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_encoder->getPos();
 
   if(dir == LEFT){
-    l_Motor->run(FORWARD);
-    r_Motor->run(BACKWARD);
+    l_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
   }
   else
   {
-   l _Motor->run(BACKWARD);
-   r_Motor->run(FORWARD);
+   l _Motor->run(FORWARD);
+   r_Motor->run(BACKWARD);
   }
   setSetPointSpeeds(200, 200);
 
