@@ -50,12 +50,12 @@ tokenControl::tokenControl(Graph * m) {
 
 int tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
-    pulleyController->movePulley(maxHeight);
+    /*pulleyController->movePulley(maxHeight);
     magnetController->magnetOn();
     delay(2000);
     delay(pickupTime);
     pulleyController->movePulley(resting);
-    delay(2000);
+    delay(2000);*/
     //Reads token colour and if there is no token returns the electromagnet
     int colour = Color::green;
     if(colour == Color::grey)
@@ -115,7 +115,7 @@ void tokenControl::rotateDiskFromSensor(int c){
     }
 }
 
-int tokenControl::readColur(){
+int tokenControl::readColour(){
 	int colour = 0;
 	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
 	//colour = colourSensor->getColour();
