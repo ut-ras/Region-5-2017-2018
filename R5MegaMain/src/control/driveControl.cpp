@@ -28,8 +28,8 @@ void driveControl::move(bool fwd) {
   }
 }
 
-void driveControl::turn(bool left) {
-  sendCommand(left?LEFT:RIGHT);
+void driveControl::turnManeuver(bool left, int steps) {
+  sendCommand(left?(LEFT45 + steps - 1):(RIGHT45 + steps - 1));
 }
 
 void driveControl::stop() {
@@ -67,15 +67,8 @@ void driveControl::turn45(bool left, int steps) {
   if (steps >= 8 || steps <= 0) {
     return;
   }
-
   steps = left?(8 - steps):steps;
-  pointlineData next = linesensors->getTurn45Intersection(steps);
-  turn(left);
-  while(linesensors->getData() != next) {
-    delay(5);
-  }
-  stop();
-
+  turnManeuver(left, steps);
   int nextDir = (mapGraph->getCurrentDirection() + steps) % 8;
   mapGraph->setCurrentDirection(nextDir);
 }
@@ -92,13 +85,8 @@ void driveControl::turnTo(int dir) {
   if (diff >= 4 || ((diff < 0) && (diff >= -4))) {
     left = false;
   }
-  turn(left);
 
-  while(linesensors->getData() != next) {
-    delay(5);
-  }
-  stop();
-
+  turnManeuver(left, abs(diff));
   mapGraph->setCurrentDirection(dir);
 }
 

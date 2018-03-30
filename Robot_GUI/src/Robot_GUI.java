@@ -16,12 +16,17 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage; 
 //import javafx.scene.input.MouseEvent; 
 import static javafx.application.Application.launch; 
-//import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.event.EventHandler;
 import java.io.BufferedReader;
 import javafx.application.Platform;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-
+import javafx.scene.control.TextField; 
+import javafx.scene.input.KeyEvent;
+import javafx.event.ActionEvent;
+import java.io.OutputStream;
+import java.io.IOException;
 //import javax.comm.*;
 
 /**
@@ -34,8 +39,6 @@ public class Robot_GUI extends Application {
     int tokenTotal = 0;
     
     ArrayList<String> path = new ArrayList<>();
-    
-    private BufferedReader input;
     
     Text[] texts = new Text[10];
     
@@ -79,7 +82,7 @@ public class Robot_GUI extends Application {
     };
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
       
         //Scanner scan = new Scanner(new File ("data.in"));
         ImageView robot = initRobot();
@@ -92,21 +95,17 @@ public class Robot_GUI extends Application {
 
         ObservableList list = root.getChildren();
         setText(list);
-        
-        SerialPort[] ports = SerialPort.getCommPorts();
-	System.out.println("Select a port:");
-	int i = 1;
-	for(SerialPort port : ports)
-		System.out.println(i++ +  ": " + port.getSystemPortName());
-	Scanner s = new Scanner(System.in);
-	int chosenPort = s.nextInt();
-	SerialPort serialPort = ports[chosenPort-1];
-	if(serialPort.openPort())
-            System.out.println("Port opened successfully.");
-	else {
-            System.out.println("Unable to open the port.");
-            return;
-	}
+
+        Text commandInstr = new Text();
+        // enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};
+        commandInstr.setText("Type a number to send the command over Serial");
+        commandInstr.setX(520);
+        commandInstr.setY(440);
+        list.add(commandInstr);
+       
+
+        SerialPort serialPort = initPort();
+
 //        
 //        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
 //            @Override 
@@ -167,21 +166,41 @@ public class Robot_GUI extends Application {
                         else
                             list.add(getDirection(path.get(path.size()-2), path.get(path.size()-1)));
                         }
-                 });
-
-
-
-              //System.out.println();
-              
-           }
+                 });           
+            }
         });
             
+        TextField textField = new TextField();
+        textField.setLayoutX(520); 
+        textField.setLayoutY(460);
+        list.add(textField);
+
+        Button sendButton = new Button("Send");
+        sendButton.setLayoutX(700);
+        sendButton.setLayoutY(460);
+        sendButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent e)  {
+                int command = Integer.parseInt(textField.getText());
+
+                try(OutputStream out = serialPort.getOutputStream()) {
+                    out.write(command);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                textField.clear();
+            }
+        });
+        list.add(sendButton);
+
         list.add(robot);
+
 
 //        background.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler); 
 //        background.addEventFilter( SerialPort.LISTENING_EVENT_DATA_RECEIVED, SerialPortEvent); 
-        Scene scene = new Scene(root, 800, 600);  
-      
+        Scene scene = new Scene(root, 1000, 600);  
+        
         //Setting title to the Stage 
         primaryStage.setTitle("Robot GUI");  
      
@@ -271,46 +290,6 @@ public class Robot_GUI extends Application {
         System.out.println("Picked up token color " + tokenColor);
     }
     
-//    private void parseCommand (String command, ImageView robot, ObservableList list) {
-//        char color = command.charAt(1);
-//        int depth = 0;
-//        
-//        if (color == 'B') {
-//            if (command.charAt(3) != ' ') {
-//                depth = Integer.parseInt(command.charAt(3)+"");
-//            }
-//        }
-//        else {
-//            if (command.charAt(2) != ' ')
-//                depth = Integer.parseInt(command.charAt(2)+"");
-//        }
-//        
-//        String node = color + "" + depth;
-//        path.add(node);
-//        moveToIntersection(node, robot);
-//        System.out.println("Moved to " + node);
-//        
-//        char tokenColor;
-//        if (color == 'B') {
-//            if (depth != 0)
-//                tokenColor = command.charAt(14);
-//            else
-//                tokenColor = command.charAt(13);
-//        }
-//        else {
-//            if (depth != 0)
-//                tokenColor = command.charAt(13);
-//            else
-//                tokenColor = command.charAt(12);
-//        }
-//        
-//        
-//        int tokenIndex = colorToIndex(tokenColor);
-//        tokenInventory[tokenIndex]++;
-//        tokenTotal++;
-//        System.out.println("Picked up token color " + tokenColor);
-//        
-//    }
     
     private ImageView initRobot() {
         ImageView robot = new ImageView(new Image("file:../reddot.png"));
@@ -366,42 +345,6 @@ public class Robot_GUI extends Application {
         
     }
     
-//    private int[] getColorIndex(char color) {
-//        int[] coordinates = new int[2];
-//        switch (color) {
-//            case 'R': 
-//                coordinates = boxCoordinates[0];
-//                break;
-//            case 'G': 
-//                coordinates = boxCoordinates[1];
-//                break;
-//            case 'B': 
-//                coordinates = boxCoordinates[2];
-//                break;
-//            case 'C':
-//                coordinates = boxCoordinates[6];
-//                break;
-//            case 'M':
-//                coordinates = boxCoordinates[7];
-//                break;
-//            case 'Y':
-//                coordinates = boxCoordinates[8];
-//                break;
-//            case 'X': // grey 
-//                coordinates = boxCoordinates[4];
-//                break;
-//            case 'T': // top white 
-//                coordinates = boxCoordinates[3];
-//                break;
-//            case 'O': // bottom white 
-//                coordinates = boxCoordinates[5];
-//                break;
-//            default: coordinates = new int[] {0,0};
-//        }
-//        
-//        return coordinates;
-//    }
-    
     private ImageView loadBackground () {
         Image image = new Image("file:../playingfield.png");  
       
@@ -427,6 +370,25 @@ public class Robot_GUI extends Application {
         tokenInventory[index]++;
         tokenTotal++;
         
+    }
+
+    private SerialPort initPort() {
+        SerialPort[] ports = SerialPort.getCommPorts();
+        System.out.println("Select a port:");
+        int i = 1;
+        for(SerialPort port : ports)
+            System.out.println(i++ +  ": " + port.getSystemPortName());
+        Scanner s = new Scanner(System.in);
+        int chosenPort = s.nextInt();
+        SerialPort serialPort = ports[chosenPort-1];
+        if(serialPort.openPort())
+                System.out.println("Port opened successfully.");
+        else {
+                System.out.println("Unable to open the port.");
+                return null;
+        }
+
+        return serialPort;
     }
     
     private int colorToIndex(char color) {
@@ -455,9 +417,7 @@ public class Robot_GUI extends Application {
                 break;
             case 'U':
                 index = 7;
-                break;
-            
-                
+                break;   
             default: break;
         }
         return index;

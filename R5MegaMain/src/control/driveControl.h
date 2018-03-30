@@ -14,7 +14,7 @@
 #define R1PIN 26
 #define R2PIN 27
 
-enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFT, RIGHT, STOP};
+enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 
 class driveControl {
 
@@ -22,14 +22,14 @@ public:
   driveControl(Graph * m);
 
   void move(bool fwd);
-  void turn(bool left);
+  void turnManeuver(bool left, int steps);
   void stop();
 
   void forwardToIntersection();
   void turn45(bool left, int steps); //increments of 45 deg
   void turnTo(int dir);
 
-  //0, 1, or 2
+  //1, 2, 3
   void setSpeed(int s);
   int getSpeed();
 

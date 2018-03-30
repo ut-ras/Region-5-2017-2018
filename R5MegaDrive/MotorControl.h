@@ -25,7 +25,7 @@
  */
 
 
-enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, STOP};    //from i2c
+enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 enum Directions{FWD, BACK, LEFT, RIGHT};
 
 class MotorControl {
@@ -72,8 +72,8 @@ private:
   void calculateEncoderSpeeds();
   void calculatePIDSpeeds();
   void setMotorSpeeds(int l_rotSpeed, int r_rotSpeed);    //set actual speeds, direct output to AFMS motors
-  int normalizeSpeedForAFMS(double s);
 
+  int currentCmd;
 
   //hardware
   Adafruit_MotorShield *AFMS;
