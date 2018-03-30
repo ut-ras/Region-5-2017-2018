@@ -55,6 +55,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //delay for testing purposes
   delay(500);
   //Serial.println("Motor Control Initialized");
+
+  currentCmd = 0;
 }
 
 
@@ -69,8 +71,9 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-
-  calculateLSCorrections();
+  if (currentCmd < FWDNOLINEcurrentCmd) {
+    calculateLSCorrections();
+  }
 
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
@@ -180,6 +183,7 @@ int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
 }
 
 void MotorControl::setMotorMode(int c) {
+  currentCmd = c;
   switch (c) {
     case FWD1:
       setSetpointSpeeds(90);
@@ -205,6 +209,10 @@ void MotorControl::setMotorMode(int c) {
       setSetpointSpeeds(180);
       moveStraight(BACK);
       break;
+    case FWDNOLINE:
+      setSetpointSpeeds(90);
+      moveStraight(FWD);
+      break;
     case LEFTIP:
       setSetpointSpeeds(90);
       turninPlace(LEFT);
@@ -213,7 +221,26 @@ void MotorControl::setMotorMode(int c) {
       setSetpointSpeeds(90);
       turninPlace(RIGHT);
       break;
+    case LEFT45:
+      break;
+    case LEFT90:
+      break;
+    case LEFT135:
+      break;
+    case LEFT180:
+      break;
+    case RIGHT45:
+      break;
+    case RIGHT90:
+      break;
+    case RIGHT135:
+      break;
+    case RIGHT180:
+      break;
     case STOP:
+      stopMotors();
+      break;
+    default:
       stopMotors();
       break;
   }
