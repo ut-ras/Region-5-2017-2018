@@ -25,7 +25,7 @@
  */
 
 
-enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, STOP};    //from i2c
+enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 enum Directions{FWD, BACK, LEFT, RIGHT};
 
 class MotorControl {
@@ -37,7 +37,7 @@ public:
   void setMotorMode(int c);
 
   void updateMotorControl();      //with PID output
-  void updateMotorControlLine(int dir);   //TODO add line following to updateMotorControl
+  void updateMotorControlLine(int dir);
 
   encoder* getLeftEncoder();     //use this to attatch interrupts to encoder pins in main. call updatePos in ISR
   encoder* getRightEncoder();
@@ -59,6 +59,10 @@ public:
   void sweepPValues(double minP, double maxP, double stepP);
   void sweepIValues(double minI, double maxI, double stepI);
 
+  //turn maneuver
+  void turnManeuver(int dir, int num45Deg);
+  void moveStraightEncoderTicks(int dir, int encoderTicks);		//move fwd along lines an exact number of encoder encoderTicks
+  void turnEncoderTicks(int dir, int encoderTicks);    //use Directions enum LEFT or RIGHT
 
 
 private:
@@ -70,6 +74,7 @@ private:
   void setMotorSpeeds(int l_rotSpeed, int r_rotSpeed);    //set actual speeds, direct output to AFMS motors
   int normalizeSpeedForAFMS(double s);
 
+  int currentCmd;
 
   //hardware
   Adafruit_MotorShield *AFMS;

@@ -20,9 +20,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   prevTime = 0;
 
-  leftKp = .25;  //0.1 - 1
-  leftKi = 15;   //5 - 70
-  leftKd = 0;   //0
+  leftKp = .25;
+  leftKi = 15;
+  leftKd = 0;
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp, leftKi, leftKd, DIRECT);
 
   rightKp = 0.25;
@@ -55,6 +55,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //delay for testing purposes
   delay(500);
   //Serial.println("Motor Control Initialized");
+
+  currentCmd = 0;
 }
 
 
@@ -69,7 +71,10 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  calculateLSCorrections();
+  if (currentCmd < FWDNOLINEcurrentCmd) {
+    calculateLSCorrections();
+  }
+
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
   setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
@@ -107,13 +112,16 @@ void MotorControl::stopMotors() {
 
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
-  if(lineSensorWeight < -8){
+  if(lineSensorWeight < -8) {
     l_correction = 4;
-  }else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)){
+  }
+  else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
     l_correction = 2;
-  }else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)){
+  }
+  else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
     r_correction = 2;
-  }else if(lineSensorWeight > 8){
+  }
+  else if(lineSensorWeight > 8) {
     r_correction = 4;
   }
   l_SetpointSpeed += l_correction;
@@ -177,7 +185,14 @@ int MotorControl::MotorControl::normalizeSpeedForAFMS(double s) {
   return (s / motorMaxSpeed) * 255;
 }
 
+// ----------setMotorMode----------
+// Some sort of intermediary function
+// Calls setSetpointSpeeds and moveStraight
+// Input: Commands Enum
+//const uint8_t setMotorModeConstants[9] = {90, 135, 180, 90, 135, 180, 90, 90, 0};
+//const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
+  currentCmd = c;
   switch (c) {
     case FWD1:
       setSetpointSpeeds(90);
@@ -203,6 +218,10 @@ void MotorControl::setMotorMode(int c) {
       setSetpointSpeeds(180);
       moveStraight(BACK);
       break;
+    case FWDNOLINE:
+      setSetpointSpeeds(90);
+      moveStraight(FWD);
+      break;
     case LEFTIP:
       setSetpointSpeeds(90);
       turninPlace(LEFT);
@@ -211,10 +230,39 @@ void MotorControl::setMotorMode(int c) {
       setSetpointSpeeds(90);
       turninPlace(RIGHT);
       break;
+    case LEFT45:
+      break;
+    case LEFT90:
+      break;
+    case LEFT135:
+      break;
+    case LEFT180:
+      break;
+    case RIGHT45:
+      break;
+    case RIGHT90:
+      break;
+    case RIGHT135:
+      break;
+    case RIGHT180:
+      break;
     case STOP:
       stopMotors();
       break;
+    default:
+      stopMotors();
+      break;
   }
+
+  /*if(setMotorModeConstants[c] == 0) {
+    stopMotors();
+    return;
+  }
+  else {
+    setSetpointSpeeds(setMotorModeConstants[c]);
+    moveStraight(setMotorDirectionConstants[c]);
+  }*/
+
 }
 
 void MotorControl::serialDebugOutput(bool plotter) {
@@ -339,4 +387,62 @@ void MotorControl::setIValues(double i_val)
   r_PID->SetTunings(0.25, i_val, 0);
   leftKi = i_val;
   rightKi = i_val;
+}
+
+//Turn maneuver functions
+
+void turnManeuver(int dir, int num45Deg){
+  moveStrightEncoderTicks(FWD, 82);
+  turnEncoderTicks(dir, num45Deg * 119);
+}
+
+void moveStraightEncoderTicks(int dir, int encoderTicks){
+  int initLTicks = l_encoder->getPos();
+  int initRTicks = r_encoder->getPos();
+
+  if(dir == FWD){
+    l_Motor->run(FORWARD);
+    r_Motor->run(FORWARD);
+  }
+  else
+  {
+   l _Motor->run(BACKWARD);
+   r_Motor->run(BACKWARD);
+  }
+
+  setSetPointSpeeds(300, 300);
+
+  while(abs(initRTicks-r_encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_encoder->getPos()) < encoderTicks)){
+    updateMotorControl();
+    if(abs(initRTicks-r_encoder->getPos()) >= encoderTicks)
+      setSetPointSpeeds(300, 0);
+    if(abs(initLTicks-l_encoder->getPos()) >= encoderTicks)
+      setSetPointSpeeds(0, 300);
+    }
+    stopMotors();
+}
+
+void turnEncoderTicks(int dir, int encoderTicks){
+  int initLTicks = l_encoder->getPos();
+  int initRTicks = r_encoder->getPos();
+
+  if(dir == LEFT){
+    l_Motor->run(FORWARD);
+    r_Motor->run(BACKWARD);
+  }
+  else
+  {
+   l _Motor->run(BACKWARD);
+   r_Motor->run(FORWARD);
+  }
+  setSetPointSpeeds(200, 200);
+
+  while(abs(initRTicks-r_encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_encoder->getPos()) < encoderTicks)){
+    updateMotorControl();
+    if(abs(initRTicks-r_encoder->getPos()) >= encoderTicks)
+      setSetPointSpeeds(200, 0);
+    if(abs(initLTicks-l_encoder->getPos()) >= encoderTicks)
+      setSetPointSpeeds(0, 200);
+    }
+    stopMotors();
 }
