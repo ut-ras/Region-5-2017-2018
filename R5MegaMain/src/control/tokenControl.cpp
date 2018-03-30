@@ -97,11 +97,11 @@ void tokenControl::goToEveryColour(){
 void tokenControl::pickUpTokenTest(){
     moveToField(maxHeight);
     magnetController->magnetOn();
-    dleay(pickupTime);
+    delay(pickupTime);
     moveToField(maxHeight);
 }
 
-void pickupFromFunnelTest(int colour){
+void tokenControl::pickupFromFunnelTest(int colour){
     rotateDiskToColor(colour);
     pickupFromFunnel();
     resetDisk(colour);
