@@ -19,7 +19,7 @@ enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFT, RIGHT, STOP};
 class driveControl {
 
 public:
-  driveControl();
+  driveControl(Graph * m);
 
   void move(bool fwd);
   void turn(bool left);
@@ -41,7 +41,7 @@ public:
 private:
   void sendCommand(int command);
 
-  Graph * map;
+  Graph * mapGraph;
   intersectionSensors * linesensors;
   int speed; //1, 2, or 3
 };

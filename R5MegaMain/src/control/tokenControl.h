@@ -10,6 +10,7 @@
  #ifndef TOKENCONTROL_H
  #define TOKENCONTROL_H
 
+#include "Graph.h"
 #include "Node.h"
 #include "../drivers/stepper.h"
 #include "../drivers/r5servo.h"
@@ -19,7 +20,7 @@ class tokenControl {
 
 public:
     //Constructor
-    tokenControl();
+    tokenControl(Graph * m);
 
     /* Picks up a token on the field
      * assuming the robot is in the
@@ -48,6 +49,8 @@ private:
     //Picks up tokens from the funnel
     //Prereq: Over a funnel
     void pickupFromFunnel();
+
+    Graph * mapGraph;    //for token storage information and updating nodes with new info
 
     r5servo *pulleyController;
     stepper *diskController;

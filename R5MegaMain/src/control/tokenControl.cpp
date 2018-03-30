@@ -1,4 +1,5 @@
 #include "tokenControl.h"
+#include "Graph.h"
 #include <Arduino.h>
 
 //Servo Distances
@@ -38,11 +39,12 @@
 
 //Public
 
-tokenControl::tokenControl() {
+tokenControl::tokenControl(Graph * m) {
   diskController = new stepper(stepPin, dirPin);
   pulleyController = new r5servo();
   pulleyController->init(servoPin);
   magnetController = new magnet(magnetPin);
+  mapGraph = m;
 }
 
 int tokenControl::pickUpToken() {

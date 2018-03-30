@@ -3,10 +3,10 @@
 #include "Graph.h"
 #include "intersectionSensors.h"
 
-driveControl::driveControl() {
+driveControl::driveControl(Graph * m) {
   Wire.begin();    //only do this if i2c not already started
-  map = new Graph();
-  linesensors = new intersectionSensors(map, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
+  mapGraph = m;
+  linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
 }
 
 void driveControl::sendCommand(int command) {
@@ -38,8 +38,8 @@ void driveControl::stop() {
 
 
 void driveControl::setCurrentLocationForTest(int name, int dir) {
-  map->setCurrentNode(map->getNode(name));
-  map->setCurrentDirection(dir);
+  mapGraph->setCurrentNode(mapGraph->getNode(name));
+  mapGraph->setCurrentDirection(dir);
 }
 
 
@@ -53,7 +53,7 @@ void driveControl::forwardToIntersection() {
     delay(5);
   }
   stop();
-  map->setCurrentNode(map->getNextIntersection());
+  mapGraph->setCurrentNode(mapGraph->getNextIntersection());
 }
 
 
@@ -76,8 +76,8 @@ void driveControl::turn45(bool left, int steps) {
   }
   stop();
 
-  int nextDir = (map->getCurrentDirection() + steps) % 8;
-  map->setCurrentDirection(nextDir);
+  int nextDir = (mapGraph->getCurrentDirection() + steps) % 8;
+  mapGraph->setCurrentDirection(nextDir);
 }
 
 void driveControl::turnTo(int dir) {
@@ -88,7 +88,7 @@ void driveControl::turnTo(int dir) {
   pointlineData next = linesensors->getTurnToIntersection(dir);
 
   bool left = true;
-  int diff = map->getCurrentDirection() - dir;
+  int diff = mapGraph->getCurrentDirection() - dir;
   if (diff >= 4 || ((diff < 0) && (diff >= -4))) {
     left = false;
   }
@@ -99,7 +99,7 @@ void driveControl::turnTo(int dir) {
   }
   stop();
 
-  map->setCurrentDirection(dir);
+  mapGraph->setCurrentDirection(dir);
 }
 
 

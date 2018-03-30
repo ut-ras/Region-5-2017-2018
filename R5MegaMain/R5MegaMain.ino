@@ -3,6 +3,7 @@
 
 #include "src/control/tokenControl.h"
 #include "src/control/driveControl.h"
+#include "src/control/Graph.h"
 
 /* Required libraries (sketch/include library/manage libraries to add)
  * Adafruit_TCS34725
@@ -10,12 +11,15 @@
 
 tokenControl * tokenController;
 driveControl * driveController;
+Graph * mapGraph;
 
 void setup() {
   // put your setup code here, to run once:]
   Serial.begin(9600);
-  tokenController = new tokenControl();
-  driveController = new driveControl();
+
+  mapGraph = new Graph();
+  tokenController = new tokenControl(mapGraph);
+  driveController = new driveControl(mapGraph);
 
   testTokenControl();
   //testDriveControl();
