@@ -24,11 +24,11 @@
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
-#define toRGBSensor 20
+#define toRGBSensor 25
 //Degrees between each funnel
-#define tokenToToken 43.33333333333333333333333333333333333333333333333333333333333333333333333333333333
+#define tokenToToken 45
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 35
+#define toFirstToken 20
 //Pin for the stepper motor - needs proper assignment
 #define stepPin 6
 #define dirPin 7
@@ -40,11 +40,12 @@
 //Public
 
 tokenControl::tokenControl(Graph * m) {
-  diskController = new stepper(stepPin, dirPin);
-  pulleyController = new r5servo();
-  pulleyController->init(servoPin);
-  magnetController = new magnet(magnetPin);
-  mapGraph = m;
+	//colourSensor = new rgbsensor;
+    diskController = new stepper(stepPin, dirPin);
+    pulleyController = new r5servo();
+    pulleyController->init(servoPin);
+    magnetController = new magnet(magnetPin);
+    mapGraph = m;
 }
 
 int tokenControl::pickUpToken() {
@@ -92,13 +93,33 @@ void tokenControl::depositTokens(int c) {
 void tokenControl::rotateDiskToColor(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
-        diskController->rotateDisk(toFirstToken + toRGBSensor, stepper::COUNTERCLOCKWISE);
+        diskController->rotateDisk((8-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
         delay(2000);
-        diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
+    }else{
+        diskController->rotateDisk((c+1)*tokenToToken, stepper::CLOCKWISE);
+        delay(2000);
+    }
+}
+
+void tokenControl::rotateDiskFromSensor(int c){
+	if(c > 3){
+		diskController->rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
+		delay(500);
+        diskController->rotateDisk((8-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
+        delay(2000);
     }else{
         diskController->rotateDisk(toFirstToken, stepper::CLOCKWISE);
+        delay(500);
         diskController->rotateDisk(c*tokenToToken, stepper::CLOCKWISE);
+        delay(2000);
     }
+}
+
+int tokenControl::readColur(){
+	int colour = 0;
+	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
+	//colour = colourSensor->getColour();
+	return colour;
 }
 
 void tokenControl::resetDisk(int c) {
