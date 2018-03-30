@@ -98,7 +98,7 @@ void tokenControl::pickUpTokenTest(){
     moveToField(maxHeight);
     magnetController->magnetOn();
     delay(pickupTime);
-    moveToField(maxHeight);
+    moveToField(resting);
 }
 
 void tokenControl::pickupFromFunnelTest(int colour){

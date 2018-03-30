@@ -33,7 +33,8 @@ void loop() {
 
 void testTokenControl() {
   Blink();
-  tokenController->goToEveryColour();
+  //tokenController->goToEveryColour();
+  tokenController->pickUpTokenTest();
   while(1);
 }
 
