@@ -71,7 +71,7 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  if (currentCmd < FWDNOLINEcurrentCmd) {
+  if (currentCmd < FWDNOLINE) {
     calculateLSCorrections();
   }
 
@@ -399,14 +399,14 @@ void MotorControl::setIValues(double i_val)
 
 //Turn maneuver functions
 
-void turnManeuver(int dir, int num45Deg){
-  moveStrightEncoderTicks(FWD, 82);
+void MotorControl::turnManeuver(int dir, int num45Deg){
+  moveStraightEncoderTicks(FWD, 82);
   turnEncoderTicks(dir, num45Deg * 119);
 }
 
-void moveStraightEncoderTicks(int dir, int encoderTicks){
-  int initLTicks = l_encoder->getPos();
-  int initRTicks = r_encoder->getPos();
+void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
+  int initLTicks = l_Encoder->getPos();
+  int initRTicks = r_Encoder->getPos();
 
   if(dir == FWD){
     l_Motor->run(FORWARD);
@@ -414,25 +414,25 @@ void moveStraightEncoderTicks(int dir, int encoderTicks){
   }
   else
   {
-   l _Motor->run(BACKWARD);
+   l_Motor->run(BACKWARD);
    r_Motor->run(BACKWARD);
   }
 
-  setSetPointSpeeds(300, 300);
+  setSetpointSpeeds(300, 300);
 
-  while(abs(initRTicks-r_encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_encoder->getPos()) < encoderTicks)){
+  while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
     updateMotorControl();
-    if(abs(initRTicks-r_encoder->getPos()) >= encoderTicks)
-      setSetPointSpeeds(300, 0);
-    if(abs(initLTicks-l_encoder->getPos()) >= encoderTicks)
-      setSetPointSpeeds(0, 300);
+    if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
+      setSetpointSpeeds(300, 0);
+    if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
+      setSetpointSpeeds(0, 300);
     }
     stopMotors();
 }
 
-void turnEncoderTicks(int dir, int encoderTicks){
-  int initLTicks = l_encoder->getPos();
-  int initRTicks = r_encoder->getPos();
+void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
+  int initLTicks = l_Encoder->getPos();
+  int initRTicks = r_Encoder->getPos();
 
   if(dir == LEFT){
     l_Motor->run(BACKWARD);
@@ -440,17 +440,17 @@ void turnEncoderTicks(int dir, int encoderTicks){
   }
   else
   {
-   l _Motor->run(FORWARD);
+   l_Motor->run(FORWARD);
    r_Motor->run(BACKWARD);
   }
-  setSetPointSpeeds(200, 200);
+  setSetpointSpeeds(200, 200);
 
-  while(abs(initRTicks-r_encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_encoder->getPos()) < encoderTicks)){
+  while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
     updateMotorControl();
-    if(abs(initRTicks-r_encoder->getPos()) >= encoderTicks)
-      setSetPointSpeeds(200, 0);
-    if(abs(initLTicks-l_encoder->getPos()) >= encoderTicks)
-      setSetPointSpeeds(0, 200);
+    if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
+      setSetpointSpeeds(200, 0);
+    if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
+      setSetpointSpeeds(0, 200);
     }
     stopMotors();
 }
