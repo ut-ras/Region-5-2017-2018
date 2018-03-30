@@ -37,7 +37,14 @@ public:
     void depositTokens(int c);
 
     //****TEST FUNCTIONS***
+    //Rotates the disk to each colour then resets
     void goToEveryColour();
+
+    //Drops the pulley, turns on the magnet, then brings up the picked up pulley
+    void pickUpTokenTest();
+
+    //Picks up a token from a funnel then brings it to the center
+    void pickupFromFunnelTest(int colour);
 
 
 
