@@ -21,9 +21,9 @@ bool* arrayline::getLineSensor(){
 	//Print the binary value to the serial buffer.
 	for( int i = 7; i >= 0; i--){
 		boolArray[i] = (rawValue >> i) & 0x01;
-    //Serial.print(boolArray[i]);Serial.print(" ");
+    Serial.print(boolArray[i]);Serial.print(" ");
 	}
- //Serial.println();
+ Serial.println();
 }
 
 int arrayline::getWeightedValue()
@@ -34,6 +34,7 @@ int arrayline::getWeightedValue()
   {
     sum = weights[i]*((rawValue>>i)&0x01);
   }
+  Serial.println(sum);
   return sum;
 }
 

@@ -35,10 +35,10 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Motor Initialization
   AFMS->begin();  // create with the default frequency 1.6KHz
 
-  l_Motor->setSpeed(120);
-  r_Motor->setSpeed(120);
-  l_PIDSpeed = 120;
-  r_PIDSpeed = 120;
+  l_Motor->setSpeed(10);
+  r_Motor->setSpeed(10);
+  l_PIDSpeed = 10;
+  r_PIDSpeed = 10;
 
   //PID Initialization
   l_PID->SetSampleTime(3);
@@ -71,6 +71,8 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
+  l_correction = 0;
+  r_correction = 0;
   if (currentCmd < FWDNOLINE) {
     calculateLSCorrections();
   }
@@ -124,8 +126,7 @@ void MotorControl::calculateLSCorrections() {
   else if(lineSensorWeight > 8) {
     r_correction = 4;
   }
-  l_SetpointSpeed += l_correction;
-  r_SetpointSpeed += r_correction;
+
 }
 
 //set desired speeds
@@ -134,8 +135,8 @@ void MotorControl::setSetpointSpeeds(int rotSpeed) {                      //deg 
 }
 
 void MotorControl::setSetpointSpeeds(int l_rotSpeed, int r_rotSpeed) {    //deg / sec
-  l_SetpointSpeed = l_rotSpeed;
-  r_SetpointSpeed = r_rotSpeed;
+  l_SetpointSpeed = l_rotSpeed+l_correction;
+  r_SetpointSpeed = r_rotSpeed+r_correction;
 }
 
 //updateMotorSpeeds functions
@@ -156,6 +157,8 @@ void MotorControl::calculateEncoderSpeeds() {
     vSampleCount++;
   }
   if (vSampleCount == numVSamples) {
+    //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
+    //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
     double lv = (leftVSampleSum/ numVSamples);
     double rv = (rightVSampleSum/ numVSamples);
 
@@ -180,6 +183,7 @@ void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set ac
 }
 
 
+
 // ----------setMotorMode----------
 // Some sort of intermediary function
 // Calls setSetpointSpeeds and moveStraight
@@ -190,7 +194,7 @@ void MotorControl::setMotorMode(int c) {
   currentCmd = c;
   switch (c) {
     case FWD1:
-      setSetpointSpeeds(90);
+      setSetpointSpeeds(45);
       moveStraight(FWD);
       break;
     case FWD2:
