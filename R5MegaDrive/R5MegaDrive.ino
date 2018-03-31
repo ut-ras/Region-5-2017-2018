@@ -5,10 +5,10 @@
 
 #define DRIVE_MEGA_I2C 8
 
-#define ENCODER_L_A 19
-#define ENCODER_L_B 18
-#define ENCODER_R_A 3
-#define ENCODER_R_B 5
+#define ENCODER_L_A 3
+#define ENCODER_L_B 2
+#define ENCODER_R_A 19
+#define ENCODER_R_B 18
 
 MotorControl * m;
 encoder* leftEncoder;
@@ -36,7 +36,7 @@ void setup() {
 
 
   //test
-  m->setMotorMode(FWD1);
+  m->setMotorMode(BACK1);
 }
 
 void loop() {
@@ -95,3 +95,4 @@ void rightEncoderISR() {
   isrCount[1]++;
   rightEncoder->updatePos();
 }
+

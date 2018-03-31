@@ -21,13 +21,13 @@ public:
 	//use the macro number I2C_ADDRESS
 	arrayline();
 
-    //Get line sensor array for line sensor values
-    bool* getLineSensor();
+  //Get line sensor array for line sensor values
+  bool* getLineSensor();
 
-    //Check if any of the 8 sensors are true
-    bool isLine();
+  //Check if any of the 8 sensors are true
+  bool isLine();
 
-    int getWeightedValue();
+  int getWeightedValue();
 
 };
 

@@ -18,15 +18,21 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   //Serial.println("AFMS init");
 
+  l_correction = 0;
+  r_correction = 0;
+
+  l_EncoderSpeed = 0;
+  r_EncoderSpeed = 0;
+
   prevTime = 0;
 
-  leftKp = .25;
+  leftKp = 0.25;
   leftKi = 15;
   leftKd = 0;
   l_PID = new PID(&l_EncoderSpeed, &l_PIDSpeed, &l_SetpointSpeed, leftKp, leftKi, leftKd, DIRECT);
 
   rightKp = 0.25;
-  rightKi = 17;
+  rightKi = 15;
   rightKd = 0;
   r_PID = new PID(&r_EncoderSpeed, &r_PIDSpeed, &r_SetpointSpeed, rightKp, rightKi, rightKd, DIRECT);
 
@@ -41,24 +47,22 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   r_PIDSpeed = 10;
 
   //PID Initialization
-  l_PID->SetSampleTime(3);
+  l_PID->SetSampleTime(5);
   l_PID->SetMode(AUTOMATIC);
   l_PID->SetOutputLimits(0, 255);
 
-  r_PID->SetSampleTime(3);
+  r_PID->SetSampleTime(5);
   r_PID->SetMode(AUTOMATIC);
   r_PID->SetOutputLimits(0, 255);
 
 
   lineSensor = new arrayline();
-  l_correction = 0;
-  r_correction = 0;
   
   //delay for testing purposes
   delay(500);
   //Serial.println("Motor Control Initialized");
 
-  currentCmd = 0;
+  currentCmd = STOP;
 }
 
 
@@ -75,23 +79,22 @@ encoder* MotorControl::getRightEncoder() {
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
   if (currentCmd < FWDNOLINE) {
     calculateLSCorrections();
+    //l_SetpointSpeed += l_correction;
+    //r_SetpointSpeed += r_correction;
   }
 
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
-  setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
-
-  l_SetpointSpeed += l_correction;
-  r_SetpointSpeed += r_correction;
+  setMotorSpeeds(abs(l_PIDSpeed) + l_correction, abs(r_PIDSpeed) + r_correction);
 }
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
   if (dir == RIGHT) {
-    l_Motor->run(FORWARD);
+    l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
   else if (dir == LEFT) {
-    l_Motor->run(BACKWARD);
+    l_Motor->run(FORWARD);
     r_Motor->run(BACKWARD);
   }
 }
@@ -99,11 +102,11 @@ void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
   if (dir == FWD) {
     l_Motor->run(BACKWARD);
-    r_Motor->run(FORWARD);
+    r_Motor->run(BACKWARD);
   }
   else if (dir == BACK) {
     l_Motor->run(FORWARD);
-    r_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
   }
 }
 
@@ -115,19 +118,28 @@ void MotorControl::stopMotors() {
 
 //Private Functions
 
+//note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
   if(lineSensorWeight < -8) {
-    l_correction = 4;
+    l_correction = 80;
+    r_correction = 0;
   }
   else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
-    l_correction = 2;
+    l_correction = 40;
+    r_correction = 0;
   }
   else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
-    r_correction = 2;
+    r_correction = 40;
+    l_correction = 0;
   }
   else if(lineSensorWeight > 8) {
-    r_correction = 4;
+    r_correction = 80;
+    l_correction = 0;
+  }
+  else {
+    l_correction = 0;
+    r_correction = 0;
   }
 
 }
@@ -172,14 +184,15 @@ void MotorControl::calculateEncoderSpeeds() {
     rightVSampleSum = 0;
     vSampleCount = 0;
 
-    l_correction = 0;
-    r_correction = 0;
+    //l_correction = 0;
+    //r_correction = 0;
   }
 }
 void MotorControl::calculatePIDSpeeds() {
   l_PID->Compute();
   r_PID->Compute();
 }
+
 void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set actual speeds, direct output to AFMS motors
   l_Motor->setSpeed(l_rotSpeed);
   r_Motor->setSpeed(r_rotSpeed);
@@ -456,3 +469,5 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
     }
     stopMotors();
 }
+
+
