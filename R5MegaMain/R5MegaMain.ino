@@ -34,7 +34,7 @@ void loop() {
 void testTokenControl() {
   Blink();
   //tokenController->goToEveryColour();
-  tokenController->pickUpTokenTest();
+  tokenController->depositTokens(magenta);
   while(1);
 }
 

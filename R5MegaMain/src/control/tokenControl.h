@@ -69,6 +69,10 @@ private:
     //Prereq: Over a funnel
     void depositInFunnel();
 
+    //Deposits the token into the tube
+    //Prereq: over tube
+    void depositInTube();
+
     //Picks up tokens from the funnel
     //Prereq: Over a funnel
     void pickupFromFunnel();
