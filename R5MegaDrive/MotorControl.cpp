@@ -51,7 +51,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
 
   lineSensor = new arrayline();
-
+  l_correction = 0;
+  r_correction = 0;
+  
   //delay for testing purposes
   delay(500);
   //Serial.println("Motor Control Initialized");
@@ -71,8 +73,6 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  l_correction = 0;
-  r_correction = 0;
   if (currentCmd < FWDNOLINE) {
     calculateLSCorrections();
   }
@@ -80,6 +80,9 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
   calculateEncoderSpeeds();
   calculatePIDSpeeds();
   setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
+
+  l_SetpointSpeed += l_correction;
+  r_SetpointSpeed += r_correction;
 }
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
@@ -135,8 +138,8 @@ void MotorControl::setSetpointSpeeds(int rotSpeed) {                      //deg 
 }
 
 void MotorControl::setSetpointSpeeds(int l_rotSpeed, int r_rotSpeed) {    //deg / sec
-  l_SetpointSpeed = l_rotSpeed+l_correction;
-  r_SetpointSpeed = r_rotSpeed+r_correction;
+  l_SetpointSpeed = l_rotSpeed;
+  r_SetpointSpeed = r_rotSpeed;
 }
 
 //updateMotorSpeeds functions
