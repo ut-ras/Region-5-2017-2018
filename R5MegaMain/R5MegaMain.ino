@@ -9,6 +9,8 @@
  * Adafruit_TCS34725
  */
 
+#define FWD true;
+
 tokenControl *tokenController;
 driveControl *driveController;
 Graph * mapGraph;
@@ -53,14 +55,18 @@ void testDriveControl() {
   while(1);
 }
 
-/*
+
 void round1() {
 	int[] inventory = new int[6];
   time_t t = now();
 
-  turn(PI / 4);
+  //get to y1 box:
+  driveController->forwardToIntersection();
+  driveController->turnTo(2);
+  driveController->forwardToIntersection();
 
   //collect across diagonal going from yellow to red
+  driveController->turnTo(7);
 	for(int i = 0; i < 4; i++){
 		driveController->forwardToIntersection();
 		tokenController->pickUpToken();
@@ -72,18 +78,42 @@ void round1() {
   delay(1000);
   driveController->stop();
 
-  //Continue to red box
+  //Continue to r1
 	for(int i = 0; i < 4; i++){
 		driveController->forwardToIntersection();
 		tokenController->pickUpToken();
 	}
+  if(mapGraph->getNumTokens(red) == 2){
+    //drop off red tokens on way by
+    driveController->turnTo(7);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(red);
+    driveController->turnTo(3);
+    driveController->forwardToIntersection();
 
-  //go to green
-  driveController->turn45(3 * PI / 4);  //turn 135 deg left
+  }
+
+  //go to g1
+  driveController->turnTo(4);               //turn 135 deg left
   driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+  if(mapGraph->getNumTokens(green) == 2){
+    //drop off green tokens on way by
+    driveController->turnTo(6);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(green);
+    driveController->turnTo(2);
+    driveController->forwardToIntersection();
+  }
   
-  //go across to magenta
-  turn(PI / 2);
+  //go across to m1
+  driverControl->turnTo(2);
   for(int i = 0; i < 4; i++){
     driveController->forwardToIntersection();
     tokenController->pickUpToken();
@@ -94,18 +124,41 @@ void round1() {
   delay(1000);
   driveController->stop();
 
-  //continue to magenta
+  //continue to m1
   for(int i = 0; i < 4; i++){
     driveController->forwardToIntersection();
     tokenController->pickUpToken();
   }
+  if(mapGraph->getNumTokens(magenta) == 2){
+    //drop off magenta tokens on way by
+    driveController->turnTo(2);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(magenta);
+    driveController->turnTo(6);
+    driveController->forwardToIntersection();
+  }
 
-  //go to cyan
-  turn(PI/2);
-  forwardToIntersection();
+  //go to c1
+  driveController->turnTo(0);
+  driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+  if(mapGraph->getNumTokens(cyan) == 2){
+    //drop off cyan tokens on way by
+    driveController->turnTo(1);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(cyan);
+    driveController->turnTo(5);
+    driveController->forwardToIntersection();
+  }
 
-  //go across the diagonal from cyan to blue
-  turn(3 * PI / 4);
+  //go across the diagonal from cyan to blue (b1)
+  driveController->turnTo(5);
   for(int i = 0; i < 4; i++){
     driveController->forwardToIntersection();
     tokenController->pickUpToken();
@@ -125,118 +178,107 @@ void round1() {
   //---------------------------------------------------
   //           DROP OFF PHASE
 
-  //drop off blue tokens
-  driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(blue);
-  turn45();
-  turn45();
-  turn45();
-  turn45();
+  if(mapGraph->getNumTokens(blue) > 0){
+    //drop off blue tokens
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(blue);
 
-  //get back to b1
-  driveController->forwardToIntersection();
-  turn45();
+    //get back to b1
+    driveController->turnTo(1);
+    driveController->forwardToIntersection();
+  }
 
-  //go to green
+  //go to g1
+  driveController->turnTo(0);
   driveController->forwardToIntersection();
-  turn45();
-  turn45();
 
-  //drop off green tokens
+  if(mapGraph->getNumTokens(green) > 0){
+    //drop off green tokens
+    driveController->turnTo(6);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(green);
+
+    //get back to g1
+    driveController->turnTo(2);
+    driveController->forwardToIntersection();
+  }
+
+  //go to r1
+  driveController->turnTo(0);
   driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(green);
-  turn45();
-  turn45();
-  turn45();
-  turn45();
 
-  //get back to g1
+  if(mapGraph->getNumTokens(red) > 0){
+    //drop off red tokens
+    driveController->turnTo(7);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(red);
+
+    //get back to r1
+    driveController->turnTo(3);
+    driveController->forwardToIntersection();
+  }
+
+  //go to c1
+  driveController->turnTo(2);
   driveController->forwardToIntersection();
-  turn45();
-  turn45();
+  driveController->turnTo(1);
 
-  //go to red
-  driveController->forwardToIntersection();
-  turn45();
+  if(mapGraph->getNumTokens(cyan) > 0){
+    //drop off cyan tokens
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(cyan);
 
-  //drop off red tokens
-  driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(red);
-  turn45();
-  turn45();
-  turn45();
-  turn45();
-
-  //if no time, get in white box
-
-  //get back to r1
-  driveController->forwardToIntersection();
-  turn45();
-
-  //go to cyan
-  driveController->forwardToIntersection();
-  turn45();
-
-  //drop off red tokens
-  driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(cyan);
-  turn45();
-  turn45();
-  turn45();
-  turn45();
-
-  //get back to c1
-  driveController->forwardToIntersection();
-  turn45();
+    //get back to c1
+    driveController->turnTo(5);
+    driveController->forwardToIntersection();
+  }
 
   //go to magenta
+  driveController->turnTo(4);
   driveController->forwardToIntersection();
-  turn45();
-  turn45();
 
-  //drop off magenta tokens
-  driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(magenta);
-  turn45();
-  turn45();
-  turn45();
-  turn45();
+  if(mapGraph->getNumTokens(magenta) > 0){
+    //drop off magenta tokens
+    driveController->turnTo(2);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(magenta);
 
-  //get back to m1
-  driveController->forwardToIntersection();
-  turn45();
-  turn45();
+    //get back to m1
+    driveController->turnTo(6);
+    driveController->forwardToIntersection();
+  }
 
-  //go to yellow
+  //go to yellow box
+  driveController->turnTo(4);
   driveController->forwardToIntersection();
-  turn45();
 
-  //drop off yellow tokens
-  driveController->forwardToIntersection();
-  move(FWD);
-  delay(1000);
-  stop();
-  tokenController->depositTokens(red);
+  if(mapGraph->getNumTokens(yellow) > 0){  
+    //drop off yellow tokens
+    driveController->turnTo(3);
+    driveController->forwardToIntersection();
+    move(FWD);
+    delay(1000);
+    stop();
+    tokenController->depositTokens(yellow);
+  }
 
   //go to the white box
-  turn45();
-  turn45();
-  turn45();
+  driveController->turnTo(6);
   driveController->forwardToIntersection();
 
 
