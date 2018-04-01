@@ -7,12 +7,12 @@
 #define DRIVE_MEGA_I2C 8
 
 //intersection sensor pins
-#define L0PIN 30
-#define L1PIN 34
-#define l2PIN 48
-#define R0PIN 46
-#define R1PIN 44
-#define R2PIN 40
+#define R0PIN 35
+#define R1PIN 33
+#define R2PIN 41
+#define L0PIN 39
+#define L1PIN 37
+#define L2PIN 31
 
 enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 

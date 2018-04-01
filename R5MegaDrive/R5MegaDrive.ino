@@ -15,6 +15,7 @@ encoder* leftEncoder;
 encoder* rightEncoder;
 
 int isrCount[2] = {0, 0};
+char newCommand = -1;
 
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
@@ -36,7 +37,7 @@ void setup() {
 
 
   //test
-  m->setMotorMode(BACK1);
+  //m->setMotorMode(BACK1);
 }
 
 void loop() {
@@ -49,6 +50,11 @@ void loop() {
   //encoder check
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
+
+  if (newCommand > 0) {
+    m->setMotorMode(newCommand);
+    newCommand = -1;
+  }
 }
 
 
@@ -61,7 +67,7 @@ void loop() {
 void receiveEvent(int howMany) {
   while (Wire.available()) {   // loop through all but the last
     char c = Wire.read();      // receive byte as a character
-    m->setMotorMode(c);
+    newCommand = c;
   }
 }
 

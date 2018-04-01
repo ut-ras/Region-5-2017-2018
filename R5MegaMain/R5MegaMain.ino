@@ -26,8 +26,8 @@ void setup() {
   Wire.begin();
 
   //testTokenControl();
-  //testDriveControl();
-  printIntersectionData();
+  testDriveControl();
+  //printIntersectionData();
 }
 
 
@@ -51,11 +51,10 @@ void Blink(){
 }
 
 void testDriveControl() {
-  driveController->move(2);
+  driveController->move(true);
 
-  //driveController->setCurrentLocationForTest(R1, 0);   //where the bot is starting, (location, dir)
+  //driveController->setCurrentLocationForTest(R5, 4);   //where the bot is starting, (location, dir)
   //driveController->forwardToIntersection();
-  while(1);
 }
 
 void printIntersectionData() {

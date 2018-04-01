@@ -7,6 +7,7 @@
 /*
  * Class that abstracts the pointline class, array of line sensors for detecting intersections of lines
  * usage: in high level code, determine the desired pointlineData for the next intersection, then move and getData until data matches
+ * 0 is front
  */
 
 typedef struct pointlineData {

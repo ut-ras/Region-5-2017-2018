@@ -123,7 +123,7 @@ void MotorControl::stopMotors() {
 //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
-  bool fwd = (lastDir >= 0) && (lastDir <= 2)
+  bool fwd = (lastDir >= 0) && (lastDir <= 2);
   
   if(lineSensorWeight <= -3) {
     //l_correction = 80;
@@ -216,6 +216,7 @@ void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set ac
 //const uint8_t setMotorModeConstants[9] = {90, 135, 180, 90, 135, 180, 90, 90, 0};
 //const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
+  Serial.println("new command: " + String(c));
   currentCmd = c;
   switch (c) {
     case FWD1:
