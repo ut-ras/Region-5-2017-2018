@@ -26,7 +26,7 @@ void setup() {
   Wire.begin();
 
   //testTokenControl();
-  testDriveControl();
+  testi2c();
   //printIntersectionData();
 }
 
@@ -49,7 +49,10 @@ void Blink(){
   digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
 }
-
+void testi2c()
+{
+  driveController->testSendCommand();
+}
 void testDriveControl() {
   driveController->move(true);
 
@@ -73,6 +76,7 @@ void printIntersectionData() {
  *                     delay is there for the robot to move 
  *                       inside the colored box
  */
+ /*
 void round3() {
 	int inventory[6];
   time_t startTime = second();
@@ -310,16 +314,16 @@ void round3() {
   //go to the white box
   driveController->turnTo(6);
   driveController->forwardToIntersection();
- */
-}
 
+}
+ */
 /*
 void round2(){
 	int inventory[6];
   time_t startTime = second();
   time_t endTime = 360 + startTime;
 } */
-
+/*
 void round1(){
 	int inventory[7];
   time_t startTime = second();

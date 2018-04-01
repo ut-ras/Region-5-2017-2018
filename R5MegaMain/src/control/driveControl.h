@@ -37,7 +37,7 @@ public:
 
   void setCurrentLocationForTest(int name, int dir);
 
-
+  void testSendCommand();
 private:
   void sendCommand(int command);
 

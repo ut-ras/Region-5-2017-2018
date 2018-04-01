@@ -13,9 +13,10 @@
 MotorControl * m;
 encoder* leftEncoder;
 encoder* rightEncoder;
-
+void  initMotorControl();
+void  initI2c();
 int isrCount[2] = {0, 0};
-char newCommand = -1;
+int8_t newCommand = -1;
 
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
@@ -51,10 +52,13 @@ void loop() {
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
 
+   Serial.println("Command" + String(newCommand));
+  /*
   if (newCommand > 0) {
     m->setMotorMode(newCommand);
     newCommand = -1;
   }
+  */
 }
 
 
@@ -65,10 +69,9 @@ void loop() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-  while (Wire.available()) {   // loop through all but the last
-    char c = Wire.read();      // receive byte as a character
+    int8_t c = Wire.read();      // receive byte as a character
     newCommand = c;
-  }
+  
 }
 
 void initI2c() {

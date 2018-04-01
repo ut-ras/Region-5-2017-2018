@@ -9,7 +9,13 @@ driveControl::driveControl(Graph * m) {
   linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, L2PIN, R0PIN, R1PIN, R2PIN);
   speed = 1;
 }
-
+void driveControl::testSendCommand()
+{
+    for(int i =0; i<255; i++)
+    {
+    sendCommand(i);
+} 
+}
 void driveControl::sendCommand(int command) {
   Serial.println("cmd: " + String(command));
   Wire.beginTransmission(DRIVE_MEGA_I2C);
