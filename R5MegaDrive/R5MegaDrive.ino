@@ -17,7 +17,7 @@ encoder* rightEncoder;
 int isrCount[2] = {0, 0};
 
 void setup() {
-  Serial.begin(115200);  // start serial for testing outputs
+  Serial.begin(9600);  // start serial for testing outputs
   delay(1000);
 
   //Serial.println("welcome to this test");
@@ -67,7 +67,6 @@ void receiveEvent(int howMany) {
 
 void initI2c() {
   //I2C Initialization
-  //Wire.begin();        //i dont think we need this
   Wire.begin(DRIVE_MEGA_I2C);
   Wire.onReceive(receiveEvent);
 }

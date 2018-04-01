@@ -35,8 +35,8 @@ int arrayline::getWeightedValue() {
     sum += weights[i]*((rawValue>>i)&0x01);
     if (((rawValue>>i) & 0x01) != 0) { notZero++; }
   }
-  Serial.println("notzero " + String(notZero));
-  Serial.println(sum / notZero);
+  //Serial.println("notzero " + String(notZero));
+  //Serial.println(sum / notZero);
   return (notZero == 0)?0:(sum / notZero);
 }
 

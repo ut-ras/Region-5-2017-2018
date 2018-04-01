@@ -4,7 +4,7 @@
 #include "intersectionSensors.h"
 
 driveControl::driveControl(Graph * m) {
-  Wire.begin();    //only do this if i2c not already started
+  //only do this if i2c not already started
   mapGraph = m;
   linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
 }
@@ -56,11 +56,6 @@ void driveControl::forwardToIntersection() {
   mapGraph->setCurrentNode(mapGraph->getNextIntersection());
 }
 
-
-
-//TODO
-//these turn functions are going to be replaced because of the orientation of the bot, it doesnt allow us to rotate around the token
-//so we need to add a hardcoded encoder function to Drive Mega that will move forward slightly and then rotate 45
 
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {

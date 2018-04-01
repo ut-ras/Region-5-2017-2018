@@ -21,8 +21,11 @@ void setup() {
   tokenController = new tokenControl(mapGraph);
   driveController = new driveControl(mapGraph);
 
-  testTokenControl();
+  Wire.begin();
+
+  //testTokenControl();
   //testDriveControl();
+  printIntersectionData();
 }
 
 
@@ -51,6 +54,14 @@ void testDriveControl() {
   //driveController->setCurrentLocationForTest(R1, 0);   //where the bot is starting, (location, dir)
   //driveController->forwardToIntersection();
   while(1);
+}
+
+void printIntersectionData() {
+  intersectionSensors * s = driveController->getIntersectionSensors();
+  while(1) {
+    Serial.println(s->getData().toString());
+    delay(500);
+  }
 }
 
 /*
