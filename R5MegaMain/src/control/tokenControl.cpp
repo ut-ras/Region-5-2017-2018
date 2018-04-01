@@ -4,7 +4,7 @@
 
 //Servo Distances
 //Distance from max height to ground - 10->5in
-#define maxHeight 177
+#define maxHeight 180
 //Distance to fall into the funnel - 5in
 #define funnelHeight 162
 //Resting position
@@ -18,7 +18,7 @@
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
-#define pickupTime 1000
+#define pickupTime 500
 //Delay pre and post drop off for stbalization
 #define dropTime 250
 
@@ -64,6 +64,7 @@ int tokenControl::pickUpToken() {
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
     rotateDiskToColor(colour);
+    depositInFunnel();
     resetDisk(colour);
     return colour;
 }
@@ -75,12 +76,7 @@ void tokenControl::depositTokens(int c) {
 
     //Moves token to center then deposits the tokens
     resetDisk(c);
-    moveToField(maxHeight);
-    magnetController->magnetOff();
-    delay(dropTime);
-
-    //Reset the magnet
-    moveToField(resting);
+    depositInTube();
 }
 
 void tokenControl::goToEveryColour(){
@@ -113,24 +109,24 @@ void tokenControl::rotateDiskToColor(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
         diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
-        delay(500 * (7-c));
+        // delay(400 * (7-c));
     }else{
         diskController->rotateDisk((c+1)*tokenToToken, stepper::CLOCKWISE);
-        delay(500*(c+1));
+        // delay(400*(c+1));
     }
 }
 
 void tokenControl::rotateDiskFromSensor(int c){
 	if(c > 3){
 		diskController->rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
-		delay(500);
+		//delay(400);
         diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
-        delay(500 * (7-c));
+        //delay(400 * (7-c));
     }else{
         diskController->rotateDisk(toFirstToken, stepper::CLOCKWISE);
-        delay(500);
+        //delay(400);
         diskController->rotateDisk(c*tokenToToken, stepper::CLOCKWISE);
-        delay(500*(c+1));
+        //delay(400*(c+1));
     }
 }
 
@@ -145,19 +141,28 @@ void tokenControl::resetDisk(int c) {
     //Finds most efficient direction for rotation
     if(c > 3){
         diskController->rotateDisk((7-c)*tokenToToken, stepper::CLOCKWISE);
-        delay(500 * (7-c));
+        //delay(400 * (7-c));
     }else{
         diskController->rotateDisk((c+1)*tokenToToken, stepper::COUNTERCLOCKWISE);
-        delay(500*(c+1));
+        //delay(400*(c+1));
     }
 }
 
 void tokenControl::depositInFunnel() {
-    pulleyController->movePulley(funnelHeight);
+    // pulleyController->movePulley(funnelHeight);
+    // delay(dropTime);
+    magnetController->magnetOff();
     delay(dropTime);
+    // pulleyController->movePulley(resting);
+}
+
+void tokenControl::depositInTube(){
+    pulleyController->movePulley(funnelHeight+5);
+    delay(funnelHeightWait+50);
     magnetController->magnetOff();
     delay(dropTime);
     pulleyController->movePulley(resting);
+    delay(funnelHeightWait+50);
 }
 
 void tokenControl::pickupFromFunnel() {
