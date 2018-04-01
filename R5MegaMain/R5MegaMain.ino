@@ -23,8 +23,11 @@ void setup() {
   tokenController = new tokenControl(mapGraph);
   driveController = new driveControl(mapGraph);
 
-  testTokenControl();
-  //testDriveControl();
+  Wire.begin();
+
+  //testTokenControl();
+  testDriveControl();
+  //printIntersectionData();
 }
 
 
@@ -48,14 +51,21 @@ void Blink(){
 }
 
 void testDriveControl() {
-  driveController->move(2);
+  driveController->move(true);
 
-  //driveController->setCurrentLocationForTest(R1, 0);   //where the bot is starting, (location, dir)
+  //driveController->setCurrentLocationForTest(R5, 4);   //where the bot is starting, (location, dir)
   //driveController->forwardToIntersection();
-  while(1);
 }
 
+void printIntersectionData() {
+  intersectionSensors * s = driveController->getIntersectionSensors();
+  while(1) {
+    Serial.println(s->getData().toString());
+    delay(500);
+  }
+}
 
+/*
 void round1() {
 	int[] inventory = new int[6];
   time_t t = now();
@@ -111,7 +121,7 @@ void round1() {
     driveController->turnTo(2);
     driveController->forwardToIntersection();
   }
-  
+
   //go across to m1
   driverControl->turnTo(2);
   for(int i = 0; i < 4; i++){
@@ -267,7 +277,7 @@ void round1() {
   driveController->turnTo(4);
   driveController->forwardToIntersection();
 
-  if(mapGraph->getNumTokens(yellow) > 0){  
+  if(mapGraph->getNumTokens(yellow) > 0){
     //drop off yellow tokens
     driveController->turnTo(3);
     driveController->forwardToIntersection();

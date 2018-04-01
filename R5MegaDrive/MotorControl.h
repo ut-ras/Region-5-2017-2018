@@ -10,7 +10,7 @@
 #include "encoder.h"
 #include "arrayline.h"
 
-#define LOOP_DELAY 200
+#define LOOP_DELAY 100
 
 
 //required libraries: Adafruit_MotorShield v2, PID by Brett, SparkFun Line Follower Array
@@ -25,7 +25,7 @@
  */
 
 
-enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
+enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, FWDNOLINE, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 enum Directions{FWD, BACK, LEFT, RIGHT};
 
 class MotorControl {
@@ -37,7 +37,6 @@ public:
   void setMotorMode(int c);
 
   void updateMotorControl();      //with PID output
-  void updateMotorControlLine(int dir);
 
   encoder* getLeftEncoder();     //use this to attatch interrupts to encoder pins in main. call updatePos in ISR
   encoder* getRightEncoder();
@@ -97,6 +96,7 @@ private:
 
   //line sensor correction
   int l_correction, r_correction;
+  int lastDir;                    //FWD or BACK commands saved before line sensor started correcting
 
   //encoder vars
   int l_PrevEncoderPos = 0;      //encoder steps

@@ -7,6 +7,7 @@
 /*
  * Class that abstracts the pointline class, array of line sensors for detecting intersections of lines
  * usage: in high level code, determine the desired pointlineData for the next intersection, then move and getData until data matches
+ * 0 is front
  */
 
 typedef struct pointlineData {
@@ -30,6 +31,11 @@ typedef struct pointlineData {
   }
   bool operator!=(const pointlineData& a) const {
       return !(l0 == a.l0 && l1 == a.l1 && l2 == a.l2 && r0 == a.r0 && r1 == a.r1 && r2 == a.r2);
+  }
+  String toString() {
+      String s = String("l0=" + String(l0) + " l1=" + String(l1) + " l2=" + String(l2) + "\n");
+      s += String("r0=" + String(r0) + " r1=" + String(r1) + " r2=" + String(r2) + "\n");
+      return s;
   }
 } pointlineData;
 

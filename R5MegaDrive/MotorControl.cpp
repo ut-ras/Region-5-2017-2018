@@ -63,6 +63,7 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Serial.println("Motor Control Initialized");
 
   currentCmd = STOP;
+  lastDir = STOP;
 }
 
 
@@ -90,12 +91,12 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
   if (dir == RIGHT) {
-    l_Motor->run(BACKWARD);
-    r_Motor->run(FORWARD);
-  }
-  else if (dir == LEFT) {
     l_Motor->run(FORWARD);
     r_Motor->run(BACKWARD);
+  }
+  else if (dir == LEFT) {
+    l_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
   }
 }
 
@@ -103,10 +104,12 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
   if (dir == FWD) {
     l_Motor->run(BACKWARD);
     r_Motor->run(BACKWARD);
+    lastDir = currentCmd;
   }
   else if (dir == BACK) {
     l_Motor->run(FORWARD);
     r_Motor->run(FORWARD);
+    lastDir = currentCmd;
   }
 }
 
@@ -117,31 +120,37 @@ void MotorControl::stopMotors() {
 
 
 //Private Functions
-
 //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
-  if(lineSensorWeight < -8) {
-    l_correction = 80;
-    r_correction = 0;
+  bool fwd = (lastDir >= 0) && (lastDir <= 2);
+  
+  if(lineSensorWeight <= -3) {
+    //l_correction = 80;
+    //r_correction = 0;
+    setMotorMode(fwd?RIGHTIP:LEFTIP);
   }
-  else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
-    l_correction = 40;
-    r_correction = 0;
+  /*else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
+    //l_correction = 40;
+    //r_correction = 0;
+    setMotorMode(fwd?RIGHTIP:LEFTIP);
   }
   else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
-    r_correction = 40;
-    l_correction = 0;
-  }
-  else if(lineSensorWeight > 8) {
-    r_correction = 80;
-    l_correction = 0;
+    //r_correction = 40;
+    //l_correction = 0;
+    setMotorMode(fwd?LEFTIP:RIGHTIP);
+  }*/
+  else if(lineSensorWeight >= 3) {
+    //r_correction = 80;
+    //l_correction = 0;
+    setMotorMode(fwd?LEFTIP:RIGHTIP);
   }
   else {
-    l_correction = 0;
-    r_correction = 0;
+    //l_correction = 0;
+    //r_correction = 0;
+    Serial.println();
+    setMotorMode(lastDir);
   }
-
 }
 
 //set desired speeds
@@ -207,6 +216,7 @@ void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set ac
 //const uint8_t setMotorModeConstants[9] = {90, 135, 180, 90, 135, 180, 90, 90, 0};
 //const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
+  Serial.println("new command: " + String(c));
   currentCmd = c;
   switch (c) {
     case FWD1:
@@ -238,11 +248,11 @@ void MotorControl::setMotorMode(int c) {
       moveStraight(FWD);
       break;
     case LEFTIP:
-      setSetpointSpeeds(90);
+      setSetpointSpeeds(50);
       turninPlace(LEFT);
       break;
     case RIGHTIP:
-      setSetpointSpeeds(90);
+      setSetpointSpeeds(50);
       turninPlace(RIGHT);
       break;
     case LEFT45:
@@ -297,7 +307,7 @@ void MotorControl::serialDebugOutput(bool plotter) {
 
   }
   else {
-    Serial.print("Line Sensor C: " + String(l_correction)+ " / " + String(r_correction));
+    //Serial.print("Line Sensor C: " + String(l_correction)+ " / " + String(r_correction));
     Serial.print(" Encoder: " +String(l_EncoderSpeed)+" / "+ String(r_EncoderSpeed));
     Serial.print(" Set: " + String(l_SetpointSpeed)+ "/ " + String(r_SetpointSpeed));
     Serial.print(" PID out: " + String(l_PIDSpeed)+ " / " + String(r_PIDSpeed) + "\n");

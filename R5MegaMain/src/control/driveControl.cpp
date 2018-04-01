@@ -4,12 +4,14 @@
 #include "intersectionSensors.h"
 
 driveControl::driveControl(Graph * m) {
-  Wire.begin();    //only do this if i2c not already started
+  //only do this if i2c not already started
   mapGraph = m;
-  linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, l2PIN, R0PIN, R1PIN, R2PIN);
+  linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, L2PIN, R0PIN, R1PIN, R2PIN);
+  speed = 1;
 }
 
 void driveControl::sendCommand(int command) {
+  Serial.println("cmd: " + String(command));
   Wire.beginTransmission(DRIVE_MEGA_I2C);
   Wire.write(command);
   Wire.endTransmission();
@@ -48,6 +50,7 @@ void driveControl::setCurrentLocationForTest(int name, int dir) {
 void driveControl::forwardToIntersection() {
   move(true);
   pointlineData next = linesensors->getNextIntersection();
+  Serial.println(next.toString());
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
   while(linesensors->getData() != next) {
     delay(5);
@@ -56,11 +59,6 @@ void driveControl::forwardToIntersection() {
   mapGraph->setCurrentNode(mapGraph->getNextIntersection());
 }
 
-
-
-//TODO
-//these turn functions are going to be replaced because of the orientation of the bot, it doesnt allow us to rotate around the token
-//so we need to add a hardcoded encoder function to Drive Mega that will move forward slightly and then rotate 45
 
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {
