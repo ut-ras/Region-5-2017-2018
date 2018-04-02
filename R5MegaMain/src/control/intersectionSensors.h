@@ -27,10 +27,10 @@ typedef struct pointlineData {
       return *this;
   }
   bool operator==(const pointlineData& a) const {
-      return (l0 == a.l0 && l1 == a.l1 && l2 == a.l2 && r0 == a.r0 && r1 == a.r1 && r2 == a.r2);
+      return ((l0 == a.l0) && (l1 == a.l1) && (l2 == a.l2) && (r0 == a.r0) && (r1 == a.r1) && (r2 == a.r2));
   }
   bool operator!=(const pointlineData& a) const {
-      return !(l0 == a.l0 && l1 == a.l1 && l2 == a.l2 && r0 == a.r0 && r1 == a.r1 && r2 == a.r2);
+      return !((l0 == a.l0) && (l1 == a.l1) && (l2 == a.l2) && (r0 == a.r0) && (r1 == a.r1) && (r2 == a.r2));
   }
   String toString() {
       String s = String("l0=" + String(l0) + " l1=" + String(l1) + " l2=" + String(l2) + "\n");

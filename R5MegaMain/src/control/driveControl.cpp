@@ -9,15 +9,15 @@ driveControl::driveControl(Graph * m) {
   linesensors = new intersectionSensors(mapGraph, L0PIN, L1PIN, L2PIN, R0PIN, R1PIN, R2PIN);
   speed = 1;
 }
-void driveControl::testSendCommand()
-{
-    for(int i =0; i<255; i++)
-    {
-    sendCommand(i);
-} 
+
+void driveControl::testSendCommand() {
+    for(int i =0; i<255; i++) {
+      sendCommand(i);
+    }
 }
-void driveControl::sendCommand(int command) {
-  Serial.println("cmd: " + String(command));
+
+void driveControl::sendCommand(uint8_t command) {
+  Serial.println("command: " + String(command));
   Wire.beginTransmission(DRIVE_MEGA_I2C);
   Wire.write(command);
   Wire.endTransmission();
@@ -56,9 +56,11 @@ void driveControl::setCurrentLocationForTest(int name, int dir) {
 void driveControl::forwardToIntersection() {
   move(true);
   pointlineData next = linesensors->getNextIntersection();
+  pointlineData current;
   Serial.println(next.toString());
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
-  while(linesensors->getData() != next) {
+  while((current = linesensors->getData()) != next) {
+    Serial.println(current.toString());
     delay(5);
   }
   stop();

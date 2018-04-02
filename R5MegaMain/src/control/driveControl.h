@@ -7,12 +7,12 @@
 #define DRIVE_MEGA_I2C 8
 
 //intersection sensor pins
-#define R0PIN 35
-#define R1PIN 33
-#define R2PIN 41
-#define L0PIN 39
-#define L1PIN 37
-#define L2PIN 31
+#define R0PIN 30
+#define R1PIN 34
+#define R2PIN 38
+#define L0PIN 40
+#define L1PIN 44
+#define L2PIN 46
 
 enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, FWDNOLINE, LEFTIP, RIGHTIP, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
 
@@ -39,7 +39,7 @@ public:
 
   void testSendCommand();
 private:
-  void sendCommand(int command);
+  void sendCommand(uint8_t command);
 
   Graph * mapGraph;
   intersectionSensors * linesensors;

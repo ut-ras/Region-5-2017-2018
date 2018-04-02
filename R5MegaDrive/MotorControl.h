@@ -96,7 +96,6 @@ private:
 
   //line sensor correction
   int l_correction, r_correction;
-  int lastDir;                    //FWD or BACK commands saved before line sensor started correcting
 
   //encoder vars
   int l_PrevEncoderPos = 0;      //encoder steps

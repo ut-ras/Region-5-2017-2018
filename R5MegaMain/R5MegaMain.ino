@@ -25,15 +25,18 @@ void setup() {
 
   Wire.begin();
 
+  delay(5000);
   //testTokenControl();
-  testi2c();
+  //testi2c();
   //printIntersectionData();
+  testDriveControl();
+
 }
 
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  
 }
 
 void testTokenControl() {
@@ -49,15 +52,18 @@ void Blink(){
   digitalWrite(LED_BUILTIN, LOW);
   delay(1000);
 }
-void testi2c()
-{
+
+void testi2c() {
   driveController->testSendCommand();
 }
-void testDriveControl() {
-  driveController->move(true);
 
-  //driveController->setCurrentLocationForTest(R5, 4);   //where the bot is starting, (location, dir)
-  //driveController->forwardToIntersection();
+void testDriveControl() {
+  //driveController->move(true);
+
+  driveController->setCurrentLocationForTest(R5, 4);   //where the bot is starting, (location, dir)
+  Serial.println(mapGraph->getCurrentNode()->toString());
+  driveController->forwardToIntersection();
+  //printIntersectionData();
 }
 
 void printIntersectionData() {
@@ -70,10 +76,10 @@ void printIntersectionData() {
 
 /*
  * Coded by Catherine, Colton
- * Commented code with "//" - is asumming we do not need 
+ * Commented code with "//" - is asumming we do not need
  *                            but might need in the future
  * CHECK delay(1000) - is this the correct parameters?
- *                     delay is there for the robot to move 
+ *                     delay is there for the robot to move
  *                       inside the colored box
  */
  /*
@@ -83,7 +89,7 @@ void round3() {
   time_t endTime = 480 + startTime; //time for 8 seconds
 
 
-  //Start at yellow box 
+  //Start at yellow box
   //assuming it is align with the y1 box:
   driveController->forwardToIntersection();
  /// driv6eController->turn45();
@@ -346,7 +352,7 @@ void round1(){
 
   //---------------------------------------------------
   //          GO AROUND SQUARE 4 PHRASE
-  
+
   ///Go to y4
   driveController->forwardToIntersection();
   tokenController->pickUpToken();
@@ -377,7 +383,7 @@ void round1(){
   tokenController->pickUpToken();
 
   //check if can drop off CYAN tokens
-  if(mapGraph->getNumTokens(cyan) == 2){ 
+  if(mapGraph->getNumTokens(cyan) == 2){
     driveController->turn45(false,1);
     for (int i = 0; i < 4; i++) {
       driveController->forwardToIntersection();
@@ -400,7 +406,7 @@ void round1(){
   tokenController->pickUpToken();
 
   //check if we can drop off RED tokens
-  if(mapGraph->getNumTokens(red) == 2){ 
+  if(mapGraph->getNumTokens(red) == 2){
     driveController->turn45(false,1);
     for (int i = 0; i < 4; i++) {
       driveController->forwardToIntersection();
@@ -464,7 +470,7 @@ void round1(){
 
   ///go to y4
   driveController->forwardToIntersection();
-  
+
   //---------------------------------------------------
   //          GO AROUND SQUARE 2 PHRASE
 
@@ -479,11 +485,11 @@ void round1(){
     driveController->turn45(false,1);
     driveController->forwardToIntersection();
     driveController->forwardToIntersection();
-    
+
     driveController->move(FWD);
     delay(1000);
     driveController->stop();
-    
+
     tokenController->depositTokens(yellow);
     driveController->turn45(false,4);
     driveController->forwardToIntersection();
@@ -537,8 +543,8 @@ void round1(){
   }
 
 
-  
-  
+
+
 }
 
 /*

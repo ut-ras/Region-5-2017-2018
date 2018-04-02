@@ -25,6 +25,6 @@ long time = micros();
 //time how long the input is HIGH, but quit after 3ms as nothing happens after that
 while (digitalRead(QRE1113_Pin) == HIGH && micros() - time < 3000);
 int diff = micros() - time;
-Serial.println(diff);
-return (diff >= 175 && diff < 300 || diff > 650);
+//Serial.println("pointline time diff" + String(diff));
+return !(diff >= 175 && diff < 300 || diff > 650);
 }
