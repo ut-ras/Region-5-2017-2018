@@ -611,10 +611,10 @@ void round1(){
     driveController->forwardToIntersection();
   }
 
-  driveController->turn45(false, 2);
+  driveController->turn45(false, 2);  //probably replace with turnTo(2);
 
   //---------------------------------------------------
-  //          GO AROUND SQUARE 4 PHRASE
+  //          GO AROUND SQUARE 4 PHASE
 
   ///Go to y4
   driveController->forwardToIntersection();
