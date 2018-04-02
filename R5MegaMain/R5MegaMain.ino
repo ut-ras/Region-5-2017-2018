@@ -352,9 +352,145 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
     }
   }
 }
- /*
-void round3() {
+
+void round1(){
+  int inventory[7];
+//  time_t startTime = second();
+ // time_t endTime = 300 + startTime; //5 minutes
+ 
+  //Start at White Box closest to the yellow
+  for (int i = 0; i < 5; i++) {
+    driveController->forwardToIntersection();
+  }
+
+  driveController->turn45(false, 2);  //probably replace with turnTo(2);
+
+  ///Go to y4
+  driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
+  driveController->turn45(false,1);
+
+  //move to next level square
+  driveController->forwardToIntersection();
+  driveController->forwardToIntersection();
+  
+  blue2yellow(true);
+
+  //check if we can drop off YELLOW tokens
+  if (mapGraph->getNumTokens(yellow) == 2) {
+    dropOffTokens(yellow);
+  }
+
+  yellow2magenta(true);
+  
+  if (mapGraph->getNumTokens(magenta) == 2) {
+    dropOffTokens(magenta);
+  }
+  magenta2cyan(true);
+ 
+  if(mapGraph->getNumTokens(cyan) == 2) {
+    dropOffTokens(cyan);
+  }
+  cyan2red(true);
+
+  if(mapGraph->getNumTokens(red) == 2) {
+    dropOffTokens(red);
+  }
+  red2green(true);
+
+  if(mapGraph->getNumTokens(green) == 2) {
+    dropOffTokens(green);
+  }
+  green2blue(true);
+  if(mapGraph->getNumTokens(blue) == 2) {
+    dropOffTokens(blue);
+  }
+
+}
+
+void round2(){
 	int inventory[6];
+  //time_t startTime = second();
+  //time_t endTime = 360 + startTime;
+
+  //Start at White Box closest to the yellow
+  for (int i = 0; i < 5; i++) {
+    driveController->forwardToIntersection();
+  }
+
+  driveController->turn45(false, 2);
+
+  ///Go to y4
+  driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+
+  ///begin picking up in tokens in 2-foot square
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
+  
+  //move to 3-foot square
+  driveController->turn45(false,1);
+  driveController->forwardToIntersection();
+
+  //begin picking up tokens in 3-foot square
+  blue2yellow(true);
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
+
+  //move to 4-foot square
+  driveController->turn45(false,1);
+  driveController->forwardToIntersection();
+  
+  //begin picking up tokens in 4-foot square
+  blue2yellow(true);
+
+  //check if we can drop off YELLOW tokens
+  if (mapGraph->getNumTokens(yellow) == 2) {
+    dropOffTokens(yellow);
+  }
+
+  yellow2magenta(true);
+  
+  if (mapGraph->getNumTokens(magenta) == 2) {
+    dropOffTokens(magenta);
+  }
+  magenta2cyan(true);
+ 
+  if(mapGraph->getNumTokens(cyan) == 2) {
+    dropOffTokens(cyan);
+  }
+  cyan2red(true);
+
+  if(mapGraph->getNumTokens(red) == 2) {
+    dropOffTokens(red);
+  }
+  red2green(true);
+
+  if(mapGraph->getNumTokens(green) == 2) {
+    dropOffTokens(green);
+  }
+  green2blue(true);
+  if(mapGraph->getNumTokens(blue) == 2) {
+    dropOffTokens(blue);
+  }
+  
+} 
+
+/*
+void round3() {
+  int inventory[6];
   time_t startTime = second();
   time_t endTime = 480 + startTime; //time for 8 seconds
 
@@ -366,22 +502,22 @@ void round3() {
   driveController->forwardToIntersection();
 
   //collect across diagonal going from yellow to red
-	for(int i = 0; i < 4; i++){
-		driveController->forwardToIntersection();
-		tokenController->pickUpToken();
+  for(int i = 0; i < 4; i++){
+    driveController->forwardToIntersection();
+    tokenController->pickUpToken();
     //assuming Map is updated
-	}
+  }
 
   //Cross grey box
-	driveController->move(FWD);
+  driveController->move(FWD);
   delay(1000);
   driveController->stop();
 
   //Continue to r1
-	for(int i = 0; i < 4; i++){
-		driveController->forwardToIntersection();
-		tokenController->pickUpToken();
-	}
+  for(int i = 0; i < 4; i++){
+    driveController->forwardToIntersection();
+    tokenController->pickUpToken();
+  }
 
   //At Red box, check if should drop off RED tokens
   if(mapGraph->getNumTokens(red) == 2){
@@ -594,147 +730,6 @@ void round3() {
 
 }
  */
-
-void round2(){
-	int inventory[6];
-  //time_t startTime = second();
-  //time_t endTime = 360 + startTime;
-
-  //Start at White Box closest to the yellow
-  for (int i = 0; i < 5; i++) {
-    driveController->forwardToIntersection();
-  }
-
-  driveController->turn45(false, 2);
-
-  //---------------------------------------------------
-  //          GO AROUND SQUARE 4 PHRASE
-
-  ///Go to y4
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  ///begin picking up in tokens in 2-foot square
-  yellow2magenta(true);
-  magenta2cyan(true);
-  cyan2red(true);
-  red2green(true);
-  green2blue(true);
-  
-  //move to 3-foot square
-  driveController->turn45(false,1);
-  driveController->forwardToIntersection();
-
-  //begin picking up tokens in 3-foot square
-  blue2yellow(true);
-  yellow2magenta(true);
-  magenta2cyan(true);
-  cyan2red(true);
-  red2green(true);
-  green2blue(true);
-
-  //move to 4-foot square
-  driveController->turn45(false,1);
-  driveController->forwardToIntersection();
-  
-  //begin picking up tokens in 4-foot square
-  blue2yellow(true);
-
-  //check if we can drop off YELLOW tokens
-  if (mapGraph->getNumTokens(yellow) == 2) {
-    dropOffTokens(yellow);
-  }
-
-  yellow2magenta(true);
-  
-  if (mapGraph->getNumTokens(magenta) == 2) {
-    dropOffTokens(magenta);
-  }
-  magenta2cyan(true);
- 
-  if(mapGraph->getNumTokens(cyan) == 2) {
-    dropOffTokens(cyan);
-  }
-  cyan2red(true);
-
-  if(mapGraph->getNumTokens(red) == 2) {
-    dropOffTokens(red);
-  }
-  red2green(true);
-
-  if(mapGraph->getNumTokens(green) == 2) {
-    dropOffTokens(green);
-  }
-  green2blue(true);
-  if(mapGraph->getNumTokens(blue) == 2) {
-    dropOffTokens(blue);
-  }
-  
-} 
-
-void round1(){
-	int inventory[7];
-//  time_t startTime = second();
- // time_t endTime = 300 + startTime; //5 minutes
- 
-  //Start at White Box closest to the yellow
-  for (int i = 0; i < 5; i++) {
-    driveController->forwardToIntersection();
-  }
-
-  driveController->turn45(false, 2);  //probably replace with turnTo(2);
-
-  //---------------------------------------------------
-  //          GO AROUND SQUARE 4 PHASE
-
-  ///Go to y4
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  yellow2magenta(true);
-  magenta2cyan(true);
-  cyan2red(true);
-  red2green(true);
-  green2blue(true);
-  driveController->turn45(false,1);
-
-  //move to next level square
-  driveController->forwardToIntersection();
-  driveController->forwardToIntersection();
-  
-  blue2yellow(true);
-
-  //check if we can drop off YELLOW tokens
-  if (mapGraph->getNumTokens(yellow) == 2) {
-    dropOffTokens(yellow);
-  }
-
-  yellow2magenta(true);
-  
-  if (mapGraph->getNumTokens(magenta) == 2) {
-    dropOffTokens(magenta);
-  }
-  magenta2cyan(true);
- 
-  if(mapGraph->getNumTokens(cyan) == 2) {
-    dropOffTokens(cyan);
-  }
-  cyan2red(true);
-
-  if(mapGraph->getNumTokens(red) == 2) {
-    dropOffTokens(red);
-  }
-  red2green(true);
-
-  if(mapGraph->getNumTokens(green) == 2) {
-    dropOffTokens(green);
-  }
-  green2blue(true);
-  if(mapGraph->getNumTokens(blue) == 2) {
-    dropOffTokens(blue);
-  }
-
-}
 
 /*
 void forwardToIntersection(){
