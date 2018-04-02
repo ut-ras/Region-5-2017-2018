@@ -14,7 +14,7 @@
 #define down false
 //Pulley waits
 #define funnelHeightWait 500
-#define fullHeighWait 2000
+#define fullHeighWait 1500
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
@@ -43,7 +43,7 @@
 //Public
 
 tokenControl::tokenControl(Graph * m) {
-	//colourSensor = new rgbsensor;
+	colourSensor = new rgbsensor;
     diskController = new stepper(stepPin, dirPin);
     pulleyController = new r5servo();
     pulleyController->init(servoPin);
@@ -58,7 +58,8 @@ int tokenControl::pickUpToken() {
     delay(pickupTime);
     moveToField(resting);
     //Reads token colour and if there is no token returns the electromagnet
-    int colour = Color::magenta;
+    //int colour = Color::magenta;
+    int colour = readColour();
     if(colour == Color::grey)
         return colour;
 
@@ -66,10 +67,17 @@ int tokenControl::pickUpToken() {
     rotateDiskToColor(colour);
     depositInFunnel();
     resetDisk(colour);
+
+    mapGraph->addToken(colour);
     return colour;
 }
 
-void tokenControl::depositTokens(int c) {
+void tokenControl::depositAllTokens(int c) {
+    while(mapGraph->getNumTokens(c) > 0)
+        depositOneToken(c);
+}
+
+void tokenControl::depositOneToken(int c){
     //Moves to the correct funnel and picks up all the tokens
     rotateDiskToColor(c);
     pickupFromFunnel();
@@ -77,6 +85,9 @@ void tokenControl::depositTokens(int c) {
     //Moves token to center then deposits the tokens
     resetDisk(c);
     depositInTube();
+
+    //mapGraph->removeToken(c);
+
 }
 
 void tokenControl::goToEveryColour(){
@@ -133,7 +144,7 @@ void tokenControl::rotateDiskFromSensor(int c){
 int tokenControl::readColour(){
 	int colour = 0;
 	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
-	//colour = colourSensor->getColour();
+	colour = colourSensor->getColor();
 	return colour;
 }
 

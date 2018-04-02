@@ -31,10 +31,16 @@ public:
     int pickUpToken();
 
     /* Picks up from the funnel and
-     * deposits onto the field, the
+     * deposits onto the field, all
      * tokens of the input colour c.
      */
-    void depositTokens(int c);
+    void depositAllTokens(int c);
+
+    /* Picks up from the funnel and
+     * deposits onto the field, one
+     * tokens of the input colour c.
+     */
+    void depositOneToken(int c);
 
     //****TEST FUNCTIONS***
     //Rotates the disk to each colour then resets
@@ -85,6 +91,6 @@ private:
     r5servo *pulleyController;
     stepper *diskController;
     magnet *magnetController;
-    //rgbsensor *colourSensor;
+    rgbsensor *colourSensor;
 };
 #endif
