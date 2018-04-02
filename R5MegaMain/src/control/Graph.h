@@ -20,8 +20,11 @@ public:
 	Graph();
 
   //token storage information
-  int getNumTokens(int c);  //c is Color
-  int addToken(int c);    //c is Color
+  //Getters and setters for token storage
+  //c = colour	
+  int getNumTokens(int c);  
+  void addToken(int c);    
+  void removeToken(int c); 
 
 	Node* getNode(Name n);  	//n is Name
   Node* getNeighbor(Node *n, int direction);

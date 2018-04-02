@@ -48,6 +48,21 @@ Node* Graph::getNode(Name n) {
 	return iterator[n];
 }
 
+
+//*****Token Counters*****
+
+void Graph::addToken(int c){
+  numTokens[c]++;
+}
+
+void Graph::removeToken(int c){
+  numTokens[c]--;
+}
+
+int Graph::getNumTokens(int c){
+  return numTokens[c];
+}
+
 /* BEAST of a function to create the entire map:
    	- Map stored as hashmap between node and adjacency list (array)
     - Nodes also stored in array by name enum (index) for quick iteration
