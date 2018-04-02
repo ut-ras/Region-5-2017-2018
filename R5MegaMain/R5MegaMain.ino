@@ -95,7 +95,7 @@ void dropOffTokens(int color) {
   driveController->move(FWD);
   delay(1000);
   driveController->stop();
-  tokenController->depositTokens(color);
+  tokenController->depositAllTokens(color);
   int dir2Node = dir2Box - 4;                         //go back the direction opposite the one we came in
   dir2Node = (dir2Node < 0)? dir2Node + 8 : dir2Node; //make sure to wrap around to 7 if we go negative
   driveController->turnTo(dir2Node);
@@ -352,7 +352,7 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
     }
   }
 }
- 
+ /*
 void round3() {
 	int inventory[6];
   time_t startTime = second();
@@ -496,6 +496,7 @@ void round3() {
   delay(1000);
   driveController->stop();
   tokenController->depositTokens(blue);
+}
 
   //get back to b1
   driveController->turn45(true,4);
@@ -599,20 +600,12 @@ void round2(){
   time_t startTime = second();
   time_t endTime = 360 + startTime;
 } */
-/*
+
 void round1(){
 	int inventory[7];
-  time_t startTime = second();
-  time_t endTime = 300 + startTime; //5 minutes
-
-  //start off at white box
-  //go to the square that's closest to the gray box
-  //go around said box and pick up tokens
-
-  //once you hit y4 go to y2, traverse around the square
-  //once you hit each's color's edge 2, check if we can despoit
-  //after going once, if enough time deposit last tokens that nearest to you
-
+//  time_t startTime = second();
+ // time_t endTime = 300 + startTime; //5 minutes
+ 
   //Start at White Box closest to the yellow
   for (int i = 0; i < 5; i++) {
     driveController->forwardToIntersection();
@@ -627,193 +620,48 @@ void round1(){
   driveController->forwardToIntersection();
   tokenController->pickUpToken();
 
-  //Go to m4
-  driveController->turn45(true,2);
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  //can we drop coins at MAGENTA
-  if(mapGraph->getNumTokens(magenta) == 2){
-    driveController->turn45(false,2);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-    tokenController->depositTokens(magenta);
-    driveController->turn45(false,4);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->turn45(false,2);
-  }
-
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  //check if can drop off CYAN tokens
-  if(mapGraph->getNumTokens(cyan) == 2){
-    driveController->turn45(false,1);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-    tokenController->depositTokens(cyan);
-    driveController->turn45(false,4);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->turn45(false,1);
-  } else {
-    driveController->turn45(true,2);
-  }
-
-  //go to r4
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  //check if we can drop off RED tokens
-  if(mapGraph->getNumTokens(red) == 2){
-    driveController->turn45(false,1);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-    tokenController->depositTokens(red);
-    driveController->turn45(false,4);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->turn45(false,1);
-  } else {
-    driveController->turn45(true,2);
-  }
-
-  //go to g4
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  //check if we can drop off GREEN tokens
-  if (mapGraph->getNumTokens(green) == 2) {
-    driveController->turn45(false,2);
-    for (int i = 0; i < 4; i++) {
-       driveController->forwardToIntersection();
-    }
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-    tokenController->depositTokens(green);
-    driveController->turn45(false,4);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->turn45(false,2);
-  }
-
-  //go to b4
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  //check if we can drop off BLUE tokens
-  if (mapGraph->getNumTokens(blue) == 2) {
-    driveController->turn45(false,2);
-    for (int i = 0; i < 4; i++) {
-       driveController->forwardToIntersection();
-    }
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-    tokenController->depositTokens(magenta);
-    driveController->turn45(false,4);
-    for (int i = 0; i < 4; i++) {
-      driveController->forwardToIntersection();
-    }
-    driveController->turn45(false,1);
-  }  else {
-    driveController->turn45(true,2);
-  }
-
-  ///go to y4
-  driveController->forwardToIntersection();
-
-  //---------------------------------------------------
-  //          GO AROUND SQUARE 2 PHRASE
-
-  //go to y2
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
   driveController->turn45(false,1);
+
+  //move to next level square
   driveController->forwardToIntersection();
   driveController->forwardToIntersection();
-  tokenController->pickUpToken();
+  
+  blue2yellow(true);
 
   //check if we can drop off YELLOW tokens
   if (mapGraph->getNumTokens(yellow) == 2) {
-    driveController->turn45(false,1);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-
-    tokenController->depositTokens(yellow);
-    driveController->turn45(false,4);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-    driveController->turn45(false,1);
-  } else {
-    driveController->turn45(true,2);
+    dropOffTokens(yellow);
   }
 
-
-  //go to m2
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  if (mapGraph0>getNumTokens(magenta) >= 2) {
-    driveController->turn45(false,2);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-
-    tokenController->depositTokens(magenta);
-    driveController->turn45(false,4);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-    driveController->turn45(false,2);
+  yellow2magenta(true);
+  
+  if (mapGraph->getNumTokens(magenta) == 2) {
+    dropOffTokens(magenta);
   }
-
-  //go to cyan2
-  driveController->forwardToIntersection();
-  tokenController->pickUpToken();
-
-  if (mapGraph0>getNumTokens(cyan) >= 2) {
-    driveController->turn45(false,1);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-
-    driveController->move(FWD);
-    delay(1000);
-    driveController->stop();
-
-    tokenController->depositTokens(magenta);
-    driveController->turn45(false,1);
-    driveController->forwardToIntersection();
-    driveController->forwardToIntersection();
-    driveController->turn45(false,2);
-  } else {
-    driveController->turna45(true,2);
+  magenta2cyan(true);
+ 
+  if(mapGraph->getNumTokens(cyan) == 2) {
+    dropOffTokens(cyan);
   }
+  cyan2red(true);
 
+  if(mapGraph->getNumTokens(red) == 2) {
+    dropOffTokens(red);
+  }
+  red2green(true);
 
-
+  if(mapGraph->getNumTokens(green) == 2) {
+    dropOffTokens(green);
+  }
+  green2blue(true);
+  if(mapGraph->getNumTokens(blue) == 2) {
+    dropOffTokens(blue);
+  }
 
 }
 
