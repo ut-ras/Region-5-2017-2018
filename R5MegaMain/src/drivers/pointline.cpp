@@ -18,7 +18,7 @@ bool pointline::getValue() {
   pinMode( QRE1113_Pin, OUTPUT );
   digitalWrite( QRE1113_Pin, HIGH );
   delayMicroseconds(10);
-  pinMode( QRE1113_Pin, INPUT_PULLUP);
+  pinMode( QRE1113_Pin, INPUT);
 
   long time = micros();
 
