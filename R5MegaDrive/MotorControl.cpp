@@ -13,8 +13,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  r_Motor = AFMS->getMotor(4);
-  l_Motor = AFMS->getMotor(3);
+  r_Motor = AFMS->getMotor(3);
+  l_Motor = AFMS->getMotor(4);
 
   //Serial.println("AFMS init");
 
@@ -296,7 +296,7 @@ void MotorControl::setMotorMode(int c) {
 
 }
 
-void MotorControl::serialDebugOutput(bool plotter) {
+void MotorControl::serialDebugOutput(boolean plotter) {
   if (plotter) {
     //Serial.println(int(l_EncoderSpeed));
     Serial.print(int(r_EncoderSpeed));

@@ -25,7 +25,7 @@ void setup() {
 
   Wire.begin();
 
-  delay(5000);
+  delay(3000);
   //testTokenControl();
   printIntersectionData();
   //testDriveControl();
@@ -35,7 +35,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
+  Blink();
 }
 
 //debugging gui
@@ -44,7 +44,7 @@ void serialEvent() {
     // get the new byte:
     char inChar = (char)Serial.read();
     if ((inChar >= 0) && (inChar <= STOP)) {
-      driveController->sendCommand(inChar);
+      driveController->sendCommand(inChar - 0x30);
     }
   }
 }

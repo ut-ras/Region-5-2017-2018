@@ -22,9 +22,10 @@ void setup() {
   Serial.begin(9600);  // start serial for testing outputs
   delay(1000);
 
-  //Serial.println("welcome to this test");
+  Serial.println("welcome to this test");
 
   initMotorControl();
+  Serial.println("setup i2c");
   initI2c();
 
   //these will halt the program and print best values when done
@@ -82,7 +83,7 @@ void initI2c() {
 
 void initMotorControl() {
   m = new MotorControl(ENCODER_L_A, ENCODER_L_B, ENCODER_R_A, ENCODER_R_B);
-
+  Serial.println("created motor control");
   m->setMotorMode(STOP);
 
   leftEncoder = m->getLeftEncoder();
