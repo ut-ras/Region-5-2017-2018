@@ -19,6 +19,8 @@ intersectionSensors::intersectionSensors(Graph * mapGraph, int l0pin, int l1pin,
     dataRedNorth[5] = createPointlineData(1, 1, 1, 0, 1, 0);
     dataRedNorth[6] = createPointlineData(0, 1, 1, 1, 0, 0);
     dataRedNorth[7] = createPointlineData(0, 0, 1, 0, 0, 1);
+
+    //dataRedBox = new pointlineData[8];
 }
 
 pointlineData intersectionSensors::getData() {
@@ -37,9 +39,9 @@ pointlineData intersectionSensors::getNextIntersection() {
   Color intersectionType = neighbor->getMapColor();
   pointlineData nextData;
 
-  if( neighbor->getName() % 6 == 0 )
-    nextData = getPointLineForBox(intersectionType);
-  else
+  //if( neighbor->getName() % 6 == 0 )
+    //nextData = getPointLineForBox(intersectionType);
+  //else
     nextData = getPointlineFor(intersectionType, map->getCurrentDirection());
 
   return nextData;
@@ -86,6 +88,7 @@ pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
   //also need something for drop off zones
 }
 
+/*
 pointlineData intersectionSensors::getPointlineForBox(Color c) {
     int offset, index;
   if ((intersectionType == red) || (intersectionType == cyan) || (intersectionType == yellow) || (intersectionType == blue)) {
@@ -111,7 +114,7 @@ pointlineData intersectionSensors::getPointlineForBox(Color c) {
   }
 
   //also need something for drop off zones
-}
+}*/
 
 pointlineData intersectionSensors::createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2) {
   pointlineData d;
