@@ -38,8 +38,9 @@ public:
   void setCurrentLocationForTest(int name, int dir);
 
   void testSendCommand();
-private:
   void sendCommand(uint8_t command);
+
+private:
 
   Graph * mapGraph;
   intersectionSensors * linesensors;

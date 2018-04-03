@@ -24,8 +24,8 @@ Node::Node(Name n, Color mc) {
   visited = false;
   isNullNode = false;
   tokenColor = unknown;
-  
-  mapColor = mc;  
+
+  mapColor = mc;
 	setName(n);
 }
 
@@ -61,9 +61,12 @@ char* Node::toString() {
 	char s[40] = "";
 
   if (isNull()) {
+    strcat(s, "[");
     strcat(s, nameToString());
+    strcat(s, "]");
   }
   else {
+    strcat(s, "[");
 	  strcat(s, colorToChar(mapColor));
     char d[2];
     itoa(depth, d, 10);
@@ -72,6 +75,7 @@ char* Node::toString() {
     strcat(s, (visited? "t" : "f"));
     strcat(s, ":");
     strcat(s, colorToChar(tokenColor));
+    strcat(s, "]");
   }
 
 	return s;
@@ -108,4 +112,3 @@ char* Node::nameToString() {
   }
 	return nameTable[name];
 }
-
