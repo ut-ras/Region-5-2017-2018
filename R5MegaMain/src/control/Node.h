@@ -46,10 +46,8 @@ class Node
 		Node* adjList;
 
 		bool isNullNode;
-
-
-
-
+		int x;
+		int y;
 };
 
 #endif
