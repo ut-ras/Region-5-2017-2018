@@ -6,9 +6,9 @@
 //Distance from max height to ground - 10->5in
 #define maxHeight 180
 //Distance to fall into the funnel - 5in
-#define funnelHeight 162
+#define funnelHeight 160
 //Resting position
-#define  resting 157
+#define  resting 155
 //Sets the direction of the magnet
 #define up true
 #define down false
@@ -59,7 +59,8 @@ int tokenControl::pickUpToken() {
     moveToField(resting);
     //Reads token colour and if there is no token returns the electromagnet
     //int colour = Color::magenta;
-    int colour = readColour();
+    //int colour = readColour();
+    int colour = magenta;
     if(colour == Color::grey)
         return colour;
 

@@ -11,7 +11,7 @@ protected:
   Node* iterator[NUMBER_OF_NODES];  //list of all nodes, in order of Node Name enum
 	Node* adj[NUMBER_OF_NODES][8];    //adjacency lists for each node, in order of Node Name enum
 
-	int numTokens[7];   //token storage information
+	int numTokens[7] = {0};   //token storage information
 
 	Node* currentNode;    //currrent location
 	int currentDirection;	//integer 0-7 to determine the current direction of the bot. 0=north, 1=NE, etc
