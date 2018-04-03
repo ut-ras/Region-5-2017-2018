@@ -55,7 +55,7 @@ public class Robot_GUI extends Application {
                                {235,450} }; // bottom white
     
     
-    int increment = 31;
+    final int INCREMENT = 31;
    
     // huge layout map, used to determine direction
     String[][] grid = { {"R0",   "",   "",   "",   "",   "", "TW",  "",   "",   "",   "",   "", "C0"},
@@ -79,7 +79,11 @@ public class Robot_GUI extends Application {
                                     {420, 50}, // cyan 
                                     {420, 235}, // magenta
                                     {420, 420}, // yellow
-    };
+                                 };
+
+    // terrible workaround for terrible Serial comm stuff
+    String currentCommand;
+    boolean commandInProgress;
     
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -157,46 +161,102 @@ public class Robot_GUI extends Application {
 
         list.add(robot);
         
-        serialPort.addDataListener(new SerialPortPacketListener() {
-            @Override
-            public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_RECEIVED; }
-            
-            @Override
-            public int getPacketSize() { return 6; }
-          
-           @Override
-           public void serialEvent(SerialPortEvent event)
-           {             
-                byte[] newData = event.getReceivedData();
+        // Old serial reading method - used fixed length packets, not flexible with other data
 
-                System.out.println("\nPACKET READ: " + newData.length);
-                StringBuilder str = new StringBuilder();
-                for (int i = 0; i < newData.length; ++i) {
-                      System.out.print((char)newData[i]);
-                      str.append((char)newData[i]);
-                }
-                System.out.println();
+        //serialPort.addDataListener(new SerialPortPacketListener() {
+           //  @Override
+           //  public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_RECEIVED; }
+            
+           //  @Override
+           //  public int getPacketSize() { return 6; }
+          
+           // @Override
+           // public void serialEvent(SerialPortEvent event)
+           // {             
+           //      byte[] newData = event.getReceivedData();
+
+           //      System.out.println("\nPACKET READ: " + newData.length);
+           //      StringBuilder str = new StringBuilder();
+           //      for (int i = 0; i < newData.length; ++i) {
+           //            System.out.print((char)newData[i]);
+           //            str.append((char)newData[i]);
+           //      }
+           //      System.out.println();
                 
-                String command = str.toString();
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        newParseCommand(command, robot, list);
-                        list.clear();
-                        setText(list);
-                        list.add(background);
-                        list.add(robot);
-                        list.add(pathToText());
-                        list.add(sendButton);
-                        list.add(textField);
-                        list.add(commandInstr);
-                        if (path.size() == 1) 
-                            list.add(getDirection("BW", path.get(0)));
-                        else
-                            list.add(getDirection(path.get(path.size()-2), path.get(path.size()-1)));
+           //      String command = str.toString();
+           //      Platform.runLater(new Runnable() {
+           //          @Override
+           //          public void run() {
+                        // newParseCommand(command, robot, list);
+                        // list.clear();
+                        // setText(list);
+                        // list.add(background);
+                        // list.add(robot);
+                        // list.add(pathToText());
+                        // list.add(sendButton);
+                        // list.add(textField);
+                        // list.add(commandInstr);
+                        // if (path.size() == 1) 
+                        //     list.add(getDirection("BW", path.get(0)));
+                        // else
+                        //     list.add(getDirection(path.get(path.size()-2), path.get(path.size()-1)));
+                        // }
+           //       });           
+           //  }
+
+            // New serial reading method - can read anything and pick out the commands
+
+            serialPort.addDataListener(new SerialPortDataListener() {
+               public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_AVAILABLE; }
+
+               @Override
+               public void serialEvent(SerialPortEvent event)
+               {
+                    if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
+                        return;
+                    byte[] newData = new byte[serialPort.bytesAvailable()];
+                    int numRead = serialPort.readBytes(newData, newData.length);
+                    String data = new String (newData);
+                    System.out.print(data);
+                    //System.out.println("Read " + numRead + " bytes.");
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (int i = 0; i < data.length(); i++) {
+                                if (data.charAt(i) == '[') {
+                                    commandInProgress = true;
+                                    currentCommand = new String("");
+                                }
+                                else {
+                                    if (data.charAt(i) == ']') { // We have a command!
+                                        commandInProgress = false;
+                                        parseCommand(currentCommand, robot, list);
+                                        list.clear();
+                                        setText(list);
+                                        list.add(background);
+                                        list.add(robot);
+                                        list.add(pathToText());
+                                        list.add(sendButton);
+                                        list.add(textField);
+                                        list.add(commandInstr);
+                                        if (path.size() == 1) 
+                                            list.add(getDirection("BW", path.get(0)));
+                                        else
+                                            list.add(getDirection(path.get(path.size()-2), path.get(path.size()-1)));
+                                    }
+
+                                    else {
+                                        if (commandInProgress) {
+                                            currentCommand += data.charAt(i) + "";
+                                        }
+                                    }
+                                }
+
+                            }
                         }
-                 });           
-            }
+                    });
+                }
         });
             
         
@@ -243,6 +303,8 @@ public class Robot_GUI extends Application {
         return dirText;
     }
     
+    // get the coordinates of the node in the array
+    // used to determine direction
     private int[] getLayoutCoordinates (String node) {
         
         for (int r = 0; r < grid.length; r++) {
@@ -255,6 +317,7 @@ public class Robot_GUI extends Application {
         return new int[] {-1, -1};
     }
     
+    // builds the path string in a hopefully efficient way
     private Text pathToText() {
         StringBuilder str = new StringBuilder();
         str.append("Nodes Visited: [ ");
@@ -274,10 +337,10 @@ public class Robot_GUI extends Application {
         return pathText;
     }
     
-    /* <name:visited:tokenColor>
-       <R1:t:R>
+    /* [name:visited:tokenColor]
+       [R1:t:R]
     */
-    private void newParseCommand (String command, ImageView robot, ObservableList list) {
+    private void parseCommand (String command, ImageView robot, ObservableList list) {
         char color = command.charAt(0);
         char depth = command.charAt(1);
         
@@ -285,17 +348,17 @@ public class Robot_GUI extends Application {
         
         path.add(node);
         moveToIntersection(node, robot);
-        System.out.println("Moved to " + node);
+        System.out.println("\n\n\tMoved to " + node);
         
         char tokenColor = command.charAt(5);
         
         int tokenIndex = colorToIndex(tokenColor);
         tokenInventory[tokenIndex]++;
         tokenTotal++;
-        System.out.println("Picked up token color " + tokenColor);
+        System.out.println("\tPicked up token color " + tokenColor + "\n");
     }
     
-    
+    // Make the robot exist in the GUI
     private ImageView initRobot() {
         ImageView robot = new ImageView(new Image("file:../reddot.png"));
         
@@ -311,6 +374,7 @@ public class Robot_GUI extends Application {
         return robot;
     }
     
+    // calculate coordinates and update robot's position in GUI
     private void moveToIntersection (String node, ImageView robot) {
         char color = node.charAt(0);
         int depth = 0;
@@ -322,26 +386,26 @@ public class Robot_GUI extends Application {
             depth = -1;
         
         if (color == 'R'){
-            x += increment * depth;
-            y += increment * depth;
+            x += INCREMENT * depth;
+            y += INCREMENT * depth;
         }
         if (color == 'G') {
-            x += increment * (depth);
+            x += INCREMENT * (depth);
         }
         if (color == 'B'){
-            x += increment * depth;
-            y -= increment * depth;
+            x += INCREMENT * depth;
+            y -= INCREMENT * depth;
         }
         if (color == 'C'){
-            x -= increment * depth;
-            y += increment * depth;
+            x -= INCREMENT * depth;
+            y += INCREMENT * depth;
         }
         if (color == 'M') {
-            x -= increment * (depth);
+            x -= INCREMENT * (depth);
         }
         if (color == 'Y'){
-            x -= increment * depth;
-            y -= increment * depth;
+            x -= INCREMENT * depth;
+            y -= INCREMENT * depth;
         }
         
         
@@ -350,6 +414,7 @@ public class Robot_GUI extends Application {
         
     }
     
+    // Make background exist
     private ImageView loadBackground () {
         Image image = new Image("file:../playingfield.png");  
       
@@ -370,6 +435,7 @@ public class Robot_GUI extends Application {
       return imageView;
     }
     
+    // Possibly unused???
     private void pickupToken (char color) {
         int index = colorToIndex (color);
         tokenInventory[index]++;
@@ -377,6 +443,7 @@ public class Robot_GUI extends Application {
         
     }
 
+    // make the serial port exist
     private SerialPort initPort() {
         SerialPort[] ports = SerialPort.getCommPorts();
         System.out.println("Select a port:");
@@ -396,6 +463,7 @@ public class Robot_GUI extends Application {
         return serialPort;
     }
     
+    // takes the char color, converts to index that is hopefully used in all GUI stuff
     private int colorToIndex(char color) {
         int index = -1;
         switch (color) {
@@ -428,6 +496,7 @@ public class Robot_GUI extends Application {
         return index;
     }
     
+    // make all the text for token inventory exist
     private void setText (ObservableList list) {
         texts[0] = new Text();
         texts[0].setFont(new Font(24));

@@ -9,9 +9,10 @@ javac -cp ".:../jars/jSerialComm-1.3.11.jar" Robot_GUI.java
 To run:
 java -cp ".:../jars/jSerialComm-1.3.11.jar" Robot_GUI
 
-This GUI only works with data in the format of the node.toString() method.
-This must be the ONLY data sent over Serial.
-Each data packet must be exactly 6 characters long with NO newline character or any delimiter.
+This GUI accepts commands in the format of the node.toString() method.
+It ignores anything else printed to Serial.
 
-<intersectionName:visited:tokenColor>
-ex. Y3:f:U 
+It can also write ints to Serial, however this functionality is untested.
+
+[intersectionName:visited:tokenColor]
+ex. [Y3:f:U] 
