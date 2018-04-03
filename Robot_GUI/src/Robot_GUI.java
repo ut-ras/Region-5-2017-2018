@@ -130,6 +130,32 @@ public class Robot_GUI extends Application {
 //                }
 //             } 
 //        };
+
+        TextField textField = new TextField();
+        textField.setLayoutX(520); 
+        textField.setLayoutY(460);
+        list.add(textField);
+
+        Button sendButton = new Button("Send");
+        sendButton.setLayoutX(700);
+        sendButton.setLayoutY(460);
+        sendButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override 
+            public void handle(ActionEvent e)  {
+                int command = Integer.parseInt(textField.getText());
+
+                try(OutputStream out = serialPort.getOutputStream()) {
+                    out.write(command);
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                textField.clear();
+            }
+        });
+        list.add(sendButton);
+
+        list.add(robot);
         
         serialPort.addDataListener(new SerialPortPacketListener() {
             @Override
@@ -161,6 +187,9 @@ public class Robot_GUI extends Application {
                         list.add(background);
                         list.add(robot);
                         list.add(pathToText());
+                        list.add(sendButton);
+                        list.add(textField);
+                        list.add(commandInstr);
                         if (path.size() == 1) 
                             list.add(getDirection("BW", path.get(0)));
                         else
@@ -170,31 +199,7 @@ public class Robot_GUI extends Application {
             }
         });
             
-        TextField textField = new TextField();
-        textField.setLayoutX(520); 
-        textField.setLayoutY(460);
-        list.add(textField);
-
-        Button sendButton = new Button("Send");
-        sendButton.setLayoutX(700);
-        sendButton.setLayoutY(460);
-        sendButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override 
-            public void handle(ActionEvent e)  {
-                int command = Integer.parseInt(textField.getText());
-
-                try(OutputStream out = serialPort.getOutputStream()) {
-                    out.write(command);
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                textField.clear();
-            }
-        });
-        list.add(sendButton);
-
-        list.add(robot);
+        
 
 
 //        background.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler); 
