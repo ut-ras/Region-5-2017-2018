@@ -28,8 +28,8 @@ void setup() {
   delay(5000);
   //testTokenControl();
   //testi2c();
-  //printIntersectionData();
-  testDriveControl();
+  printIntersectionData();
+  //testDriveControl();
 
 }
 
