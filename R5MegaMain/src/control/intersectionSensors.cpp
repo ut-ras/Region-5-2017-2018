@@ -128,7 +128,7 @@ pointlineData intersectionSensors::createPointlineData(int l0, int l1, int l2, i
 }
 
 char * intersectionSensors::PLDatatoString(pointlineData data) {
-  char s[40] = "";
+  char s[100] = "";
   strcat(s, data.l0?"[l0:1]":"[l0:0]");
   strcat(s, data.l1?"[l1:1]":"[l1:0]");
   strcat(s, data.l2?"[l2:1]":"[l2:0]");

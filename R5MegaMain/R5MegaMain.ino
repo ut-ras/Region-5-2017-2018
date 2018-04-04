@@ -84,7 +84,7 @@ void testDriveControl() {
 void setCurrentLocationForTest(int name, int dir) {
   mapGraph->setCurrentNode(mapGraph->getNode(name));
   mapGraph->setCurrentDirection(dir);
-  Serial.println("set node to " + String(mapGraph->getNode(name)->toString()));
+  Serial.println("set node to " + String(mapGraph->getNode(name)->toString())+ " set direction to " + String(mapGraph->getCurrentDirection()));
 }
 
 void printIntersectionData() {
