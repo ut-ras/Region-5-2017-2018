@@ -26,8 +26,8 @@ void setup() {
   Wire.begin();
 
   delay(3000);
-  //testTokenControl();
-  printIntersectionData();
+  testTokenControl();
+  //printIntersectionData();
   //testDriveControl();
 
 }
@@ -53,7 +53,9 @@ void testTokenControl() {
   Blink();
   //tokenController->goToEveryColour();
   //tokenController->depositTokens(magenta);
-  while(1);
+  while(1){
+    tokenController->pickUpToken();
+  }
 }
 
 void Blink(){
