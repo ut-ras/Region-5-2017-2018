@@ -25,7 +25,7 @@ void setup() {
 
   Wire.begin();
 
-  mapGraph->printSerial();
+  //mapGraph->printSerial();
 
   delay(2000);
   //testTokenControl();
@@ -75,10 +75,16 @@ void Blink(){
 void testDriveControl() {
   //driveController->move(true);
 
-  driveController->setCurrentLocationForTest(R5, 4);   //where the bot is starting, (location, dir)
+  setCurrentLocationForTest(R5, 4);  
   Serial.println(mapGraph->getCurrentNode()->toString());
   driveController->forwardToIntersection();
-  //printIntersectionData();
+}
+
+//where the bot is starting, (location, dir)
+void setCurrentLocationForTest(int name, int dir) {
+  mapGraph->setCurrentNode(mapGraph->getNode(name));
+  mapGraph->setCurrentDirection(dir);
+  Serial.println("set node to " + String(mapGraph->getNode(name)->toString()));
 }
 
 void printIntersectionData() {

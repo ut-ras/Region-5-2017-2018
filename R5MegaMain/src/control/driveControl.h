@@ -35,8 +35,6 @@ public:
 
   intersectionSensors * getIntersectionSensors();
 
-  void setCurrentLocationForTest(int name, int dir);
-
   void testSendCommand();
   void sendCommand(uint8_t command);
 
