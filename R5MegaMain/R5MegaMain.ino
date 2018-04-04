@@ -26,9 +26,9 @@ void setup() {
   Wire.begin();
 
   delay(2000);
-  testTokenControl();
+  //testTokenControl();
   //printIntersectionData();
-  //testDriveControl();
+  testDriveControl();
 
 }
 

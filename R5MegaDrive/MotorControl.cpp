@@ -90,11 +90,11 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
 }
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
-  if (dir == RIGHT) {
+  if (dir == LEFT) {
     l_Motor->run(FORWARD);
     r_Motor->run(BACKWARD);
   }
-  else if (dir == LEFT) {
+  else if (dir == RIGHT) {
     l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
@@ -102,12 +102,12 @@ void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
   if (dir == FWD) {
-    l_Motor->run(BACKWARD);
-    r_Motor->run(BACKWARD);
-  }
-  else if (dir == BACK) {
     l_Motor->run(FORWARD);
     r_Motor->run(FORWARD);
+  }
+  else if (dir == BACK) {
+    l_Motor->run(BACKWARD);
+    r_Motor->run(BACKWARD);
   }
 }
 
@@ -118,18 +118,34 @@ void MotorControl::stopMotors() {
 
 
 //Private Functions
-//negative weight values closer to sensor b0 which is right side of the bot
+//note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
   
   if(lineSensorWeight <= -3) {
+    //l_correction = 80;
+    //r_correction = 0;
     turninPlace(fwd?RIGHT:LEFT);
   }
+  /*else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
+    //l_correction = 40;
+    //r_correction = 0;
+    turninPlace(fwd?RIGHT:LEFT);
+  }
+  else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
+    //r_correction = 40;
+    //l_correction = 0;
+    turninPlace(fwd?LEFT:RIGHT);
+  }*/
   else if(lineSensorWeight >= 3) {
+    //r_correction = 80;
+    //l_correction = 0;
     turninPlace(fwd?LEFT:RIGHT);
   }
   else {
+    //l_correction = 0;
+    //r_correction = 0;
     moveStraight(fwd?FWD:BACK);
   }
 }

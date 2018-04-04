@@ -7,9 +7,9 @@
 #define DRIVE_MEGA_I2C 8
 
 //intersection sensor pins
-#define R0PIN 30
+#define R0PIN 38
 #define R1PIN 34
-#define R2PIN 38
+#define R2PIN 30
 #define L0PIN 40
 #define L1PIN 44
 #define L2PIN 46
