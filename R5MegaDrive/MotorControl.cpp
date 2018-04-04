@@ -80,7 +80,7 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  if(useArray==false  && (l_Encoder->getPos() > startTicks+160) )
+  if(useArray==false  && (l_Encoder->getPos() > startTicks+80) )
   {
     useArray=true;
   }
@@ -148,7 +148,7 @@ void MotorControl::calculateLSCorrections() {
     //l_correction = 0;
     turninPlace(fwd?LEFT:RIGHT);
   }*/
-  else if(lineSensorWeight >= 3) {
+  else if(lineSensorWeight >=3) {
     //r_correction = 80;
     //l_correction = 0;
     turninPlace(fwd?RIGHT:LEFT);

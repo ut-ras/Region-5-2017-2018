@@ -25,6 +25,6 @@ bool pointline::getValue() {
   //time how long the input is HIGH, but quit after 3ms as nothing happens after that
   while (digitalRead(QRE1113_Pin) == HIGH && micros() - time < 3000);
   int diff = micros() - time;
-  Serial.println("pointline time diff" + String(diff));
+  //Serial.println("pointline time diff" + String(diff));
   return (diff >1000);
 }

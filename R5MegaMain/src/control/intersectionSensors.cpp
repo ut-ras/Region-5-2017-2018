@@ -35,7 +35,6 @@ pointlineData intersectionSensors::getData() {
 }
 
 pointlineData intersectionSensors::getNextIntersection() {
-  return createPointlineData(0, 1, 1, 1, 0, 0);
   Node *neighbor = map->getNextIntersection();
   Color intersectionType = neighbor->getMapColor();
   //pointlineData nextData;
@@ -51,19 +50,19 @@ pointlineData intersectionSensors::getNextIntersection() {
 //for turn in place
 pointlineData intersectionSensors::getTurn45Intersection(int steps) {
   Node *current = map->getCurrentNode();
-  intersectionType = current->getMapColor();
+  Color intersectionType = current->getMapColor();
   return getPointlineFor(intersectionType, map->getCurrentDirection() + steps);
 }
 
 //turn to a specific direction
 pointlineData intersectionSensors::getTurnToIntersection(int dir) {
   Node *current = map->getCurrentNode();
-  intersectionType = current->getMapColor();
+  Color intersectionType = current->getMapColor();
   return getPointlineFor(intersectionType, dir);
 }
 
-pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
-    int offset, index;
+pointlineData intersectionSensors::getPointlineFor(Color intersectionType, int dir) {
+  int offset, index;
   if ((intersectionType == red) || (intersectionType == cyan) || (intersectionType == yellow) || (intersectionType == blue)) {
     switch(intersectionType) {
       case cyan:
@@ -90,7 +89,7 @@ pointlineData intersectionSensors::getPointlineFor(Color c, int dir) {
 }
 
 /*
-pointlineData intersectionSensors::getPointlineForBox(Color c) {
+pointlineData intersectionSensors::getPointlineForBox(Color intersectionType) {
     int offset, index;
   if ((intersectionType == red) || (intersectionType == cyan) || (intersectionType == yellow) || (intersectionType == blue)) {
     switch(intersectionType) {

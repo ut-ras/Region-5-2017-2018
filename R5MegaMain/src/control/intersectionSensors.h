@@ -52,7 +52,6 @@ public:
 
   pointlineData createPointlineData(int l0, int l1, int l2, int r0, int r1, int r2);
 
-  Color intersectionType;
   void printDataRedNorth();
 
 private:
@@ -66,6 +65,6 @@ private:
   pointlineData *data;
   pointlineData *dataRedNorth;
 
-  pointlineData getPointlineFor(Color c, int dir);
+  pointlineData getPointlineFor(Color intersectionType, int dir);
 };
 #endif

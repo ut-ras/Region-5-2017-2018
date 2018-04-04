@@ -78,6 +78,10 @@ void testDriveControl() {
   setCurrentLocationForTest(R5, 4);  
   Serial.println(mapGraph->getCurrentNode()->toString());
   driveController->forwardToIntersection();
+  delay(2000);
+  driveController->forwardToIntersection();
+
+  
 }
 
 //where the bot is starting, (location, dir)

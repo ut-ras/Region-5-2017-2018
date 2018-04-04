@@ -13,7 +13,7 @@ private:
 	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;
-  int8_t weights[8] = {-8, -4, -2, -1, 1, 2, 4, 8};
+  int8_t weights[8] = {-16, -8, -4, -2, 2, 4, 8, 16};
 
 public:
 
