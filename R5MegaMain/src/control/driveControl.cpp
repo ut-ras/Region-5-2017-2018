@@ -55,9 +55,9 @@ void driveControl::forwardToIntersection() {
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
   while((current = linesensors->getData()) != next) {
-    Serial.println("current " + String(linesensors->PLDatatoString(current)));
-    Serial.println("next " + String(linesensors->PLDatatoString(next)));
-    delay(50);
+    //Serial.println("current " + String(linesensors->PLDatatoString(current)));
+    //Serial.println("next " + String(linesensors->PLDatatoString(next)));
+   delay(5);
   }
   stop();
   mapGraph->setCurrentNode(mapGraph->getNextIntersection());
