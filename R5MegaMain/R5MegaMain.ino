@@ -56,12 +56,12 @@ void testTokenControl() {
   //tokenController->goToEveryColour();
   //tokenController->depositTokens(magenta);
   while(1){
-    //tokenController->pickU pToken(); 
     Serial.println("Start");
-    tokenController->readColour();
+    //tokenController->readColour();
+    tokenController->pickUpToken(); 
     Serial.println("----");
     Serial.println("");
-    delay(2000);
+    delay(2000);  
   }
 }
 
