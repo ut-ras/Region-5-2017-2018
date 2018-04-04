@@ -96,6 +96,8 @@ private:
 
   //line sensor correction
   int l_correction, r_correction;
+  bool useArray = false;
+  int startTicks = 0;
 
   //encoder vars
   int l_PrevEncoderPos = 0;      //encoder steps
@@ -110,6 +112,7 @@ private:
 
   //constants
   const double motorMaxSpeed = 950.0;     //deg / sec
+
 
 };
 

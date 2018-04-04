@@ -63,6 +63,9 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   //Serial.println("Motor Control Initialized");
 
   currentCmd = STOP;
+  useArray=false;
+  startTicks = 0;
+
 }
 
 
@@ -77,7 +80,11 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  if (currentCmd < FWDNOLINE) {
+  if(useArray==false  && (l_Encoder->getPos() > startTicks+160) )
+  {
+    useArray=true;
+  }
+  if (useArray && (currentCmd < FWDNOLINE)) {
     calculateLSCorrections();
     //l_SetpointSpeed += l_correction;
     //r_SetpointSpeed += r_correction;
@@ -98,6 +105,9 @@ void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
     l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
+
+
+  
 }
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
@@ -219,14 +229,20 @@ void MotorControl::setMotorMode(int c) {
     case FWD1:
       setSetpointSpeeds(45);
       moveStraight(FWD);
+      useArray=false;
+      startTicks=l_Encoder->getPos();
       break;
     case FWD2:
       setSetpointSpeeds(135);
       moveStraight(FWD);
+      useArray=false;
+      startTicks=l_Encoder->getPos();
       break;
     case FWD3:
       setSetpointSpeeds(180);
       moveStraight(FWD);
+      useArray=false;
+      startTicks=l_Encoder->getPos();
       break;
     case BACK1:
       setSetpointSpeeds(90);
