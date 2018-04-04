@@ -42,9 +42,9 @@ void loop() {
 void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
-    char inChar = (char)Serial.read();
+    int8_t inChar = Serial.parseInt();
     if ((inChar >= 0) && (inChar <= STOP)) {
-      driveController->sendCommand(inChar - 0x30);
+      driveController->sendCommand(inChar);
     }
   }
 }
