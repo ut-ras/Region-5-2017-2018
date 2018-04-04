@@ -35,6 +35,7 @@ pointlineData intersectionSensors::getData() {
 }
 
 pointlineData intersectionSensors::getNextIntersection() {
+  return createPointlineData(0, 1, 0, 0, 1, 0);
   Node *neighbor = map->getNextIntersection();
   Color intersectionType = neighbor->getMapColor();
   //pointlineData nextData;
