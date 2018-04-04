@@ -4,7 +4,7 @@
 
 //Servo Distances
 //Distance from max height to ground - 10->5in
-#define maxHeight 180
+#define maxHeight 174
 //Distance to fall into the funnel - 5in
 #define funnelHeight 160
 //Resting position
@@ -18,7 +18,7 @@
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
-#define pickupTime 500
+#define pickupTime 250
 //Delay pre and post drop off for stbalization
 #define dropTime 250
 
@@ -27,11 +27,11 @@
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
-#define toRGBSensor 25
+#define toRGBSensor 28
 //Degrees between each funnel
 #define tokenToToken 45
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 20
+#define toFirstToken 17
 //Pin for the stepper motor - needs proper assignment
 #define stepPin 6
 #define dirPin 7
@@ -57,6 +57,7 @@ int tokenControl::pickUpToken() {
     magnetController->magnetOn();
     delay(pickupTime);
     moveToField(resting);
+    delay(1000);
     //Reads token colour and if there is no token returns the electromagnet
     //int colour = Color::magenta;
     int colour = readColour();
@@ -145,7 +146,7 @@ void tokenControl::rotateDiskFromSensor(int c){
 int tokenControl::readColour(){
 	int colour = 0;
 	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
-    delay(200);
+    delay(500);
     //magnetController->magnetOn();
 	colour = colourSensor->getColor();
     Serial.println(colour);
