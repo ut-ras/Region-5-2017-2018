@@ -18,7 +18,7 @@ bool pointline::getValue() {
   pinMode( QRE1113_Pin, OUTPUT );
   digitalWrite( QRE1113_Pin, HIGH );
   delayMicroseconds(10);
-  pinMode( QRE1113_Pin, INPUT_PULLUP);
+  pinMode( QRE1113_Pin, INPUT);
 
   long time = micros();
 
@@ -26,5 +26,5 @@ bool pointline::getValue() {
   while (digitalRead(QRE1113_Pin) == HIGH && micros() - time < 3000);
   int diff = micros() - time;
   Serial.println("pointline time diff" + String(diff));
-  return !(diff < 300 || diff > 650);
+  return (diff >1000);
 }

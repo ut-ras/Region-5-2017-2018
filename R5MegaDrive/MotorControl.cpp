@@ -118,34 +118,18 @@ void MotorControl::stopMotors() {
 
 
 //Private Functions
-//note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
+//negative weight values closer to sensor b0 which is right side of the bot
 void MotorControl::calculateLSCorrections() {
   int lineSensorWeight = lineSensor->getWeightedValue();
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
   
   if(lineSensorWeight <= -3) {
-    //l_correction = 80;
-    //r_correction = 0;
     turninPlace(fwd?RIGHT:LEFT);
   }
-  /*else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
-    //l_correction = 40;
-    //r_correction = 0;
-    turninPlace(fwd?RIGHT:LEFT);
-  }
-  else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
-    //r_correction = 40;
-    //l_correction = 0;
-    turninPlace(fwd?LEFT:RIGHT);
-  }*/
   else if(lineSensorWeight >= 3) {
-    //r_correction = 80;
-    //l_correction = 0;
     turninPlace(fwd?LEFT:RIGHT);
   }
   else {
-    //l_correction = 0;
-    //r_correction = 0;
     moveStraight(fwd?FWD:BACK);
   }
 }

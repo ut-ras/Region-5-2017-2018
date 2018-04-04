@@ -26,8 +26,8 @@ void setup() {
   Wire.begin();
 
   delay(3000);
-  //testTokenControl();
-  printIntersectionData();
+  testTokenControl();
+  //printIntersectionData();
   //testDriveControl();
 
 }
@@ -42,9 +42,9 @@ void loop() {
 void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
-    char inChar = (char)Serial.read();
+    int8_t inChar = Serial.parseInt();
     if ((inChar >= 0) && (inChar <= STOP)) {
-      driveController->sendCommand(inChar - 0x30);
+      driveController->sendCommand(inChar);
     }
   }
 }
@@ -53,7 +53,9 @@ void testTokenControl() {
   Blink();
   //tokenController->goToEveryColour();
   //tokenController->depositTokens(magenta);
-  while(1);
+  while(1){
+    tokenController->pickUpToken();
+  }
 }
 
 void Blink(){
