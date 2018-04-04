@@ -31,30 +31,56 @@ float utility(
 		return(heuristic(referenceNode, time));
 	}
 
+	// Get the total number of remaining tokens
+	float totalTokens = 0;
+	for(int i = 0; i < 8; i++) {
+		totalTokens += remainingTokens[i];
+	}
+
 	// Memory for current highest node
-	uint8_t highestIndex;
-	float highestUtility;
+	uint8_t highestIndex = 0;
+	float highestUtility = 0;
 	// Arrays for creating expected token and remaining arrays
 	float expectedTokens[8];
 	float expectedRemaining[8];
+
 	// Scan each direction
 	for(uint8_t i = 0; i < 8; i++) {
+		
+		// Intermediate variables
+		float currentUtility;
+		Node *neighborNode;
 
-		if(Graph->getNeighbor(referenceNode))
+		// Get target neighbor node
+		neighborNode = Graph->getNeighbor(referenceNode, i);
+
+		// Not a null node
+		if(!neighborNode.isNullNode) {
+
+			// Not visited -> increase the expected tokens
+			if(!neighborNode.visited) {
+				for(uint8_t i = 0; i < 8; i++) {
+					expectedTokens[i] += remainingTokens[i] / totalTokens;
+					expectedRemaining[i] -= remainingTokens[i] / totalTokens;
+				}
+			}
+
+			// Get recursive utility
+			currentUtility = utility(
+				neighborNode,
+				time - SPEED * distance(referenceNode, neighborNode),
+				expectedTokens,
+				remainingTokens,
+				layer - 1,
+				graph);
+
+			// Update highest utility if applicable
+			if(currentUtility > highestUtility) {
+				highextIndex = i;
+				highestUtility = currentUtility;
+			}
+		}
 
 	}
-
-/*
-	pseudocode:
-
-	for each node:
-		update the expected token values for that node
-		call utility on that node with tokens
-		compare to the previous stored node
-		discard if less utility
-
-	return the maximal utility
-*/
-	return;
-
+	return(highestUtility);
 }
