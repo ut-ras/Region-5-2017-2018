@@ -34,6 +34,22 @@ pointlineData intersectionSensors::getData() {
   return data;
 }
 
+pointlineData intersectionSensors::getDataOverTime(long waitTimeMs) {
+  long endT = millis() + waitTimeMs;
+  pointlineData data;
+
+  while(millis() < endT) {
+    data.l0 |= l0->getValue();
+    data.l1 |= l1->getValue();
+    data.l2 |= l2->getValue();
+    data.r0 |= r0->getValue();
+    data.r1 |= r1->getValue();
+    data.r2 |= r2->getValue();
+  }
+ 
+  return data;
+}
+
 pointlineData intersectionSensors::getNextIntersection() {
   Node *neighbor = map->getNextIntersection();
   Color intersectionType = neighbor->getMapColor();
