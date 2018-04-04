@@ -25,7 +25,7 @@ void setup() {
 
   Wire.begin();
 
-  delay(3000);
+  delay(2000);
   testTokenControl();
   //printIntersectionData();
   //testDriveControl();
@@ -54,7 +54,12 @@ void testTokenControl() {
   //tokenController->goToEveryColour();
   //tokenController->depositTokens(magenta);
   while(1){
+    //tokenController->pickUpToken(); 
+    Serial.println("Start");
     tokenController->pickUpToken();
+    Serial.println("----");
+    Serial.println("");
+    delay(2000);
   }
 }
 

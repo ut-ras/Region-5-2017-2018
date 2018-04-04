@@ -9,7 +9,7 @@ rgbsensor::rgbsensor() {
   }
 }
 
-String rgbsensor::getColor(){
+String rgbsensor::getColorHelper(){
   uint16_t clear, red, green, blue;
 
   delay(60);  // takes 50ms to read

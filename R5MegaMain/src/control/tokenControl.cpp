@@ -8,13 +8,13 @@
 //Distance to fall into the funnel - 5in
 #define funnelHeight 160
 //Resting position
-#define  resting 155
+#define  resting 150
 //Sets the direction of the magnet
 #define up true
 #define down false
 //Pulley waits
 #define funnelHeightWait 500
-#define fullHeighWait 1500
+#define fullHeighWait 2000
 
 //Magnet Times
 //Delay to allow tokens to latch to magnet
@@ -36,7 +36,7 @@
 #define stepPin 6
 #define dirPin 7
 //Pin for the magnet - needs proper assignment
-#define magnetPin 11
+#define magnetPin 48
 //Pin for the servo - needs proper assignment
 #define servoPin 12
 
@@ -53,19 +53,19 @@ tokenControl::tokenControl(Graph * m) {
 
 int tokenControl::pickUpToken() {
     //Drops magnet full distance, turns it on and waits for tokens, then returns it to base height
-    //moveToField(maxHeight);
-    //magnetController->magnetOn();
-    //delay(pickupTime);
-    //moveToField(resting);
+    moveToField(maxHeight);
+    magnetController->magnetOn();
+    delay(pickupTime);
+    moveToField(resting);
     //Reads token colour and if there is no token returns the electromagnet
     //int colour = Color::magenta;
     int colour = readColour();
     //int colour = magenta;
-    if(colour == Color::grey)
+    if(colour == Color::unknown)
         return colour;
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
-    rotateDiskToColor(colour);
+    rotateDiskFromSensor(colour);
     depositInFunnel();
     resetDisk(colour);
 
@@ -145,6 +145,8 @@ void tokenControl::rotateDiskFromSensor(int c){
 int tokenControl::readColour(){
 	int colour = 0;
 	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
+    delay(200);
+    //magnetController->magnetOn();
 	colour = colourSensor->getColor();
     Serial.println(colour);
 	return colour;

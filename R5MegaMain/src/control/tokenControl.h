@@ -52,7 +52,9 @@ public:
     //Picks up a token from a funnel then brings it to the center
     void pickupFromFunnelTest(int colour);
 
-
+    //Rotates the disk to the sensor and reads input
+    //Prereq: Disk is centered
+    int readColour();
 
 private:
     //Rotates the token disk to input colour
@@ -63,9 +65,7 @@ private:
     //Prereq: Magnet is over RGB sensor
     void rotateDiskFromSensor(int c);
 
-    //Rotates the disk to the sensor and reads input
-    //Prereq: Disk is centered
-    int readColour();
+    
 
     //Resets the disk from input colour to center
     //Prereq: Magnet is at c
