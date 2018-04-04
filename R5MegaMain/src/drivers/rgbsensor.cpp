@@ -9,7 +9,7 @@ rgbsensor::rgbsensor() {
 }
 
 Color rgbsensor::getColor(){
-  uint16_t clear, red, green, blue, colours[7];
+  uint16_t clear, red, green, blue, colours[7] = {0}  ;
   /*RunningMedian rSamples = RunningMedian(5);
   RunningMedian gSamples = RunningMedian(5);
   RunningMedian bSamples = RunningMedian(5);*/
@@ -23,9 +23,8 @@ Color rgbsensor::getColor(){
     bSamples.add(blue);*/
   }
 
-  int max = 0, maxI = 0;
-
-  for(int i = 0; i <  7; i ++){
+  int max = colours[0], maxI = 0;
+  for(int i = 1; i <  7; i ++){
     if(colours[i] > max){
       max = colours[i];
       maxI = i;
@@ -108,25 +107,25 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
     color = grey;
   }*/
 
-  if((Red > 330 && Red < 370) && (Blue > 280 && Blue < 320) && (Green > 330 && Green < 370)){
+  if((Red > 260 && Red < 280) && (Blue > 240 && Blue < 260) && (Green > 270 && Green < 290)){
     color = red;
   }
-  else if ((Red > 330 && Red  < 370) && (Blue > 300 && Blue < 340) && (Green > 350 && Green < 390)){
+  else if ((Red > 265 && Red  < 285) && (Blue > 250 && Blue < 270) && (Green > 300 && Green < 320)){
     color = green;
   }
-  else if((Red > 290 && Red < 320) && (Blue > 310 && Blue < 330) && (Green > 335 && Green < 360)){
+  else if((Red > 245 && Red < 265) && (Blue > 255 && Blue < 275) && (Green > 280 && Green < 300)){
     color = blue;
   }
-  else if((Red > 390 && Red < 430) && (Blue > 310 && Blue < 350) && (Green > 390 && Green < 430)){
+  else if((Red > 300 && Red < 340) && (Blue > 255 && Blue < 295) && (Green > 315 && Green < 355)){
     color = yellow;
   }
-  else if((Red > 300 && Red  < 330) && (Blue > 270 && Blue < 310) && (Green > 300 && Green  < 340)){
+  else if((Red > 250 && Red  < 290) && (Blue > 240 && Blue < 280) && (Green > 270 && Green  < 310)){
     color = magenta;
   }
-  else if((Red > 310 && Red < 350) && (Blue >  310 && Blue < 350) && (Green > 360 && Green < 400)){
+  else if((Red > 240 && Red < 280) && (Blue >  260 && Blue < 300) && (Green > 290 && Green < 330)){
     color = cyan;
   }
-  else if((Red > 290 && Red < 330) && (Blue > 270 && Blue < 310) && (Green > 320 && Green <  360)){
+  else if((Red > 240 && Red < 280) && (Blue > 235 && Blue < 275) && (Green > 270 && Green <  310)){
     color = grey;
   }
 
