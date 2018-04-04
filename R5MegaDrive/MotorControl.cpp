@@ -1,4 +1,6 @@
 #include "MotorControl.h"
+
+#include <Arduino.h>
 #include <Adafruit_MotorShield.h>
 #include <PID_v1.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
@@ -56,7 +58,7 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   r_PID->SetOutputLimits(0, 255);
 
 
-  lineSensor = new arrayline();
+  lineSensor = new arrayline(LS_DIGITAL);
   
   //delay for testing purposes
   delay(500);

@@ -1,7 +1,7 @@
 #include "MotorControl.h"
 #include <Arduino.h>
 
-//required libraries: Adafruit_MotorShield v2, PID by Brett, SparkFun Line Follower Array
+//required libraries: Adafruit_MotorShield v2, PID by Brett, SparkFun Line Follower Array, QTRSensors
 
 #define DRIVE_MEGA_I2C 8
 
