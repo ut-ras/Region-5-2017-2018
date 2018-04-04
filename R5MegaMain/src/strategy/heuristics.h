@@ -22,18 +22,18 @@
 // Return to white box characteristic
 #define LAMBDA 1
 // Distance function
-float distance(Node firstNode, Node secondNode);
+float distance(Node *firstNode, Node *secondNode);
 
 
 // ----------heuristic-----------
 // Compute the heuristic value of a given node.
 // Parameters:
-//      Node x : input node
+//      Node *x : input node
 //      float t : time remaining, in seconds
 //      tokens : expected number of tokens
 // Returns:
 //      float : computed heuristic value
-float heuristic(Node x, float t, float tokens[8]);
+float heuristic(Node *x, float t, float tokens[8]);
 
 
 #endif
