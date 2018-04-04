@@ -37,14 +37,14 @@ pointlineData intersectionSensors::getData() {
 pointlineData intersectionSensors::getNextIntersection() {
   Node *neighbor = map->getNextIntersection();
   Color intersectionType = neighbor->getMapColor();
-  pointlineData nextData;
+  //pointlineData nextData;
+  Serial.println(String(neighbor->toString()));
 
   //if( neighbor->getName() % 6 == 0 )
     //nextData = getPointLineForBox(intersectionType);
   //else
-    nextData = getPointlineFor(intersectionType, map->getCurrentDirection());
-
-  return nextData;
+  return getPointlineFor(intersectionType, map->getCurrentDirection());
+  //return nextData;
 }
 
 //for turn in place

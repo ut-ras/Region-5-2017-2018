@@ -48,6 +48,7 @@ void driveControl::stop() {
 void driveControl::setCurrentLocationForTest(int name, int dir) {
   mapGraph->setCurrentNode(mapGraph->getNode(name));
   mapGraph->setCurrentDirection(dir);
+  Serial.println("set node to " + String(mapGraph->getNode(name)->toString()));
 }
 
 
@@ -57,10 +58,11 @@ void driveControl::forwardToIntersection() {
   move(true);
   pointlineData next = linesensors->getNextIntersection();
   pointlineData current;
-  Serial.println(next.toString());
+  Serial.println("next " + next.toString());
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
   while((current = linesensors->getData()) != next) {
-    Serial.println(current.toString());
+    Serial.println("current " + current.toString());
+    Serial.println("next " + next.toString());
     delay(5);
   }
   stop();

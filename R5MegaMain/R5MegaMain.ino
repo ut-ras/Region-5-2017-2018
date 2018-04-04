@@ -25,6 +25,8 @@ void setup() {
 
   Wire.begin();
 
+  mapGraph->printSerial();
+
   delay(2000);
   //testTokenControl();
   //printIntersectionData();

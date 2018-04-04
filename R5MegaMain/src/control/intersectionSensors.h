@@ -33,8 +33,8 @@ typedef struct pointlineData {
       return !((l0 == a.l0) && (l1 == a.l1) && (l2 == a.l2) && (r0 == a.r0) && (r1 == a.r1) && (r2 == a.r2));
   }
   String toString() {
-      String s = String("l0=" + String(l0) + " l1=" + String(l1) + " l2=" + String(l2) + "\n");
-      s += String("r0=" + String(r0) + " r1=" + String(r1) + " r2=" + String(r2) + "\n");
+      String s = String("l0=" + String(l0?"true":"false") + " l1=" + String(l1?"true":"false") + " l2=" + String(l2?"true":"false") + "\n");
+      s += String("r0=" + String(r0?"true":"false") + " r1=" + String(r1?"true":"false") + " r2=" + String(r2?"true":"false") + "\n");
       return s;
   }
 } pointlineData;

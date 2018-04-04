@@ -126,7 +126,7 @@ void MotorControl::calculateLSCorrections() {
   if(lineSensorWeight <= -3) {
     //l_correction = 80;
     //r_correction = 0;
-    turninPlace(fwd?RIGHT:LEFT);
+    turninPlace(fwd?LEFT:RIGHT);
   }
   /*else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
     //l_correction = 40;
@@ -141,7 +141,7 @@ void MotorControl::calculateLSCorrections() {
   else if(lineSensorWeight >= 3) {
     //r_correction = 80;
     //l_correction = 0;
-    turninPlace(fwd?LEFT:RIGHT);
+    turninPlace(fwd?RIGHT:LEFT);
   }
   else {
     //l_correction = 0;
