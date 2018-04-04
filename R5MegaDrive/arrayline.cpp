@@ -11,6 +11,8 @@ arrayline::arrayline(int stype){
 
 		//set up calibration data from saved tested values
 		setCalibration();
+    //or, run calibration
+    //calibrateSensors();
 	}
 	else {
 		arrayLineD = new SensorBar(I2C_ADDRESS);

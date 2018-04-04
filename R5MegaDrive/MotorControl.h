@@ -80,7 +80,7 @@ private:
   Adafruit_DCMotor *r_Motor;
   encoder* l_Encoder;
   encoder* r_Encoder;
-  arrayline* lineSensor;
+  arrayline* lineSensorBack;
 
 
   // PID Variables
