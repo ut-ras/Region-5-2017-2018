@@ -81,7 +81,7 @@ private:
   encoder* l_Encoder;
   encoder* r_Encoder;
   arrayline* lineSensorBack;
-
+  arrayline* lineSensorFront;
 
   // PID Variables
   PID * l_PID;

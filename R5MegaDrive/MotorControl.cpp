@@ -59,6 +59,7 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
 
   lineSensorBack = new arrayline(LS_DIGITAL);
+  lineSensorFront = new arrayline(LS_ANALOG);
   
   //delay for testing purposes
   delay(500);
@@ -132,11 +133,15 @@ void MotorControl::stopMotors() {
 //Private Functions
 //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
-  int lineSensorWeight = lineSensorBack->getWeightedValue();
+  int lineSensorWeightBack = lineSensorBack->getWeightedValue();
+  int lineSensorWeightFront = lineSensorFront->getWeightedValue();
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
+  //TODO add options for different orientations of the two array lines
+  // -4000 is left, +4000 is right, 1000 for each sensor
+
   //since we were using the wieghts only for finding position within the array, this should be the same thing
-  if(lineSensorWeight <= -1500) {
+  if(lineSensorWeightBack <= -1500) {
     //l_correction = 80;
     //r_correction = 0;
     turninPlace(fwd?LEFT:RIGHT);
@@ -151,7 +156,7 @@ void MotorControl::calculateLSCorrections() {
     //l_correction = 0;
     turninPlace(fwd?LEFT:RIGHT);
   }*/
-  else if(lineSensorWeight >= 1500) {
+  else if(lineSensorWeightBack >= 1500) {
     //r_correction = 80;
     //l_correction = 0;
     turninPlace(fwd?RIGHT:LEFT);
