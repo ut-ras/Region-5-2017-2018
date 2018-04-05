@@ -72,6 +72,9 @@ int* arrayline::calibrateSensors() {
     delay(20);
   }
   
+  calibratedMinimumOn = arrayLineA.calibratedMinimumOn;
+  calibratedMaximumOn = arrayLineA.calibratedMaximumOn;
+  
   //this wont save in between runs, so print results and add to h file before competiton 
   printAnalogCalibration();
 	
