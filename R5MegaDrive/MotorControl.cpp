@@ -134,7 +134,8 @@ void MotorControl::calculateLSCorrections() {
   
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
-  
+    Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
+
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
   //TODO add options for different orientations of the two array lines
@@ -177,14 +178,14 @@ void MotorControl::calculateLSCorrections() {
   
   if(turnLeft) {
     l_SetpointSpeed = 0;
-    r_SetpointSpeed = moveSpeed;
+    r_SetpointSpeed = LOW_SPEED;
   }
   else if(turnRight) {
     r_SetpointSpeed = 0;
-    l_SetpointSpeed = moveSpeed;
+    l_SetpointSpeed = LOW_SPEED;
   }
   else {
-    r_SetpointSpeed = 0;
+    r_SetpointSpeed = moveSpeed;
     l_SetpointSpeed = moveSpeed;
   }
   moveStraight(fwd?FWD:BACK);
