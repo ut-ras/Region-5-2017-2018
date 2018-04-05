@@ -50,16 +50,16 @@ pointlineData intersectionSensors::getDataOverTime(long waitTimeMs) {
   return data;
 }
 
-pointlineData intersectionSensors::getDataOverTimeRolling(long waitTimeMs) {
-  long t = millis();
+pointlineData intersectionSensors::getDataOverTimeRolling(unsigned long waitTimeMs) {
+  unsigned long t = millis();
   pointlineData data = getData();
 
-  data.l0 = t < (pointlineTimers[0] = (data.l0 == 1)?(t + waitTimeMs):(pointlineTimers[0] ));
-  data.l1 = t < (pointlineTimers[1] = (data.l1 == 1)?(t + waitTimeMs):(pointlineTimers[1]));
-  data.l2 = t < (pointlineTimers[2] = (data.l2 == 1)?(t + waitTimeMs):(pointlineTimers[2]));
-  data.r0 = t < (pointlineTimers[3] = (data.r0 == 1)?(t + waitTimeMs):(pointlineTimers[3]));
-  data.r1 = t < (pointlineTimers[4] = (data.r1 == 1)?(t + waitTimeMs):(pointlineTimers[4]));
-  data.r2 = t < (pointlineTimers[5] = (data.r2 == 1)?(t + waitTimeMs):(pointlineTimers[5]));
+  data.l0 =  t < (pointlineTimers[0] = (data.l0 == 1)?(t + waitTimeMs):(pointlineTimers[0]));
+  data.l1 =  t < (pointlineTimers[1] = (data.l1 == 1)?(t + waitTimeMs):(pointlineTimers[1]));
+  data.l2 =  t < (pointlineTimers[2] = (data.l2 == 1)?(t + waitTimeMs):(pointlineTimers[2]));
+  data.r0 =  t < (pointlineTimers[3] = (data.r0 == 1)?(t + waitTimeMs):(pointlineTimers[3]));
+  data.r1 =  t < (pointlineTimers[4] = (data.r1 == 1)?(t + waitTimeMs):(pointlineTimers[4]));
+  data.r2 =  t < (pointlineTimers[5] = (data.r2 == 1)?(t + waitTimeMs):(pointlineTimers[5]));
 
   return data;
 }

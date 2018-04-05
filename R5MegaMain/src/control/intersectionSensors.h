@@ -72,6 +72,6 @@ private:
   pointlineData getPointlineFor(Color intersectionType, int dir);
 
 
-  int pointlineTimers[6] = {0};
+  unsigned long pointlineTimers[6] = {0};
 };
 #endif
