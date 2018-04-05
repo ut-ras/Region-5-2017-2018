@@ -46,8 +46,8 @@ public:
   intersectionSensors(Graph * mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
 
   pointlineData getData();
-  pointlineData getDataOverTime(long waitTimeMs);
-  pointlineData getDataOverTimeRolling(long waitTimeMs);
+  pointlineData getDataOverTime(unsigned long waitTimeMs);
+  pointlineData getDataOverTimeRolling(unsigned long waitTimeMs);
 
   pointlineData getNextIntersection();  //based on current location and direction in map
 

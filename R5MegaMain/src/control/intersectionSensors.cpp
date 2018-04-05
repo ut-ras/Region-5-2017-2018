@@ -34,8 +34,8 @@ pointlineData intersectionSensors::getData() {
   return data;
 }
 
-pointlineData intersectionSensors::getDataOverTime(long waitTimeMs) {
-  long endT = millis() + waitTimeMs;
+pointlineData intersectionSensors::getDataOverTime(unsigned long waitTimeMs) {
+  unsigned long endT = millis() + waitTimeMs;
   pointlineData data;
 
   while(millis() < endT) {
