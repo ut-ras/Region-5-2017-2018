@@ -29,7 +29,7 @@ arrayline::arrayline(int stype){
 
 
 
-int arrayline::getWeightedValue() {
+int arrayline::getLinePosition() {
 	//assuming that 0 is to the left here, so switch if 0 is near the right
 	if (sensorType == LS_ANALOG) {
 		unsigned int sensors[8];
@@ -52,19 +52,10 @@ int arrayline::getWeightedValue() {
 	}
 }
 
-/*bool* arrayline::getLineSensor(){
-	if (sensorType == LS_ANALOG) {
-	
-	}
-	else { 
-		uint8_t rawValue = arrayLineD->getRaw();
-		//Print the binary value to the serial buffer.
-		for( int i = 7; i >= 0; i--){
-			boolArray[i] = (rawValue >> i) & 0x01;
-		}
-		return boolArray;
-	}
-}*/
+int arrayline::getWeightedValue(){
+  int pos = getLinePosition();
+  return pos *= weights[(pos + 4000) / 1000];
+}
 
 
 

@@ -133,8 +133,8 @@ void MotorControl::stopMotors() {
 //Private Functions
 //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
-  int lineSensorWeightBack = lineSensorBack->getWeightedValue();
-  int lineSensorWeightFront = lineSensorFront->getWeightedValue();
+  int lineSensorWeightBack = lineSensorBack->getLinePosition();
+  int lineSensorWeightFront = lineSensorFront->getLinePosition();
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
   //TODO add options for different orientations of the two array lines

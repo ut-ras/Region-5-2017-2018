@@ -47,8 +47,7 @@ public:
 	arrayline(int stype);
 
 	//Get line sensor array for line sensor values
-	//bool* getLineSensor();
-
+	int getLinePosition();
 	int getWeightedValue();
 
  //for analog calibration
