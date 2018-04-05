@@ -39,7 +39,6 @@ Color rgbsensor::colorTester(){
   RunningMedian rSamples = RunningMedian(100);
   RunningMedian gSamples = RunningMedian(100);
   RunningMedian bSamples = RunningMedian(100);
-
   delay(1000);
   //tcs.setInterrupt(false);
   for(int i = 0; i < 100; i ++){
@@ -58,13 +57,10 @@ Color rgbsensor::colorTester(){
 
 Color rgbsensor::getColorHelper(){
   uint16_t clear, red, green, blue;
-
   //tcs.setInterrupt(false);
-
   delay(60);  // takes 50ms to read
   tcs.getRawData(&red, &green, &blue, &clear);
   //tcs.setInterrupt(true);  // turn on LED
-
   return getClosestColor(red,green,blue);
 }
 Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
@@ -129,9 +125,9 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
     color = grey;
   }
 
-    Serial.print("\tR:\t"); Serial.print(Red);
-    Serial.print("\tG:\t"); Serial.print(Green);
-    Serial.print("\tB:\t"); Serial.println(Blue);
-    Serial.println(color);
+  Serial.print("\tR:\t"); Serial.print(Red);
+  Serial.print("\tG:\t"); Serial.print(Green);
+  Serial.print("\tB:\t"); Serial.println(Blue);
+  Serial.println(color);
   return color;
 }
