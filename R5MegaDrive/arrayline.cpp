@@ -71,9 +71,9 @@ int* arrayline::calibrateSensors() {
     arrayLineA->calibrate();
     delay(20);
   }
-  
-  calibratedMinimumOn = arrayLineA->calibratedMinimumOn;
-  calibratedMaximumOn = arrayLineA->calibratedMaximumOn;
+
+  memcpy(calibratedMinimumOn, arrayLineA->calibratedMinimumOn, sizeof(8 * sizeof(int)));
+  memcpy(calibratedMaximumOn , arrayLineA->calibratedMaximumOn, sizeof(8 * sizeof(int)));
   
   //this wont save in between runs, so print results and add to h file before competiton 
   printAnalogCalibration();
