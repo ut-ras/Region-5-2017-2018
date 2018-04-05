@@ -62,6 +62,17 @@ int arrayline::getWeightedValue(){
   return pos *= weights[(pos + 4000) / 1000];
 }
 
+int arrayline::getWeightedSum(){
+	int sum = 0;
+	unsigned int sensors[8];
+	arrayLineA->readLine(sensors);
+	for(int i = 0; i < 8; i++)
+	{
+		sum += weights[i]*sensors[i];
+	}
+	return sum;
+}
+
 
 
 //calibration stuff for the analog sensor (library's readLine function uses this calibration to create a weight)
@@ -91,13 +102,6 @@ void arrayline::setCalibration() {
   arrayLineA->calibrate();
 	memcpy(arrayLineA->calibratedMinimumOn, calibratedMinimumOn, 8 * sizeof(sizeof(int)));
   memcpy(arrayLineA->calibratedMaximumOn , calibratedMaximumOn, 8 * sizeof(sizeof(int)));
-
-  Serial.println("calibration data");
-  for (int i = 0; i < 8; i++) {
-  	Serial.print(arrayLineA->calibratedMinimumOn[i]);
-  	Serial.print(" ");
-  }
-  Serial.println();
 }
 
 void arrayline::printAnalogCalibration() {

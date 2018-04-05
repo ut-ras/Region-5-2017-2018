@@ -192,6 +192,32 @@ void MotorControl::calculateLSCorrections() {
   
 }
 
+
+void MotorControl::offsetCorrection() {
+
+  int rawWeighted = lineSensorFront->getWeightedSum();
+
+  double correction = rawWeighted/12000;
+
+  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
+
+  int moveSpeed = 0;
+  if (currentCmd % 3 == 0) {
+    moveSpeed = LOW_SPEED;
+  }
+  else if (currentCmd % 3 == 1) {
+    moveSpeed = MID_SPEED;
+  }
+  else {
+    moveSpeed = HIGH_SPEED;
+  }
+
+  r_SetpointSpeed = moveSpeed - correction * moveSpeed;
+  l_SetpointSpeed = moveSpeed + correction * moveSpeed;
+
+  moveStraight(fwd?FWD:BACK);
+}
+
 //set desired speeds
 void MotorControl::setSetpointSpeeds(int rotSpeed) {                      //deg / sec
   setSetpointSpeeds(rotSpeed, rotSpeed);
