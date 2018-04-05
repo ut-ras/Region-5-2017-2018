@@ -9,14 +9,14 @@
 #define I2C_ADDRESS 0x3E
 
 //for analog array
-#define ARRAYP0 8
-#define ARRAYP1 9
-#define ARRAYP2 10
-#define ARRAYP3 11
-#define ARRAYP4 12
-#define ARRAYP5 13
-#define ARRAYP6 14
-#define ARRAYP7 15
+#define ARRAYP0 A8
+#define ARRAYP1 A9
+#define ARRAYP2 A10
+#define ARRAYP3 A11
+#define ARRAYP4 A12
+#define ARRAYP5 A13
+#define ARRAYP6 A14
+#define ARRAYP7 A15
 
 //library for analog line sensor: QTRSensors
 
