@@ -83,8 +83,9 @@ int* arrayline::calibrateSensors() {
 
 void arrayline::setCalibration() {
 	printAnalogCalibration();
-	arrayLineA->calibratedMinimumOn = calibratedMinimumOn;
-	arrayLineA->calibratedMaximumOn = calibratedMaximumOn;
+  arrayLineA->calibrate();
+	memcpy(arrayLineA->calibratedMinimumOn, calibratedMinimumOn, sizeof(8 * sizeof(int)));
+  memcpy(arrayLineA->calibratedMaximumOn , calibratedMaximumOn, sizeof(8 * sizeof(int)));
 }
 
 void arrayline::printAnalogCalibration() {
