@@ -158,9 +158,9 @@ void MotorControl::calculateLSCorrections() {
 
   //double sensors: -1 = left, 0 = middle, 1 = right
   int cutoff = 1500;
-  int frontSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
-  int backSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
-  Serial.println("front array: " + String(frontSection) + " / back array: " + String(backSection));
+  int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
+  int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
+  Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
   boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
   boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
   Serial.println("turn left: " + String(turnRight) + " / turn right: " + String(turnLeft));

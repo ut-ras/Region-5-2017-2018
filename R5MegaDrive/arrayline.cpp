@@ -33,22 +33,22 @@ int arrayline::getLinePosition() {
 	//assuming that 0 is to the left here, so switch if 0 is near the right
 	if (sensorType == LS_ANALOG) {
 		unsigned int sensors[8];
-	  int position = arrayLineA->readLine(sensors);		//this is between 0 and 7000 so subtract 4000
-		position -= 3500;
-		return position; 
+	  int sum = arrayLineA->readLine(sensors);		//this is between 0 and 7000 so subtract 4000
+		sum -= 3500;
+		return sum; 
 	}
 	else { 
 		uint8_t rawValue = arrayLineD->getRaw();
 		rawValue = ~rawValue;
 		double sum = 0;
-		double notZero = 0;
+		//double notZero = 0;
 		for(int i = 0; i<8; i++) {
 		  	//sum += weights[i]*((rawValue>>i)&0x01);
 			sum += i*1000*((rawValue>>i)&0x01);
-		  	if (((rawValue>>i) & 0x01) != 0) { notZero++; }
+		  	//if (((rawValue>>i) & 0x01) != 0) { notZero++; }
 		}
-		sum -= 4000;
-		return (notZero == 0)?0:(sum / notZero);
+		sum -= 3500;
+		return sum;
 	}
 }
 
