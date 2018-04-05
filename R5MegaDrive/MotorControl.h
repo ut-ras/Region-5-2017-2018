@@ -12,6 +12,9 @@
 
 #define LOOP_DELAY 100
 
+#define LOW_SPEED 90
+#define MID_SPEED 130
+#define HIGH_SPEED 150
 
 //required libraries: Adafruit_MotorShield v2, PID by Brett, SparkFun Line Follower Array
 

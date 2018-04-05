@@ -33,8 +33,8 @@ int arrayline::getLinePosition() {
 	//assuming that 0 is to the left here, so switch if 0 is near the right
 	if (sensorType == LS_ANALOG) {
 		unsigned int sensors[8];
-	  	int position = arrayLineA->readLine(sensors);		//this is between 0 and 7000 so subtract 4000
-		position -= 4000;
+	  int position = arrayLineA->readLine(sensors);		//this is between 0 and 7000 so subtract 4000
+		position -= 3500;
 		return position; 
 	}
 	else { 
@@ -64,28 +64,23 @@ int arrayline::getWeightedValue(){
 //return and print calibration data, add output to arrays in h file
 //run this once, record data, store in H file, and then call setCalibration in constructor
 int* arrayline::calibrateSensors() {
-	if (sensorType == LS_ANALOG) {
-		int i;
-	   	for (i = 0; i < 250; i++)  { // make the calibration take about 5 seconds	  
-		    arrayLineA->calibrate();
-		    delay(20);
-	  	}
-
-	  	//this wont save in between runs, so print results and add to h file before competiton 
-	    calibratedMinimumOn = arrayLineA->calibratedMinimumOn;
-		calibratedMaximumOn = arrayLineA->calibratedMaximumOn;
-		calibratedMinimumOff = arrayLineA->calibratedMinimumOff;
-		calibratedMaximumOff = arrayLineA->calibratedMaximumOff;
-		printAnalogCalibration();
-	}
+  Serial.println("Starting Front Line Calibration (about 5s)");
+  delay(1000);
+  int i;
+  	for (i = 0; i < 350; i++)  { // make the calibration take about 5 seconds	  
+    arrayLineA->calibrate();
+    delay(20);
+  }
+  
+  //this wont save in between runs, so print results and add to h file before competiton 
+  printAnalogCalibration();
+	
 }
 
 void arrayline::setCalibration() {
 	printAnalogCalibration();
 	arrayLineA->calibratedMinimumOn = calibratedMinimumOn;
 	arrayLineA->calibratedMaximumOn = calibratedMaximumOn;
-	arrayLineA->calibratedMinimumOff = calibratedMinimumOff;
-	arrayLineA->calibratedMaximumOff = calibratedMaximumOff;
 }
 
 void arrayline::printAnalogCalibration() {
@@ -101,6 +96,7 @@ void arrayline::printAnalogCalibration() {
 	}
 	Serial.println();
 
+  /* we're leaving the emitter on so these don't really matter
 	Serial.print("calibratedMinimumOff: ");
 	for (int i = 0; i < 8; i++) {
 		Serial.print(String(calibratedMinimumOff[i]) + " ");
@@ -112,4 +108,5 @@ void arrayline::printAnalogCalibration() {
 		Serial.print(String(calibratedMaximumOff[i]) + " ");
 	}
 	Serial.println();
+ */
 }

@@ -30,15 +30,14 @@ private:
 	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;
-  	int8_t weights[8] = {-16, -8, -4, -2, 2, 4, 8, 16};
+	int8_t weights[8] = {-8, -4, -2, -1, 1, 2, 4, 8};
 
-  	int sensorType = 0; //ANALOG or DIGITAL
+	int sensorType = 0; //ANALOG or DIGITAL
 
-  	//for analog, calibration stuff
-  	unsigned int* calibratedMinimumOn;
+	//for analog, calibration stuff
+	unsigned int* calibratedMinimumOn;
 	unsigned int* calibratedMaximumOn;
-	unsigned int* calibratedMinimumOff;
-	unsigned int* calibratedMaximumOff;
+
 
 public:
 

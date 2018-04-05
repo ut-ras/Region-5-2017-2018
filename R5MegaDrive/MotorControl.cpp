@@ -108,9 +108,6 @@ void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
     l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
-
-
-  
 }
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
@@ -137,6 +134,7 @@ void MotorControl::calculateLSCorrections() {
   
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
+  
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
   //TODO add options for different orientations of the two array lines
@@ -158,21 +156,38 @@ void MotorControl::calculateLSCorrections() {
 
 
   //double sensors: -1 = left, 0 = middle, 1 = right
-  int frontSection = (lineSensorWeightBack <= -1500) ? (-1) : ((lineSensorWeightBack >= 1500)?1:0);
-  int backSection = (lineSensorWeightFront <= -1500) ? (-1) : ((lineSensorWeightFront >= 1500)?1:0);
+  int cutoff = 1500;
+  int frontSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
+  int backSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front array: " + String(frontSection) + " / back array: " + String(backSection));
   boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
   boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
   Serial.println("turn left: " + String(turnRight) + " / turn right: " + String(turnLeft));
-  if(turnLeft) {
-    turninPlace(fwd?LEFT:RIGHT);
+
+  int moveSpeed = 0;
+  if (currentCmd % 3 == 0) {
+    moveSpeed = LOW_SPEED;
   }
-  else if(turnRight) {
-    turninPlace(fwd?RIGHT:LEFT);
+  else if (currentCmd % 3 == 1) {
+    moveSpeed = MID_SPEED;
   }
   else {
-    moveStraight(fwd?FWD:BACK);
+    moveSpeed = HIGH_SPEED;
   }
+  
+  if(turnLeft) {
+    l_SetpointSpeed = 0;
+    r_SetpointSpeed = moveSpeed;
+  }
+  else if(turnRight) {
+    r_SetpointSpeed = 0;
+    l_SetpointSpeed = moveSpeed;
+  }
+  else {
+    r_SetpointSpeed = 0;
+    l_SetpointSpeed = moveSpeed;
+  }
+  moveStraight(fwd?FWD:BACK);
   
 }
 
@@ -243,37 +258,37 @@ void MotorControl::setMotorMode(int c) {
   currentCmd = c;
   switch (c) {
     case FWD1:
-      setSetpointSpeeds(45);
+      setSetpointSpeeds(LOW_SPEED);
       moveStraight(FWD);
       useArray=false;
       startTicks=l_Encoder->getPos();
       break;
     case FWD2:
-      setSetpointSpeeds(135);
+      setSetpointSpeeds(MID_SPEED);
       moveStraight(FWD);
       useArray=false;
       startTicks=l_Encoder->getPos();
       break;
     case FWD3:
-      setSetpointSpeeds(180);
+      setSetpointSpeeds(HIGH_SPEED);
       moveStraight(FWD);
       useArray=false;
       startTicks=l_Encoder->getPos();
       break;
     case BACK1:
-      setSetpointSpeeds(90);
+      setSetpointSpeeds(LOW_SPEED);
       moveStraight(BACK);
       break;
     case BACK2:
-      setSetpointSpeeds(135);
+      setSetpointSpeeds(MID_SPEED);
       moveStraight(BACK);
       break;
     case BACK3:
-      setSetpointSpeeds(180);
+      setSetpointSpeeds(HIGH_SPEED);
       moveStraight(BACK);
       break;
     case FWDNOLINE:
-      setSetpointSpeeds(90);
+      setSetpointSpeeds(LOW_SPEED);
       moveStraight(FWD);
       break;
     case LEFTIP:
