@@ -135,6 +135,10 @@ void MotorControl::calculateLSCorrections() {
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
   Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
+  
+  int rawWeighted = lineSensorFront->getWeightedValue();
+
+  double correction = rawWeighted/12000;
 
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
@@ -157,7 +161,7 @@ void MotorControl::calculateLSCorrections() {
 
 
   //double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 1000;
+  int cutoff = 3500;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
@@ -178,44 +182,18 @@ void MotorControl::calculateLSCorrections() {
   
   if(turnLeft) {
     l_SetpointSpeed = 0;
-    r_SetpointSpeed = 50;
+    r_SetpointSpeed = 90;
   }
   else if(turnRight) {
     r_SetpointSpeed = 0;
-    l_SetpointSpeed = 50;
+    l_SetpointSpeed = 90;
   }
   else {
-    r_SetpointSpeed = moveSpeed;
-    l_SetpointSpeed = moveSpeed;
+    r_SetpointSpeed = moveSpeed - correction * moveSpeed;
+    l_SetpointSpeed = moveSpeed + correction * moveSpeed;
   }
   moveStraight(fwd?FWD:BACK);
   
-}
-
-
-void MotorControl::offsetCorrection() {
-
-  int rawWeighted = lineSensorFront->getWeightedSum();
-
-  double correction = rawWeighted/12000;
-
-  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
-
-  int moveSpeed = 0;
-  if (currentCmd % 3 == 0) {
-    moveSpeed = LOW_SPEED;
-  }
-  else if (currentCmd % 3 == 1) {
-    moveSpeed = MID_SPEED;
-  }
-  else {
-    moveSpeed = HIGH_SPEED;
-  }
-
-  r_SetpointSpeed = moveSpeed - correction * moveSpeed;
-  l_SetpointSpeed = moveSpeed + correction * moveSpeed;
-
-  moveStraight(fwd?FWD:BACK);
 }
 
 //set desired speeds

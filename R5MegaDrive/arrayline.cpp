@@ -58,21 +58,15 @@ int arrayline::getLinePosition() {
 }
 
 int arrayline::getWeightedValue(){
-  int pos = getLinePosition();
-  return pos *= weights[(pos + 4000) / 1000];
-}
-
-int arrayline::getWeightedSum(){
-	int sum = 0;
+  int sum = 0;
 	unsigned int sensors[8];
 	arrayLineA->readLine(sensors);
 	for(int i = 0; i < 8; i++)
 	{
 		sum += weights[i]*sensors[i];
 	}
-	return sum;
+	return sum;;
 }
-
 
 
 //calibration stuff for the analog sensor (library's readLine function uses this calibration to create a weight)

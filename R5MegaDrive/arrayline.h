@@ -48,7 +48,6 @@ public:
 	//Get line sensor array for line sensor values
 	int getLinePosition();
 	int getWeightedValue();
-	int getWeightedSum();
 
  //for analog calibration
  int* calibrateSensors();
