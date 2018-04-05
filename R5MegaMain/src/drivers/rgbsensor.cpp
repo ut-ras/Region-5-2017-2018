@@ -103,25 +103,25 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
     color = grey;
   }*/
 
-  if((Red > 260 && Red < 280) && (Blue > 240 && Blue < 260) && (Green > 270 && Green < 290)){
+  if((Red > 241 && Red < 261) && (Blue > 163 && Blue < 183) && (Green > 189 && Green < 209)){
     color = red;
   }
-  else if ((Red > 265 && Red  < 285) && (Blue > 250 && Blue < 270) && (Green > 300 && Green < 320)){
+  else if ((Red > 236 && Red  < 256) && (Blue > 182 && Blue < 202) && (Green > 236 && Green < 256)){
     color = green;
   }
-  else if((Red > 245 && Red < 265) && (Blue > 255 && Blue < 275) && (Green > 280 && Green < 300)){
+  else if((Red > 205 && Red < 225) && (Blue > 204 && Blue < 224) && (Green > 207 && Green < 227)){
     color = blue;
   }
-  else if((Red > 300 && Red < 340) && (Blue > 255 && Blue < 295) && (Green > 315 && Green < 355)){
+  else if((Red > 337 && Red < 357) && (Blue > 218 && Blue < 238) && (Green > 295 && Green < 315)){
     color = yellow;
   }
-  else if((Red > 250 && Red  < 290) && (Blue > 240 && Blue < 280) && (Green > 270 && Green  < 310)){
+  else if((Red > 226 && Red  < 246) && (Blue > 174 && Blue < 194) && (Green > 193 && Green  < 213)){
     color = magenta;
   }
-  else if((Red > 240 && Red < 280) && (Blue >  260 && Blue < 300) && (Green > 290 && Green < 330)){
+  else if((Red > 219 && Red < 239) && (Blue >  228 && Blue < 248) && (Green > 244 && Green < 264)){
     color = cyan;
   }
-  else if((Red > 240 && Red < 280) && (Blue > 235 && Blue < 275) && (Green > 270 && Green <  310)){
+  else if((Red > 195 && Red < 215) && (Blue > 160 && Blue < 180) && (Green > 185 && Green <  205)){
     color = grey;
   }
 

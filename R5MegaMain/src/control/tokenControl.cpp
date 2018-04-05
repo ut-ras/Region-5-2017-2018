@@ -8,7 +8,7 @@
 //Distance to fall into the funnel - 5in
 #define funnelHeight 160
 //Resting position
-#define  resting 148
+#define  resting 150
 //Sets the direction of the magnet
 #define up true
 #define down false
@@ -27,11 +27,11 @@
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
-#define toRGBSensor 25
+#define toRGBSensor 22
 //Degrees between each funnel
 #define tokenToToken 45
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 20
+#define toFirstToken 23
 //Pin for the stepper motor - needs proper assignment
 #define stepPin 6
 #define dirPin 7
@@ -147,8 +147,10 @@ void tokenControl::rotateDiskFromSensor(int c){
 
 int tokenControl::readColour(){
 	int colour = 0;
-	//diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
-    //delay(500);
+	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
+    delay(500);
+    pulleyController->movePulley(resting+2	);
+    delay(100);
     magnetController->magnetOn();
 	colour = colourSensor->getColor();
     Serial.println(colour);

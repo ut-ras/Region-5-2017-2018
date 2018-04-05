@@ -7,7 +7,7 @@ r5servo::r5servo(){}
 
 //servo inputs go from 10 - 180 , running below 10 results in constant slow rotation
 void r5servo::init(int _servoPin){
-  servoPos = 148;
+  servoPos = 150;
   thisServo.attach(_servoPin);
   thisServo.write(servoPos);  //initialize the servo to the start servo position
   delay(100);

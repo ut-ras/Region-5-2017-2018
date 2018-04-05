@@ -57,19 +57,19 @@ void testTokenControl() {
   //tokenController->depositTokens(magenta);
     Serial.println("Start");
     //tokenController->readColour();
-    //tokenController->pickUpToken(); 
+    tokenController->pickUpToken(); 
     Serial.println("----");
     Serial.println("");
     delay(2000);
     while(1){
-      tokenController->readColour();
+    //tokenController->readColour();
     //tokenController->pickUpToken(); 
-    Serial.println("----");
-    Serial.println("");
-    delay(2000);
+//    Serial.println("----");
+//    Serial.println("");
+//    delay(2000);
     }
 }
-
+      
 void Blink(){
   digitalWrite(LED_BUILTIN, HIGH);
   delay(1000);
