@@ -133,6 +133,8 @@ void MotorControl::stopMotors() {
 //Private Functions
 //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
 void MotorControl::calculateLSCorrections() {
+  Serial.println("Line Sensor Corrections");
+  
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
@@ -141,31 +143,37 @@ void MotorControl::calculateLSCorrections() {
   // -4000 is left, +4000 is right, 1000 for each sensor
 
   //since we were using the wieghts only for finding position within the array, this should be the same thing
-  if(lineSensorWeightBack <= -1500) {
-    //l_correction = 80;
-    //r_correction = 0;
+
+
+  //single sensor 
+  /*if(lineSensorWeightFront <= -1500) {
     turninPlace(fwd?LEFT:RIGHT);
   }
-  /*else if((lineSensorWeight >= -8)&&(lineSensorWeight < -2)) {
-    //l_correction = 40;
-    //r_correction = 0;
-    turninPlace(fwd?RIGHT:LEFT);
-  }
-  else if((lineSensorWeight >= 2)&&(lineSensorWeight < 8)) {
-    //r_correction = 40;
-    //l_correction = 0;
-    turninPlace(fwd?LEFT:RIGHT);
-  }*/
-  else if(lineSensorWeightBack >= 1500) {
-    //r_correction = 80;
-    //l_correction = 0;
+  else if(lineSensorWeightFront >= 1500) {
     turninPlace(fwd?RIGHT:LEFT);
   }
   else {
-    //l_correction = 0;
-    //r_correction = 0;
+    moveStraight(fwd?FWD:BACK);
+  }*/
+
+
+  //double sensors: -1 = left, 0 = middle, 1 = right
+  int frontSection = (lineSensorWeightBack <= -1500) ? (-1) : ((lineSensorWeightBack >= 1500)?1:0);
+  int backSection = (lineSensorWeightFront <= -1500) ? (-1) : ((lineSensorWeightFront >= 1500)?1:0);
+  Serial.println("front array: " + String(frontSection) + " / back array: " + String(backSection));
+  boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
+  boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
+  Serial.println("turn left: " + String(turnRight) + " / turn right: " + String(turnLeft));
+  if(turnLeft) {
+    turninPlace(fwd?LEFT:RIGHT);
+  }
+  else if(turnRight) {
+    turninPlace(fwd?RIGHT:LEFT);
+  }
+  else {
     moveStraight(fwd?FWD:BACK);
   }
+  
 }
 
 //set desired speeds
