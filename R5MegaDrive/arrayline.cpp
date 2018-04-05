@@ -10,9 +10,9 @@ arrayline::arrayline(int stype){
 		arrayLineA = new QTRSensorsAnalog(&pins[0], 8);
 
 		//set up calibration data from saved tested values
-		//setCalibration();
+		setCalibration();
     //or, run calibration
-    calibrateSensors();
+    //calibrateSensors();
 	}
 	else {
 		arrayLineD = new SensorBar(I2C_ADDRESS);
@@ -72,8 +72,8 @@ int* arrayline::calibrateSensors() {
     delay(20);
   }
   
-  calibratedMinimumOn = arrayLineA.calibratedMinimumOn;
-  calibratedMaximumOn = arrayLineA.calibratedMaximumOn;
+  calibratedMinimumOn = arrayLineA->calibratedMinimumOn;
+  calibratedMaximumOn = arrayLineA->calibratedMaximumOn;
   
   //this wont save in between runs, so print results and add to h file before competiton 
   printAnalogCalibration();

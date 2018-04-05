@@ -35,8 +35,8 @@ private:
 	int sensorType = 0; //ANALOG or DIGITAL
 
 	//for analog, calibration stuff
-	unsigned int* calibratedMinimumOn;
-	unsigned int* calibratedMaximumOn;
+	unsigned int calibratedMinimumOn[8] = {37, 36, 35, 33, 32, 34, 34, 36};
+	unsigned int calibratedMaximumOn[8] = {889, 834, 766, 791, 770, 781, 804, 802};
 
 
 public:
