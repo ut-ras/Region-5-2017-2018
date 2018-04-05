@@ -157,13 +157,13 @@ void MotorControl::calculateLSCorrections() {
 
 
   //double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 1500;
+  int cutoff = 1000;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
   boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
   boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
-  Serial.println("turn left: " + String(turnRight) + " / turn right: " + String(turnLeft));
+  Serial.println("turn right: " + String(turnRight) + " / turn left: " + String(turnLeft));
 
   int moveSpeed = 0;
   if (currentCmd % 3 == 0) {
@@ -178,11 +178,11 @@ void MotorControl::calculateLSCorrections() {
   
   if(turnLeft) {
     l_SetpointSpeed = 0;
-    r_SetpointSpeed = LOW_SPEED;
+    r_SetpointSpeed = 50;
   }
   else if(turnRight) {
     r_SetpointSpeed = 0;
-    l_SetpointSpeed = LOW_SPEED;
+    l_SetpointSpeed = 50;
   }
   else {
     r_SetpointSpeed = moveSpeed;

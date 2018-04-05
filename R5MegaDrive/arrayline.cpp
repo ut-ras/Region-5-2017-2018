@@ -34,6 +34,11 @@ int arrayline::getLinePosition() {
 	if (sensorType == LS_ANALOG) {
 		unsigned int sensors[8];
 	  int sum = arrayLineA->readLine(sensors);		//this is between 0 and 7000 so subtract 4000
+	  	for(int i = 0; i < 8; i++)
+	  	{
+	  		Serial.print(String(sensors[i]) + " ");
+	  	}
+	  	Serial.println("");
 		sum -= 3500;
 		return sum; 
 	}
@@ -44,7 +49,7 @@ int arrayline::getLinePosition() {
 		//double notZero = 0;
 		for(int i = 0; i<8; i++) {
 		  	//sum += weights[i]*((rawValue>>i)&0x01);
-			sum += i*1000*((rawValue>>i)&0x01);
+			sum += i*100*((rawValue>>i)&0x01);
 		  	//if (((rawValue>>i) & 0x01) != 0) { notZero++; }
 		}
 		sum -= 3500;
@@ -72,8 +77,8 @@ int* arrayline::calibrateSensors() {
     delay(20);
   }
 
-  memcpy(calibratedMinimumOn, arrayLineA->calibratedMinimumOn, sizeof(8 * sizeof(int)));
-  memcpy(calibratedMaximumOn , arrayLineA->calibratedMaximumOn, sizeof(8 * sizeof(int)));
+  memcpy(calibratedMinimumOn, arrayLineA->calibratedMinimumOn, 8 * sizeof(sizeof(int)));
+  memcpy(calibratedMaximumOn , arrayLineA->calibratedMaximumOn, 8 * sizeof(sizeof(int)));
   
   //this wont save in between runs, so print results and add to h file before competiton 
   printAnalogCalibration();
@@ -84,8 +89,15 @@ int* arrayline::calibrateSensors() {
 void arrayline::setCalibration() {
 	printAnalogCalibration();
   arrayLineA->calibrate();
-	memcpy(arrayLineA->calibratedMinimumOn, calibratedMinimumOn, sizeof(8 * sizeof(int)));
-  memcpy(arrayLineA->calibratedMaximumOn , calibratedMaximumOn, sizeof(8 * sizeof(int)));
+	memcpy(arrayLineA->calibratedMinimumOn, calibratedMinimumOn, 8 * sizeof(sizeof(int)));
+  memcpy(arrayLineA->calibratedMaximumOn , calibratedMaximumOn, 8 * sizeof(sizeof(int)));
+
+  Serial.println("calibration data");
+  for (int i = 0; i < 8; i++) {
+  	Serial.print(arrayLineA->calibratedMinimumOn[i]);
+  	Serial.print(" ");
+  }
+  Serial.println();
 }
 
 void arrayline::printAnalogCalibration() {

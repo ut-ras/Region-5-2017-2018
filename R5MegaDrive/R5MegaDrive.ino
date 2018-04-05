@@ -1,3 +1,4 @@
+
 #include "MotorControl.h"
 #include <Arduino.h>
 
@@ -39,7 +40,7 @@ void setup() {
 
 
   //test
-  m->setMotorMode(FWD1);
+  //m->setMotorMode(FWD2);
 }
 
 void loop() {
