@@ -4,11 +4,11 @@
 
 //Servo Distances
 //Distance from max height to ground - 10->5in
-#define maxHeight 174
+#define maxHeight 175
 //Distance to fall into the funnel - 5in
 #define funnelHeight 160
 //Resting position
-#define  resting 150
+#define  resting 148
 //Sets the direction of the magnet
 #define up true
 #define down false
@@ -27,11 +27,11 @@
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
-#define toRGBSensor 28
+#define toRGBSensor 25
 //Degrees between each funnel
 #define tokenToToken 45
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 17
+#define toFirstToken 20
 //Pin for the stepper motor - needs proper assignment
 #define stepPin 6
 #define dirPin 7
@@ -62,8 +62,10 @@ int tokenControl::pickUpToken() {
     //int colour = Color::magenta;
     int colour = readColour();
     //int colour = magenta;
-    if(colour == Color::unknown)
+    if(colour == Color::unknown){
+        resetDisk(-1);
         return colour;
+    }
 
     //Rotates the disk to the correct funnel, drops the tokens, then resets magnet
     rotateDiskFromSensor(colour);
@@ -145,9 +147,9 @@ void tokenControl::rotateDiskFromSensor(int c){
 
 int tokenControl::readColour(){
 	int colour = 0;
-	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
-    delay(500);
-    //magnetController->magnetOn();
+	//diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
+    //delay(500);
+    magnetController->magnetOn();
 	colour = colourSensor->getColor();
     Serial.println(colour);
 	return colour;
@@ -155,7 +157,11 @@ int tokenControl::readColour(){
 
 void tokenControl::resetDisk(int c) {
     //Finds most efficient direction for rotation
-    if(c > 3){
+    if(c == -1){
+        diskController->rotateDisk(toRGBSensor, stepper::COUNTERCLOCKWISE);
+        delay(500);
+    }
+    else if(c > 3){
         diskController->rotateDisk((7-c)*tokenToToken, stepper::CLOCKWISE);
         //delay(400 * (7-c));
     }else{
