@@ -44,8 +44,11 @@ public:
   char* PLDatatoString(pointlineData data);
 
   intersectionSensors(Graph * mapGraph, int l0pin, int l1pin, int l2pin, int r0pin, int r1pin, int r2pin);
+
   pointlineData getData();
   pointlineData getDataOverTime(long waitTimeMs);
+  pointlineData getDataOverTimeRolling(long waitTimeMs);
+
   pointlineData getNextIntersection();  //based on current location and direction in map
 
   pointlineData getTurn45Intersection(int steps);  //for turn in place
@@ -67,5 +70,8 @@ private:
   pointlineData *dataRedNorth;
 
   pointlineData getPointlineFor(Color intersectionType, int dir);
+
+
+  int pointlineTimers[6] = {0};
 };
 #endif

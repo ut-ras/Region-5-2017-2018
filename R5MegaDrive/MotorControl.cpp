@@ -134,7 +134,7 @@ void MotorControl::calculateLSCorrections() {
   
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
-    Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
+  Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
 
   bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
 
