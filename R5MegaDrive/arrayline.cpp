@@ -68,6 +68,17 @@ int arrayline::getWeightedValue(){
 	return sum;;
 }
 
+int arrayline::getWeightedAverage() {
+  	int sum = 0;
+	unsigned int sensors[8];
+	arrayLineA->readLine(sensors);
+	int numOn = 0;
+	for(int i = 0; i < 8; i++) {
+		sum += weights[i]*sensors[i];
+		if (sensors[i] > 1000) {numOn++;}
+	}
+	return sum / numOn;;
+}
 
 //calibration stuff for the analog sensor (library's readLine function uses this calibration to create a weight)
 
