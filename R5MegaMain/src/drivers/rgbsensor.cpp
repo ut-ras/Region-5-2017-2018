@@ -115,7 +115,7 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
   else if((Red > 6000) && (Blue > 4450) && (Green > 5500)){
     color = yellow;
   }
-  else if((Red > 4500 && Red  < 4750) && (Blue > 3700 && Blue < 4000) && (Green > 4050 && Green  < 4300)){
+  else if((Red > 4400 && Red  < 4750) && (Blue > 3700 && Blue < 4000) && (Green > 4050 && Green  < 4300)){
     color = magenta;
   }
   else if((Red > 4300 && Red < 4600) && (Blue >  4600 && Blue < 5000) && (Green > 5000 && Green < 5300)){
