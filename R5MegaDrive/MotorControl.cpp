@@ -167,7 +167,7 @@ void MotorControl::calculateLSCorrections() {
   Serial.println("turn right: " + String(turnRight) + " / turn left: " + String(turnLeft));
 
   int rawWeighted = lineSensorFront->getWeightedValue();
-  double correction = rawWeighted/12000;
+  double correction = rawWeighted/12000.0;
   Serial.println("speed correction: " + String(correction));
   
   if(turnLeft) {
