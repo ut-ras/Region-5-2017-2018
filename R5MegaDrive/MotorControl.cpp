@@ -121,7 +121,68 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
   }
 }
 
-void MotorControl::stopMotors() {
+void MotorControl::stopMotors(int lastCmd) {
+  setMotorSpeeds(0, 0);
+  int r_pos_s = r_Encoder->getPos();
+  int l_pos_s = l_Encoder->getPos();
+
+  int r_pos_last = r_pos_s;
+  int l_pos_last = l_pos_s;
+
+  delay(5);
+  int r_pos_current = r_Encoder->getPos();
+  int l_pos_current = l_Encoder->getPos();
+
+  while ((r_pos_last != r_current) || (l_pos_last != l_current)) {
+    r_pos_current = r_Encoder->getPos();
+    l_pos_current = l_Encoder->getPos();
+    delay(5);
+  }
+
+  int l_diff = abs(l_pos_current - l_pos_s);
+  int r_diff = abs(r_pos_current - r_pos_s);
+
+
+
+  //correct motors
+  if ((lastCmd == FWD1) || (lastCmd == FWD2) || (lastCmd == FWD3) || (lastCmd == FWDNOLINE)) {
+    setMotorSpeeds(20, 20);
+    moveStraight(BACK);
+
+  }
+  else if ((lastCmd == BACK1) || (lastCmd == BACK2) || (lastCmd == BACK3)) {
+    setMotorSpeeds(20, 20);
+    moveStraight(FWD);
+
+  }
+  //add if we want correction for the turn functions
+  /*else if ((lastCmd == LEFTIP) || (lastCmd == LEFT45) || (lastCmd == LEFT90) || (lastCmd == LEFT135) || (lastCmd == LEFT180)) {
+
+  }
+  else if ((lastCmd == RIGHTIP) || (lastCmd == RIGHT45) || (lastCmd == RIGHT90) || (lastCmd == RIGHT135) || (lastCmd == RIGHT180) {
+
+  }*/
+  else {
+    return;
+  }
+
+  //count encoder ticks for correction
+  r_pos_s = r_Encoder->getPos();
+  l_pos_s = l_Encoder->getPos();
+
+  while ((abs(l_pos_s - l_pos_current) < l_diff) || (abs(r_pos_s - r_pos_current) < r_diff)) {
+    r_pos_current = r_Encoder->getPos();
+    l_pos_current = l_Encoder->getPos();
+
+    if (abs(l_pos_s - l_pos_current) > l_diff) {
+      l_Motor->setSpeed(0);
+    }
+    else if (abs(r_pos_s - r_pos_current) > r_diff) {
+      r_Motor->setSpeed(0);
+    }
+    delay(5);
+  }
+
   setMotorSpeeds(0, 0);
 }
 
@@ -132,21 +193,17 @@ void MotorControl::stopMotors() {
 void MotorControl::calculateLSCorrections() {
   Serial.println("Line Sensor Corrections");
   
+  //grab fwd vs back and move speed
+  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
+  int moveSpeed = 0;
+  if (currentCmd % 3 == 0) { moveSpeed = LOW_SPEED; }
+  else if (currentCmd % 3 == 1) { moveSpeed = MID_SPEED; }
+  else { moveSpeed = HIGH_SPEED; }
+
+  //get both line sensor positions -4000 is left, +4000 is right, 1000 for each sensor
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
   Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
-  
-  int rawWeighted = lineSensorFront->getWeightedValue();
-
-  double correction = rawWeighted/12000;
-
-  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
-
-  //TODO add options for different orientations of the two array lines
-  // -4000 is left, +4000 is right, 1000 for each sensor
-
-  //since we were using the wieghts only for finding position within the array, this should be the same thing
-
 
   //single sensor 
   /*if(lineSensorWeightFront <= -1500) {
@@ -160,26 +217,20 @@ void MotorControl::calculateLSCorrections() {
   }*/
 
 
-  //double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 3500;
+  //calculate general position for each sensor. double sensors: -1 = left, 0 = middle, 1 = right
+  int cutoff = 3000;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
+
   boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
   boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
   Serial.println("turn right: " + String(turnRight) + " / turn left: " + String(turnLeft));
 
-  int moveSpeed = 0;
-  if (currentCmd % 3 == 0) {
-    moveSpeed = LOW_SPEED;
-  }
-  else if (currentCmd % 3 == 1) {
-    moveSpeed = MID_SPEED;
-  }
-  else {
-    moveSpeed = HIGH_SPEED;
-  }
-  
+  int rawWeighted = lineSensorFront->getWeightedValue();
+  double correction = double(rawWeighted)/12000.0;
+  Serial.println("speed correction: " + String(correction));
+
   if(turnLeft) {
     l_SetpointSpeed = 0;
     r_SetpointSpeed = 90;
@@ -260,6 +311,7 @@ void MotorControl::setMotorSpeeds(int l_rotSpeed, int r_rotSpeed) {     //set ac
 //const uint8_t setMotorDirectionConstants[9] = {FWD, FWD, FWD, BACK, BACK, BACK, LEFT, RIGHT, 0};
 void MotorControl::setMotorMode(int c) {
   Serial.println("Set Command: " + String(c));
+  int lastCmd = currentCmd;
   currentCmd = c;
   switch (c) {
     case FWD1:
@@ -329,16 +381,16 @@ void MotorControl::setMotorMode(int c) {
       turnManeuver(RIGHT, 4);
       break;
     case STOP:
-      stopMotors();
+      stopMotors(lastCmd);
       break;
     default:
       Serial.println("Undefined Command Error");
-      stopMotors();
+      stopMotors(lastCmd);
       break;
   }
 
   /*if(setMotorModeConstants[c] == 0) {
-    stopMotors();
+    stopMotors(lastCmd);
     return;
   }
   else {
@@ -504,7 +556,7 @@ void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
     if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
       setSetpointSpeeds(0, 300);
     }
-    stopMotors();
+    stopMotors(currentCmd);
 }
 
 void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
@@ -531,7 +583,7 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
     if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
       setSetpointSpeeds(0, 200);
     }
-    stopMotors();
+    stopMotors(currentCmd);
 }
 
 

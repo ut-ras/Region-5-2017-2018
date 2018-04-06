@@ -48,11 +48,12 @@ public:
 	//Get line sensor array for line sensor values
 	int getLinePosition();
 	int getWeightedValue();
+	int getWeightedAverage();
 
- //for analog calibration
- int* calibrateSensors();
- void printAnalogCalibration();
- void setCalibration();
+	 //for analog calibration
+	 int* calibrateSensors();
+	 void printAnalogCalibration();
+	 void setCalibration();
 
 };
 
