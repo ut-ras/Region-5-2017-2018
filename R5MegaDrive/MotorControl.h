@@ -46,7 +46,7 @@ public:
 
   void moveStraight(int dir);             //use Directions enum FWD or BACK
   void turninPlace(int dir);   //use Directions enum LEFT or RIGHT
-  void stopMotors();
+  void stopMotors(int lastCmd);
 
   //set desired speeds for PID
   void setSetpointSpeeds(int rotSpeed);                     //deg / sec
