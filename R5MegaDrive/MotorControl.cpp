@@ -132,17 +132,21 @@ void MotorControl::stopMotors() {
 void MotorControl::calculateLSCorrections() {
   Serial.println("Line Sensor Corrections");
   
-  //grab fwd vs back and move speed
-  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
-  int moveSpeed = 0;
-  if (currentCmd % 3 == 0) { moveSpeed = LOW_SPEED; }
-  else if (currentCmd % 3 == 1) { moveSpeed = MID_SPEED; }
-  else { moveSpeed = HIGH_SPEED; }
-
-  //get both line sensor positions -4000 is left, +4000 is right, 1000 for each sensor
   int lineSensorWeightBack = lineSensorBack->getLinePosition();
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
   Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
+  
+  int rawWeighted = lineSensorFront->getWeightedValue();
+
+  double correction = rawWeighted/12000;
+
+  bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
+
+  //TODO add options for different orientations of the two array lines
+  // -4000 is left, +4000 is right, 1000 for each sensor
+
+  //since we were using the wieghts only for finding position within the array, this should be the same thing
+
 
   //single sensor 
   /*if(lineSensorWeightFront <= -1500) {
@@ -156,18 +160,25 @@ void MotorControl::calculateLSCorrections() {
   }*/
 
 
-  //calculate general position for each sensor. double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 3000;
+  //double sensors: -1 = left, 0 = middle, 1 = right
+  int cutoff = 3500;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
-
   boolean turnRight = ((frontSection == 0) && (backSection == -1)) || (frontSection == 1);
   boolean turnLeft = ((frontSection == 0) && (backSection == 1)) || (frontSection == -1);
   Serial.println("turn right: " + String(turnRight) + " / turn left: " + String(turnLeft));
 
-  int rawWeighted = lineSensorFront->getWeightedValue();
-  double correction = rawWeighted/12000;
+  int moveSpeed = 0;
+  if (currentCmd % 3 == 0) {
+    moveSpeed = LOW_SPEED;
+  }
+  else if (currentCmd % 3 == 1) {
+    moveSpeed = MID_SPEED;
+  }
+  else {
+    moveSpeed = HIGH_SPEED;
+  }
   
   if(turnLeft) {
     l_SetpointSpeed = 0;
