@@ -133,7 +133,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int r_pos_current = r_Encoder->getPos();
   int l_pos_current = l_Encoder->getPos();
 
-  while ((r_pos_last != r_current) || (l_pos_last != l_current)) {
+  while ((r_pos_last != r_pos_current) || (l_pos_last != l_pos_current)) {
     r_pos_current = r_Encoder->getPos();
     l_pos_current = l_Encoder->getPos();
     delay(5);
@@ -142,7 +142,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int l_diff = abs(l_pos_current - l_pos_s);
   int r_diff = abs(r_pos_current - r_pos_s);
 
-
+  Serial.println("encoder overshoot l:" + String(l_diff) + " r:" + String(r_diff));
 
   //correct motors
   if ((lastCmd == FWD1) || (lastCmd == FWD2) || (lastCmd == FWD3) || (lastCmd == FWDNOLINE)) {

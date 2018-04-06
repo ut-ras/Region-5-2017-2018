@@ -4,7 +4,7 @@
 
 //Servo Distances
 //Distance from max height to ground - 10->5in
-#define maxHeight 175
+#define maxHeight 176
 //Distance to fall into the funnel - 5in
 #define funnelHeight 160
 //Resting position
