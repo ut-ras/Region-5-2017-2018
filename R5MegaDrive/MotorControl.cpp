@@ -142,7 +142,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int l_diff = abs(l_pos_current - l_pos_s);
   int r_diff = abs(r_pos_current - r_pos_s);
 
-
+  Serial.println("encoder overshoot l:" + String(l_diff) + " r:" + String(r_diff));
 
   //correct motors
   if ((lastCmd == FWD1) || (lastCmd == FWD2) || (lastCmd == FWD3) || (lastCmd == FWDNOLINE)) {
