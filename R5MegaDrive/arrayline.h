@@ -30,7 +30,7 @@ private:
 	bool boolArray [LINESENSOR_SIZE];
 
 	uint8_t rawValue;
-	int8_t weights[8] = {-8, -4, -2, -1, 1, 2, 4, 8};
+	int8_t weights[8] = {-8, -4, -3, -2, 2, 3, 4, 8};
 
 	int sensorType = 0; //ANALOG or DIGITAL
 
