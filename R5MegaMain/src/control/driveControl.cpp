@@ -44,6 +44,22 @@ void driveControl::stop() {
   sendCommand(STOP);
 }
 
+void driveControl::forwardAtStart() {
+  move(true);
+  pointlineData next = linesensors->getPointlineFor(green, 4); //should emulate crossing the lines
+  pointlineData current;
+  Serial.println("next " + String(linesensors->PLDatatoString(next)));
+  delay(1000);  //allow pointline sensors to get past the current intersection before polling
+  
+  //getDataOverTimeRolling of getDataOverTime doesnt work
+  while((current = linesensors->getDataOverTimeRolling(500)) != next) {
+    Serial.println("current " + String(linesensors->PLDatatoString(current)));
+    //Serial.println("next " + String(linesensors->PLDatatoString(next)));
+   delay(5);
+  }
+  stop();
+}
+
 
 
 //Complex Move Commands
