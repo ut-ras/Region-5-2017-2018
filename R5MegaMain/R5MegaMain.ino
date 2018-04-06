@@ -28,9 +28,9 @@ void setup() {
   //mapGraph->printSerial();
 
   delay(2000);
-  //testTokenControl();
+  testTokenControl();
   //printIntersectionData();
-  testDriveControl();
+  //testDriveControl();
 
 }
 
@@ -57,16 +57,17 @@ void testTokenControl() {
   //tokenController->depositTokens(magenta);
     Serial.println("Start");
     //tokenController->readColour();
-    tokenController->pickUpToken(); 
-    Serial.println("----");
-    Serial.println("");
+    //tokenController->pickUpToken(); 
+    //Serial.println("----");
+    //Serial.println("");
     delay(2000);
     while(1){
     //tokenController->readColour();
     //tokenController->pickUpToken(); 
-//    Serial.println("----");
-//    Serial.println("");
-//    delay(2000);
+    tokenController->pickUpToken(); 
+    Serial.println("----");
+    Serial.println("");
+    delay(5000);
     }
 }
       

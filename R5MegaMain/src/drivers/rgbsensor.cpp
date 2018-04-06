@@ -1,7 +1,7 @@
 #include "rgbsensor.h"
 
 rgbsensor::rgbsensor() {
-  tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
+  tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_60X);
   boolean error = false;
   if (!tcs.begin()) {
     error = true;
@@ -72,7 +72,7 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
   // int cyanThreshold = 250;
   // int greenThreshold = 150;
   // int purpleThreshold = 50;
-  Color color = unknown;
+  Color color = grey;
 
   /*if((((Red - Blue) > redThreshold) && ((Red - Green) > redThreshold)))
   {
@@ -103,25 +103,25 @@ Color rgbsensor::getClosestColor(int Red,int Green, int Blue)
     color = grey;
   }*/
 
-  if((Red > 241 && Red < 261) && (Blue > 163 && Blue < 183) && (Green > 189 && Green < 209)){
+  if((Red > 4600 && Red < 4950) && (Blue > 3350 && Blue < 3650) && (Green > 3800 && Green < 4100)){
     color = red;
   }
-  else if ((Red > 236 && Red  < 256) && (Blue > 182 && Blue < 202) && (Green > 236 && Green < 256)){
+  else if ((Red > 4780 && Red  < 4980) && (Blue > 3950 && Blue < 4150) && (Green > 4950 && Green < 5150)){
     color = green;
   }
-  else if((Red > 205 && Red < 225) && (Blue > 204 && Blue < 224) && (Green > 207 && Green < 227)){
+  else if((Red > 4030 && Red < 4230) && (Blue > 4000  && Blue < 4300) && (Green > 4250 && Green < 4400)){
     color = blue;
   }
-  else if((Red > 337 && Red < 357) && (Blue > 218 && Blue < 238) && (Green > 295 && Green < 315)){
+  else if((Red > 6000) && (Blue > 4450) && (Green > 5500)){
     color = yellow;
   }
-  else if((Red > 226 && Red  < 246) && (Blue > 174 && Blue < 194) && (Green > 193 && Green  < 213)){
+  else if((Red > 4500 && Red  < 4750) && (Blue > 3700 && Blue < 4000) && (Green > 4050 && Green  < 4300)){
     color = magenta;
   }
-  else if((Red > 219 && Red < 239) && (Blue >  228 && Blue < 248) && (Green > 244 && Green < 264)){
+  else if((Red > 4300 && Red < 4600) && (Blue >  4600 && Blue < 5000) && (Green > 5000 && Green < 5300)){
     color = cyan;
   }
-  else if((Red > 195 && Red < 215) && (Blue > 160 && Blue < 180) && (Green > 185 && Green <  205)){
+  else if((Red > 3900 && Red < 4200) && (Blue > 3500 && Blue < 3800) && (Green > 4000 && Green <  4300)){
     color = grey;
   }
 
