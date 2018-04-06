@@ -125,26 +125,31 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
 
 void MotorControl::stopMotors(int lastCmd) {
   setMotorSpeeds(0, 0);
+
+  int waitTimeMs = 10;
   int r_pos_s = r_Encoder->getPos();
   int l_pos_s = l_Encoder->getPos();
 
   int r_pos_last = r_pos_s;
   int l_pos_last = l_pos_s;
 
-  delay(5);
+  delay(waitTimeMs);
   int r_pos_current = r_Encoder->getPos();
   int l_pos_current = l_Encoder->getPos();
 
+  int loopCount = 0;
   while ((r_pos_last != r_pos_current) || (l_pos_last != l_pos_current)) {
+    r_pos_last = r_current;
+    l_pos_last = l_current;
     r_pos_current = r_Encoder->getPos();
     l_pos_current = l_Encoder->getPos();
-    delay(5);
+    delay(waitTimeMs);
   }
 
   int l_diff = abs(l_pos_current - l_pos_s);
   int r_diff = abs(r_pos_current - r_pos_s);
 
-  Serial.println("encoder overshoot l:" + String(l_diff) + " r:" + String(r_diff));
+  Serial.println("encoder overshoot l:" + String(l_diff) + " r:" + String(r_diff) + " loopcount:" + String(loopCount));
 
   //correct motors
   if ((lastCmd == FWD1) || (lastCmd == FWD2) || (lastCmd == FWD3) || (lastCmd == FWDNOLINE)) {
