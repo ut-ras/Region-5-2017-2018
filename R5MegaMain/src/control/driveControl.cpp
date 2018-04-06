@@ -55,12 +55,27 @@ void driveControl::forwardToIntersection() {
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
   //getDataOverTimeRolling of getDataOverTime doesnt work
-  while((current = linesensors->getDataOverTimeRolling(500)) != next) {
+  while((current = linesensors->getDataOverTimeRolling(300)) != next) {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));
     //Serial.println("next " + String(linesensors->PLDatatoString(next)));
-   delay(5);
+    delay(5);
   }
   stop();
+  Serial.println("found intersection:  " + String(linesensors->PLDatatoString(current)));
+
+  delay(100);
+
+  //back up after overshoot
+  if ((current = linesensors->getDataOverTime(20)) != next) {
+    setSpeed(1);
+    move(false);
+    while((current = linesensors->getDataOverTimeRolling(50)) != next) {
+      delay(5);
+    }
+    stop();
+    Serial.println("found intersection: " + String(linesensors->PLDatatoString(current)));
+  }
+
   mapGraph->setCurrentNode(mapGraph->getNextIntersection());
 }
 

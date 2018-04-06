@@ -69,6 +69,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
   useArray=false;
   startTicks = 0;
 
+  l_SetpointSpeed = 0;
+  r_SetpointSpeed = 0;
 }
 
 
@@ -228,7 +230,7 @@ void MotorControl::calculateLSCorrections() {
   Serial.println("turn right: " + String(turnRight) + " / turn left: " + String(turnLeft));
 
   int rawWeighted = lineSensorFront->getWeightedValue();
-  double correction = double(rawWeighted)/12000.0;
+  double correction = rawWeighted/12000.0;
   Serial.println("speed correction: " + String(correction));
 
   if(turnLeft) {
