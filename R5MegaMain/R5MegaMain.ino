@@ -83,9 +83,12 @@ void testDriveControl() {
   setCurrentLocationForTest(R5, 4);  
   Serial.println(mapGraph->getCurrentNode()->toString());
   driveController->forwardToIntersection();
-  delay(2000);
+  Serial.println(mapGraph->getCurrentNode()->toString());
+  delay(3000);
   driveController->forwardToIntersection();
-
+  Serial.println(mapGraph->getCurrentNode()->toString());
+  delay(3000);
+  driveController->turn45(true, 2);
   
 }
 
