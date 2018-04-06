@@ -133,7 +133,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int r_pos_current = r_Encoder->getPos();
   int l_pos_current = l_Encoder->getPos();
 
-  while ((r_pos_last != r_current) || (l_pos_last != l_current)) {
+  while ((r_pos_last != r_pos_current) || (l_pos_last != l_pos_current)) {
     r_pos_current = r_Encoder->getPos();
     l_pos_current = l_Encoder->getPos();
     delay(5);
