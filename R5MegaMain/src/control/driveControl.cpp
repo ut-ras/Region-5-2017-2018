@@ -61,11 +61,16 @@ void driveControl::forwardAtStart() {
 }
 
 void driveControl::forwardAcrossGrey() {
-  sendCommand(FWDNOLINE);
   pointlineData next = linesensors->createPointlineData(0, 0, 1, 0, 0, 1); //should emulate crossing the lines
+  if (mapGraph->getCurrentDirection() % 2 == 0) {
+    next = linesensors->createPointlineData(0, 1, 0, 0, 1, 0); //should emulate crossing the lines
+  }
+
+  sendCommand(FWDNOLINE);
+
   pointlineData current;
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
-  delay(1000);  //allow pointline sensors to get past the current intersection before polling
+  delay(500);  //allow pointline sensors to get past the current intersection before polling
   
   while((current = linesensors->getDataOverTimeRolling(300)) != next) {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));

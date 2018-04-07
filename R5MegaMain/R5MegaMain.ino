@@ -372,27 +372,37 @@ void round2(){
 //Drop off tokens in the corner boxes (doesn't handle grey right now)
 void dropOffTokens(int color, int level) {
 
-  int boxDir[] = {7, 6, 5, 3, 2, 1};  //direction of each box relative to its node, indexed by color enum
-  
-  int dir2Box = boxDir[color];
-  driveController->turnTo(dir2Box);
+  if (color == grey) {
+    driveController->sendCommand(FWDNOLINE);
+    delay(1000);
+    driveController->stop();
+    tokenController->depositAllTokens(color);
+    driverController->forwardAcrossGrey();
 
-  for(int i=0; i<level; i++)
-    driveController->forwardToIntersection(); //take the diagonal path until you reach the box
+  }
+  else {
+    int boxDir[] = {7, 6, 5, 3, 2, 1};  //direction of each box relative to its node, indexed by color enum
+    
+    int dir2Box = boxDir[color];
+    driveController->turnTo(dir2Box);
 
-  driveController->sendCommand(FWDNOLINE);
-  delay(1000);
-  driveController->stop();
-  tokenController->depositAllTokens(color);
-  
-  //return to the node we came from
-  int dir2Node = dir2Box - 4;                         
-  dir2Node = (dir2Node < 0)? dir2Node + 8 : dir2Node; //make sure to wrap around to 7 if we go negative
-  driveController->turnTo(dir2Node);
+    for(int i=0; i<level; i++)
+      driveController->forwardToIntersection(); //take the diagonal path until you reach the box
 
-  //driveController->forwardToIntersection(); //may require an extra call to get past the box edge
-  for(int i=0; i<level; i++)
-    driveController->forwardToIntersection();
+    driveController->sendCommand(FWDNOLINE);
+    delay(1000);
+    driveController->stop();
+    tokenController->depositAllTokens(color);
+    
+    //return to the node we came from
+    int dir2Node = dir2Box - 4;                         
+    dir2Node = (dir2Node < 0)? dir2Node + 8 : dir2Node; //make sure to wrap around to 7 if we go negative
+    driveController->turnTo(dir2Node);
+
+    //driveController->forwardToIntersection(); //may require an extra call to get past the box edge
+    for(int i=0; i<level; i++)
+      driveController->forwardToIntersection();
+  }
 }
 
 void red2cyan(bool collectTokens) {
