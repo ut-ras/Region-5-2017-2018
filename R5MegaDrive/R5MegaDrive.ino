@@ -19,6 +19,16 @@ void  initI2c();
 //int isrCount[2] = {0, 0};
 int8_t newCommand = -1;
 
+const int stopButton = 3; //TODO: Change the pin number
+
+void checkStop(){
+  if(digitalRead(stopButton) == 0){
+    while(true){
+      delay(1000);
+    }
+  }
+}
+
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
   delay(1000);
@@ -29,6 +39,8 @@ void setup() {
   Serial.println("setup i2c");
   initI2c();
 
+  pinMode(stopButton, INPUT_PULLUP);
+  
   //these will halt the program and print best values when done
   //use one at a time. P, set P in MotorControl, I, set I in MotorControl
   //we can tune on the field by running this, then plug into serial to see result
@@ -44,6 +56,8 @@ void setup() {
 }
 
 void loop() {
+  checkStop();
+  
   //test different loop delays, LOOP_DELAY in MotorControl.h
   delay(LOOP_DELAY);
 
@@ -54,7 +68,6 @@ void loop() {
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
 
-  
   if (newCommand >= 0) {
     Serial.println("New Command: " + String(newCommand));
     m->setMotorMode(newCommand);

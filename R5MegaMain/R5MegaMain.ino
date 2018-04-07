@@ -11,6 +11,7 @@
 
 #define FWD true
 
+//TODO: Change the button pin numbers to the appropriate pins
 const int startButton = 2;
 const int stopButton = 3;
 
@@ -25,13 +26,8 @@ void waitForStart() {
   }
 }
 
-void checkStop(){
-  if(digitalRead(stopButton) == 0){
-    // TODO: Command telling the motor to stop
-    while(true){
-      delay(1000);
-    }
-  }
+void stopISR(){
+  while(true);
 }
 
 void setup() {
@@ -41,6 +37,7 @@ void setup() {
   //Negative Logic Buttons
   pinMode(startButton, INPUT_PULLUP);
   pinMode(stopButton, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(stopButtonPin), stopISR, FALLING);
   
   mapGraph = new Graph();
   tokenController = new tokenControl(mapGraph);
