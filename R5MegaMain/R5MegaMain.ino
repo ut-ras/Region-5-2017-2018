@@ -238,6 +238,107 @@ void testSimple() {
   Serial.println("drop off in blue");
 }
 
+void allIn() {
+  bool checked[] = {false, false, false, false, false, false, false};
+
+  driveController->forwardAtStart();  
+  Serial.println("hit the white box edge");
+  driveController->forwardAtStart();
+  Serial.println("hit the first square line");
+
+  setCurrentLocationForTest(bl1, 2);
+  goColor2Color(blue, yellow, true);
+  if(mapGraph->getNumTokens(yellow) > 0) {
+    dropOffTokens(yellow, 1);
+    checked[yellow] = true;
+  }
+
+  goColor2Color(yellow, red, true);
+  if(mapGraph->getNumTokens(red) > 0) {
+    dropOffTokens(red, 1);
+    checked[red] = true;
+  }
+
+  goColor2Color(red, cyan, true);
+  if(mapGraph->getNumTokens(cyan) > 0) {
+    dropOffTokens(cyan, 1);
+    checked[cyan] = true;
+  }
+
+  goColor2Color(cyan, blue, true);
+  if(mapGraph->getNumTokens(blue) > 0) {
+    dropOffTokens(blue, 1);
+    checked[blue] = true;
+  }
+
+  goColor2Color(blue, green, true);
+  if(mapGraph->getNumTokens(green) > 0) {
+    dropOffTokens(green, 1);
+    checked[green] = true;
+  }
+
+  goColor2Color(green, grey, true);
+  if(mapGraph->getNumTokens(grey) > 0) {
+    dropOffTokens(grey);
+    checked[grey] = true;
+  } 
+
+  goColor2Color(grey, magenta, true);
+  if(mapGraph->getNumTokens(magenta) > 0) {
+    dropOffTokens(magenta);
+    checked[magenta] = true;
+  }
+
+
+  //Wrap up any we missed colors
+  if(!checked[yellow]){
+    goColor2Color(currentColor, yellow, false);
+    dropOffTokens(yellow, 1);
+    currentColor = yellow;
+  }
+
+  if(!checked[blue]){
+    goColor2Color(currentColor, blue, false);
+    dropOffTokens(blue, 1);
+    currentColor = blue;
+  }
+
+  if(!checked[red]){
+    goColor2Color(currentColor, red, false);
+    dropOffTokens(red, 1);
+    currentColor = red;
+  }
+
+  if(!checked[cyan]){
+    goColor2Color(currentColor, cyan, false);
+    dropOffTokens(cyan, 1);
+    currentColor = cyan;
+  }
+
+  if(currentColor == green) {
+    goColor2Color(green, blue, 1);
+    currentColor = blue;
+  }
+
+  if(currentColor == magenta){
+    goColor2Color(magenta, yellow, 1);
+    currentColor = yellow;
+  }
+
+  if( (currentColor == red) || (currentColor == yellow) ){
+    sendCommand(???_LEFT);
+    wait(???);
+  }
+
+  if( (currentColor == blue) || (currentColor == cyan)){
+    sendCommand(???_RIGHT);
+    wait(???);
+  }
+
+  //stop?
+
+
+}
 
 //Strategies for each round:
 void round1() {
