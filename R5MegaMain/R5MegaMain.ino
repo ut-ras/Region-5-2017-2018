@@ -62,7 +62,7 @@ void loop() {
 }
 
 //debugging gui
-void serialEvent() {
+/*void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
     int8_t inChar = Serial.parseInt();
@@ -70,7 +70,7 @@ void serialEvent() {
       driveController->sendCommand(inChar);
     }
   }
-}
+}*/
 
 void testTokenControl() {
   Blink();
