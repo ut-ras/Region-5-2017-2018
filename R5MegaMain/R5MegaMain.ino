@@ -308,7 +308,7 @@ void dropOffTokens(int color, int level) {
   for(int i=0; i<level; i++)
     driveController->forwardToIntersection(); //take the diagonal path until you reach the box
 
-  driveController->move(FWD);
+  driveController->sendCommand(FWDNOLINE);
   delay(1000);
   driveController->stop();
   tokenController->depositAllTokens(color);
