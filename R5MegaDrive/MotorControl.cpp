@@ -554,24 +554,23 @@
       turnEncoderTicks(dir, num45Deg * 57);
     }
 
-    void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
-      int initLTicks = l_Encoder->getPos();
-      int initRTicks = r_Encoder->getPos();
+void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
+  int initLTicks = l_Encoder->getPos();
+  int initRTicks = r_Encoder->getPos();
 
-      setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
+  setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
-      moveStraight(dir);
+  moveStraight(dir);
 
-      while((abs(initRTicks - r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks - l_Encoder->getPos()) < encoderTicks)){
-        updateMotorControl();
-        //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-          //r_SetpointSpeed=0;  
-        //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-          //l_SetpointSpeed=0;
-        delay(LOOP_DELAY);
-      }
-      setMotorMode(STOP);
-    }
+  while((abs(initRTicks - r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks - l_Encoder->getPos()) < encoderTicks)){
+    calculateEncoderSpeeds();
+    calculatePIDSpeeds();
+    setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
+ 
+    delay(LOOP_DELAY);
+  }
+  setMotorMode(STOP);
+}
 
 void MotorControl::forwardToWhite(int dir){
   moveStraightEncoderTicks(FWD, 535);
@@ -587,15 +586,13 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
 
   turninPlace(dir);
 
-
   Serial.println("Starting the turn");
 
   while((abs(initRTicks-r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks-l_Encoder->getPos()) < encoderTicks)){
-    updateMotorControl();
-    //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-      //r_SetpointSpeed=0;
-    //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-      //l_SetpointSpeed=0;
+    calculateEncoderSpeeds();
+    calculatePIDSpeeds();
+    setMotorSpeeds(abs(l_PIDSpeed), abs(r_PIDSpeed));
+
     Serial.println("Turning");
     delay(LOOP_DELAY);
   }
