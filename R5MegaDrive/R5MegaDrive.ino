@@ -18,7 +18,11 @@ void  initMotorControl();
 void  initI2c();
 //int isrCount[2] = {0, 0};
 int8_t newCommand = -1;
+
+
 const int stopButton = 53;
+const int startButton = 54;
+
 
 void stopISR(){
   while(true);
@@ -30,6 +34,7 @@ void setup() {
 
   pinMode(stopButton, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
+  pinMode(startButton, INPUT_PULLUP);
 
   Serial.println("welcome to this test");
 
@@ -78,8 +83,11 @@ void emergencyRound1() {
     
   m->setMotorMode(FWDNOLINE);
   delay(1000);
+  m->setMotorMode(STOP);
 
-  
+  m->setMotorMode(BACKNOLINE);
+  delay(1000);
+  m->setMotorMode(STOP);
 }
 
 
