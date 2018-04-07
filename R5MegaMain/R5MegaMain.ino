@@ -90,6 +90,7 @@ void testDriveControl() {
   Serial.println(mapGraph->getCurrentNode()->toString());
   delay(3000);
   driveController->turn45(true, 2);
+  driveController->forwardToIntersection();
   
 }
 
