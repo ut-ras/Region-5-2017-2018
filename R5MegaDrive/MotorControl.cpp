@@ -85,11 +85,14 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  if(useArray==false  && (l_Encoder->getPos() > startTicks+80) ) {
+  if(useArray==false  && (l_Encoder->getPos() > startTicks+80) )
+  {
     useArray=true;
   }
   if (useArray && (currentCmd < FWDNOLINE)) {
     calculateLSCorrections();
+    //l_SetpointSpeed += l_correction;
+    //r_SetpointSpeed += r_correction;
   }
   if (currentCmd != STOP) {
     calculateEncoderSpeeds();
@@ -123,7 +126,6 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
 void MotorControl::stopMotors(int lastCmd) {
   setMotorSpeeds(0, 0);
 
-  /*
   int waitTimeMs = 10;
   int r_pos_s = r_Encoder->getPos();
   int l_pos_s = l_Encoder->getPos();
@@ -136,7 +138,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int l_pos_current = l_Encoder->getPos();
 
   int loopCount = 0;
-  
+  /*
   while ((r_pos_last != r_pos_current) || (l_pos_last != l_pos_current)) {
     r_pos_last = r_pos_current;
     l_pos_last = l_pos_current;
@@ -209,7 +211,8 @@ void MotorControl::calculateLSCorrections() {
   else { moveSpeed = HIGH_SPEED; }
 
   //get both line sensor positions -4000 is left, +4000 is right, 1000 for each sensor
-  int lineSensorWeightBack = lineSensorBack->getLinePosition();
+  //int lineSensorWeightBack = lineSensorBack->getLinePosition();
+  int lineSensorWeightBack = 0;
   int lineSensorWeightFront = lineSensorFront->getLinePosition();
   Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
 
@@ -227,7 +230,8 @@ void MotorControl::calculateLSCorrections() {
 
   //calculate general position for each sensor. double sensors: -1 = left, 0 = middle, 1 = right
   int cutoff = 2000;
-  int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
+  //int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
+  int backSection = 0;
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
 
@@ -283,6 +287,8 @@ void MotorControl::calculateEncoderSpeeds() {
     vSampleCount++;
   }
   if (vSampleCount == numVSamples) {
+    //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
+    //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
     double lv = (leftVSampleSum/ numVSamples);
     double rv = (rightVSampleSum/ numVSamples);
 
@@ -292,6 +298,9 @@ void MotorControl::calculateEncoderSpeeds() {
     leftVSampleSum = 0;
     rightVSampleSum = 0;
     vSampleCount = 0;
+
+    //l_correction = 0;
+    //r_correction = 0;
   }
 }
 void MotorControl::calculatePIDSpeeds() {
@@ -540,6 +549,15 @@ void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_Encoder->getPos();
 
   moveStraight(dir);
+  /*if(dir == FWD){
+    l_Motor->run(FORWARD);
+    r_Motor->run(FORWARD);
+  }
+  else
+  {
+   l_Motor->run(BACKWARD);
+   r_Motor->run(BACKWARD);
+  }*/
 
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
@@ -558,7 +576,16 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_Encoder->getPos();
 
   turninPlace(dir);
-
+  
+  /*if(dir == LEFT){
+    l_Motor->run(BACKWARD);
+    r_Motor->run(FORWARD);
+  }
+  else
+  {
+   l_Motor->run(FORWARD);
+   r_Motor->run(BACKWARD);
+  }*/
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
   while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
