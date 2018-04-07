@@ -21,6 +21,7 @@ class driveControl {
 public:
   driveControl(Graph * m);
 
+  void forwardAcrossGrey();
   void forwardAtStart();
 
   void move(bool fwd);
