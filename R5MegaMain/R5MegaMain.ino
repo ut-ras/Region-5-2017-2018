@@ -107,15 +107,18 @@ void testDriveControl() {
   setCurrentLocationForTest(R5, 4);  
   Serial.println(mapGraph->getCurrentNode()->toString());
   driveController->forwardToIntersection();
+  tokenController->pickUpToken();
   driveController->setSpeed(2);
   Serial.println(mapGraph->getCurrentNode()->toString());
   delay(3000);
   driveController->forwardToIntersection();
+  tokenController->pickUpToken();
   driveController->setSpeed(2);
   Serial.println(mapGraph->getCurrentNode()->toString());
   delay(3000);
   driveController->turn45(true, 2);
   driveController->forwardToIntersection();
+  tokenController->pickUpToken();
   driveController->setSpeed(2);
   
 }
@@ -293,6 +296,304 @@ void round2(){
 
   //write code to get into the white box at the end;
 }
+
+//Drop off tokens in the corner boxes (doesn't handle grey right now)
+void dropOffTokens(int color, int level) {
+
+  int boxDir[] = {7, 6, 5, 3, 2, 1};  //direction of each box relative to its node, indexed by color enum
+  
+  int dir2Box = boxDir[color];
+  driveController->turnTo(dir2Box);
+
+  for(int i=0; i<level; i++)
+    driveController->forwardToIntersection(); //take the diagonal path until you reach the box
+
+  driveController->move(FWD);
+  delay(1000);
+  driveController->stop();
+  tokenController->depositAllTokens(color);
+  
+  //return to the node we came from
+  int dir2Node = dir2Box - 4;                         
+  dir2Node = (dir2Node < 0)? dir2Node + 8 : dir2Node; //make sure to wrap around to 7 if we go negative
+  driveController->turnTo(dir2Node);
+
+  //driveController->forwardToIntersection(); //may require an extra call to get past the box edge
+  for(int i=0; i<level; i++)
+    driveController->forwardToIntersection();
+}
+
+void red2cyan(bool collectTokens) {
+    driveController->turnTo(2);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void red2green(bool collectTokens) {
+  driveController->turnTo(4);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void green2red(bool collectTokens) {
+  driveController->turnTo(0);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void green2blue(bool collectTokens) {
+  driveController->turnTo(4);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void blue2green(bool collectTokens) {
+  driveController->turnTo(0);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void blue2yellow(bool collectTokens) {
+  driveController->turnTo(2);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void yellow2blue(bool collectTokens) {
+  driveController->turnTo(6);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void yellow2magenta(bool collectTokens) {
+  driveController->turnTo(0);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void magenta2yellow(bool collectTokens) {
+  driveController->turnTo(4);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void magenta2cyan(bool collectTokens) {
+  driveController->turnTo(0);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void cyan2magenta(bool collectTokens){
+  driveController->turnTo(4);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void cyan2red(bool collectTokens) {
+  driveController->turnTo(6);
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+}
+
+void color2grey(int colorStart, bool collectTokens) {
+
+  int inwardDirs[] = {3, 2, 1, 7, 6, 5};
+  int thisDir = inwardDirs[colorStart];
+  driveController->turnTo(thisDir);
+
+  for(int i = 0; i < 4; i++) {
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+  }
+}
+
+void grey2color(int colorEnd, bool collectTokens) {
+
+  int outwardDirs[] = {7, 6, 5, 3, 2, 1};
+  int thisDir = outwardDirs[colorEnd];
+  driveController->turnTo(thisDir);
+
+  for(int i = 0; i < 4; i++) {
+    driveController->forwardToIntersection();
+    if(collectTokens)
+      tokenController->pickUpToken();
+  }
+}
+
+void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
+
+  if(colorStart == red) {
+    switch(colorEnd){
+      case green:
+        red2green(tokenCollect);
+        break;
+      case blue:
+        red2green(tokenCollect);
+        green2blue(tokenCollect);
+        break;
+      case yellow:
+        color2grey(red, tokenCollect);
+        grey2color(yellow, tokenCollect); 
+        break;
+      case magenta:
+        color2grey(red, tokenCollect);
+        grey2color(magenta, tokenCollect);
+        break;
+      case cyan:
+        red2cyan(tokenCollect);
+        break;
+    }
+  }
+
+  if(colorStart == green) {
+    switch(colorEnd){
+      case red:
+        green2red(tokenCollect);
+        break;
+      case blue:
+        green2blue(tokenCollect);
+        break;
+      case yellow:
+        color2grey(green, tokenCollect);
+        grey2color(yellow, tokenCollect); 
+        break;
+      case magenta:
+        color2grey(green, tokenCollect);
+        grey2color(magenta, tokenCollect);
+        break;
+      case cyan:
+        color2grey(green, tokenCollect);
+        grey2color(cyan, tokenCollect);
+        break;
+    }
+  }
+
+  if(colorStart == blue) {
+    switch(colorEnd){
+      case red:
+        blue2green(tokenCollect);
+        green2red(tokenCollect);
+        break;
+      case green:
+        blue2green(tokenCollect);
+        break;
+      case yellow:
+        blue2yellow(tokenCollect); 
+        break;
+      case magenta:
+        color2grey(blue, tokenCollect);
+        grey2color(magenta, tokenCollect);
+        break;
+      case cyan:
+        color2grey(blue, tokenCollect);
+        grey2color(cyan, tokenCollect);
+        break;
+    }
+  }
+
+  if(colorStart == yellow) {
+    switch(colorEnd){
+      case red:
+        color2grey(yellow, tokenCollect);
+        grey2color(red, tokenCollect); 
+        break;
+      case green:
+        color2grey(yellow, tokenCollect);
+        grey2color(green, tokenCollect);
+        break;
+      case blue:
+        yellow2blue(tokenCollect); 
+        break;
+      case magenta:
+        yellow2magenta(tokenCollect);
+        break;
+      case cyan:
+        yellow2magenta(tokenCollect);
+        magenta2cyan(tokenCollect);
+        break;
+    }
+  }
+
+  if(colorStart == magenta) {
+    switch(colorEnd){
+      case red:
+        color2grey(magenta, tokenCollect);
+        grey2color(red, tokenCollect); 
+        break;
+      case green:
+        color2grey(magenta, tokenCollect);
+        grey2color(green, tokenCollect);
+        break;
+      case blue:
+        color2grey(magenta, tokenCollect);
+        grey2color(blue, tokenCollect);
+        break;
+      case yellow:
+        magenta2yellow(tokenCollect);
+        break;
+      case cyan:
+        magenta2cyan(tokenCollect);
+        break;
+    }
+  }
+
+  if(colorStart == cyan) {
+    switch(colorEnd){
+      case red:
+        cyan2red(tokenCollect); 
+        break;
+      case green:
+        color2grey(cyan, tokenCollect);
+        grey2color(green, tokenCollect);
+        break;
+      case blue:
+        color2grey(cyan, tokenCollect);
+        grey2color(blue, tokenCollect);
+        break;
+      case yellow:
+        cyan2magenta(tokenCollect);
+        magenta2yellow(tokenCollect);
+        break;
+      case magenta:
+        cyan2magenta(tokenCollect);
+        break;
+    }
+  }
+}
+
+void changeLevel(int color, int startLevel, int endLevel) {
+  
+  int inwardDirs[] = {3, 2, 1, 7, 6, 5};
+  int outwardDirs[] = {7, 6, 5, 3, 2, 1};
+
+  int dir;
+  int levelsChanged;
+  if(startLevel > endLevel) {
+    dir = outwardDirs[color];
+    levelsChanged = startLevel - endLevel;
+  } else {
+    dir = inwardDirs[color];
+    levelsChanged = endLevel - startLevel;
+  }
+
+  driveController->turnTo(dir);
+  for(int i = 0; i < levelsChanged; i++)
+    driveController->forwardToIntersection();
+
+} 
 
 
 
