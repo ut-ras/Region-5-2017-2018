@@ -550,8 +550,8 @@
     //Turn maneuver functions
 
     void MotorControl::turnManeuver(int dir, int num45Deg){
-      moveStraightEncoderTicks(FWD, 30);
-      turnEncoderTicks(dir, num45Deg * 119);
+      //moveStraightEncoderTicks(FWD, 30);
+      turnEncoderTicks(dir, num45Deg * 57);
     }
 
     void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
@@ -559,24 +559,15 @@
       int initRTicks = r_Encoder->getPos();
 
       moveStraight(dir);
-      /*if(dir == FWD){
-        l_Motor->run(FORWARD);
-        r_Motor->run(FORWARD);
-      }
-      else
-      {
-       l_Motor->run(BACKWARD);
-       r_Motor->run(BACKWARD);
-      }*/
 
       setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
-      while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
+      while((abs(initRTicks-r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks-l_Encoder->getPos()) < encoderTicks)){
         updateMotorControl();
-        if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-          r_SetpointSpeed=0;  
-        if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-          l_SetpointSpeed=0;
+        //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
+          //r_SetpointSpeed=0;  
+        //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
+          //l_SetpointSpeed=0;
         }
         stopMotors(currentCmd);
     }
@@ -593,23 +584,14 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
 
   turninPlace(dir);
   
-  /*if(dir == LEFT){
-    l_Motor->run(BACKWARD);
-    r_Motor->run(FORWARD);
-  }
-  else
-  {
-   l_Motor->run(FORWARD);
-   r_Motor->run(BACKWARD);
-  }*/
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
-  while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
+  while((abs(initRTicks-r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks-l_Encoder->getPos()) < encoderTicks)){
     updateMotorControl();
-    if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-      r_SetpointSpeed=0;
-    if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-      l_SetpointSpeed=0;
+    //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
+      //r_SetpointSpeed=0;
+    //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
+      //l_SetpointSpeed=0;
     }
     stopMotors(currentCmd);
 }
