@@ -37,7 +37,7 @@ void driveControl::move(bool fwd) {
 }
 
 void driveControl::turnManeuver(bool left, int steps) {
-  Serial.println("In turnManeuver " + left:"left":"right");
+  Serial.println("In turnManeuver " + String(left?"left":"right"));
   sendCommand(left?(LEFT45 + steps - 1):(RIGHT45 + steps - 1));
 }
 
