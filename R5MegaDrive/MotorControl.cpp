@@ -15,8 +15,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  r_Motor = AFMS->getMotor(3);
-  l_Motor = AFMS->getMotor(4);
+  r_Motor = AFMS->getMotor(4);
+  l_Motor = AFMS->getMotor(3);
 
   //Serial.println("AFMS init");
 
