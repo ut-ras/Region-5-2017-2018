@@ -65,7 +65,7 @@ void loop() {
 }
 
 //debugging gui
-void serialEvent() {
+/*void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
     int8_t inChar = Serial.parseInt();
@@ -73,7 +73,7 @@ void serialEvent() {
       driveController->sendCommand(inChar);
     }
   }
-}
+}*/
 
 void testCombo() {
   Blink();
@@ -325,7 +325,7 @@ void dropOffTokens(int color, int level) {
   for(int i=0; i<level; i++)
     driveController->forwardToIntersection(); //take the diagonal path until you reach the box
 
-  driveController->move(FWD);
+  driveController->sendCommand(FWDNOLINE);
   delay(1000);
   driveController->stop();
   tokenController->depositAllTokens(color);
