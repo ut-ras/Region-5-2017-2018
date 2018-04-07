@@ -108,10 +108,9 @@ void driveControl::forwardToIntersection() {
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {
   Serial.println("In turn45");
-  if (steps >= 8 || steps <= 0) {
+  if (steps >= 4 || steps <= 0) {
     return;
   }
-  steps = left?(8 - steps):steps;
   turnManeuver(left, steps);
   int nextDir = (mapGraph->getCurrentDirection() + steps) % 8;
   mapGraph->setCurrentDirection(nextDir);

@@ -558,9 +558,9 @@
       int initLTicks = l_Encoder->getPos();
       int initRTicks = r_Encoder->getPos();
 
-      moveStraight(dir);
-
       setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
+
+      moveStraight(dir);
 
       while((abs(initRTicks - r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks - l_Encoder->getPos()) < encoderTicks)){
         updateMotorControl();
@@ -583,9 +583,10 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   int initLTicks = l_Encoder->getPos();
   int initRTicks = r_Encoder->getPos();
 
-  turninPlace(dir);
-  
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
+
+  turninPlace(dir);
+
 
   Serial.println("Starting the turn");
 
