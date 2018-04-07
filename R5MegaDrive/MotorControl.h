@@ -12,7 +12,7 @@
 
 #define LOOP_DELAY 100
 
-#define LOW_SPEED 40
+#define LOW_SPEED 50
 #define MID_SPEED 90
 #define HIGH_SPEED 130
 

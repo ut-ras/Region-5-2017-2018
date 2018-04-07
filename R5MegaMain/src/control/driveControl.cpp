@@ -76,6 +76,7 @@ void driveControl::forwardToIntersection() {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));
     if (current.isLine()) {
       setSpeed(1);
+      move(true);
     }
     //Serial.println("next " + String(linesensors->PLDatatoString(next)));
     delay(5);
