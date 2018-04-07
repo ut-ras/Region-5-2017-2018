@@ -38,9 +38,10 @@ void setup() {
 
   Serial.println("welcome to this test");
 
+  initI2c();
+
   initMotorControl();
   Serial.println("setup i2c");
-  initI2c();
 
   //these will halt the program and print best values when done
   //use one at a time. P, set P in MotorControl, I, set I in MotorControl
@@ -54,6 +55,8 @@ void setup() {
 
   //test
   m->setMotorMode(STOP);
+
+  emergencyRound1();
 }
 
 void loop() {
