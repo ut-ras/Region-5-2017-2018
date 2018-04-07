@@ -228,7 +228,7 @@ void MotorControl::calculateLSCorrections() {
 
 
   //calculate general position for each sensor. double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 3000;
+  int cutoff = 2000;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
