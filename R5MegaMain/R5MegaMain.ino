@@ -184,23 +184,36 @@ void testGUI(){
 
 void testSimple() {
 
-  driveController->forwardAtStart();  //hit the white box edge
-  driveController->forwardAtStart();  //hit the first square line
-  driveController->forwardAtStart();  //hit the second square line
-  driveController->forwardAtStart();  //hit the third square line
-  driveController->forwardAtStart();  //hit the fourth box line
-  driveController->turn45(true, 2); //turn to the left (towards blue)
+  driveController->forwardAtStart();  
+  Serial.println("hit the white box edge");
+  driveController->forwardAtStart();
+  Serial.println("hit the first square line");
+  driveController->forwardAtStart();
+  Serial.println("hit the second square line");
+  driveController->forwardAtStart();  
+  Serial.println("hit the third square line");
+  driveController->forwardAtStart();
+  Serial.println("hit the fourth box line");
+  driveController->turn45(true, 2);
+  Serial.println("turn to the left (toward blue)");
 
   setCurrentLocationForTest(Y4, 6);
   Serial.println(mapGraph->getCurrentNode()->toString());
-  driveController->forwardToIntersection();   //drive to Bl4
+  driveController->forwardToIntersection();
+  Serial.println("drive to Blue 4");
   tokenController->pickUpToken();
+  Serial.println("pick up the token");
   driveController->turn45(true, 1);
-  setCurrentLocationForTest(Bl5, 5);  //redundant
-  driveController->forwardToIntersection();   //drive to Bl3
+  Serial.println("turn towards blue box");
+  //setCurrentLocationForTest(Bl4, 5);  //redundant
+  driveController->forwardToIntersection();
+  Serial.println("drive to Blue 3");
   driveController->forwardToIntersection();   //drive to Bl2
+  Serial.println("drive to Blue 2");
   tokenController->pickUpToken();
+  Serial.println("pick up the token");
   dropOffTokens(blue, 2);
+  Serial.println("drop off in blue");
 }
 
 
