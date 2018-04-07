@@ -74,6 +74,9 @@ void driveControl::forwardToIntersection() {
   //getDataOverTimeRolling of getDataOverTime doesnt work
   while((current = linesensors->getDataOverTimeRolling(300)) != next) {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));
+    if (current.isLine()) {
+      setSpeed(1);
+    }
     //Serial.println("next " + String(linesensors->PLDatatoString(next)));
     delay(5);
   }
@@ -83,10 +86,10 @@ void driveControl::forwardToIntersection() {
   delay(100);
 
   //back up after overshoot
-  if ((current = linesensors->getDataOverTime(20)) != next) {
+  if ((current = linesensors->getDataOverTimeRolling(50)) != next) {
     setSpeed(1);
     move(false);
-    while((current = linesensors->getDataOverTimeRolling(50)) != next) {
+    while((current = linesensors->getDataOverTimeRolling(100)) != next) {
       delay(5);
     }
     stop();
