@@ -60,7 +60,7 @@
 
       lineSensorBack = new arrayline(LS_DIGITAL);
       lineSensorFront = new arrayline(LS_ANALOG);
-      
+
       //delay for testing purposes
       delay(500);
       //Serial.println("Motor Control Initialized");
@@ -206,7 +206,7 @@
     //note: switched around corrections for testing while sensor is on rear, so we can move backwards and pretend its going fwd
     void MotorControl::calculateLSCorrections() {
       Serial.println("Line Sensor Corrections");
-      
+
       //grab fwd vs back and move speed
       bool fwd = (currentCmd >= 0) && (currentCmd <= 2);
       int moveSpeed = 0;
@@ -220,7 +220,7 @@
       int lineSensorWeightFront = lineSensorFront->getLinePosition();
       Serial.println("front weight: " + String(lineSensorWeightFront) + " / back weight: " + String(lineSensorWeightBack));
 
-      //single sensor 
+      //single sensor
       /*if(lineSensorWeightFront <= -1500) {
         turninPlace(fwd?LEFT:RIGHT);
       }
@@ -260,7 +260,7 @@
         l_SetpointSpeed = moveSpeed + correction * moveSpeed;
       }
       moveStraight(fwd?FWD:BACK);
-      
+
     }
 
     //set desired speeds
@@ -532,8 +532,8 @@
 
 
 
-    //Method Does not work properly because p values are not tuned by getting the error. We need to look at 
-    // The way to tune pid is to 
+    //Method Does not work properly because p values are not tuned by getting the error. We need to look at
+    // The way to tune pid is to
     void MotorControl::setPValues(double p_val) {
       l_PID->SetTunings(p_val, 0, 0);
       r_PID->SetTunings(p_val, 0, 0);
@@ -550,7 +550,7 @@
     //Turn maneuver functions
 
     void MotorControl::turnManeuver(int dir, int num45Deg){
-      //moveStraightEncoderTicks(FWD, 30);
+      //moveStraightEncoderTicks(FWD, 10);
       turnEncoderTicks(dir, num45Deg * 57);
     }
 
@@ -565,12 +565,12 @@
       while((abs(initRTicks - r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks - l_Encoder->getPos()) < encoderTicks)){
         updateMotorControl();
         //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-          //r_SetpointSpeed=0;  
+          //r_SetpointSpeed=0;
         //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
           //l_SetpointSpeed=0;
         delay(LOOP_DELAY);
       }
-      setMotorMode(STOP);
+      setSetpointSpeeds(0, 0);
     }
 
 void MotorControl::forwardToWhite(int dir){
@@ -584,7 +584,7 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_Encoder->getPos();
 
   turninPlace(dir);
-  
+
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
   Serial.println("Starting the turn");
@@ -601,5 +601,3 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   Serial.println("Stopping");
   setMotorMode(STOP);
 }
-
-
