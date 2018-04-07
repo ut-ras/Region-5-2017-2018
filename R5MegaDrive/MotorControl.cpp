@@ -100,23 +100,23 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
   if (dir == LEFT) {
-    l_Motor->run(FORWARD);
-    r_Motor->run(BACKWARD);
-  }
-  else if (dir == RIGHT) {
     l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
+  }
+  else if (dir == RIGHT) {
+    l_Motor->run(FORWARD);
+    r_Motor->run(BACKWARD);
   }
 }
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
   if (dir == FWD) {
-    l_Motor->run(FORWARD);
-    r_Motor->run(FORWARD);
-  }
-  else if (dir == BACK) {
     l_Motor->run(BACKWARD);
     r_Motor->run(BACKWARD);
+  }
+  else if (dir == BACK) {
+    l_Motor->run(FORWARD);
+    r_Motor->run(FORWARD);
   }
 }
 
