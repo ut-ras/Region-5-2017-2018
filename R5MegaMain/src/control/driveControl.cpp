@@ -39,7 +39,7 @@ void driveControl::move(bool fwd) {
 void driveControl::turnManeuver(bool left, int steps) {
   Serial.println("In turnManeuver " + String(left?"left":"right"));
   sendCommand(left?(LEFT45 + steps - 1):(RIGHT45 + steps - 1));
-  delay(4000);   //wait to finish turning!!!
+  delay(3000);   //wait to finish turning!!!
 }
 
 void driveControl::stop() {
@@ -53,10 +53,8 @@ void driveControl::forwardAtStart() {
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
   
-  //getDataOverTimeRolling of getDataOverTime doesnt work
   while((current = linesensors->getDataOverTimeRolling(500)) != next) {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));
-    //Serial.println("next " + String(linesensors->PLDatatoString(next)));
    delay(5);
   }
   stop();
