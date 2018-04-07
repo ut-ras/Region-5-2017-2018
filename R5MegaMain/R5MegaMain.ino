@@ -37,7 +37,7 @@ void setup() {
   //Negative Logic Buttons
   pinMode(startButton, INPUT_PULLUP);
   pinMode(stopButton, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(stopButtonPin), stopISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
   
   mapGraph = new Graph();
   tokenController = new tokenControl(mapGraph);
@@ -45,7 +45,7 @@ void setup() {
 
   Wire.begin();
 
-  waitForStart();
+  //waitForStart();
 
   //mapGraph->printSerial();
 
@@ -140,7 +140,160 @@ void printIntersectionData() {
  *                     delay is there for the robot to move
  *                       inside the colored box
  */
- /*
+
+//Useful Function Prototypes:
+void dropOffTokens(int color, int level);
+void red2cyan(bool collectTokens);
+void red2green(bool collectTokens);
+void green2red(bool collectTokens);
+void green2blue(bool collectTokens);
+void blue2green(bool collectTokens);
+void blue2yellow(bool collectTokens);
+void yellow2blue(bool collectTokens);
+void yellow2magenta(bool collectTokens);
+void magenta2yellow(bool collectTokens);
+void magenta2cyan(bool collectTokens);
+void cyan2magenta(bool collectTokens);
+void cyan2red(bool collectTokens);
+void color2grey(int colorStart, bool collectTokens);
+void grey2color(int colorEnd, bool collectTokens);
+void goColor2Color(int colorStart, int colorEnd, bool tokenCollect);
+void changeLevel(int color, int startLevel, int endLevel);
+
+
+//Strategies for each round:
+void round1() {
+  int inventory[7];
+  int currentLevel = 0;
+ //  time_t startTime = second();
+ // time_t endTime = 300 + startTime; //5 minutes
+ 
+  //Start at White Box closest to the yellow
+  driveController->forwardAtStart();
+  currentLevel = 4;
+
+  ///Go to y4
+  driveController->turnTo(2);  //probably replace with turnTo(2);
+  driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
+
+  //move to level 2 square
+  changeLevel(blue, 4, 2);
+  currentLevel = 2;
+
+  //Tour the level 2 square, checking if we should drop off at each color
+  if (mapGraph->getNumTokens(blue) == 2) {
+    dropOffTokens(blue, currentLevel);
+  } 
+  blue2green(true);
+
+  if (mapGraph->getNumTokens(green) == 2) {
+    dropOffTokens(green, currentLevel);
+  }
+  green2red(true);
+  
+  if (mapGraph->getNumTokens(red) == 2) {
+    dropOffTokens(red, currentLevel);
+  }
+  red2cyan(true);
+ 
+  if(mapGraph->getNumTokens(cyan) == 2) {
+    dropOffTokens(cyan, currentLevel);
+  }
+  cyan2magenta(true);
+
+  if(mapGraph->getNumTokens(magenta) == 2) {
+    dropOffTokens(magenta, currentLevel);
+  }
+  magenta2yellow(true);
+
+  if(mapGraph->getNumTokens(yellow) == 2) {
+    dropOffTokens(yellow, currentLevel);
+  }
+
+  //write code to get into the white box;
+}
+
+void round2(){
+  int inventory[7];
+  int currentLevel = 0;
+ //  time_t startTime = second();
+ // time_t endTime = 300 + startTime; //5 minutes
+ 
+  //Start at White Box closest to the yellow
+  for (int i = 0; i < 5; i++) {
+    driveController->forwardToIntersection();
+  }
+  currentLevel = 4;
+
+  ///Go to y4
+  driveController->turnTo(2);  //probably replace with turnTo(2);
+  driveController->forwardToIntersection();
+  tokenController->pickUpToken();
+
+  yellow2magenta(true);
+  magenta2cyan(true);
+  cyan2red(true);
+  red2green(true);
+  green2blue(true);
+
+  //move to level 3 square
+  changeLevel(blue, 4, 3);
+  currentLevel = 3;
+
+  //tour level 3 square
+  blue2green(true);
+  green2red(true);
+  red2cyan(true);
+  cyan2magenta(true);
+  magenta2yellow(true);
+
+  //move to level 2 square
+  changeLevel(blue, 3, 2);
+  currentLevel = 2;
+
+  //Tour the level 2 square, checking if we should drop off at each color
+  if (mapGraph->getNumTokens(yellow) == 2) {
+    dropOffTokens(yellow, currentLevel);
+  } 
+  yellow2magenta(true);
+
+  if (mapGraph->getNumTokens(magenta) == 2) {
+    dropOffTokens(magenta, currentLevel);
+  }
+  magenta2cyan(true);
+  
+  if (mapGraph->getNumTokens(cyan) == 2) {
+    dropOffTokens(cyan, currentLevel);
+  }
+  cyan2red(true);
+ 
+  if(mapGraph->getNumTokens(red) == 2) {
+    dropOffTokens(red, currentLevel);
+  }
+  red2green(true);
+
+  if(mapGraph->getNumTokens(green) == 2) {
+    dropOffTokens(green, currentLevel);
+  }
+  green2blue(true);
+
+  if(mapGraph->getNumTokens(blue) == 2) {
+    dropOffTokens(blue, currentLevel);
+  }
+
+  //write code to get into the white box at the end;
+}
+
+
+
+/*
 void round3() {
 	int inventory[6];
   time_t startTime = second();
