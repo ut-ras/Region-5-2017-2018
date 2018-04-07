@@ -19,15 +19,33 @@ void  initI2c();
 //int isrCount[2] = {0, 0};
 int8_t newCommand = -1;
 
+
+const int stopButton = 51;
+const int startButton = 52;
+
+
+void checkStop() {
+  if (digitalRead(stopButton) == 0) {
+    Serial.println("Stop button");
+    m->setMotorSpeeds(0, 0);
+    while(true);
+  }
+  Serial.println("Not Stop Button");
+}
+
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
   delay(1000);
 
+  pinMode(stopButton, INPUT_PULLUP);
+  pinMode(startButton, INPUT_PULLUP);
+
   Serial.println("welcome to this test");
+
+  initI2c();
 
   initMotorControl();
   Serial.println("setup i2c");
-  initI2c();
 
   //these will halt the program and print best values when done
   //use one at a time. P, set P in MotorControl, I, set I in MotorControl
@@ -41,10 +59,13 @@ void setup() {
 
   //test
   m->setMotorMode(STOP);
+
+  emergencyRound1();
 }
 
 void loop() {
   //test different loop delays, LOOP_DELAY in MotorControl.h
+  checkStop();
   delay(LOOP_DELAY);
 
   m->updateMotorControl();
@@ -54,6 +75,7 @@ void loop() {
   //Serial.println("left encoder isr " + String(isrCount[0]) + " / right encoder isr " + String(isrCount[1]));
   //Serial.println("left encoder position " + String(leftEncoder->getPos()) + " / right encoder position" + String(rightEncoder->getPos()));
 
+  checkStop();
   
   if (newCommand >= 0) {
     Serial.println("New Command: " + String(newCommand));
@@ -63,6 +85,46 @@ void loop() {
   
 }
 
+
+void emergencyRound1() {
+  int wait = 15000;
+  
+  Serial.println("Hello");
+  while(digitalRead(startButton) == 1){
+    delay(100);
+    checkStop();
+  }
+
+  m->setMotorMode(FWDNOLINE);
+  long t = millis() + wait;
+  Serial.println("FWD");  
+  while(millis() < t) {
+    checkStop();
+    m->updateMotorControl();
+    delay(LOOP_DELAY);
+  }
+  
+  m->setMotorMode(STOP);
+   t = millis() + wait - 1000;
+  Serial.println("STOP");
+  while(millis() < t) {
+    checkStop();
+    m->updateMotorControl();
+    delay(LOOP_DELAY);
+  }
+
+  m->setMotorMode(BACKNOLINE);
+   t = millis() + wait - 500;
+   Serial.println("BACK");
+  while(millis() < t) {
+    checkStop();
+    m->updateMotorControl();
+    delay(LOOP_DELAY);
+  }
+  m->setMotorMode(STOP);
+
+  Serial.println("Hello");
+}
 
 
 

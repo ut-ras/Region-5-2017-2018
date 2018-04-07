@@ -43,6 +43,8 @@ void setup() {
   tokenController = new tokenControl(mapGraph);
   driveController = new driveControl(mapGraph);
 
+  driveController->sendCommand(STOP);
+    
   Wire.begin();
 
   //waitForStart();
@@ -53,7 +55,10 @@ void setup() {
   //testTokenControl();
   //printIntersectionData();
   //testDriveControl();
-  testGUI();
+  //testGUI();
+  //testCombo();
+  testSimple();
+
 
 }
 
@@ -63,13 +68,27 @@ void loop() {
 }
 
 //debugging gui
-void serialEvent() {
+/*void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
     int8_t inChar = Serial.parseInt();
     if ((inChar >= 0) && (inChar <= STOP)) {
       driveController->sendCommand(inChar);
     }
+  }
+}*/
+
+void testCombo() {
+  Blink();
+  driveController->sendCommand(STOP);
+  while(1){
+    for(int i = 0; i < 2; i ++){
+      driveController->sendCommand(STOP);
+      tokenController->pickUpToken();
+      driveController->forwardToIntersection();
+    }
+    tokenController->pickUpToken();
+    driveController->turnManeuver(true, 2);
   }
 }
 
@@ -358,7 +377,7 @@ void dropOffTokens(int color, int level) {
   for(int i=0; i<level; i++)
     driveController->forwardToIntersection(); //take the diagonal path until you reach the box
 
-  driveController->move(FWD);
+  driveController->sendCommand(FWDNOLINE);
   delay(1000);
   driveController->stop();
   tokenController->depositAllTokens(color);

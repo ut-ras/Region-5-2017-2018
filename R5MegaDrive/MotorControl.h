@@ -28,7 +28,7 @@
  */
 
 
-enum Commands{BLANK, FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, FWDNOLINE, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP, RETURNWHITELEFT, RETURNWHITERIGHT};    //from i2c
+enum Commands{BLANK, FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, FWDNOLINE,BACKNOLINE, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP, RETURNWHITELEFT, RETURNWHITERIGHT};    //from i2c
 enum Directions{FWD, BACK, LEFT, RIGHT};
 
 class MotorControl {
@@ -66,6 +66,7 @@ public:
   void moveStraightEncoderTicks(int dir, int encoderTicks);		//move fwd along lines an exact number of encoder encoderTicks
   void turnEncoderTicks(int dir, int encoderTicks);    //use Directions enum LEFT or RIGHT
 
+  void setMotorSpeeds(int l_rotSpeed, int r_rotSpeed);    //set actual speeds, direct output to AFMS motors
 
 private:
 
@@ -73,7 +74,6 @@ private:
   void calculateLSCorrections();
   void calculateEncoderSpeeds();
   void calculatePIDSpeeds();
-  void setMotorSpeeds(int l_rotSpeed, int r_rotSpeed);    //set actual speeds, direct output to AFMS motors
 
   int currentCmd;
 

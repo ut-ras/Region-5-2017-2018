@@ -364,6 +364,10 @@
           setSetpointSpeeds(LOW_SPEED);
           moveStraight(FWD);
           break;
+        case BACKNOLINE:
+          setSetpointSpeeds(LOW_SPEED);
+          moveStraight(BACK);
+          break;
         case LEFTIP:
           setSetpointSpeeds(LOW_SPEED);
           turninPlace(LEFT);
