@@ -78,6 +78,10 @@ void driveControl::forwardToIntersection() {
       setSpeed(1);
       move(true);
     }
+    else {
+      setSpeed(2);
+      move(true);
+    }
     //Serial.println("next " + String(linesensors->PLDatatoString(next)));
     delay(5);
   }
