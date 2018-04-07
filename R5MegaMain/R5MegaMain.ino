@@ -11,19 +11,44 @@
 
 #define FWD true
 
+const int startButton = 2;
+const int stopButton = 3;
+
 tokenControl *tokenController;
 driveControl *driveController;
 Graph * mapGraph;
+
+void waitForStart() {
+  //While not pressed
+  while(digitalRead(startButton) == 1){
+    delay(100);
+  }
+}
+
+void checkStop(){
+  if(digitalRead(stopButton) == 0){
+    // TODO: Command telling the motor to stop
+    while(true){
+      delay(1000);
+    }
+  }
+}
 
 void setup() {
   // put your setup code here, to run once:]
   Serial.begin(9600);
 
+  //Negative Logic Buttons
+  pinMode(startButton, INPUT_PULLUP);
+  pinMode(stopButton, INPUT_PULLUP);
+  
   mapGraph = new Graph();
   tokenController = new tokenControl(mapGraph);
   driveController = new driveControl(mapGraph);
 
   Wire.begin();
+
+  waitForStart();
 
   //mapGraph->printSerial();
 
@@ -33,7 +58,6 @@ void setup() {
   testDriveControl();
 
 }
-
 
 void loop() {
   // put your main code here, to run repeatedly:
