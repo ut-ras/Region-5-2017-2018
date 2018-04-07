@@ -80,6 +80,8 @@ void Blink(){
 void testDriveControl() {
   //driveController->move(true);
 
+  driveController->setSpeed(2);
+  
   setCurrentLocationForTest(R5, 4);  
   Serial.println(mapGraph->getCurrentNode()->toString());
   driveController->forwardToIntersection();

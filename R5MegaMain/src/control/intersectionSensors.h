@@ -37,6 +37,9 @@ typedef struct pointlineData {
       s += String("r0=" + String(r0?"true":"false") + " r1=" + String(r1?"true":"false") + " r2=" + String(r2?"true":"false") + "\n");
       return s;
   }
+  bool isLine() {
+    return (l0 || l1 || l2 || r0 || r1 || r2);
+  }
 } pointlineData;
 
 class intersectionSensors {
