@@ -28,7 +28,7 @@
  */
 
 
-enum Commands{FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, FWDNOLINE, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP};    //from i2c
+enum Commands{BLANK, FWD1, FWD2, FWD3, BACK1, BACK2, BACK3, LEFTIP, RIGHTIP, FWDNOLINE, LEFT45, LEFT90, LEFT135, LEFT180, RIGHT45, RIGHT90, RIGHT135, RIGHT180, STOP, RETURNWHITELEFT, RETURNWHITERIGHT};    //from i2c
 enum Directions{FWD, BACK, LEFT, RIGHT};
 
 class MotorControl {
@@ -40,7 +40,7 @@ public:
   void setMotorMode(int c);
 
   void updateMotorControl();      //with PID output
-
+  void forwardToWhite(int dir);
   encoder* getLeftEncoder();     //use this to attatch interrupts to encoder pins in main. call updatePos in ISR
   encoder* getRightEncoder();
 
