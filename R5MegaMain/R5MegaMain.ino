@@ -43,6 +43,8 @@ void setup() {
   tokenController = new tokenControl(mapGraph);
   driveController = new driveControl(mapGraph);
 
+  driveController->sendCommand(STOP);
+    
   Wire.begin();
 
   //waitForStart();
@@ -75,13 +77,15 @@ void serialEvent() {
 
 void testCombo() {
   Blink();
+  driveController->sendCommand(STOP);
   while(1){
     for(int i = 0; i < 2; i ++){
-      //tokenController->pickUpToken();
+      driveController->sendCommand(STOP);
+      tokenController->pickUpToken();
       driveController->forwardToIntersection();
     }
-    //tokenController->pickUpToken();
-    //driveController->turnManeuver(true, 2);
+    tokenController->pickUpToken();
+    driveController->turnManeuver(true, 2);
   }
 }
 
