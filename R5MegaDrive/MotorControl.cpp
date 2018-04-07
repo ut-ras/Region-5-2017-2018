@@ -85,14 +85,11 @@ encoder* MotorControl::getRightEncoder() {
 }
 
 void MotorControl::updateMotorControl() {      //update motor speeds with PID
-  if(useArray==false  && (l_Encoder->getPos() > startTicks+80) )
-  {
+  if(useArray==false  && (l_Encoder->getPos() > startTicks+80) ) {
     useArray=true;
   }
   if (useArray && (currentCmd < FWDNOLINE)) {
     calculateLSCorrections();
-    //l_SetpointSpeed += l_correction;
-    //r_SetpointSpeed += r_correction;
   }
   if (currentCmd != STOP) {
     calculateEncoderSpeeds();
@@ -126,6 +123,7 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
 void MotorControl::stopMotors(int lastCmd) {
   setMotorSpeeds(0, 0);
 
+  /*
   int waitTimeMs = 10;
   int r_pos_s = r_Encoder->getPos();
   int l_pos_s = l_Encoder->getPos();
@@ -138,7 +136,7 @@ void MotorControl::stopMotors(int lastCmd) {
   int l_pos_current = l_Encoder->getPos();
 
   int loopCount = 0;
-  /*
+  
   while ((r_pos_last != r_pos_current) || (l_pos_last != l_pos_current)) {
     r_pos_last = r_pos_current;
     l_pos_last = l_pos_current;
@@ -285,8 +283,6 @@ void MotorControl::calculateEncoderSpeeds() {
     vSampleCount++;
   }
   if (vSampleCount == numVSamples) {
-    //double lv = normalizeSpeedForAFMS(leftVSampleSum / numVSamples);
-    //double rv = normalizeSpeedForAFMS(rightVSampleSum / numVSamples);
     double lv = (leftVSampleSum/ numVSamples);
     double rv = (rightVSampleSum/ numVSamples);
 
@@ -296,9 +292,6 @@ void MotorControl::calculateEncoderSpeeds() {
     leftVSampleSum = 0;
     rightVSampleSum = 0;
     vSampleCount = 0;
-
-    //l_correction = 0;
-    //r_correction = 0;
   }
 }
 void MotorControl::calculatePIDSpeeds() {
@@ -547,15 +540,6 @@ void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_Encoder->getPos();
 
   moveStraight(dir);
-  /*if(dir == FWD){
-    l_Motor->run(FORWARD);
-    r_Motor->run(FORWARD);
-  }
-  else
-  {
-   l_Motor->run(BACKWARD);
-   r_Motor->run(BACKWARD);
-  }*/
 
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
@@ -574,16 +558,7 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   int initRTicks = r_Encoder->getPos();
 
   turninPlace(dir);
-  
-  /*if(dir == LEFT){
-    l_Motor->run(BACKWARD);
-    r_Motor->run(FORWARD);
-  }
-  else
-  {
-   l_Motor->run(FORWARD);
-   r_Motor->run(BACKWARD);
-  }*/
+
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
   while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){

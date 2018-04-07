@@ -71,14 +71,13 @@ void driveControl::forwardToIntersection() {
   pointlineData current;
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
   delay(1000);  //allow pointline sensors to get past the current intersection before polling
-  //getDataOverTimeRolling of getDataOverTime doesnt work
   while((current = linesensors->getDataOverTimeRolling(300)) != next) {
     Serial.println("current " + String(linesensors->PLDatatoString(current)));
     if (current.isLine()) {
-      //setSpeed(1);
-      //move(true);
+      Serial.println("Near an intersection, lowering speed");
+      setSpeed(1);
+      move(true);
     }
-    //Serial.println("next " + String(linesensors->PLDatatoString(next)));
     delay(5);
   }
   stop();
@@ -90,7 +89,9 @@ void driveControl::forwardToIntersection() {
   if ((current = linesensors->getDataOverTimeRolling(50)) != next) {
     setSpeed(1);
     move(false);
-    while((current = linesensors->getDataOverTimeRolling(100)) != next) {
+
+    int timeout = millis() + 1000;
+    while((millis() < timeout) && ((current = linesensors->getDataOverTimeRolling(100)) != next)) {
       delay(5);
     }
     stop();
