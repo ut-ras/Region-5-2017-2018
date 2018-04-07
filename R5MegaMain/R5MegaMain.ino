@@ -277,18 +277,18 @@ void allIn() {
     checked[green] = true;
   }
 
-  goColor2Color(green, grey, true);
+  color2grey(green, true);
   if(mapGraph->getNumTokens(grey) > 0) {
     dropOffTokens(grey);
     checked[grey] = true;
   } 
 
-  goColor2Color(grey, magenta, true);
+  grey2color(magenta, true);
   if(mapGraph->getNumTokens(magenta) > 0) {
     dropOffTokens(magenta);
     checked[magenta] = true;
   }
-
+  
 
   //Wrap up any we missed colors
   if(!checked[yellow]){
@@ -326,12 +326,12 @@ void allIn() {
   }
 
   if( (currentColor == red) || (currentColor == yellow) ){
-    sendCommand(???_LEFT);
+    driveController->sendCommand(RETURNWHITELEFT);
     wait(???);
   }
 
   if( (currentColor == blue) || (currentColor == cyan)){
-    sendCommand(???_RIGHT);
+    driveController->sendCommand(RETURNWHITERIGHT);
     wait(???);
   }
 
@@ -478,7 +478,7 @@ void dropOffTokens(int color, int level) {
     delay(1000);
     driveController->stop();
     tokenController->depositAllTokens(color);
-    driverController->forwardAcrossGrey();
+    driveController->forwardAcrossGrey();
 
   }
   else {
@@ -629,10 +629,12 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
         break;
       case yellow:
         color2grey(red, tokenCollect);
+        forwardAcrossGrey();
         grey2color(yellow, tokenCollect); 
         break;
       case magenta:
         color2grey(red, tokenCollect);
+        forwardAcrossGrey();
         grey2color(magenta, tokenCollect);
         break;
       case cyan:
@@ -651,14 +653,17 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
         break;
       case yellow:
         color2grey(green, tokenCollect);
+        forwardAcrossGrey();
         grey2color(yellow, tokenCollect); 
         break;
       case magenta:
         color2grey(green, tokenCollect);
+        forwardAcrossGrey();
         grey2color(magenta, tokenCollect);
         break;
       case cyan:
         color2grey(green, tokenCollect);
+        forwardAcrossGrey();
         grey2color(cyan, tokenCollect);
         break;
     }
@@ -678,10 +683,12 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
         break;
       case magenta:
         color2grey(blue, tokenCollect);
+        forwardAcrossGrey();
         grey2color(magenta, tokenCollect);
         break;
       case cyan:
         color2grey(blue, tokenCollect);
+        forwardAcrossGrey();
         grey2color(cyan, tokenCollect);
         break;
     }
@@ -691,10 +698,12 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
     switch(colorEnd){
       case red:
         color2grey(yellow, tokenCollect);
+        forwardAcrossGrey();
         grey2color(red, tokenCollect); 
         break;
       case green:
         color2grey(yellow, tokenCollect);
+        forwardAcrossGrey();
         grey2color(green, tokenCollect);
         break;
       case blue:
@@ -714,14 +723,17 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
     switch(colorEnd){
       case red:
         color2grey(magenta, tokenCollect);
+        forwardAcrossGrey();
         grey2color(red, tokenCollect); 
         break;
       case green:
         color2grey(magenta, tokenCollect);
+        forwardAcrossGrey();
         grey2color(green, tokenCollect);
         break;
       case blue:
         color2grey(magenta, tokenCollect);
+        forwardAcrossGrey();
         grey2color(blue, tokenCollect);
         break;
       case yellow:
@@ -740,10 +752,12 @@ void goColor2Color(int colorStart, int colorEnd, bool tokenCollect) {
         break;
       case green:
         color2grey(cyan, tokenCollect);
+        forwardAcrossGrey();
         grey2color(green, tokenCollect);
         break;
       case blue:
         color2grey(cyan, tokenCollect);
+        forwardAcrossGrey();
         grey2color(blue, tokenCollect);
         break;
       case yellow:
