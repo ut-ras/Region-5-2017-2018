@@ -63,6 +63,7 @@ public:
 
   //Moved to public cause compile issues
     pointlineData getPointlineFor(Color intersectionType, int dir);
+    pointlineData getPointlineForBox(Color intersectionType);
 
 
 private:

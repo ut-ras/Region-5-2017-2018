@@ -37,7 +37,7 @@ void setup() {
   //Negative Logic Buttons
   pinMode(startButton, INPUT_PULLUP);
   pinMode(stopButton, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(stopButtonPin), stopISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
   
   mapGraph = new Graph();
   tokenController = new tokenControl(mapGraph);
@@ -45,7 +45,7 @@ void setup() {
 
   Wire.begin();
 
-  waitForStart();
+  //waitForStart();
 
   //mapGraph->printSerial();
 
