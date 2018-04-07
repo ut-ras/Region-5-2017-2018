@@ -15,8 +15,8 @@ MotorControl::MotorControl(int lA, int lB, int rA, int rB) {
 
   AFMS = new Adafruit_MotorShield();
 
-  r_Motor = AFMS->getMotor(4);
-  l_Motor = AFMS->getMotor(3);
+  r_Motor = AFMS->getMotor(3);
+  l_Motor = AFMS->getMotor(4);
 
   //Serial.println("AFMS init");
 
@@ -102,22 +102,22 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
 }
 
 void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
-  if (dir == LEFT) {
+  if (dir == RIGHT) {
     l_Motor->run(BACKWARD);
     r_Motor->run(FORWARD);
   }
-  else if (dir == RIGHT) {
+  else if (dir == LEFT) {
     l_Motor->run(FORWARD);
     r_Motor->run(BACKWARD);
   }
 }
 
 void MotorControl::moveStraight(int dir) {              //use Directions enum FWD or BACK
-  if (dir == FWD) {
+  if (dir == BACK) {
     l_Motor->run(BACKWARD);
     r_Motor->run(BACKWARD);
   }
-  else if (dir == BACK) {
+  else if (dir == FWD) {
     l_Motor->run(FORWARD);
     r_Motor->run(FORWARD);
   }
