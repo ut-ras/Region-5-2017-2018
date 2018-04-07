@@ -18,10 +18,18 @@ void  initMotorControl();
 void  initI2c();
 //int isrCount[2] = {0, 0};
 int8_t newCommand = -1;
+const int stopButton = 53;
+
+void stopISR(){
+  while(true);
+}
 
 void setup() {
   Serial.begin(9600);  // start serial for testing outputs
   delay(1000);
+
+  pinMode(stopButton, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
 
   Serial.println("welcome to this test");
 

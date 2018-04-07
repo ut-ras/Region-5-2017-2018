@@ -50,9 +50,10 @@ void setup() {
   //mapGraph->printSerial();
 
   delay(2000);
-  testTokenControl();
+  //testTokenControl();
   //printIntersectionData();
   //testDriveControl();
+  testCombo();
 
 }
 
@@ -69,6 +70,18 @@ void serialEvent() {
     if ((inChar >= 0) && (inChar <= STOP)) {
       driveController->sendCommand(inChar);
     }
+  }
+}
+
+void testCombo() {
+  Blink();
+  while(1){
+    for(int i = 0; i < 2; i ++){
+      //tokenController->pickUpToken();
+      driveController->forwardToIntersection();
+    }
+    //tokenController->pickUpToken();
+    //driveController->turnManeuver(true, 2);
   }
 }
 
