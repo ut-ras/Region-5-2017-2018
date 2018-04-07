@@ -562,17 +562,18 @@
 
       setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
-      while((abs(initRTicks-r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks-l_Encoder->getPos()) < encoderTicks)){
+      while((abs(initRTicks - r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks - l_Encoder->getPos()) < encoderTicks)){
         updateMotorControl();
         //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
           //r_SetpointSpeed=0;  
         //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
           //l_SetpointSpeed=0;
-        }
-        setMotorMode(STOP);
+        delay(LOOP_DELAY);
+      }
+      setMotorMode(STOP);
     }
 
-    void MotorControl::forwardToWhite(int dir){
+void MotorControl::forwardToWhite(int dir){
   moveStraightEncoderTicks(FWD, 535);
   turnEncoderTicks(dir, 238);;
   moveStraightEncoderTicks(FWD, 227);
@@ -586,14 +587,19 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   
   setSetpointSpeeds(LOW_SPEED, LOW_SPEED);
 
+  Serial.println("Starting the turn");
+
   while((abs(initRTicks-r_Encoder->getPos()) < encoderTicks) && (abs(initLTicks-l_Encoder->getPos()) < encoderTicks)){
     updateMotorControl();
     //if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
       //r_SetpointSpeed=0;
     //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
       //l_SetpointSpeed=0;
-    }
-    setMotorMode(STOP);
+    Serial.println("Turning");
+    delay(LOOP_DELAY);
+  }
+  Serial.println("Stopping");
+  setMotorMode(STOP);
 }
 
 
