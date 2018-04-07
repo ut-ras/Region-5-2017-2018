@@ -50,9 +50,10 @@ void setup() {
   //mapGraph->printSerial();
 
   delay(2000);
-  testTokenControl();
+  //testTokenControl();
   //printIntersectionData();
   //testDriveControl();
+  testGUI();
 
 }
 
@@ -165,6 +166,42 @@ void color2grey(int colorStart, bool collectTokens);
 void grey2color(int colorEnd, bool collectTokens);
 void goColor2Color(int colorStart, int colorEnd, bool tokenCollect);
 void changeLevel(int color, int startLevel, int endLevel);
+
+
+void testGUI(){
+  setCurrentLocationForTest(Y4, 2);
+  driveController->turnTo(0);
+  driveController->forwardToIntersection(); //magenta;
+  driveController->forwardToIntersection(); //cyan;
+  driveController->turnTo(6);
+  driveController->forwardToIntersection(); //red;
+  goColor2Color(red, blue, true);
+  changeLevel(blue, 4, 2);
+  goColor2Color(blue, cyan, true);
+
+}
+
+
+void testSimple() {
+
+  driveController->forwardAtStart();  //hit the white box edge
+  driveController->forwardAtStart();  //hit the first square line
+  driveController->forwardAtStart();  //hit the second square line
+  driveController->forwardAtStart();  //hit the third square line
+  driveController->forwardAtStart();  //hit the fourth box line
+  driveController->turn45(true, 2); //turn to the left (towards blue)
+
+  setCurrentLocationForTest(Y4, 6);
+  Serial.println(mapGraph->getCurrentNode()->toString());
+  driveController->forwardToIntersection();   //drive to Bl4
+  tokenController->pickUpToken();
+  driveController->turn45(true, 1);
+  setCurrentLocationForTest(Bl5, 5);  //redundant
+  driveController->forwardToIntersection();   //drive to Bl3
+  driveController->forwardToIntersection();   //drive to Bl2
+  tokenController->pickUpToken();
+  dropOffTokens(blue, 2);
+}
 
 
 //Strategies for each round:
