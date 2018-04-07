@@ -5,6 +5,8 @@
 #include "src/control/driveControl.h"
 #include "src/control/Graph.h"
 
+#define MAIN_MEGA_I2C 0x10
+
 /* Required libraries (sketch/include library/manage libraries to add)
  * Adafruit_TCS34725
  */
@@ -12,32 +14,33 @@
 #define FWD true
 
 //TODO: Change the button pin numbers to the appropriate pins
-const int startButton = 2;
-const int stopButton = 3;
+//const int startButton = 2;
+//const int stopButton = 3;
 
 tokenControl *tokenController;
 driveControl *driveController;
 Graph * mapGraph;
 
-void waitForStart() {
+/* void waitForStart() {
   //While not pressed
   while(digitalRead(startButton) == 1){
     delay(100);
   }
+  //send i2c to main
 }
 
 void stopISR(){
   while(true);
-}
+}*/
 
 void setup() {
   // put your setup code here, to run once:]
   Serial.begin(9600);
 
   //Negative Logic Buttons
-  pinMode(startButton, INPUT_PULLUP);
-  pinMode(stopButton, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
+  //pinMode(startButton, INPUT_PULLUP);
+  //pinMode(stopButton, INPUT_PULLUP);
+  //attachInterrupt(digitalPinToInterrupt(stopButton), stopISR, FALLING);
   
   mapGraph = new Graph();
   tokenController = new tokenControl(mapGraph);
@@ -59,12 +62,12 @@ void setup() {
   //testCombo();
   testSimple();
 
-
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   Blink();
+  round1();
 }
 
 //debugging gui
