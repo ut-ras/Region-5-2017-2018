@@ -64,6 +64,16 @@ void loop() {
 }
 
 
+void emergencyRound1() {
+  while(digitalRead(startButton) == 1){
+    delay(100);
+    
+  m->setMotorMode(FWDNOLINE);
+  delay(1000);
+
+  
+}
+
 
 
 //REQUIRED MAIN METHOD FUNCTIONS FOR MOTOR CONTROL BELOW

@@ -47,7 +47,7 @@ void driveControl::stop() {
 }
 
 void driveControl::forwardAtStart() {
-  move(true);
+  sendCommand(FWDNOLINE);
   pointlineData next = linesensors->getPointlineFor(green, 4); //should emulate crossing the lines
   pointlineData current;
   Serial.println("next " + String(linesensors->PLDatatoString(next)));
