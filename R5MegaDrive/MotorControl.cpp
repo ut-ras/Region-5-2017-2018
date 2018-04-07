@@ -94,6 +94,10 @@ void MotorControl::updateMotorControl() {      //update motor speeds with PID
     //l_SetpointSpeed += l_correction;
     //r_SetpointSpeed += r_correction;
   }
+  if(useArray && FWDNOLINE)
+  {
+
+  }
   if (currentCmd != STOP) {
     calculateEncoderSpeeds();
     calculatePIDSpeeds();
@@ -395,6 +399,9 @@ void MotorControl::setMotorMode(int c) {
     case STOP:
       stopMotors(lastCmd);
       break;
+    case RETURNWHITE:
+      forwardToWhite();
+      break;
     default:
       Serial.println("Undefined Command Error");
       stopMotors(lastCmd);
@@ -569,6 +576,12 @@ void MotorControl::moveStraightEncoderTicks(int dir, int encoderTicks){
       setSetpointSpeeds(0, LOW_SPEED);
     }
     stopMotors(currentCmd);
+}
+
+void MotorControl::forwardToWhite(){
+  moveStraightEncoderTicks(FWD, 535);
+  turn45(LEFT, 2);
+  moveStraightEncoderTicks(FWD, 227);
 }
 
 void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
