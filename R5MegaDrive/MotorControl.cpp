@@ -569,7 +569,7 @@
         //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
           //l_SetpointSpeed=0;
         }
-        stopMotors(currentCmd);
+        setMotorMode(STOP);
     }
 
     void MotorControl::forwardToWhite(int dir){
@@ -593,7 +593,7 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
     //if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
       //l_SetpointSpeed=0;
     }
-    stopMotors(currentCmd);
+    setMotorMode(STOP);
 }
 
 
