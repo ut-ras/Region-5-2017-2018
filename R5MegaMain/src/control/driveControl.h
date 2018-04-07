@@ -21,6 +21,8 @@ class driveControl {
 public:
   driveControl(Graph * m);
 
+  void forwardAtStart();
+
   void move(bool fwd);
   void turnManeuver(bool left, int steps);
   void stop();

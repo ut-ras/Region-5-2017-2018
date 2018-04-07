@@ -60,7 +60,7 @@ int arrayline::getLinePosition() {
 int arrayline::getWeightedValue(){
   int sum = 0;
 	unsigned int sensors[8];
-	arrayLineA->readLine(sensors);
+	arrayLineA->readLine(sensors);	//0-7000;
 	for(int i = 0; i < 8; i++)
 	{
 		sum += weights[i]*sensors[i];

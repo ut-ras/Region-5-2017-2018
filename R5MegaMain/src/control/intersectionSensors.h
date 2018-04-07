@@ -61,6 +61,10 @@ public:
 
   void printDataRedNorth();
 
+  //Moved to public cause compile issues
+    pointlineData getPointlineFor(Color intersectionType, int dir);
+
+
 private:
   Graph * map;
   pointline *l0;
@@ -72,7 +76,6 @@ private:
   pointlineData *data;
   pointlineData *dataRedNorth;
 
-  pointlineData getPointlineFor(Color intersectionType, int dir);
 
 
   unsigned long pointlineTimers[6] = {0};

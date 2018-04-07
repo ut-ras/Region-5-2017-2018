@@ -126,7 +126,7 @@ void MotorControl::moveStraight(int dir) {              //use Directions enum FW
 void MotorControl::stopMotors(int lastCmd) {
   setMotorSpeeds(0, 0);
 
-  int waitTimeMs = 10;
+  int waitTimeMs = 100;
   int r_pos_s = r_Encoder->getPos();
   int l_pos_s = l_Encoder->getPos();
 
@@ -225,7 +225,7 @@ void MotorControl::calculateLSCorrections() {
 
 
   //calculate general position for each sensor. double sensors: -1 = left, 0 = middle, 1 = right
-  int cutoff = 3000;
+  int cutoff = 2000;
   int backSection = (lineSensorWeightBack <= -1 *cutoff) ? (-1) : ((lineSensorWeightBack >= cutoff)?1:0);
   int frontSection = (lineSensorWeightFront <= -1 * cutoff) ? (-1) : ((lineSensorWeightFront >= cutoff)?1:0);
   Serial.println("front loc: " + String(frontSection) + " / back loc: " + String(backSection));
@@ -340,15 +340,15 @@ void MotorControl::setMotorMode(int c) {
       startTicks=l_Encoder->getPos();
       break;
     case BACK1:
-      setSetpointSpeeds(LOW_SPEED);
+      setSetpointSpeeds(40);  //LOW_SPEED
       moveStraight(BACK);
       break;
     case BACK2:
-      setSetpointSpeeds(MID_SPEED);
+      setSetpointSpeeds(LOW_SPEED);
       moveStraight(BACK);
       break;
     case BACK3:
-      setSetpointSpeeds(HIGH_SPEED);
+      setSetpointSpeeds(MID_SPEED);
       moveStraight(BACK);
       break;
     case FWDNOLINE:

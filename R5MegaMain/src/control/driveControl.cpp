@@ -37,11 +37,28 @@ void driveControl::move(bool fwd) {
 }
 
 void driveControl::turnManeuver(bool left, int steps) {
+  Serial.println("In turnManeuver");
   sendCommand(left?(LEFT45 + steps - 1):(RIGHT45 + steps - 1));
 }
 
 void driveControl::stop() {
   sendCommand(STOP);
+}
+
+void driveControl::forwardAtStart() {
+  move(true);
+  pointlineData next = linesensors->getPointlineFor(green, 4); //should emulate crossing the lines
+  pointlineData current;
+  Serial.println("next " + String(linesensors->PLDatatoString(next)));
+  delay(1000);  //allow pointline sensors to get past the current intersection before polling
+  
+  //getDataOverTimeRolling of getDataOverTime doesnt work
+  while((current = linesensors->getDataOverTimeRolling(500)) != next) {
+    Serial.println("current " + String(linesensors->PLDatatoString(current)));
+    //Serial.println("next " + String(linesensors->PLDatatoString(next)));
+   delay(5);
+  }
+  stop();
 }
 
 
@@ -85,6 +102,7 @@ void driveControl::forwardToIntersection() {
 
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {
+  Serial.println("In turn45");
   if (steps >= 8 || steps <= 0) {
     return;
   }

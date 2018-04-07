@@ -27,11 +27,11 @@
 //Center to first funnel is 50 degrees
 // 43.33333 between funnels
 //Degrees from center to RGB Sesnor
-#define toRGBSensor 22
+#define toRGBSensor 20
 //Degrees between each funnel
 #define tokenToToken 45
 //Degrees to first funnel from the RGB Sensor
-#define toFirstToken 23
+#define toFirstToken 25
 //Pin for the stepper motor - needs proper assignment
 #define stepPin 6
 #define dirPin 7
@@ -59,9 +59,8 @@ int tokenControl::pickUpToken() {
     moveToField(resting);
     delay(1000);
     //Reads token colour and if there is no token returns the electromagnet
-    //int colour = Color::magenta;
+
     int colour = readColour();
-    //int colour = magenta;
     if(colour == Color::unknown){
         resetDisk(-1);
         return colour;
@@ -133,7 +132,7 @@ void tokenControl::rotateDiskToColor(int c) {
 
 void tokenControl::rotateDiskFromSensor(int c){
 	if(c > 3){
-		diskController->rotateDisk(toFirstToken, stepper::COUNTERCLOCKWISE);
+		diskController->rotateDisk(toRGBSensor, stepper::COUNTERCLOCKWISE);
 		//delay(400);
         diskController->rotateDisk((7-c)*tokenToToken, stepper::COUNTERCLOCKWISE);
         //delay(400 * (7-c));
@@ -149,12 +148,18 @@ int tokenControl::readColour(){
 	int colour = 0;
 	diskController->rotateDisk(toRGBSensor, stepper::CLOCKWISE);
     delay(500);
-    pulleyController->movePulley(resting+2	);
-    delay(100);
-    magnetController->magnetOn();
+    
+    //magnetController->magnetOn();
+    // delay(1000);
+    
+    pulleyController->movePulley(resting+3	);
+    delay(1250);
 	colour = colourSensor->getColor();
     Serial.println(colour);
-	return colour;
+    pulleyController->movePulley(resting+1);
+    delay(200);
+	
+    return colour;
 }
 
 void tokenControl::resetDisk(int c) {
