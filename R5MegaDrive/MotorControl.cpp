@@ -107,12 +107,12 @@
 
     void MotorControl::turninPlace(int dir) {    //use Directions enum LEFT or RIGHT
       if (dir == RIGHT) {
-        l_Motor->run(BACKWARD);
-        r_Motor->run(FORWARD);
-      }
-      else if (dir == LEFT) {
         l_Motor->run(FORWARD);
         r_Motor->run(BACKWARD);
+      }
+      else if (dir == LEFT) {
+        l_Motor->run(BACKWARD);
+        r_Motor->run(FORWARD);
       }
     }
 
@@ -550,7 +550,7 @@
     //Turn maneuver functions
 
     void MotorControl::turnManeuver(int dir, int num45Deg){
-      moveStraightEncoderTicks(FWD, 82);
+      moveStraightEncoderTicks(FWD, 30);
       turnEncoderTicks(dir, num45Deg * 119);
     }
 
@@ -574,9 +574,9 @@
       while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
         updateMotorControl();
         if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-          setSetpointSpeeds(LOW_SPEED, 0);
+          r_SetpointSpeed=0;  
         if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-          setSetpointSpeeds(0, LOW_SPEED);
+          l_SetpointSpeed=0;
         }
         stopMotors(currentCmd);
     }
@@ -607,9 +607,9 @@ void MotorControl::turnEncoderTicks(int dir, int encoderTicks){
   while(abs(initRTicks-r_Encoder->getPos()) < encoderTicks ||  abs(initLTicks-l_Encoder->getPos()) < encoderTicks){
     updateMotorControl();
     if(abs(initRTicks-r_Encoder->getPos()) >= encoderTicks)
-      setSetpointSpeeds(LOW_SPEED, 0);
+      r_SetpointSpeed=0;
     if(abs(initLTicks-l_Encoder->getPos()) >= encoderTicks)
-      setSetpointSpeeds(0, LOW_SPEED);
+      l_SetpointSpeed=0;
     }
     stopMotors(currentCmd);
 }
