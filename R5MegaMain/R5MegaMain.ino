@@ -28,9 +28,9 @@ void setup() {
   //mapGraph->printSerial();
 
   delay(2000);
-  testTokenControl();
+  //testTokenControl();
   //printIntersectionData();
-  //testDriveControl();
+  testDriveControl();
 
 }
 

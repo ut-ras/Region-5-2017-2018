@@ -37,6 +37,7 @@ void driveControl::move(bool fwd) {
 }
 
 void driveControl::turnManeuver(bool left, int steps) {
+  Serial.println("In turnManeuver");
   sendCommand(left?(LEFT45 + steps - 1):(RIGHT45 + steps - 1));
 }
 
@@ -98,6 +99,7 @@ void driveControl::forwardToIntersection() {
 
 //increments of 45 deg, based on intersection sensors
 void driveControl::turn45(bool left, int steps) {
+  Serial.println("In turn45");
   if (steps >= 8 || steps <= 0) {
     return;
   }

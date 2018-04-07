@@ -40,7 +40,7 @@ void setup() {
 
 
   //test
-  m->setMotorMode(STOP);
+  m->setMotorMode(FWD1);
 }
 
 void loop() {
